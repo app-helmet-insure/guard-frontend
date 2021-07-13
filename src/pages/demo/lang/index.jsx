@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl'
 
 function LangTest (props) {
   const changeLanguage_ = () => {
-    props.changeLanguage({language: props.language === 'en' ? 'cn' : 'en'})
+    props.changeLanguage({language: props.language === 'en' ? 'zh' : 'en'})
   }
   return (
     <React.Fragment>

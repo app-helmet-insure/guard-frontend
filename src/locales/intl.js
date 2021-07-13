@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 
 const config = {
   en: en_US,
-  cn: zh_CN
+  zh: zh_CN
 }
 const getLanguage = language => config[language] || config.en
 
