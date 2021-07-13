@@ -1,10 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 const os = require('os')
-const HappyPack = require('happypack') // 多进程打包
+const HappyPack = require('happypack')
 
-const HtmlWebpackPlugin = require('html-webpack-plugin') // html plugin
-const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 抽离 css
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const resolve = dir => path.resolve(__dirname, dir)
 const happyThreadPool = HappyPack.ThreadPool({
@@ -17,6 +17,11 @@ module.exports = {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
     alias: {
       '@': resolve('../src'),
+      crypto: false,
+      stream: false,
+      assert: false,
+      http: false,
+      https: false
     },
   },
   module: {

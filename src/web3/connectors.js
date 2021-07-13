@@ -1,4 +1,9 @@
 import {ChainId} from './address'
+import { InjectedConnector,
+  NoEthereumProviderError,
+  UserRejectedRequestError} from '@web3-react/injected-connector'
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 export const SCAN_ADDRESS = {
   [ChainId.BSC]: 'https://bscscan.com',
@@ -45,6 +50,11 @@ const networkConf = {
   }
 }
 
+
+export const injected = new InjectedConnector({
+  supportedChainIds: [ChainId.MATIC, ChainId.BSC, ChainId.HECO],
+})
+
 export const changeNetwork = chainId => {
   return new Promise(reslove => {
     const {ethereum} = window
@@ -62,5 +72,81 @@ export const changeNetwork = chainId => {
     } else {
       reslove()
     }
+  })
+}
+
+export const POLLING_INTERVAL = 12000
+
+const bscWalletConnector = new WalletConnectConnector({
+  rpc: { 56: 'https://bsc-dataseed.binance.org/' },
+  bridge: 'https://bridge.walletconnect.org',
+  qrcode: true,
+  pollingInterval: POLLING_INTERVAL,
+})
+
+const hecoWalletConnector = new WalletConnectConnector({
+  rpc: { 128: 'https://http-mainnet-node.huobichain.com' },
+  bridge: 'https://bridge.walletconnect.org',
+  qrcode: true,
+  pollingInterval: POLLING_INTERVAL,
+})
+
+export const walletConnector = {
+  [ChainId.HECO]: hecoWalletConnector,
+  [ChainId.BSC]: bscWalletConnector,
+}
+
+export function connectWallet(activate, connector, deactivate) {
+  return new Promise((reslove, reject) => {
+    activate(connector, undefined, true)
+      .then((e) => {
+        if (window.ethereum.on) {
+          // 监听钱包事件
+          console.log('注册事件')
+          // const { ethereum } = window
+          window.ethereum.on('accountsChanged', (accounts) => {
+            if (accounts.length === 0) {
+              // 无账号，则代表锁定了,主动断开
+              deactivate()
+            }
+            // 账号改了
+          })
+
+          window.ethereum.on('disconnect', () => {
+            // 断开连接
+            deactivate()
+          })
+
+          window.ethereum.on('close', () => {
+            // 断开连接
+            deactivate()
+          })
+
+          window.ethereum.on('message', (msg) => {
+            console.log('message', msg)
+          })
+
+          window.ethereum.on('networkChanged', () => {
+            // 链改了
+          })
+        }
+        reslove(e)
+      })
+      .catch((error) => {
+        switch (true) {
+          case error instanceof UnsupportedChainIdError:
+            console.log('链错了')
+            break
+          case error instanceof NoEthereumProviderError:
+            console.log('不是钱包环境')
+            break
+          case error instanceof UserRejectedRequestError:
+            alert('用户拒绝连接钱包')
+            break
+          default:
+            console.log('未知错误', error)
+        }
+        reject(error)
+      })
   })
 }

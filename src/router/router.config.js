@@ -3,7 +3,7 @@ import loadable from '@/utils/loadable'
 export default [
   {
     path: '/',
-    component: loadable('/index'),
+    component: loadable('/insurance'),
     exact: true,
   },
   {

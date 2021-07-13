@@ -1,5 +1,5 @@
 {
-  "name": "react-0-1-build",
+  "name": "guard-frontend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -50,21 +50,33 @@
   },
   "dependencies": {
     "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/network-connector": "^6.1.9",
+    "@web3-react/walletconnect-connector": "^6.2.0",
     "antd": "^4.15.4",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
+    "crypto-browserify": "^3.12.0",
     "dayjs": "^1.10.4",
     "ethers-multicall-x": "^0.2.2",
     "lodash": "^4.17.21",
     "qs": "^6.10.1",
     "react": "^17.0.2",
+    "react-device-detect": "^1.17.0",
     "react-dom": "^17.0.2",
     "react-intl": "^5.20.4",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-svg": "^13.0.3",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
+    "stream-browserify": "^3.0.0",
     "web3": "^1.4.0"
+  },
+  "browser": {
+    "crypto": false,
+    "stream": false,
+    "assert": false,
+    "http": false,
+    "https": false
   }
 }
