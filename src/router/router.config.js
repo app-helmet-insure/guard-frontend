@@ -3,7 +3,7 @@ import loadable from '@/utils/loadable'
 export default [
   {
     path: '/',
-    redirect: '/home',
+    component: loadable('/index'),
     exact: true,
   },
   {
