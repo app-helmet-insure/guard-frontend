@@ -1,0 +1,1 @@
+(self.webpackChunkreact_0_1_build=self.webpackChunkreact_0_1_build||[]).push([[407],{2407:(e,a,u)=>{"use strict";u.r(a),u.d(a,{default:()=>b});const b={"page-box":"page-box-2PLFZ"}}}]);
