@@ -34,4 +34,9 @@ export default [
       },
     ],
   },
+  {
+    path: '/mining',
+    component: loadable('/mining/index'),
+    exact: true,
+  }
 ]
