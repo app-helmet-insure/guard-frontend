@@ -1,3 +1,18 @@
 export default {
-  WELCOME: '欢迎 {data}'
+  WELCOME: '欢迎 {data}',
+  mining_text1: 'Gurad Mining Campaigns.',
+  mining_text2: 'You can farm dedicated Gurad tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
+  mining_text3: 'Guard-Matic Pool',
+  mining_text4: 'Pool APY',
+  mining_text5: 'CountDown',
+  mining_text6: 'Ongoing',
+  mining_text7: 'Earned',
+  mining_text8: 'Guard',
+  mining_text9: 'Total Stake',
+  mining_text10: 'My Stake',
+  mining_text11: 'Available',
+  mining_text12: 'Stake',
+  mining_text13: 'Guard Rewards: ',
+  mining_text14: 'Claim',
+  mining_text15: '',
 }
