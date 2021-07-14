@@ -3,6 +3,7 @@ import './index.less';
 import Banner from '@/components/insurance/banner';
 import ShowData from '@/components/insurance/shwodata';
 import Header from '@/components/header';
+import Footer from '@/components/footer';
 class insurance extends Component {
     render() {
         return (
@@ -10,6 +11,7 @@ class insurance extends Component {
                 <Header />
                 <Banner />
                 <ShowData />
+                <Footer />
             </div>
         );
     }

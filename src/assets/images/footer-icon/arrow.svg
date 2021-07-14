@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <path d="M6,7 C5.744,7 5.488,6.902 5.293,6.707 L0.293,1.707 C-0.098,1.316 -0.098,0.684 0.293,0.293 C0.684,-0.098 1.316,-0.098 1.707,0.293 L6,4.586 L10.293,0.293 C10.684,-0.098 11.316,-0.098 11.707,0.293 C12.098,0.684 12.098,1.316 11.707,1.707 L6.707,6.707 C6.512,6.902 6.256,7 6,7" id="path-1"></path>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="04挖矿" transform="translate(-1690.000000, -1032.000000)">
+            <g id="footer" transform="translate(0.000000, 1000.000000)">
+                <g id="编组-11" transform="translate(1560.000000, 22.000000)">
+                    <g id="06-icon/minor/chevrondown" transform="translate(134.000000, 17.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <use id="Icon" fill="#959595" xlink:href="#path-1"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
