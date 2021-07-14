@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="01保险-我的保单" transform="translate(-575.000000, -863.000000)">
+            <g id="arrow-drop-down-fill备份-14" transform="translate(482.000000, 863.000000)" filter="url(#filter-1)">
+                <g transform="translate(93.000000, 0.000000)">
+                    <g id="编组">
+                        <polygon id="路径" points="0 0 24 0 24 24 0 24"></polygon>
+                    </g>
+                    <path d="M12.54,9.72 L15.69,13.92 C15.9136753,14.2182338 15.8532338,14.6413247 15.555,14.865 C15.4381601,14.9526299 15.2960499,15 15.15,15 L8.85,15 C8.47720779,15 8.175,14.6977922 8.175,14.325 C8.175,14.1789501 8.22237006,14.0368399 8.31,13.92 L11.46,9.72 C11.6836753,9.42176624 12.1067662,9.36132468 12.405,9.585 C12.4561688,9.62337662 12.5016234,9.66883118 12.54,9.72 Z" id="三角形" fill="#CFCFD2" transform="translate(12.000000, 12.000000) scale(1, -1) translate(-12.000000, -12.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
