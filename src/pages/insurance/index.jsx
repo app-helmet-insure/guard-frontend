@@ -1,12 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react'
 import './index.less'
 import Banner from '@/components/insurance/banner'
-import ShowData from '@/components/insurance/shwodata'
+import ShowData from '@/components/insurance/showdata'
+import Operation from '@/components/insurance/operation'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 
-function Insurance (props) {
-  console.log(props)
+const Insurance = (props) => {
   return (
     <div>
       <Header {...props}/>
@@ -14,6 +14,7 @@ function Insurance (props) {
         <div className="insurance_container">
           <Banner/>
           <ShowData/>
+          <Operation/>
         </div>
       </div>
       <Footer/>
