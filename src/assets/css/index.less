@@ -22,3 +22,10 @@ li {
 .page_box {
     min-height: calc(100vh - 160px);
 }
+@keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+.loading_ani{
+    animation:rotate 1s infinite linear;
+}

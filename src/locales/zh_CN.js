@@ -1,5 +1,4 @@
 export default {
-  WELCOME: '欢迎 {data}',
   mining_text1: 'Gurad Mining Campaigns.',
   mining_text2: 'You can farm dedicated Gurad tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
   mining_text3: 'Guard-Matic Pool',
@@ -15,4 +14,9 @@ export default {
   mining_text13: 'Guard Rewards: ',
   mining_text14: 'Claim',
   mining_text15: '',
+  header_text1: '保险',
+  header_text2: '挖矿',
+  header_text3: '连接钱包',
+  header_text4: '等待中',
+  header_text5: '连接到你的{wallet}钱包'
 }

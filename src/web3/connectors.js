@@ -4,6 +4,7 @@ import { InjectedConnector,
   UserRejectedRequestError} from '@web3-react/injected-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import {useCallback, useEffect, useMemo} from 'react'
 
 export const SCAN_ADDRESS = {
   [ChainId.BSC]: 'https://bscscan.com',
@@ -96,57 +97,71 @@ export const walletConnector = {
   [ChainId.BSC]: bscWalletConnector,
 }
 
-export function connectWallet(activate, connector, deactivate) {
-  return new Promise((reslove, reject) => {
-    activate(connector, undefined, true)
-      .then((e) => {
-        if (window.ethereum.on) {
-          // 监听钱包事件
-          console.log('注册事件')
-          // const { ethereum } = window
-          window.ethereum.on('accountsChanged', (accounts) => {
-            if (accounts.length === 0) {
-              // 无账号，则代表锁定了,主动断开
-              deactivate()
+export const useConnectWallet = () => {
+  const {activate, deactivate, active} = useWeb3React()
+  const connectWallet = useCallback((connector, chainId) => {
+    return changeNetwork(chainId).then(() => {
+      return new Promise((reslove, reject) => {
+        activate(connector, undefined, true)
+          .then((e) => {
+            if ( window.ethereum && window.ethereum.on) {
+              // 监听钱包事件
+              console.log('注册事件')
+              // const { ethereum } = window
+              window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                  // 无账号，则代表锁定了,主动断开
+                  deactivate()
+                }
+                // 账号改了，刷新网页
+                // window.location.reload()
+              })
+
+              window.ethereum.on('disconnect', () => {
+                // 断开连接
+                deactivate()
+              })
+
+              window.ethereum.on('close', () => {
+                // 断开连接
+                deactivate()
+              })
+
+              window.ethereum.on('message', (e) => {
+                console.log('message', e)
+              })
+
             }
-            // 账号改了
+            reslove(e)
           })
-
-          window.ethereum.on('disconnect', () => {
-            // 断开连接
-            deactivate()
+          .catch((error) => {
+            switch (true) {
+              case error instanceof UnsupportedChainIdError:
+                console.log('链错了')
+                break
+              case error instanceof NoEthereumProviderError:
+                console.log('不是钱包环境')
+                break
+              case error instanceof UserRejectedRequestError:
+                console.log('用户拒绝连接钱包')
+                break
+              default:
+                console.log(error)
+            }
+            reslove(error)
           })
-
-          window.ethereum.on('close', () => {
-            // 断开连接
-            deactivate()
-          })
-
-          window.ethereum.on('message', (msg) => {
-            console.log('message', msg)
-          })
-
-          window.ethereum.on('networkChanged', () => {
-            // 链改了
-          })
-        }
-        reslove(e)
       })
-      .catch((error) => {
-        switch (true) {
-          case error instanceof UnsupportedChainIdError:
-            console.log('链错了')
-            break
-          case error instanceof NoEthereumProviderError:
-            console.log('不是钱包环境')
-            break
-          case error instanceof UserRejectedRequestError:
-            alert('用户拒绝连接钱包')
-            break
-          default:
-            console.log('未知错误', error)
-        }
-        reject(error)
-      })
-  })
+    })
+
+
+  }, [])
+
+  useMemo(() => {
+    !active && connectWallet(injected)
+    window.ethereum && window.ethereum.on('networkChanged', () => {
+      // 切换网络后，尝试连接
+      !active && connectWallet(injected)
+    })
+  }, [])
+  return connectWallet
 }
