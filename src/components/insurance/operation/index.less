@@ -1,0 +1,93 @@
+.insurance_operation {
+    width: 1200px;
+    min-height: 319px;
+    background: #ffffff;
+    box-shadow: 11px 11px 42px 0px rgba(237, 237, 240, 0.6);
+    border: 1px solid #f5f7fb;
+    border-radius: 10px 0 10px 0;
+    margin: 20px auto 0;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    &_left {
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-top: 26px;
+            img {
+                width: 132px;
+                height: 40px;
+            }
+            span {
+                margin-left: 8px;
+                font-size: 14px;
+                font-family: HelveticaNeue;
+                color: #919aa6;
+                line-height: 16px;
+            }
+        }
+        .price {
+            display: flex;
+            align-items: center;
+            margin-top: 30px;
+            &_cell {
+                display: flex;
+                align-items: center;
+                &:nth-of-type(2) {
+                    margin-left: 43px;
+                }
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 12px;
+                    span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            font-family: HelveticaNeue;
+                            color: #919aa6;
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            margin-top: 4px;
+                            font-size: 20px;
+                            font-family: HelveticaNeue-Bold, HelveticaNeue;
+                            font-weight: bold;
+                            color: #2a3749;
+                        }
+                    }
+                }
+            }
+        }
+        .buttons {
+            margin-top: 30px;
+            button {
+                min-width: 180px;
+                height: 48px;
+                border-radius: 24px;
+                font-size: 14px;
+                font-family: HelveticaNeue-Medium, HelveticaNeue;
+                font-weight: 550;
+                color: #ffffff;
+                cursor: pointer;
+            }
+            .market {
+                background: #4364e8;
+                box-shadow: 0px 4px 8px 0px rgba(67, 100, 232, 0.2);
+                border: none;
+                &:hover {
+                    background: #3050d0;
+                }
+            }
+            .supply {
+                margin-left: 20px;
+                background: #2a3749;
+                border: 1px solid #ededf0;
+            }
+        }
+    }
+    &_right {
+        width: 460px;
+        height: 249px;
+        background: #fcc;
+    }
+}

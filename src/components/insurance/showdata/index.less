@@ -1,0 +1,41 @@
+@media screen and (min-width: 750px) {
+    .insurance_data {
+        width: 1200px;
+        height: 140px;
+        background: url('../../../assets/images/insurance//showdata_bg.png')
+            100% 100% no-repeat;
+        margin: 40px auto 0;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .data_item {
+            display: flex;
+            img {
+                width: 46px;
+                height: 46px;
+            }
+            p {
+                display: flex;
+                flex-direction: column;
+                margin-left: 20px;
+                span {
+                    &:nth-of-type(1) {
+                        font-size: 12px;
+                        font-family: HelveticaNeue;
+                        color: rgba(255, 255, 255, 0.8);
+                        line-height: 14px;
+                    }
+                    &:nth-of-type(2) {
+                        margin-top: 8px;
+                        font-size: 20px;
+                        font-family: HelveticaNeue-Medium, HelveticaNeue;
+                        font-weight: 500;
+                        color: #ffffff;
+                        line-height: 20px;
+                    }
+                }
+            }
+        }
+    }
+}

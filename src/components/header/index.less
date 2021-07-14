@@ -80,6 +80,16 @@
         }
       }
     }
+  .menu_tab{
+    flex: 1;
+    display: none;
+    flex-direction: row-reverse;
+    align-items: center;
+    img{
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 @media (max-width: 1199px) {
   .header{
@@ -95,6 +105,9 @@
     .connect_wallet{
       display: none;
     }
+    .menu_tab{
+      display: flex;
+    }
   }
 }
 @media (max-width: 375px) {
@@ -105,6 +118,9 @@
     }
     .connect_wallet{
       display: none;
+    }
+    .menu_tab{
+      display: flex;
     }
   }
 }
