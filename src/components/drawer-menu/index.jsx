@@ -1,12 +1,14 @@
 import React from 'react'
-import {Button, Drawer} from 'antd'
+import {Drawer} from 'antd'
 import './index.less'
 import LogoSvg from '../../assets/images/logo2.svg'
 import LoadingSvg from '../../assets/images/loading.svg'
 import {FormattedMessage} from 'react-intl'
 import {formatAddress} from '../../utils'
+import {navList} from '../header'
+import {Link} from 'react-router-dom'
 
-function DrawerMenu({account, active, visible, setVisible, connectWalletClick}) {
+function DrawerMenu({account, active, visible, setVisible, connectWalletClick, location}) {
   const onClose = () => {
     setVisible(false)
   }
@@ -21,11 +23,16 @@ function DrawerMenu({account, active, visible, setVisible, connectWalletClick}) 
     >
       <img src={LogoSvg} alt="" className="logo"/>
       <div className="menu-li">
-        <h1><FormattedMessage id="header_text1"/></h1>
-        <p>我的保单</p>
-        <p>我发布的保险</p>
-        <p>我的结算</p>
-        <h1><FormattedMessage id="header_text2"/></h1>
+        {
+          navList.map(item => {
+            return (
+              <React.Fragment key={item.path}>
+                <Link to={item.path}><h1 className={location.pathname === item.path ? 'active' : ''}>{item.name}</h1></Link>
+                {item.children && item.children.map(cItem => <Link to={cItem.path} key={cItem.path}><p className={location.pathname === cItem.path ? 'active' : ''}>{cItem.name}</p></Link>)}
+              </React.Fragment>
+            )
+          })
+        }
         <div>简体中文</div>
         <div>English</div>
       </div>
