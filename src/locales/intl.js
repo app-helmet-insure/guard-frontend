@@ -4,19 +4,26 @@ import zh_CN from './zh_CN'
 import {connect} from 'react-redux'
 
 
-const config = {
-  en: en_US,
-  zh: zh_CN
+export const languageConfig = {
+  en: {
+    data: en_US,
+    name: 'en',
+    title: 'English'
+  },
+  zh: {
+    data: zh_CN,
+    name: 'zh',
+    title: '中文简体'
+  }
 }
-const getLanguage = language => config[language] || config.en
+const getLanguage = language => (languageConfig[language] || languageConfig.en).data
 
 function HandleMessages (props) {
-
   return (
     <IntlProvider
       key={props.language}
       locale={props.language}
-      defaultLocale="cn"
+      defaultLocale="en"
       messages={getLanguage(props.language)}
     >
       {props.children}

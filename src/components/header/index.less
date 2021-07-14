@@ -13,11 +13,12 @@
         height: 40px;
       }
     }
-    .nav-list{
+    .nav_list{
       flex: 1;
       display: flex;
-      .nav-list-item{
+      .nav_list_item{
         padding: 0 30px;
+        white-space:nowrap;
         cursor: pointer;
         &:hover{
           color: #4364E8;
@@ -35,10 +36,10 @@
         }
       }
     }
-    .connect-wallet{
+    .connect_wallet{
       display: flex;
       align-items: center;
-      .CONNECT-STYLE{
+      .CONNECT_STYLE{
         height: 48px;
         font-size: 16px;
         color: #FFFFFF;
@@ -46,8 +47,8 @@
         line-height: 0;
         cursor: pointer;
       }
-      .not-connect{
-        .CONNECT-STYLE;
+      .not_connect{
+        .CONNECT_STYLE;
         width: 182px;
         background: #2A3749;
         border-radius: 5px;
@@ -57,7 +58,7 @@
         border-radius: 5px;
         overflow: hidden;
         .balance{
-          .CONNECT-STYLE;
+          .CONNECT_STYLE;
           background: #4364E8;
           img{
             width: 30px;
@@ -66,7 +67,7 @@
           }
         }
         .address{
-          .CONNECT-STYLE;
+          .CONNECT_STYLE;
           background: #2A3749;
           span{
             display: block;
@@ -88,10 +89,10 @@
 @media (min-width: 375px) and (max-width: 760px){
   .header{
     padding: 0 50px;
-    .nav-list{
+    .nav_list{
       display: none;
     }
-    .connect-wallet{
+    .connect_wallet{
       display: none;
     }
   }
@@ -99,10 +100,10 @@
 @media (max-width: 375px) {
   .header{
     padding: 0 16px;
-    .nav-list{
+    .nav_list{
       display: none;
     }
-    .connect-wallet{
+    .connect_wallet{
       display: none;
     }
   }

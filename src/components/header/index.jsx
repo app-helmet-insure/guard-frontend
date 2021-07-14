@@ -16,24 +16,24 @@ function Header () {
       <div className="logo">
         <img src={LOGO} alt="Gurad"/>
       </div>
-      <ul className="nav-list">
-        <li className="nav-list-item">
+      <ul className="nav_list">
+        <li className="nav_list_item">
           <span className="active">保险</span>
         </li>
-        <li className="nav-list-item">
+        <li className="nav_list_item">
           <span>挖矿</span>
         </li>
       </ul>
-      <div className="connect-wallet">
+      <div className="connect_wallet">
         {!active ? (
-          <div className="not-connect flex-center" onClick={connectWalletClick}>CONNECT WALLET</div>
+          <div className="not_connect flex_center" onClick={connectWalletClick}>CONNECT WALLET</div>
         ) : (
           <div className="connected">
-            <div className="balance flex-center">
+            <div className="balance flex_center">
               <img src={GURAD_ICON} alt=""/>
               14966231.12
             </div>
-            <div className="address flex-center">
+            <div className="address flex_center">
               {formatAddress(account)}
               <span />
             </div>
