@@ -33,5 +33,14 @@ export default {
   stake_chain_dialog_text4: 'Claim',
   stake_chain_dialog_text5: 'Rewards',
   stake_chain_dialog_text6: 'Unstake & Claim',
-
+  waiting_confirmation_dialog_text1: 'Waiting for confirmation',
+  waiting_confirmation_dialog_text2: 'Please confirm the transaction in your wallet',
+  successful_purchase_dialog_text1: 'Insurance purchase successful, please check in',
+  successful_purchase_dialog_text2: ' my policy',
+  submit_insurance_dialog_text1: 'Tip',
+  submit_insurance_dialog_text2: 'Do you want to buy {num} {doubleInsurance}, The policy fee is {fee}, The expected return is {profit}.',
+  submit_insurance_dialog_text3: 'double insurance',
+  submit_insurance_dialog_text4: 'Cash delivery or not',
+  submit_insurance_dialog_text5: 'Choosing a cash delivery contract will trade your 〔corresponding option\'s pledge currency〕 in pancake into XXX 〔currency required for exercise〕',
+  submit_insurance_dialog_text6: 'Submit'
 }
