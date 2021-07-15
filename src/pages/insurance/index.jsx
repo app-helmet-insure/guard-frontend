@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './index.less'
 import Banner from '@/components/insurance/banner'
 import ShowData from '@/components/insurance/showdata'

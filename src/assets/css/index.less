@@ -31,5 +31,37 @@ li {
     to {transform: rotate(360deg);}
 }
 .loading_ani{
-    animation:rotate 1s infinite linear;
+    animation:rotate 1.5s infinite linear;
+}
+.btn_primary{
+    &.ant-btn-lg{
+        width: 100%;
+    }
+    background: #4364E8;
+    border-color: #4364E8;
+    border-radius: 5px;
+    &.ant-btn-primary:focus, &.ant-btn:focus{
+        background: #4364E8;
+        border-color: #4364E8;
+    }
+    &.ant-btn-primary:hover, &:hover,&.ant-btn:hover{
+        background: #3050D0;
+        border-color: #3050D0;
+    }
+}
+.btn_primary_gray{
+    &.ant-btn-lg{
+        width: 100%;
+    }
+    background: #2A3749;
+    border-color: #2A3749;
+    border-radius: 5px;
+    &.ant-btn-primary:focus, &.ant-btn:focus{
+        border-color: #2A3749;
+        background: #2A3749;
+    }
+    &.ant-btn-primary:hover, &:hover,&.ant-btn:hover{
+        background: #38485f;
+        border-color: #38485f;
+    }
 }

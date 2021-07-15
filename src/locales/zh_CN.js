@@ -24,4 +24,13 @@ export default {
   install_metamask_dialog_text3: '选择一个钱包',
   install_metamask_dialog_text4: '返回',
   install_metamask_dialog_text5: '下载{wallet}',
+  login_authorize_dialog_text1: '登录授权你的钱包',
+  login_authorize_dialog_text2: '此dapp需要访问您的钱包，请登录并授权访问您的{wallet}帐户以继续',
+  login_authorize_dialog_text3: '取消',
+  stake_chain_dialog_text1: '抵押',
+  stake_chain_dialog_text2: '可用',
+  stake_chain_dialog_text3: '请输入抵押数量',
+  stake_chain_dialog_text4: '领取奖励',
+  stake_chain_dialog_text5: '奖励',
+  stake_chain_dialog_text6: '赎回 & 领取奖励',
 }

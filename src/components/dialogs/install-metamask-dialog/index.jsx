@@ -14,6 +14,7 @@ function InstallMetamaskDialog({visible, onClose}) {
       footer={null}
       onCancel={onClose}
       centered
+      destroyOnClose
       wrapClassName="install_metamask_dialog_wrap"
     >
       <h1><FormattedMessage id="install_metamask_dialog_text3"/></h1>

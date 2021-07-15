@@ -24,4 +24,14 @@ export default {
   install_metamask_dialog_text3: 'Select a wallet',
   install_metamask_dialog_text4: 'Back',
   install_metamask_dialog_text5: 'Install {wallet}',
+  login_authorize_dialog_text1: 'Login and Authorize Your wallet ',
+  login_authorize_dialog_text2: 'This dapp requires access to your wallet,please login and authorize access to your {wallet} accounts to continue ',
+  login_authorize_dialog_text3: 'Dismiss',
+  stake_chain_dialog_text1: 'Stake',
+  stake_chain_dialog_text2: 'Available',
+  stake_chain_dialog_text3: 'Staking Amounts',
+  stake_chain_dialog_text4: 'Claim',
+  stake_chain_dialog_text5: 'Rewards',
+  stake_chain_dialog_text6: 'Unstake & Claim',
+
 }
