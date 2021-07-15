@@ -1,6 +1,5 @@
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import RouterList from './router'
-import './assets/css/index.less'
 
 export default () => {
   return (
