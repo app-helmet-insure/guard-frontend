@@ -19,14 +19,14 @@ function ConnectWallDialog({visible, onClose}) {
       closable={false}
       onCancel={onClose}
       centered
-      wrapClassName="connect_wall_dialog_wrap"
+      wrapClassName="connect_wallet_dialog_wrap"
     >
-      <div className="connect_wall_dialog">
-        <div className="wall_item flex_center" onClick={onConnectWallMetaMask}>
+      <div className="connect_wallet_dialog">
+        <div className="wallet_item flex_center" onClick={onConnectWallMetaMask}>
           <img src={MetamaskSvg} alt=""/>
           <p><FormattedMessage id="header_text5" values={{wallet: 'Metamask'}}/></p>
         </div>
-        <div className="wall_item flex_center">
+        <div className="wallet_item flex_center">
           <img src={MathSvg} alt=""/>
           <p><FormattedMessage id="header_text5" values={{wallet: 'Math'}}/></p>
         </div>

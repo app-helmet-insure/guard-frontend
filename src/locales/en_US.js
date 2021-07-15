@@ -18,5 +18,10 @@ export default {
   header_text2: 'mining',
   header_text3: 'Connect to a wallet',
   header_text4: 'Pending',
-  header_text5: 'Connect to your {wallet} Wallet'
+  header_text5: 'Connect to your {wallet} Wallet',
+  install_metamask_dialog_text1: 'You\'ll need to install {wallet} tocontinue.once you have it installed,go ahead and',
+  install_metamask_dialog_text2: 'refresh the page',
+  install_metamask_dialog_text3: 'Select a wallet',
+  install_metamask_dialog_text4: 'Back',
+  install_metamask_dialog_text5: 'Install {wallet}',
 }

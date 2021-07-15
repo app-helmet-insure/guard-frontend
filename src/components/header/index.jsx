@@ -7,8 +7,9 @@ import {useWeb3React} from '@web3-react/core'
 import {formatAddress} from '../../utils'
 import DrawerMenu from '../drawer-menu'
 import {FormattedMessage} from 'react-intl'
-import ConnectWallDialog from '../dialogs/connect-wall-dialog'
+import ConnectWallDialog from '../dialogs/connect-wallet-dialog'
 import {Link} from 'react-router-dom'
+import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
 
 export const navList = [
   {
@@ -38,11 +39,16 @@ export const navList = [
 function Header (props) {
   console.log(props)
   const {account, activate, active} = useWeb3React()
+  console.log(account, active)
   const [visibleMenu, setVisibleMenu] = useState(false)
   const [visibleConnectWall, setVisibleConnectWall] = useState(false)
-  console.log(account, active)
+  const [nonExistentMetamask, setNonExistentMetamask] = useState(false)
   const connectWalletClick = () => {
-    setVisibleConnectWall(true)
+    if (window.ethereum) {
+      setVisibleConnectWall(true)
+    } else {
+      setNonExistentMetamask(true)
+    }
   }
   return (
     <>
@@ -83,6 +89,8 @@ function Header (props) {
       </div>
       <DrawerMenu {...{account, active, visible: visibleMenu, setVisible: setVisibleMenu, connectWalletClick, ...props}}/>
       <ConnectWallDialog visible={visibleConnectWall} onClose={() => setVisibleConnectWall(false)}/>
+      {/* 无钱包提示 */}
+      <InstallMetamaskDialog visible={nonExistentMetamask} onClose={() => setNonExistentMetamask(false)}/>
     </>
   )
 }
