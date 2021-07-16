@@ -14,7 +14,7 @@ import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
 export const navList = [
   {
     name: <FormattedMessage id="header_text1"/>,
-    path: '/',
+    path: '/insurance',
     children: [
       {
         name: '我的保单',

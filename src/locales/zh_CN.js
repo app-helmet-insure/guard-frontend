@@ -42,5 +42,6 @@ export default {
   submit_insurance_dialog_text3: '翻倍险',
   submit_insurance_dialog_text4: '是否现金交割',
   submit_insurance_dialog_text5: '选择现金交割合约会将你的〔对应期权的质押币种〕在pancake交易成需要行权的xxx 〔行权需要币种〕',
-  submit_insurance_dialog_text6: '提交'
+  submit_insurance_dialog_text6: '提交',
+  home_text1: '基于MATIC的加密资产保险交易平台'
 }

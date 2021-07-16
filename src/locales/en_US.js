@@ -42,5 +42,7 @@ export default {
   submit_insurance_dialog_text3: 'double insurance',
   submit_insurance_dialog_text4: 'Cash delivery or not',
   submit_insurance_dialog_text5: 'Choosing a cash delivery contract will trade your 〔corresponding option\'s pledge currency〕 in pancake into XXX 〔currency required for exercise〕',
-  submit_insurance_dialog_text6: 'Submit'
+  submit_insurance_dialog_text6: 'Submit',
+  home_text1: 'Crypto-assets insurance trading platform on MATIC',
+
 }

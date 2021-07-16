@@ -1,0 +1,234 @@
+.home_page {
+  margin: 0 auto;
+  padding: 60px 0;
+  width: 80vw;
+  max-width: 1800px;
+  transition: all 100ms ease;
+  .logo {
+    margin-bottom: 73px;
+    img {
+      width: 240px;
+      height: 80px;
+    }
+  }
+
+  .home_page_view_m {
+    width: 100%;
+    display: flex;
+
+    .home_page_view_m_t {
+      flex: 1;
+
+      h1 {
+        font-size: 64px;
+        font-weight: normal;
+        color: #2A3749;
+        line-height: 100px;
+        margin-top: 77px;
+      }
+
+      p {
+        font-size: 30px;
+        color: #2A3749;
+        line-height: 34px;
+        margin-top: 27px;
+      }
+
+      .btn_view {
+        margin-top: 70px;
+
+        .btn_github {
+          height: 64px;
+          font-size: 20px;
+          color: #4364E8;
+          background: #FFFFFF;
+        }
+
+        .btn_lauch_app {
+          height: 64px;
+          font-size: 20px;
+          color: #FFFFFF;
+          background: #4364E8;
+          margin-left: 21px;
+        }
+
+        .btn_icon {
+          width: 33px;
+          height: 33px;
+        }
+      }
+    }
+
+    .poster {
+      flex: 1;
+      width: 100%;
+      max-width: 885px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 1250px) {
+  .home_page {
+    width: 90vw;
+    padding-top: 40px;
+    .logo {
+      margin-bottom: 50px;
+      img {
+        width: 210px;
+        height: 70px;
+      }
+    }
+    .home_page_view_m {
+      .home_page_view_m_t {
+        h1 {
+          font-size: 48px;
+          margin-top: 60px;
+        }
+        p {
+          font-size: 26px;
+          margin-top: 20px;
+        }
+        .btn_view {
+          margin-top: 50px;
+          .btn_github {
+            height: 55px;
+            font-size: 20px;
+            color: #4364E8;
+            background: #FFFFFF;
+          }
+
+          .btn_lauch_app {
+            height: 55px;
+            font-size: 20px;
+            color: #FFFFFF;
+            background: #4364E8;
+            margin-left: 21px;
+          }
+
+          .btn_icon {
+            width: 30px;
+            height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 950px) {
+  .home_page {
+    width: 90vw;
+    padding-top: 30px;
+    .logo {
+      margin-bottom: 40px;
+      img {
+        width: 180px;
+        height: 60px;
+      }
+    }
+    .home_page_view_m {
+      .home_page_view_m_t {
+        h1 {
+          font-size: 45px;
+          margin-top: 60px;
+        }
+        p {
+          font-size: 20px;
+          margin-top: 20px;
+        }
+        .btn_view {
+          margin-top: 50px;
+          .btn_github {
+            height: 50px;
+            font-size: 18px;
+            color: #4364E8;
+            background: #FFFFFF;
+          }
+          .btn_lauch_app {
+            height: 50px;
+            font-size: 18px;
+            color: #FFFFFF;
+            background: #4364E8;
+            margin-left: 21px;
+          }
+
+          .btn_icon {
+            width: 25px;
+            height: 25px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 770px) {
+  .home_page {
+    width: 95vw;
+    padding-top: 20px;
+    .logo {
+      margin-bottom: 40px;
+      img {
+        width: 160px;
+        height: 40px;
+      }
+    }
+    .home_page_view_m {
+      flex-direction: column-reverse;
+    }
+  }
+}
+@media (max-width: 450px) {
+  .home_page {
+    width: 95vw;
+    padding-top: 20px;
+    .logo {
+      margin-bottom: 40px;
+      img {
+        width: 120px;
+        height: 40px;
+      }
+    }
+    .home_page_view_m {
+      flex-direction: column-reverse;
+      .home_page_view_m_t {
+        h1 {
+          font-size: 40px;
+          margin-top: 34px;
+          line-height: 60px;
+        }
+        p {
+          font-size: 20px;
+          margin-top: 12px;
+        }
+        .btn_view {
+          margin-top: 34px;
+          padding: 0 20px;
+          display: flex;
+          flex-direction: column-reverse;
+          .btn_github {
+            width: 100%;
+            height: 48px;
+            font-size: 16px;
+            margin-top: 20px;
+          }
+          .btn_lauch_app {
+            width: 100%;
+            height: 48px;
+            font-size: 16px;
+            margin-left: 0;
+          }
+          .btn_icon {
+            width: 24px;
+            height: 24px;
+          }
+        }
+      }
+    }
+  }
+}
