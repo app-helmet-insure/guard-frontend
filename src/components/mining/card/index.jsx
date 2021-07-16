@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
 import './index.less'
 import { message, Button, Space } from 'antd'
@@ -7,6 +7,10 @@ import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 
 const MiningCard = (props) => {
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
+
+  useMemo(() => {
+    console.log(props.pools, 'props')
+  }, [])
 
   const success = () => {
     message.success({
