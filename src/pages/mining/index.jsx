@@ -4,6 +4,7 @@ import MiningBanner from '../../components/mining/banner'
 import MiningCard from '../../components/mining/card'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import mining from '../../config/mining'
 
 const Mining = (props) => {
   return (
@@ -13,8 +14,8 @@ const Mining = (props) => {
         <div className="mining_index">
           <MiningBanner/>
           <div className="mining_index_content">
-            {[0, 1, 2].map((item, index) => (
-              <MiningCard key={index}/>
+            {mining.map((item, index) => (
+              <MiningCard pools={item} key={index}/>
             ))}
           </div>
         </div>
