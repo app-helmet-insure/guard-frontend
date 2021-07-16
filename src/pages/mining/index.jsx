@@ -4,7 +4,7 @@ import MiningBanner from '../../components/mining/banner'
 import MiningCard from '../../components/mining/card'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import mining from '../../config/mining'
+import mining from '../../configs/mining'
 
 const Mining = (props) => {
   return (

@@ -1,17 +1,14 @@
 import React, { useState, useMemo } from 'react'
-import { useActiveWeb3React, useBlockHeight } from '../web3'
-import { abi as ERC20 } from '../web3/abi/ERC20.json'
-import Mining from '../configs/mining'
 import Web3 from 'web3'
+import { useActiveWeb3React, useBlockHeight } from '../web3'
+import ERC20 from '../web3/abi/ERC20.json'
+import Mining from '../configs/mining'
 import { processResult, getOnlyMultiCallProvider } from '../web3/multicall'
 import { Contract } from 'ethers-multicall-x'
-
-
 
 export const useMiningInfo = (address = '') => {
   const { account } = useActiveWeb3React()
   const blockHeight = useBlockHeight()
-
   const pool = Mining.find(o => o.address === address)
 
   const now = parseInt(Date.now() / 1000)
@@ -21,7 +18,7 @@ export const useMiningInfo = (address = '') => {
   useMemo(() => {
     const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
     const pool_contract = new Contract(pool.address, pool.abi)
-    const currency_token = new Contract(pool.MLP, ERC20)
+    const currency_token = new Contract(pool.MLP, ERC20.abi)
     const promise_list = [
       pool_contract.begin(), // 开始时间
       pool_contract.totalSupply(), // 总抵押
