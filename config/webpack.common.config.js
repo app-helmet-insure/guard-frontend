@@ -5,6 +5,7 @@ const HappyPack = require('happypack')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 const resolve = dir => path.resolve(__dirname, dir)
 const happyThreadPool = HappyPack.ThreadPool({
@@ -16,12 +17,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
     alias: {
-      '@': resolve('../src'),
-      crypto: false,
-      stream: false,
-      assert: false,
-      http: false,
-      https: false
+      '@': resolve('../src')
     },
   },
   module: {
@@ -140,5 +136,6 @@ module.exports = {
       verboseWhenProfiling: false,
       verbose: false,
     }),
+    new NodePolyfillPlugin()
   ],
 }

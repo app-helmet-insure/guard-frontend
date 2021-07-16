@@ -8,7 +8,14 @@ import Select from '@/assets/images/insurance/select.svg';
 
 import './index.less';
 const Operation = (props) => {
-    const [ActionType, SetActionType] = useState('MARKET');
+    const [ActionType, SetActionType] = useState('');
+    const HandleChilciActiveType = (Type) => {
+        if (Type === ActionType) {
+            SetActionType('');
+        } else {
+            SetActionType(Type);
+        }
+    };
     return (
         <div className='insurance_operation'>
             <div className='insurance_control'>
@@ -36,12 +43,12 @@ const Operation = (props) => {
                     <div className='buttons'>
                         <button
                             className='market'
-                            onClick={() => SetActionType('MARKET')}>
+                            onClick={() => HandleChilciActiveType('MARKET')}>
                             Buy Insurance <img src={Select} alt='' />
                         </button>
                         <button
                             className='supply'
-                            onClick={() => SetActionType('SUPPLY')}>
+                            onClick={() => HandleChilciActiveType('SUPPLY')}>
                             Supply
                             <img src={Select} alt='' />
                         </button>
@@ -49,7 +56,8 @@ const Operation = (props) => {
                 </div>
                 <div className='insurance_operation_right'></div>
             </div>
-            {ActionType === 'MARKET' ? <Market /> : <Supply />}
+            {ActionType === 'MARKET' ? <Market /> : ''}
+            {ActionType === 'SUPPLY' ? <Supply /> : ''}
         </div>
     );
 };

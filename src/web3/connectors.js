@@ -92,9 +92,17 @@ const hecoWalletConnector = new WalletConnectConnector({
   pollingInterval: POLLING_INTERVAL,
 })
 
+const maticWalletConnector = new WalletConnectConnector({
+  rpc: { 137: 'https://rpc-mainnet.maticvigil.com' },
+  bridge: 'https://bridge.walletconnect.org',
+  qrcode: true,
+  pollingInterval: POLLING_INTERVAL,
+})
+
 export const walletConnector = {
   [ChainId.HECO]: hecoWalletConnector,
   [ChainId.BSC]: bscWalletConnector,
+  [ChainId.MATIC]: maticWalletConnector
 }
 
 export const useConnectWallet = () => {
@@ -102,6 +110,7 @@ export const useConnectWallet = () => {
   const connectWallet = useCallback((connector, chainId) => {
     return changeNetwork(chainId).then(() => {
       return new Promise((reslove, reject) => {
+        console.log('activate', activate)
         activate(connector, undefined, true)
           .then((e) => {
             if ( window.ethereum && window.ethereum.on) {
@@ -148,7 +157,7 @@ export const useConnectWallet = () => {
               default:
                 console.log(error)
             }
-            reslove(error)
+            reject(error)
           })
       })
     })
