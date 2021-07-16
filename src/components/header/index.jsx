@@ -57,19 +57,29 @@ function Header (props) {
           <img src={LOGO} alt="Gurad"/>
         </div>
         <ul className="nav_list">
-          {
-            navList.map(item => (
-              <Link to={item.path} className="nav_list_item" key={item.path}>
-                <span className={props.location.pathname === item.path ? 'active' : ''}>
-                  {item.name}
-                </span>
-              </Link>
-            ))
-          }
+          {navList.map((item) => (
+            <Link
+              to={item.path}
+              className="nav_list_item"
+              key={item.path}>
+                            <span
+                              className={
+                                props.location.pathname === item.path
+                                  ? 'active'
+                                  : ''
+                              }>
+                                {item.name}
+                            </span>
+            </Link>
+          ))}
         </ul>
         <div className="connect_wallet">
           {!active ? (
-            <div className="not_connect flex_center" onClick={connectWalletClick}>CONNECT WALLET</div>
+            <div
+              className="not_connect flex_center"
+              onClick={connectWalletClick}>
+              CONNECT WALLET
+            </div>
           ) : (
             <div className="connected" onClick={connectWalletClick}>
               <div className="balance flex_center">
@@ -84,19 +94,32 @@ function Header (props) {
           )}
         </div>
         <div className="menu_tab">
-          <img src={MenuSvg} alt="" onClick={() => setVisibleMenu(true)}/>
+          <img
+            src={MenuSvg}
+            alt=""
+            onClick={() => setVisibleMenu(true)}
+          />
         </div>
       </div>
-      <DrawerMenu {...{
-        account,
-        active,
-        visible: visibleMenu,
-        setVisible: setVisibleMenu,
-        connectWalletClick, ...props
-      }}/>
-      <ConnectWallDialog visible={visibleConnectWall} onClose={() => setVisibleConnectWall(false)}/>
+      <DrawerMenu
+        {...{
+          account,
+          active,
+          visible: visibleMenu,
+          setVisible: setVisibleMenu,
+          connectWalletClick,
+          ...props,
+        }}
+      />
+      <ConnectWallDialog
+        visible={visibleConnectWall}
+        onClose={() => setVisibleConnectWall(false)}
+      />
       {/* 无钱包提示 */}
-      <InstallMetamaskDialog visible={nonExistentMetamask} onClose={() => setNonExistentMetamask(false)}/>
+      <InstallMetamaskDialog
+        visible={nonExistentMetamask}
+        onClose={() => setNonExistentMetamask(false)}
+      />
     </>
   )
 }
