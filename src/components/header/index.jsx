@@ -12,29 +12,29 @@ import {Link} from 'react-router-dom'
 import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
 
 export const navList = [
-  {
-    name: <FormattedMessage id="header_text1"/>,
-    path: '/',
-    children: [
-      {
-        name: '我的保单',
-        path: '/1'
-      },
-      {
-        name: '我发布的保险',
-        path: '/2'
-      },
-      {
-        name: '我的结束',
-        path: '/3'
-      },
-    ]
-  },
-  {
-    name: <FormattedMessage id="header_text2"/>,
-    path: '/mining'
-  }
-]
+    {
+        name: <FormattedMessage id='header_text1' />,
+        path: '/',
+        children: [
+            {
+                name: '我的保单',
+                path: '/1',
+            },
+            {
+                name: '我发布的保险',
+                path: '/2',
+            },
+            {
+                name: '我的结束',
+                path: '/3',
+            },
+        ],
+    },
+    {
+        name: <FormattedMessage id='header_text2' />,
+        path: '/mining',
+    },
+];
 
 function Header (props) {
   console.log(props)
@@ -95,4 +95,4 @@ function Header (props) {
   )
 }
 
-export default Header
+export default Header;
