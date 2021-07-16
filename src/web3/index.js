@@ -41,7 +41,7 @@ export const useActiveWeb3React = () => {
 }
 
 export function useBlockHeight() {
-  const { account, active, library } = useActiveWeb3React()
+  const { library } = useActiveWeb3React()
   const [blockNumber, setBlockNumber] = useState(0)
 
   const updateBlockNumber = (blockNumber) => {
