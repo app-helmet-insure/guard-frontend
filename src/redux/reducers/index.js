@@ -13,6 +13,7 @@ export default function reducer(state = initState, action) {
     case LANGUAGE:
       window.localStorage.setItem('guard_frontend_language', action.params.language)
       return {
+        ...state,
         language: action.params.language,
       }
     default:

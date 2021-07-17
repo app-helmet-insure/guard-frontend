@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useMemo, useState} from 'react'
 import './index.less'
 import LOGO from '../../assets/images/logo.svg'
 import GuradSvg from '../../assets/images/gurad-icon.svg'
@@ -10,6 +10,8 @@ import {FormattedMessage} from 'react-intl'
 import ConnectWallDialog from '../dialogs/connect-wallet-dialog'
 import {Link} from 'react-router-dom'
 import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
+
+import {VarContext} from '../../context'
 
 export const navList = [
   {
@@ -37,12 +39,14 @@ export const navList = [
 ]
 
 function Header (props) {
-  console.log(props)
-  const {account, activate, active} = useWeb3React()
-  console.log(account, active)
   const [visibleMenu, setVisibleMenu] = useState(false)
   const [visibleConnectWall, setVisibleConnectWall] = useState(false)
   const [nonExistentMetamask, setNonExistentMetamask] = useState(false)
+
+  const {account, activate, active, library} = useWeb3React()
+
+  const {balance} = useContext(VarContext)
+
   const connectWalletClick = () => {
     if (window.ethereum) {
       setVisibleConnectWall(true)
@@ -84,7 +88,7 @@ function Header (props) {
             <div className="connected" onClick={connectWalletClick}>
               <div className="balance flex_center">
                 <img src={GuradSvg} alt=""/>
-                14966231.12
+                {balance}
               </div>
               <div className="address flex_center">
                 {formatAddress(account)}
