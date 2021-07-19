@@ -1,4 +1,5 @@
 import {message} from 'antd'
+import { useState, useEffect } from 'react'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import Web3 from 'web3'
 import {getRpcUrl} from './address'
