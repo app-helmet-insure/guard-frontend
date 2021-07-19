@@ -17,7 +17,9 @@ function ConnectWallDialog({visible, onClose}) {
   const onConnectWallMetaMask = () => {
     // const isUnlocked = window.ethereum.isConnected()
     // console.log('isUnlocked', isUnlocked)
-    connectWallet(injected, defChainId).then(onClose).catch(() => {
+    connectWallet(injected, defChainId).then(()=>{
+      setIsLoginAuthorize(false)
+    }).catch(() => {
       setIsLoginAuthorize(false)
     })
     // if (!isUnlocked) {

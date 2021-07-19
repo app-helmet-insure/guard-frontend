@@ -123,11 +123,11 @@ function Header (props) {
           ...props,
         }}
       />
+      <DisconnectedWalletDialog visible={visibleDisconnectConnectWall} onClose={()=> setVisibleDisconnectConnectWall(false)}/>
       <ConnectWallDialog
         visible={visibleConnectWall}
         onClose={() => setVisibleConnectWall(false)}
       />
-      <DisconnectedWalletDialog visible={visibleDisconnectConnectWall} onClose={()=> setVisibleDisconnectConnectWall(false)}/>
       {/* 无钱包提示 */}
       <InstallMetamaskDialog
         visible={nonExistentMetamask}
