@@ -3,33 +3,42 @@ import { FormattedMessage } from 'react-intl'
 import './index.less'
 import { message, Button, Space } from 'antd'
 import { connect } from 'react-redux'
-// import { useMiningInfo } from '../../../hooks/mining'
+import BigNumber from 'bignumber.js'
+// 处理格式 千位符
+import { formatNumber } from 'accounting'
+import { formatAmount, splitFormat } from '../../../utils/format'
+import { useBalance } from '../../../hooks/index'
+import { useMiningInfo } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 
 const MiningCard = (props) => {
   let { pools: miningPools } = props
+  miningPools = useMiningInfo(miningPools && miningPools.address)
+  const { balance } = useBalance(
+    miningPools && miningPools.MLP,
+    props.pools.networkId
+  )
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
+  const [balanceProportion, setBalanceProportion] = useState(0)
+  const [tabFlag, setTabFlag] = useState('Stake')
 
   useMemo(() => {
-    console.log(miningPools, props.pools, 'props')
-  }, [])
+    if (miningPools && miningPools.balanceOf * 1 && miningPools.totalSupply) {
+      setBalanceProportion(
+        new BigNumber(miningPools.balanceOf)
+          .dividedBy(new BigNumber(formatAmount(miningPools.totalSupply)))
+          .multipliedBy(new BigNumber(100))
+          .toNumber()
+          .toFixed(2) * 1
+      )
+    } else {
+      setBalanceProportion(0)
+    }
+  }, [miningPools, miningPools.balanceOf, miningPools.totalSupply])
 
-  const success = () => {
-    message.success({
-      content: 'This is a success message',
-      style: {
-        color: '#2A3749',
-      },
-    })
-  }
-
-  const error = () => {
-    message.error({
-      content: 'This is a error message',
-      style: {
-        color: '#2A3749',
-      },
-    })
+  const stakeClaimPopup = (val) => {
+    setTabFlag(val)
+    setVisibleStakePopup(true)
   }
 
   return (
@@ -37,9 +46,7 @@ const MiningCard = (props) => {
       <div className='mining_card'>
         <div className='mining_card_title'>
           <img />
-          <h2>
-            <FormattedMessage id='mining_text3' />
-          </h2>
+          <h2>{miningPools && miningPools.name}</h2>
         </div>
         <div className='mining_card_apy'>
           <p className='mining_card_apy_val'>
@@ -70,34 +77,82 @@ const MiningCard = (props) => {
             <span>
               <FormattedMessage id='mining_text9' />
             </span>
-            <span>999,999.123456</span>
+            <span>
+              {miningPools && miningPools.totalSupply
+                ? formatNumber(
+                    formatAmount(
+                      miningPools.totalSupply,
+                      miningPools.decimal,
+                      6
+                    ),
+                    {
+                      thousand: ',',
+                      decimal: '.',
+                      precision:
+                        formatAmount(miningPools.totalSupply) - 0 > 0 ? 6 : 0,
+                    }
+                  )
+                : '--'}
+            </span>
           </p>
           <p className='mining_card_content_val'>
             <span>
               <FormattedMessage id='mining_text10' />
             </span>
-            <span>9,999.123456(10.11%)</span>
+            <span>
+              {miningPools && miningPools.balanceOf
+                ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
+                    thousand: ',',
+                    decimal: '.',
+                    precision: miningPools.balanceOf - 0 > 0 ? 6 : 0,
+                  }) +
+                  '(' +
+                  (balanceProportion - 0 === 0 ? '0.00' : balanceProportion) +
+                  '%)'
+                : '--'}
+            </span>
           </p>
           <p className='mining_card_content_val'>
             <span>
               <FormattedMessage id='mining_text11' />
             </span>
-            <span>9,999.123456(10.11%)</span>
+            <span>
+              {miningPools && miningPools.balanceOf
+                ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
+                    thousand: ',',
+                    decimal: '.',
+                    precision: formatAmount(balance) - 0 > 0 ? 6 : 0,
+                  })
+                : '--'}
+            </span>
           </p>
         </div>
-        <a
-          className='mining_card_btn'
-          onClick={() => setVisibleStakePopup(true)}
-        >
+        <a className='mining_card_btn' onClick={() => stakeClaimPopup('Stake')}>
           <FormattedMessage id='mining_text12' />
         </a>
         <div className='mining_card_content' style={{ padding: '6px 12px' }}>
           <p className='mining_card_content_val'>
             <span>
-              <FormattedMessage id='mining_text13' />
-              99.123456
+              <FormattedMessage
+                id='mining_text13'
+                values={{ coin: miningPools && miningPools.rewards1 }}
+              />
+              {miningPools && miningPools.earned
+                ? formatNumber(
+                    formatAmount(miningPools.earned, miningPools.decimal, 6),
+                    {
+                      thousand: ',',
+                      decimal: '.',
+                      precision:
+                        formatAmount(miningPools.earned) - 0 > 0 ? 6 : 0,
+                    }
+                  )
+                : '--'}
             </span>
-            <a className='mining_card_claim_btn' onClick={() => setVisibleStakePopup(true)}>
+            <a
+              className='mining_card_claim_btn'
+              onClick={() => stakeClaimPopup('Claim')}
+            >
               <FormattedMessage id='mining_text14' />
             </a>
           </p>
@@ -105,6 +160,8 @@ const MiningCard = (props) => {
       </div>
       <StakeChaimDialog
         visible={visibleStakePopup}
+        tab={tabFlag}
+        pool={miningPools}
         onClose={() => setVisibleStakePopup(false)}
       />
     </>

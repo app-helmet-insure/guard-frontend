@@ -1,6 +1,7 @@
 export default {
   mining_text1: 'Gurad Mining Campaigns.',
-  mining_text2: 'You can farm dedicated Gurad tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
+  mining_text2:
+    'You can farm dedicated Gurad tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
   mining_text3: 'Guard-Matic Pool',
   mining_text4: 'Pool APY',
   mining_text5: 'CountDown',
@@ -11,7 +12,7 @@ export default {
   mining_text10: 'My Stake',
   mining_text11: 'Available',
   mining_text12: 'Stake',
-  mining_text13: 'Guard Rewards: ',
+  mining_text13: '{coin} Rewards: ',
   mining_text14: 'Claim',
   mining_text15: '',
   header_text1: '保险',
@@ -26,7 +27,8 @@ export default {
   install_metamask_dialog_text4: '返回',
   install_metamask_dialog_text5: '下载{wallet}',
   login_authorize_dialog_text1: '登录授权你的钱包',
-  login_authorize_dialog_text2: '此dapp需要访问您的钱包，请登录并授权访问您的{wallet}帐户以继续',
+  login_authorize_dialog_text2:
+    '此dapp需要访问您的钱包，请登录并授权访问您的{wallet}帐户以继续',
   login_authorize_dialog_text3: '取消',
   stake_chain_dialog_text1: '抵押',
   stake_chain_dialog_text2: '可用',
@@ -39,14 +41,17 @@ export default {
   successful_purchase_dialog_text1: '保险购买成功，请在 {title} 中查看',
   successful_purchase_dialog_text2: '我的保单',
   submit_insurance_dialog_text1: '提示',
-  submit_insurance_dialog_text2: '是否要买入数量为 {num} {doubleInsurance}，保费为  {fee} ，预期收益为 {profit}',
+  submit_insurance_dialog_text2:
+    '是否要买入数量为 {num} {doubleInsurance}，保费为  {fee} ，预期收益为 {profit}',
   submit_insurance_dialog_text3: '翻倍险',
   submit_insurance_dialog_text4: '是否现金交割',
-  submit_insurance_dialog_text5: '选择现金交割合约会将你的〔对应期权的质押币种〕在pancake交易成需要行权的xxx 〔行权需要币种〕',
+  submit_insurance_dialog_text5:
+    '选择现金交割合约会将你的〔对应期权的质押币种〕在pancake交易成需要行权的xxx 〔行权需要币种〕',
   submit_insurance_dialog_text6: '提交',
   home_text1: '基于MATIC的加密资产保险交易平台',
   disconnected_wallet_dialog_text1: '账户',
   disconnected_wallet_dialog_text2: '复制账户地址',
   disconnected_wallet_dialog_text3: '切换钱包',
-  disconnected_wallet_dialog_text4: '断开钱包'
+  disconnected_wallet_dialog_text4: '断开钱包',
+
 }
