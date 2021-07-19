@@ -7,7 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
-const resolve = dir => path.resolve(__dirname, dir)
+const resolve = (dir) => path.resolve(__dirname, dir)
 const happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length,
 })
@@ -17,7 +17,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
     alias: {
-      '@': resolve('../src')
+      '@': resolve('../src'),
     },
   },
   module: {
@@ -93,8 +93,8 @@ module.exports = {
               },
             ],
             include: resolve('../src'),
-          }
-        ]
+          },
+        ],
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -122,6 +122,7 @@ module.exports = {
       template: resolve('../public/index.html'),
       inject: 'body',
       hash: true,
+      favicon: resolve('../public/favicon.ico'),
     }),
     new webpack.ProvidePlugin({ React: 'react' }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -136,6 +137,6 @@ module.exports = {
       verboseWhenProfiling: false,
       verbose: false,
     }),
-    new NodePolyfillPlugin()
+    new NodePolyfillPlugin(),
   ],
 }

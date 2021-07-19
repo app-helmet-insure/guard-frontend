@@ -232,7 +232,7 @@ export const Chart = props => {
     })
   }
 
-  useMemo(() => {
+  useEffect(() => {
     initChart()
   }, [lpt_address, over_price, off_price])
   return (

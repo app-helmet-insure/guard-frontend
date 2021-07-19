@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack serve --config ./config/webpack.dev.config.js",
+    "start": "cross-env --max_old_space_size=4096 NODE_ENV=development webpack serve --config ./config/webpack.dev.config.js",
     "build": "cross-env NODE_ENV=production webpack --config ./config/webpack.prod.config.js"
   },
   "author": "",
@@ -77,6 +77,7 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "stream-browserify": "^3.0.0",
-    "web3": "^1.4.0"
+    "web3": "^1.4.0",
+    "react-compound-timer": "^1.2.0"
   }
 }

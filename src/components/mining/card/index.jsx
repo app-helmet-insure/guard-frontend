@@ -10,6 +10,7 @@ import { formatAmount, splitFormat } from '../../../utils/format'
 import { useBalance } from '../../../hooks/index'
 import { useMiningInfo } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
+import CountDown from '@/components/mining/countDown'
 
 const MiningCard = (props) => {
   let { pools: miningPools } = props
@@ -21,6 +22,32 @@ const MiningCard = (props) => {
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
   const [tabFlag, setTabFlag] = useState('Stake')
+  const [aprPercentage, setPercentage] = useState('-')
+  const [now, setNow] = useState(parseInt(Date.now() / 1000))
+  const isFinish =
+    miningPools &&
+    miningPools.dueDate &&
+    miningPools.dueDate <= now &&
+    miningPools.openDate < now
+
+  useMemo(() => {
+    let timerId = null
+    const fn = () => {
+      timerId = setTimeout(() => {
+        const now = parseInt(Date.now() / 1000)
+        setNow(now)
+        if (isFinish) {
+          clearTimeout(timerId)
+        } else {
+          fn()
+        }
+      }, 1000)
+    }
+    fn()
+    return () => {
+      clearTimeout(timerId)
+    }
+  }, [])
 
   useMemo(() => {
     if (miningPools && miningPools.balanceOf * 1 && miningPools.totalSupply) {
@@ -48,7 +75,13 @@ const MiningCard = (props) => {
           <img />
           <h2>{miningPools && miningPools.name}</h2>
         </div>
-        <div className='mining_card_apy'>
+        <CountDown
+          pools={miningPools}
+          aprPercentage={aprPercentage}
+          now={now}
+          isFinish={isFinish}
+        />
+        {/* <div className='mining_card_apy'>
           <p className='mining_card_apy_val'>
             <span>
               <FormattedMessage id='mining_text4' />
@@ -63,7 +96,7 @@ const MiningCard = (props) => {
               <FormattedMessage id='mining_text6' />
             </span>
           </p>
-        </div>
+        </div> */}
         <div className='mining_card_content'>
           <p className='mining_card_content_val'>
             <span>
@@ -168,6 +201,4 @@ const MiningCard = (props) => {
   )
 }
 
-export default connect(
-  state => state.index
-)(MiningCard)
+export default connect((state) => state.index)(MiningCard)

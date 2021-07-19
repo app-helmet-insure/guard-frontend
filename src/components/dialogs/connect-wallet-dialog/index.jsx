@@ -17,7 +17,9 @@ function ConnectWallDialog({visible, onClose}) {
   const onConnectWallMetaMask = () => {
     // const isUnlocked = window.ethereum.isConnected()
     // console.log('isUnlocked', isUnlocked)
-    connectWallet(injected, defChainId).then(onClose).catch(() => {
+    connectWallet(injected, defChainId).then(()=>{
+      setIsLoginAuthorize(false)
+    }).catch(() => {
       setIsLoginAuthorize(false)
     })
     // if (!isUnlocked) {
@@ -42,6 +44,7 @@ function ConnectWallDialog({visible, onClose}) {
         onCancel={onClose}
         centered
         wrapClassName="connect_wallet_dialog_wrap"
+        zIndex={1001}
       >
         <div className="connect_wallet_dialog">
           <div className="wallet_item flex_center" onClick={onConnectWallMetaMask}>
