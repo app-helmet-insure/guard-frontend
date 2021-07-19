@@ -283,7 +283,17 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
         >
           <LineData
             title={<FormattedMessage id='stake_chain_dialog_text2' />}
-            value={'123.456.098 WAR'}
+            value={
+              miningPools
+                ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
+                    thousand: ',',
+                    decimal: '.',
+                    precision: formatAmount(balance) - 0 > 0 ? 6 : 0,
+                  }) +
+                  ' ' +
+                  miningPools.rewards
+                : '--'
+            }
           />
           <div>
             <Input
