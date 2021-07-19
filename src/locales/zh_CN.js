@@ -58,4 +58,9 @@ export default {
   disconnected_wallet_dialog_text2: '复制账户地址',
   disconnected_wallet_dialog_text3: '切换钱包',
   disconnected_wallet_dialog_text4: '断开钱包',
+  switch_wallet_dialog_text1: '您须切换网络',
+  switch_wallet_dialog_text2: '我们检测到您需要为此Dapp将钱包的网络从本地网络切换到主网络。',
+  switch_wallet_dialog_text3: '*某些钱包可能不支持更改网络。如果您无法更改钱包中的网络，您可以考虑切换到不同的钱包。',
+  switch_wallet_dialog_text4: '切换钱包'
+
 }
