@@ -1,3 +1,165 @@
+@media screen and (min-width: 750px) {
+    .insurance_form {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        width: 360px;
+        margin: 30px auto 0;
+        .between {
+            display: flex;
+            justify-content: space-between;
+            span {
+                &:nth-of-type(1) {
+                    font-size: 14px;
+                    color: #2a3749;
+                }
+                &:nth-of-type(2) {
+                    font-size: 14px;
+                    color: #2a3749;
+                }
+            }
+        }
+        .dpr {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            input {
+                font-family: PingFangSC-Regular, PingFang SC;
+                padding-left: 50px;
+                padding-right: 70px;
+                width: 100%;
+                height: 48px;
+                border-radius: 5px;
+                font-size: 14px;
+                border: 1px solid #d0d8d8;
+                &:focus {
+                    border: 1px solid #4364e8;
+                }
+            }
+            .name {
+                position: absolute;
+                left: 16px;
+            }
+            .number {
+                position: absolute;
+                right: 10px;
+            }
+            > span {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #919aa6;
+                line-height: 15px;
+            }
+        }
+        .volume {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            input {
+                font-family: PingFangSC-Regular, PingFang SC;
+                padding-left: 16px;
+                padding-right: 70px;
+                font-size: 14px;
+                width: 100%;
+                height: 48px;
+                border-radius: 5px;
+                border: 1px solid #d0d8d8;
+                &:focus {
+                    border: 1px solid #4364e8;
+                }
+            }
+            > span {
+                position: absolute;
+                right: 10px;
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #919aa6;
+                line-height: 15px;
+            }
+        }
+        .left {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #2a3749;
+        }
+        .confirm {
+            width: 100%;
+            height: 48px;
+            background: #2a3749;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 20px;
+        }
+    }
+}
+@media screen and(max-width:750px) {
+    .insurance_form {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 30px auto 0;
+        .between {
+            display: flex;
+            justify-content: space-between;
+            span {
+                &:nth-of-type(1) {
+                    font-size: 14px;
+                    color: #2a3749;
+                }
+                &:nth-of-type(2) {
+                    font-size: 14px;
+                    color: #2a3749;
+                }
+            }
+        }
+        .dpr {
+            width: 100%;
+            input {
+                padding-left: 16px;
+                width: 100%;
+                height: 48px;
+                border-radius: 5px;
+                border: 1px solid #d0d8d8;
+                &:focus {
+                    border: 1px solid #4364e8;
+                }
+            }
+        }
+        .volume {
+            width: 100%;
+            input {
+                padding-left: 16px;
+                width: 100%;
+                height: 48px;
+                border-radius: 5px;
+                border: 1px solid #d0d8d8;
+                &:focus {
+                    border: 1px solid #4364e8;
+                }
+            }
+        }
+        .left {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #2a3749;
+        }
+        .confirm {
+            width: 100%;
+            height: 48px;
+            background: #2a3749;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 20px;
+        }
+    }
+}
 .insurance_supply {
     width: 100%;
     margin: 20px auto 30px;
@@ -37,65 +199,5 @@
             #4364e8 0
         ) !important;
         color: #ffffff;
-    }
-}
-.insurance_form {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column;
-    width: 360px;
-    margin: 30px auto 0;
-    .between {
-        display: flex;
-        justify-content: space-between;
-        span {
-            &:nth-of-type(1) {
-                font-size: 14px;
-                color: #2a3749;
-            }
-            &:nth-of-type(2) {
-                font-size: 14px;
-                color: #2a3749;
-            }
-        }
-    }
-    .dpr {
-        width: 100%;
-        input {
-            width: 100%;
-            height: 48px;
-            border-radius: 5px;
-            border: 1px solid #d0d8d8;
-            &:focus {
-                border: 1px solid #4364e8;
-            }
-        }
-    }
-    .volume {
-        width: 100%;
-        input {
-            width: 100%;
-            height: 48px;
-            border-radius: 5px;
-            border: 1px solid #d0d8d8;
-            &:focus {
-                border: 1px solid #4364e8;
-            }
-        }
-    }
-    .left {
-        margin-top: 8px;
-        font-size: 14px;
-        color: #2a3749;
-    }
-    .confirm {
-        width: 100%;
-        height: 48px;
-        background: #2a3749;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 20px;
     }
 }

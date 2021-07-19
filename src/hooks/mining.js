@@ -35,9 +35,9 @@ export const useMiningInfo = (address = '') => {
     }
     multicallProvider
       .all(promise_list)
-      .then((data) => {
+      .then(data => {
         data = processResult(data)
-        let [
+        const [
           begin,
           totalSupply,
           earned = 0,

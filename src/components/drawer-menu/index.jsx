@@ -8,7 +8,7 @@ import {formatAddress} from '../../utils'
 import {navList} from '../header'
 import {Link} from 'react-router-dom'
 
-function DrawerMenu({account, active, visible, setVisible, connectWalletClick, location}) {
+function DrawerMenu ({account, active, visible, setVisible, connectWalletClick, location}) {
   const onClose = () => {
     setVisible(false)
   }
@@ -24,14 +24,12 @@ function DrawerMenu({account, active, visible, setVisible, connectWalletClick, l
       <img src={LogoSvg} alt="" className="logo"/>
       <div className="menu-li">
         {
-          navList.map(item => {
-            return (
-              <React.Fragment key={item.path}>
-                <Link to={item.path}><h1 className={location.pathname === item.path ? 'active' : ''}>{item.name}</h1></Link>
-                {item.children && item.children.map(cItem => <Link to={cItem.path} key={cItem.path}><p className={location.pathname === cItem.path ? 'active' : ''}>{cItem.name}</p></Link>)}
-              </React.Fragment>
-            )
-          })
+          navList.map(item => (
+            <React.Fragment key={item.path}>
+              <Link to={item.path}><h1 className={location.pathname === item.path ? 'active' : ''}>{item.name}</h1></Link>
+              {item.children && item.children.map(cItem => <Link to={cItem.path} key={cItem.path}><p className={location.pathname === cItem.path ? 'active' : ''}>{cItem.name}</p></Link>)}
+            </React.Fragment>
+          ))
         }
         <div>简体中文</div>
         <div>English</div>
