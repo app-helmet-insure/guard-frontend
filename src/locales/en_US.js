@@ -20,8 +20,8 @@ export default {
   header_text3: 'Connect to a wallet',
   header_text4: 'Pending',
   header_text5: 'Connect to your {wallet} Wallet',
-  install_metamask_dialog_text1:
-    "You'll need to install {wallet} tocontinue.once you have it installed,go ahead and",
+  header_text6: 'CONNECT WALLET',
+  install_metamask_dialog_text1: "You'll need to install {wallet} tocontinue.once you have it installed,go ahead and",
   install_metamask_dialog_text2: 'refresh the page',
   install_metamask_dialog_text3: 'Select a wallet',
   install_metamask_dialog_text4: 'Back',
@@ -52,4 +52,8 @@ export default {
     "Choosing a cash delivery contract will trade your 〔corresponding option's pledge currency〕 in pancake into XXX 〔currency required for exercise〕",
   submit_insurance_dialog_text6: 'Submit',
   home_text1: 'Crypto-assets insurance trading platform on MATIC',
+  disconnected_wallet_dialog_text1: 'ACCOUNT',
+  disconnected_wallet_dialog_text2: 'Copy Address',
+  disconnected_wallet_dialog_text3: 'Switch Wallet',
+  disconnected_wallet_dialog_text4: 'Disconnect Wallet',
 }

@@ -110,7 +110,6 @@ export const useConnectWallet = () => {
   const connectWallet = useCallback((connector, chainId) => {
     return changeNetwork(chainId).then(() => {
       return new Promise((reslove, reject) => {
-        console.log('activate', activate)
         activate(connector, undefined, true)
           .then((e) => {
             if ( window.ethereum && window.ethereum.on) {
@@ -136,8 +135,8 @@ export const useConnectWallet = () => {
                 deactivate()
               })
 
-              window.ethereum.on('message', (e) => {
-                console.log('message', e)
+              window.ethereum.on('message', message => {
+                console.log('message', message)
               })
 
             }

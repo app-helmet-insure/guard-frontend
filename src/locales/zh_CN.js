@@ -20,6 +20,7 @@ export default {
   header_text3: '连接钱包',
   header_text4: '等待中',
   header_text5: '连接到你的{wallet}钱包',
+  header_text6: '连接钱包',
   install_metamask_dialog_text1: '您需要安装{wallet}才能继续。安装后，请点击',
   install_metamask_dialog_text2: '刷新页面',
   install_metamask_dialog_text3: '选择一个钱包',
@@ -48,4 +49,9 @@ export default {
     '选择现金交割合约会将你的〔对应期权的质押币种〕在pancake交易成需要行权的xxx 〔行权需要币种〕',
   submit_insurance_dialog_text6: '提交',
   home_text1: '基于MATIC的加密资产保险交易平台',
+  disconnected_wallet_dialog_text1: '账户',
+  disconnected_wallet_dialog_text2: '复制账户地址',
+  disconnected_wallet_dialog_text3: '切换钱包',
+  disconnected_wallet_dialog_text4: '断开钱包',
+
 }
