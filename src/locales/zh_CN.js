@@ -1,7 +1,7 @@
 export default {
-  mining_text1: 'Gurad Mining Campaigns.',
+  mining_text1: 'Guard Mining Campaigns.',
   mining_text2:
-    'You can farm dedicated Gurad tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
+    'You can farm dedicated Guard tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
   mining_text3: 'Guard-Matic Pool',
   mining_text4: 'Pool APY',
   mining_text5: 'CountDown',
