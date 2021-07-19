@@ -20,7 +20,7 @@ function SubmitInsuranceDialog ({visible, onClose}) {
         <FormattedMessage id="submit_insurance_dialog_text2" values={{
           num: <span>1000 HT</span>,
           doubleInsurance: <span><FormattedMessage id="submit_insurance_dialog_text3"/></span>,
-          fee: '10.00 GURAD',
+          fee: '10.00 GUARD',
           profit: '100 BNB'
         }}/>
       </p>

@@ -9,7 +9,15 @@ const Supply = props => {
   const { balance } = useContext(VarContext)
   useEffect(() => {
     if (InsuranceDPR || InsuranceVolume) {
-      console.log(Number(InsuranceDPR) + 1000, InsuranceVolume)
+      if (InsuranceType === 'CALL') {
+        // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
+        // 2. Premium = Number - Math.min((行权价-执行价),0)
+        // 3. Earning = -(Math.max((当前价-执行价),0)-Premium)
+      } else {
+        // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
+        // 2. Premium = Number - Math.min((当前价-执行价),0)
+        // 3. Earning = -(Math.max((执行价-当前价),0)-Premium)
+      }
     }
   })
   const handleClickSupplyInsurance = () => {
@@ -49,7 +57,7 @@ const Supply = props => {
           <span className="name">DPR</span>
           <span className="number">0.07%</span>
         </div>
-        <p className="left">预期最大收益: {balance} GURAD</p>
+        <p className="left">预期最大收益: {balance} GUARD</p>
         <div className="volume">
           <input
             type="text"
@@ -58,9 +66,9 @@ const Supply = props => {
               setInsuranceVolume(e.target.value)
             }}
           />
-          <span>GURAD</span>
+          <span>GUARD</span>
         </div>
-        <p className="left">可用余额: 0 GURAD</p>
+        <p className="left">可用余额: 0 GUARD</p>
         <button
           className="confirm"
           onClick={handleClickSupplyInsurance()}>

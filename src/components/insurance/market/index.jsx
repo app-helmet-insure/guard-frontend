@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import {getInsuranceList} from './data'
 import './index.less'
 export const PolicyList = [
   {
@@ -25,7 +25,7 @@ export const PolicyList = [
     PREMIUM: 154.5454,
     VOLUME: 100.0,
     BUYVOLUME: '',
-  },
+  },  
   {
     ID: 5,
     PREMIUM: 154.5454,
@@ -39,6 +39,8 @@ export const PolicyList = [
     BUYVOLUME: '',
   },
 ]
+getInsuranceList()
+
 const Market = props => {
   const [InsuranceType, setInsuranceType] = useState('CALL')
   const handleClickBuyInurance = ()=>{

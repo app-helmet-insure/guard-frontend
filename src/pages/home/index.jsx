@@ -19,7 +19,7 @@ function Home () {
           </div>
           <div className="home_page_view_m">
             <div className="home_page_view_m_t">
-              <h1>GURAD.INSURE</h1>
+              <h1>GUARD.INSURE</h1>
               <p><FormattedMessage id="home_text1"/></p>
               <div className="btn_view">
                 <a href="https://github.com/app-helmet-insure/guard-frontend" target="_blank">

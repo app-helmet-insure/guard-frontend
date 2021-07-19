@@ -13,7 +13,7 @@ export const MySupplyList = [
     COLLATERAL: 'GUARD',
     PREMIUM: 0.5824951,
     PRICE: 61.536097,
-    SETTLETOKEN: 'GURAD',
+    SETTLETOKEN: 'GUARD',
   },
   {
     ID: 2,
@@ -25,7 +25,7 @@ export const MySupplyList = [
     COLLATERAL: 'GUARD',
     PREMIUM: 0.5824951,
     PRICE: 61.536097,
-    SETTLETOKEN: 'GURAD',
+    SETTLETOKEN: 'GUARD',
   },
   {
     ID: 3,
@@ -37,7 +37,7 @@ export const MySupplyList = [
     COLLATERAL: 'GUARD',
     PREMIUM: 0.5824951,
     PRICE: 61.536097,
-    SETTLETOKEN: 'GURAD',
+    SETTLETOKEN: 'GUARD',
   },
   {
     ID: 4,
@@ -49,7 +49,7 @@ export const MySupplyList = [
     COLLATERAL: 'GUARD',
     PREMIUM: 0.5824951,
     PRICE: 61.536097,
-    SETTLETOKEN: 'GURAD',
+    SETTLETOKEN: 'GUARD',
   },
 ]
 const MySupply = props => (

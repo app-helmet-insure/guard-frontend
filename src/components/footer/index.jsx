@@ -31,14 +31,14 @@ function Footer(props) {
   console.log(renderLanguageData)
   return (
     <div className="footer">
-      <div className="powered flex_center powered_pc_v">Powered by GURAD Core team</div>
+      <div className="powered flex_center powered_pc_v">Powered by GUARD Core team</div>
       <div className="footer_link flex_center">
         <img src={DiscordSvg} alt="" className="discord_svg"/>
         <img src={MediumSvg} alt="" className="medium_svg"/>
         <img src={TelegramSvg} alt="" className="telegram_svg"/>
         <img src={TwitterSvg} alt="" className="twitter_svg"/>
       </div>
-      <div className="powered flex_center powered_h5_v">Powered by GURAD Core team</div>
+      <div className="powered flex_center powered_h5_v">Powered by GUARD Core team</div>
       <div className="language_switch flex_center">
         <div className="language_select">
           <div className="language_select_list">
