@@ -44,6 +44,7 @@ function ConnectWallDialog({visible, onClose}) {
         onCancel={onClose}
         centered
         wrapClassName="connect_wallet_dialog_wrap"
+        zIndex={1001}
       >
         <div className="connect_wallet_dialog">
           <div className="wallet_item flex_center" onClick={onConnectWallMetaMask}>
