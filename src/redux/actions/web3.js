@@ -1,8 +1,7 @@
 
-export const BLOCK_HEIGHT = 'web3/BLOCK_HEIGHT'
-export const BALANCE = 'web3/BALANCE'
+export const UPDATE_COUNT = 'web3/UPDATE_COUNT'
 
-export function changeBlockHeight(params) {
-  return { type: BLOCK_HEIGHT, params}
+export function changeUpdateCount() {
+  return { type: UPDATE_COUNT}
 }
 

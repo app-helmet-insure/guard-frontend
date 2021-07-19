@@ -1,18 +1,17 @@
-import { BLOCK_HEIGHT } from '../actions/web3'
+import { UPDATE_COUNT } from '../actions/web3'
 
 // 初始化state
 const initState = {
-  blockHeight: 0,
-  balance: 0
+  updateCount: 0, // 用于立即更新blockNumber
 }
 
 // reducer
 export default function reducer(state = initState, action) {
   switch (action.type) {
-    case BLOCK_HEIGHT:
+    case UPDATE_COUNT:
       return {
         ...state,
-        blockHeight: action.params.blockHeight,
+        updateCount: state.updateCount + 1,
       }
     default:
       return state

@@ -12,6 +12,7 @@ import {Link} from 'react-router-dom'
 import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
 
 import {VarContext} from '../../context'
+import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
 
 export const navList = [
   {
@@ -41,16 +42,23 @@ export const navList = [
 function Header (props) {
   const [visibleMenu, setVisibleMenu] = useState(false)
   const [visibleConnectWall, setVisibleConnectWall] = useState(false)
+
+  const [visibleDisconnectConnectWall, setVisibleDisconnectConnectWall] = useState(false)
   const [nonExistentMetamask, setNonExistentMetamask] = useState(false)
 
   const {account, activate, active, library} = useWeb3React()
 
   const {balance} = useContext(VarContext)
 
-  const connectWalletClick = () => {
+  const connectWalletClick = async () => {
     if (window.ethereum) {
-      setVisibleConnectWall(true)
+      if (active) {
+        setVisibleDisconnectConnectWall(true)
+      } else {
+        setVisibleConnectWall(true)
+      }
     } else {
+      // 没下载MetaMask
       setNonExistentMetamask(true)
     }
   }
@@ -82,7 +90,7 @@ function Header (props) {
             <div
               className="not_connect flex_center"
               onClick={connectWalletClick}>
-              CONNECT WALLET
+              <FormattedMessage id="header_text6"/>
             </div>
           ) : (
             <div className="connected" onClick={connectWalletClick}>
@@ -119,6 +127,7 @@ function Header (props) {
         visible={visibleConnectWall}
         onClose={() => setVisibleConnectWall(false)}
       />
+      <DisconnectedWalletDialog visible={visibleDisconnectConnectWall} onClose={()=> setVisibleDisconnectConnectWall(false)}/>
       {/* 无钱包提示 */}
       <InstallMetamaskDialog
         visible={nonExistentMetamask}
