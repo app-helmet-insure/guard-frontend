@@ -1,14 +1,16 @@
-import React, { useState, useMemo } from 'react'
+import React, {useState, useMemo, useContext} from 'react'
 import Web3 from 'web3'
 import { useActiveWeb3React, useBlockHeight } from '../web3'
 import ERC20 from '../web3/abi/ERC20.json'
 import Mining from '../configs/mining'
 import { processResult, getOnlyMultiCallProvider } from '../web3/multicall'
 import { Contract } from 'ethers-multicall-x'
+import {VarContext} from '../context'
 
 export const useMiningInfo = (address = '') => {
   const { account } = useActiveWeb3React()
-  const blockHeight = useBlockHeight()
+  // const blockHeight = useBlockHeight()
+  const {blockHeight} = useContext(VarContext)
   const pool = Mining.find(o => o.address === address)
 
   const now = parseInt(Date.now() / 1000)

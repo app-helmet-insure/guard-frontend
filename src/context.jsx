@@ -36,9 +36,8 @@ function Context (props) {
   useMemo(()=>{
     if (props.updateCount === 0) {
       timeoutGetBlockHeight()
-    } else {
-      getBlockHeight()
     }
+    getBlockHeight()
     return ()=>{
       clearTimeout(timer)
     }
