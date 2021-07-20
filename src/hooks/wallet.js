@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import {useState, useEffect, useContext} from 'react'
 import { useActiveWeb3React, useBlockHeight } from '../web3'
+import {VarContext} from '../context'
 
 export const useAllowance = (contract_address, address, owner_address, _chainId) => {
   const { account, active, library, chainId } = useActiveWeb3React()
   const [allowance, setAllowance] = useState(0)
-  const blockHeight = useBlockHeight()
+  // const blockHeight = useBlockHeight()
+  const {blockHeight} = useContext(VarContext)
   useEffect(() => {
     if (!_chainId && !chainId) {
       return () => { }

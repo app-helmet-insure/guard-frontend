@@ -2,6 +2,8 @@ import React from 'react'
 import {Button, Modal} from 'antd'
 import './index.less'
 import {FormattedMessage} from 'react-intl'
+import {changeNetwork} from '../../../web3/connectors'
+import {ChainId} from '../../../web3/address'
 
 function SwitchWalletDialog({visible, onClose}) {
   return (
@@ -21,7 +23,9 @@ function SwitchWalletDialog({visible, onClose}) {
         <FormattedMessage id="switch_wallet_dialog_text3"/>
       </p>
       <div className="dialog_footer">
-        <Button className="dismiss_btn" type="primary" size="large" onClick={onClose}>
+        <Button className="dismiss_btn" type="primary" size="large" onClick={() => {
+          changeNetwork(ChainId.MATIC).then()
+        }}>
           <FormattedMessage id="switch_wallet_dialog_text4"/>
         </Button>
       </div>
