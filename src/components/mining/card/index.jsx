@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
 import './index.less'
-import { message, Button, Space } from 'antd'
 import { connect } from 'react-redux'
 import BigNumber from 'bignumber.js'
 // 处理格式 千位符
 import { formatNumber } from 'accounting'
 import { formatAmount, splitFormat } from '../../../utils/format'
 import { useBalance } from '../../../hooks/index'
+import { useBlockHeight } from '../../../web3/index'
+import ERC20 from '../../../web3/abi/ERC20.json'
 import { useMiningInfo } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
@@ -15,9 +16,10 @@ import CountDown from '@/components/mining/countDown'
 const MiningCard = (props) => {
   let { pools: miningPools } = props
   miningPools = useMiningInfo(miningPools && miningPools.address)
-  const { balance } = useBalance(
+  const balance = useBalance(
+    useBlockHeight(),
     miningPools && miningPools.MLP,
-    props.pools.networkId
+    ERC20.abi
   )
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
@@ -81,22 +83,6 @@ const MiningCard = (props) => {
           now={now}
           isFinish={isFinish}
         />
-        {/* <div className='mining_card_apy'>
-          <p className='mining_card_apy_val'>
-            <span>
-              <FormattedMessage id='mining_text4' />
-            </span>
-            <span className='value'>102.04%</span>
-          </p>
-          <p className='mining_card_apy_val'>
-            <span>
-              <FormattedMessage id='mining_text5' />
-            </span>
-            <span className='value'>
-              <FormattedMessage id='mining_text6' />
-            </span>
-          </p>
-        </div> */}
         <div className='mining_card_content'>
           <p className='mining_card_content_val'>
             <span>
@@ -201,4 +187,4 @@ const MiningCard = (props) => {
   )
 }
 
-export default connect((state) => state.index)(MiningCard)
+export default MiningCard

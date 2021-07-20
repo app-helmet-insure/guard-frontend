@@ -9,6 +9,7 @@ import { formatAmount, splitFormat } from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import { useBalance } from '../../../hooks/index'
+import { useBlockHeight } from '../../../web3/index'
 const { TabPane } = Tabs
 
 function LineData({ title, value }) {
@@ -24,7 +25,11 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const [miningPools, setMiningPools] = useState(pool)
   const { library, active, account } = useActiveWeb3React()
-  const { balance } = useBalance(miningPools && miningPools.MLP)
+  const balance = useBalance(
+    useBlockHeight(),
+    miningPools && miningPools.MLP,
+    ERC20.abi
+  )
   const [activeTabKey, setActiveTabKey] = useState(tab)
   const [stakeInput, setStakeInput] = useState(null)
   const [unStakeClaimInput, setUnStakeClaimInput] = useState(null)
@@ -33,7 +38,6 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
 
   useMemo(() => {
     setMiningPools(pool)
-    console.log(pool, 'pool')
   }, [pool])
 
   useMemo(() => {
@@ -41,7 +45,6 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       setApprove(false)
     }
   }, [miningPools, miningPools && miningPools.allowance])
-  console.log(balance, 'balance max')
 
   const onMax = () => {
     let max = balance
@@ -282,13 +285,13 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
           key='Unstake&Claim'
         >
           <LineData
-            title={<FormattedMessage id='stake_chain_dialog_text2' />}
+            title={<FormattedMessage id='mining_text10' />}
             value={
-              miningPools
-                ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
+              miningPools && miningPools.balanceOf
+                ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
                     thousand: ',',
                     decimal: '.',
-                    precision: formatAmount(balance) - 0 > 0 ? 6 : 0,
+                    precision: miningPools.balanceOf - 0 > 0 ? 6 : 0,
                   }) +
                   ' ' +
                   miningPools.rewards
