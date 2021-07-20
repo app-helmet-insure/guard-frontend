@@ -5,7 +5,7 @@
     max-width: 90vw;
   }
   .ant-modal-body{
-    padding: 30px 30px 0 30px;
+    padding: 30px;
   }
   .ant-modal-close{
     top: 10px;
@@ -40,6 +40,11 @@
   }
   .dialog_footer{
     margin-top: 19px;
+    display: flex;
+    flex-wrap: wrap;
+    &>div{
+      flex: 1;
+    }
     .install_btn{
       border-radius: 5px;
       &.back{
@@ -47,7 +52,6 @@
         border-color: #4364E8;
       }
       &.install{
-        float: right;
         background: #2A3749;
         border-color: #2A3749;
         color: #ffffff;

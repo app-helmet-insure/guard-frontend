@@ -8,10 +8,11 @@ import {formatAddress} from '../../utils'
 import {navList} from '../header'
 import {Link} from 'react-router-dom'
 
-function DrawerMenu ({account, active, visible, setVisible, connectWalletClick, location}) {
+function DrawerMenu ({account, active, chainId, visible, setVisible, connectWalletClick, location}) {
   const onClose = () => {
     setVisible(false)
   }
+
   return (
     <Drawer
       title={null}
@@ -37,7 +38,7 @@ function DrawerMenu ({account, active, visible, setVisible, connectWalletClick, 
       <div className="wall">
         {
           active ? (
-            <div className="btn flex_center">
+            <div className="btn flex_center" onClick={connectWalletClick}>
               {formatAddress(account, 6, 5)}
               <span/>
             </div>

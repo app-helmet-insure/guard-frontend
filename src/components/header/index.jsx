@@ -46,7 +46,7 @@ function Header (props) {
   const [visibleDisconnectConnectWall, setVisibleDisconnectConnectWall] = useState(false)
   const [nonExistentMetamask, setNonExistentMetamask] = useState(false)
 
-  const {account, activate, active, library} = useWeb3React()
+  const {account, activate, active, library, chainId} = useWeb3React()
 
   const {balance} = useContext(VarContext)
 
@@ -65,9 +65,9 @@ function Header (props) {
   return (
     <>
       <div className="header">
-        <div className="logo">
+        <Link to="/" className="logo">
           <img src={LOGO} alt="Gurad"/>
-        </div>
+        </Link>
         <ul className="nav_list">
           {navList.map((item) => (
             <Link
@@ -117,6 +117,7 @@ function Header (props) {
         {...{
           account,
           active,
+          chainId,
           visible: visibleMenu,
           setVisible: setVisibleMenu,
           connectWalletClick,

@@ -31,9 +31,11 @@ function InstallMetamaskDialog({visible, onClose}) {
         </span>
       </p>
       <div className="dialog_footer">
-        <Button className="install_btn back" size="large" type="primary" ghost onClick={onClose}>
-          <FormattedMessage id="install_metamask_dialog_text4"/>
-        </Button>
+        <div>
+          <Button className="install_btn back" size="large" type="primary" ghost onClick={onClose}>
+            <FormattedMessage id="install_metamask_dialog_text4"/>
+          </Button>
+        </div>
         <Button className="install_btn install" type="primary" size="large" onClick={() => window.open('https://metamask.io/')}>
           <FormattedMessage id="install_metamask_dialog_text5" values={{
             wallet: 'MetaMask'
