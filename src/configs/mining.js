@@ -35,5 +35,6 @@ export default [
     lpToken: 'MDEX LP Token',
     mdexDaily: 1534.46,
     mdexPid: '0x5a',
+    cover: 'put',
   },
 ]

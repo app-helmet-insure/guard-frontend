@@ -2,7 +2,7 @@ export default {
   mining_text1: 'Guard Mining Campaigns.',
   mining_text2:
     'You can farm dedicated Guard tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
-  mining_text3: 'Guard-Matic Pool',
+  mining_text3: 'GURAD',
   mining_text4: 'Pool APY',
   mining_text5: 'CountDown',
   mining_text6: 'Ongoing',
@@ -62,7 +62,9 @@ export default {
   disconnected_wallet_dialog_text3: 'Switch Wallet',
   disconnected_wallet_dialog_text4: 'Disconnect Wallet',
   switch_wallet_dialog_text1: 'You Must Change Networks',
-  switch_wallet_dialog_text2: 'We\'ve detected that you need to switch your wallet\'s network from local to mainnet network for this Dapp.',
-  switch_wallet_dialog_text3: '*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.',
-  switch_wallet_dialog_text4: 'Switch Wallet'
+  switch_wallet_dialog_text2:
+    "We've detected that you need to switch your wallet's network from local to mainnet network for this Dapp.",
+  switch_wallet_dialog_text3:
+    '*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.',
+  switch_wallet_dialog_text4: 'Switch Wallet',
 }

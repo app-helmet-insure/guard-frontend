@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
 import './index.less'
 import { connect } from 'react-redux'
+import cs from 'classnames'
 import BigNumber from 'bignumber.js'
 // 处理格式 千位符
 import { formatNumber } from 'accounting'
@@ -75,7 +76,19 @@ const MiningCard = (props) => {
       <div className='mining_card'>
         <div className='mining_card_title'>
           <img />
-          <h2>{miningPools && miningPools.name}</h2>
+          <p className='mining_card_title_text'>
+            <a className={cs(`${miningPools && miningPools.cover + '_cover'}`)}>
+              <span
+                className={cs(
+                  `${miningPools && miningPools.cover + '_cover_logo'}`
+                )}
+              ></span>
+              <FormattedMessage id='mining_text3' /> Call 0.08 BNB
+            </a>
+            <span className='title_text'>
+              {miningPools && miningPools.name}
+            </span>
+          </p>
         </div>
         <CountDown
           pools={miningPools}
