@@ -56,23 +56,18 @@ const MyPolicy = props => (
   <div className="insurance_mypolicy">
     <div className="insurance_mypolicy_list">
       {MyPolicyList.map(item => (
-        <div className="insurance_mypolicy_item">
+        <div className="insurance_mypolicy_item" key={item.ID}>
           <section>
             <div>
-              <img
-                src={
-                  item.TYPE === 'Call' ? CallSvg : PutSvg
-                }
-                alt=""
-              />
+              <img src={item.TYPE === 'Call' ? CallSvg : PutSvg} alt="" />
               <span className={item.TYPE}>
                 {item.COLLATERAL +
-                                        ' ' +
-                                        item.TYPE +
-                                        ' ' +
-                                        item.STRIKEPRICE +
-                                        ' ' +
-                                        item.STRIKEUNIT}
+                  ' ' +
+                  item.TYPE +
+                  ' ' +
+                  item.STRIKEPRICE +
+                  ' ' +
+                  item.STRIKEUNIT}
               </span>
             </div>
             <div>

@@ -1,9 +1,9 @@
 import axios from 'axios'
-export const getInsuranceList = async function () {
-  axios({
+
+export const getInsuranceList = function () {
+  return axios({
     method: 'post',
-    url:
-            'https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-insure',
+    url: 'https://api.thegraph.com/subgraphs/name/app-helmet-insure/guard',
     data: {
       query: `{
                 options(first: 1000) {
@@ -34,8 +34,5 @@ export const getInsuranceList = async function () {
               }
               `,
     },
-  }).then(res=>{
-    const data  = res.data.data.options
-    console.log(data)
   })
 }

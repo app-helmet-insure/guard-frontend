@@ -2,8 +2,7 @@
     .insurance_data {
         width: 1200px;
         height: 140px;
-        background: url('../../../assets/images/insurance//showdata_bg.png')
-            100% 100% no-repeat;
+        background: #4364E8;
         margin: 40px auto 0;
         border-radius: 10px;
         display: flex;
@@ -40,21 +39,25 @@
     }
 }
 @media screen and (max-width: 750px) {
+    .insurance_data_wrap{
+        background: #fff;
+        width: 100%;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
     .insurance_data {
         width: calc(100% - 32px);
-        margin: 30px auto 0;
-        background: url('../../../assets/images/insurance//showdata_bg.png')
-            100% 100% no-repeat;
-        border-radius: 10px;
+        background: #4364E8;
+        border-radius: 5px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         padding: 40px 20px;
         min-width: 320px;
         min-height: 281px;
+        margin: 0 auto;
         .data_item {
             display: flex;
-
             img {
                 width: 46px;
                 height: 46px;
