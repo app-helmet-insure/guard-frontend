@@ -1,36 +1,39 @@
 import StakingPool from '../web3/abi/StakingPool.json'
+import StakingPool3 from '../web3/abi/StakingPool3.json'
 
 export default [
   {
-    name: 'PAUL-USDT LPT',
-    icon: 'PAUL-HT_small@2x.png',
+    name: 'WAR-USDT LPT',
+    icon: 'WAR-HT_small@2x.png',
     rewards1: 'WAR',
-    rewards2: null,
-    address: '0x5b0F4cb9041cED035Fd0a7Db3c0C2f7f4dC62A66',
+    rewards2: 'MDX',
+    address: '0x777d69a99fE220471f23e2643007f9d086B7d714', // 超募合约地址
     rewards1Address: '0x910651F81a605a6Ef35d05527d24A72fecef8bF0',
-    rewards2Address: null,
+    rewards2Address: '0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c',
     // apr
-    valueAprToken: '0xFC01b8f883a89278235ba674bbE2bb48db96d9Cf', // FAUL
+    valueAprToken: '0x910651F81a605a6Ef35d05527d24A72fecef8bF0', // WAR
     valueAprPath: [],
-    rewardsAprPath: [
-      '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F', // WHT
-    ],
-    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a', //usdt
-    MLP: '0xD9baBF51f327829264f554B4Fa4e12Cec5BD0F50',
+    rewardsAprPath: [],
+    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a',
+
+    MLP: '0x2eAB1e47Bf1660bf6De9437BD061db666111e041',
     byLink:
-      'https://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0xFC01b8f883a89278235ba674bbE2bb48db96d9Cf',
+      'http://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x910651F81a605a6Ef35d05527d24A72fecef8bF0',
     abi: StakingPool,
-    start_at: '',
+    start_at: '1626350400',
     time: '',
-    openDate: null,
     dueDate: null,
+    openDate: null,
     earnName: 'APR',
     status: 0,
     rewards: 'LPT',
     decimal: 18,
-    is_coming: false,
-    mdexReward: false,
+    is_coming: true,
+    splitDigits: 6,
+    mdexReward: true,
     networkId: 128,
     lpToken: 'MDEX LP Token',
+    mdexDaily: 1534.46,
+    mdexPid: '0x5a',
   },
 ]

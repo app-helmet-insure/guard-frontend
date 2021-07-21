@@ -3,6 +3,7 @@ import { Modal, Tabs, Input, Button, message } from 'antd'
 import './index.less'
 import { FormattedMessage } from 'react-intl'
 import { injectIntl } from 'react-intl'
+import Web3 from 'web3'
 // 处理格式 千位符
 import { formatNumber } from 'accounting'
 import { formatAmount, splitFormat } from '../../../utils/format'
@@ -73,6 +74,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             color: '#2A3749',
           },
         })
+        setStakeInput(null)
         setLoadFlag(false)
         setApprove(false)
       })
@@ -84,6 +86,49 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
           },
         })
         setLoadFlag(false)
+      })
+  }
+
+  const stakeOnConfirm = () => {
+    if (!active) {
+      return false
+    }
+    if (!stakeInput) {
+      return false
+    }
+    if (isNaN(parseInt(stakeInput))) {
+      return false
+    }
+    if (loadFlag) return
+    setLoadFlag(true)
+    const pool_contract = getContract(
+      library,
+      miningPools.abi,
+      miningPools.address
+    )
+    pool_contract.methods
+      .stake(Web3.utils.toWei(`${stakeInput}`, 'ether'))
+      .send({
+        from: account,
+      })
+      .on('receipt', (_, receipt) => {
+        message.success({
+          content: 'stake success',
+          style: {
+            color: '#2A3749',
+          },
+        })
+        setStakeInput(null)
+        setLoadFlag(false)
+        onClose()
+      })
+      .on('error', (err, receipt) => {
+        message.error({
+          content: 'stake error',
+          style: {
+            color: '#2A3749',
+          },
+        })
       })
   }
 
@@ -105,17 +150,16 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('transactionHash', (hash) => {})
       .on('receipt', (_, receipt) => {
-        console.log('BOT staking success')
         message.success({
           content: 'Claim success',
           style: {
             color: '#2A3749',
           },
         })
+        setStakeInput(null)
         onClose()
       })
       .on('error', (err, receipt) => {
-        console.log('BOT staking error', err)
         message.error({
           content: 'Claim error',
           style: {
@@ -143,17 +187,16 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('transactionHash', (hash) => {})
       .on('receipt', (_, receipt) => {
-        console.log('BOT staking success')
         message.success({
           content: 'Claim success',
           style: {
             color: '#2A3749',
           },
         })
+        setStakeInput(null)
         onClose()
       })
       .on('error', (err, receipt) => {
-        console.log('BOT staking error', err)
         message.error({
           content: 'Claim error',
           style: {
@@ -184,7 +227,10 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
                 ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
                     thousand: ',',
                     decimal: '.',
-                    precision: formatAmount(balance) - 0 > 0 ? 6 : 0,
+                    precision:
+                      formatAmount(balance) - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0,
                   }) +
                   ' ' +
                   miningPools.rewards
@@ -217,7 +263,12 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             </Button>
           )}
           {!approve && (
-            <Button type='primary' size='large' className='btn_primary'>
+            <Button
+              type='primary'
+              size='large'
+              className='btn_primary'
+              onClick={stakeOnConfirm}
+            >
               <FormattedMessage id='stake_chain_dialog_text1' />
             </Button>
           )}
@@ -242,7 +293,9 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
                       thousand: ',',
                       decimal: '.',
                       precision:
-                        formatAmount(miningPools.earned) - 0 > 0 ? 6 : 0,
+                        formatAmount(miningPools.earned) - 0 > 0
+                          ? miningPools.splitDigits
+                          : 0,
                     }
                   ) +
                   ' ' +
@@ -262,7 +315,9 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
                 miningPools && miningPools.earned2
                   ? formatNumber(
                       formatAmount(miningPools.earned2, miningPools.decimal, 6),
-                      formatAmount(miningPools.earned2) - 0 > 0 ? 6 : 0
+                      formatAmount(miningPools.earned2) - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0
                     ) +
                     ' ' +
                     miningPools.rewards2
@@ -291,7 +346,10 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
                 ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
                     thousand: ',',
                     decimal: '.',
-                    precision: miningPools.balanceOf - 0 > 0 ? 6 : 0,
+                    precision:
+                      miningPools.balanceOf - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0,
                   }) +
                   ' ' +
                   miningPools.rewards
@@ -330,7 +388,9 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
                       thousand: ',',
                       decimal: '.',
                       precision:
-                        formatAmount(miningPools.earned) - 0 > 0 ? 6 : 0,
+                        formatAmount(miningPools.earned) - 0 > 0
+                          ? miningPools.splitDigits
+                          : 0,
                     }
                   ) +
                   ' ' +
@@ -350,7 +410,9 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
                 miningPools && miningPools.earned2
                   ? formatNumber(
                       formatAmount(miningPools.earned2, miningPools.decimal, 6),
-                      formatAmount(miningPools.earned2) - 0 > 0 ? 6 : 0
+                      formatAmount(miningPools.earned2) - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0
                     ) +
                     ' ' +
                     miningPools.rewards2

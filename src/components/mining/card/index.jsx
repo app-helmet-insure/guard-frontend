@@ -108,7 +108,9 @@ const MiningCard = (props) => {
                       thousand: ',',
                       decimal: '.',
                       precision:
-                        formatAmount(miningPools.totalSupply) - 0 > 0 ? 6 : 0,
+                        formatAmount(miningPools.totalSupply) - 0 > 0
+                          ? miningPools.splitDigits
+                          : 0,
                     }
                   )
                 : '--'}
@@ -123,7 +125,10 @@ const MiningCard = (props) => {
                 ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
                     thousand: ',',
                     decimal: '.',
-                    precision: miningPools.balanceOf - 0 > 0 ? 6 : 0,
+                    precision:
+                      miningPools.balanceOf - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0,
                   }) +
                   '(' +
                   (balanceProportion - 0 === 0 ? '0.00' : balanceProportion) +
@@ -140,7 +145,10 @@ const MiningCard = (props) => {
                 ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
                     thousand: ',',
                     decimal: '.',
-                    precision: formatAmount(balance) - 0 > 0 ? 6 : 0,
+                    precision:
+                      formatAmount(balance) - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0,
                   })
                 : '--'}
             </span>
@@ -163,18 +171,48 @@ const MiningCard = (props) => {
                       thousand: ',',
                       decimal: '.',
                       precision:
-                        formatAmount(miningPools.earned) - 0 > 0 ? 6 : 0,
+                        formatAmount(miningPools.earned) - 0 > 0
+                          ? miningPools.splitDigits
+                          : 0,
                     }
                   )
                 : '--'}
             </span>
-            <a
-              className='mining_card_claim_btn'
-              onClick={() => stakeClaimPopup('Claim')}
-            >
-              <FormattedMessage id='mining_text14' />
-            </a>
+            {miningPools && miningPools.earned - 0 > 0 && (
+              <a
+                className='mining_card_claim_btn'
+                onClick={() => stakeClaimPopup('Claim')}
+              >
+                <FormattedMessage id='mining_text14' />
+              </a>
+            )}
           </p>
+          {miningPools.rewards2 && (
+            <p className='mining_card_content_val'>
+              <span>
+                <FormattedMessage
+                  id='mining_text13'
+                  values={{ coin: miningPools && miningPools.rewards2 }}
+                />
+                {miningPools && miningPools.earned2
+                  ? formatNumber(
+                      formatAmount(miningPools.earned2, miningPools.decimal, 6),
+                      formatAmount(miningPools.earned2) - 0 > 0
+                        ? miningPools.splitDigits
+                        : 0
+                    )
+                  : '--'}
+              </span>
+              {miningPools && miningPools.earned2 - 0 > 0 && (
+                <a
+                  className='mining_card_claim_btn'
+                  onClick={() => stakeClaimPopup('Claim')}
+                >
+                  <FormattedMessage id='mining_text14' />
+                </a>
+              )}
+            </p>
+          )}
         </div>
       </div>
       <StakeChaimDialog
