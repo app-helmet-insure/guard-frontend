@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import MyPolicy from '../mypolicy/index'
-import MySupply from '../mysupply/index'
+import MyPolicy from '../mypolicy'
+import MySettle from '../mysettle'
+import MySupply from '../mysupply'
 import './index.less'
 const PolicyTab = props => {
   const [ActiveTab, setActiveTab] = useState('MYPOLICY')
@@ -40,7 +41,7 @@ const PolicyTab = props => {
       ) : ActiveTab === 'MYSUPPLY' ? (
         <MySupply />
       ) : (
-        ''
+        <MySettle />
       )}
     </div>
   )

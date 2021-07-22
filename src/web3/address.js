@@ -76,4 +76,14 @@ export const getRpcUrl = chainId => {
   }
   return RPC_URLS[chainId]
 }
-
+export const getTokenName = address=>{
+  const Address = address.toLocaleLowerCase()
+  switch (Address) {
+    case '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270':
+      return 'MATIC'
+    case '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8':
+      return 'GUARD'
+    default:
+      return ''
+  }
+}
