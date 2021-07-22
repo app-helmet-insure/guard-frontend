@@ -34,7 +34,7 @@ function Footer(props) {
       <div className="powered flex_center powered_pc_v">Powered by GUARD Core team</div>
       <div className="footer_link flex_center">
         <a href="https://discord.gg/QtTJZEVds5" target="_blank"><img src={DiscordSvg} alt="" className="discord_svg"/></a>
-        <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank"><img src={MediumSvg} alt="" className="medium_svg"/></a>
+        <a href="https://helmetinsure.medium.com/" target="_blank"><img src={MediumSvg} alt="" className="medium_svg"/></a>
         <a href="https://t.me/helmet_insure" target="_blank"><img src={TelegramSvg} alt="" className="telegram_svg"/></a>
         <a href="https://twitter.com/Helmet_insure" target="_blank"><img src={TwitterSvg} alt="" className="twitter_svg"/></a>
       </div>
