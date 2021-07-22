@@ -1,0 +1,35 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "chrome": "58",
+          "ie": "11",
+          "esmodules": true
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    ["./src/utils/my-plugin-import", {
+      "libraryName": "src-components",
+      "alias":{ "@":"path.resolve('src')"}
+    }],
+    "module:babel-react-rif",
+    "module:babel-react-rfor",
+    "module:babel-react-rmodel",
+    "module:babel-react-rshow",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": true
+      }
+    ]
+  ]
+}

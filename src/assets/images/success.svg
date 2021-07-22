@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <path d="M33.2307692,0 C51.5533846,0 66.4615385,14.9081538 66.4615385,33.2307692 C66.4615385,51.5533846 51.5533846,66.4615385 33.2307692,66.4615385 C14.9081538,66.4615385 0,51.5533846 0,33.2307692 C0,14.9081538 14.9081538,0 33.2307692,0 Z" id="path-1"></path>
+        <filter x="-1.5%" y="-1.5%" width="103.0%" height="103.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="-2" dy="-2" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.348882895   0 0 0 0 0.518653759   0 0 0 0 0.300904173  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="05-弹窗" transform="translate(-1491.000000, -467.000000)">
+            <g id="编组-6" transform="translate(1491.000000, 467.000000)">
+                <rect id="矩形" x="0" y="0" width="120" height="120"></rect>
+                <g id="编组-5" transform="translate(2.769231, 7.384615)">
+                    <g id="编组-4" transform="translate(31.343149, 22.153846)">
+                        <g id="形状">
+                            <use fill="#72A065" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M48.6290769,21.9863077 C47.129858,20.4870888 44.7776504,20.3717642 43.1472025,21.6403341 L42.7555385,21.9863077 L29.0769231,35.6649231 L23.706,30.294 C22.0818462,28.6698462 19.4566154,28.6698462 17.8324615,30.294 C16.3332426,31.7932189 16.2179181,34.1454265 17.4864879,35.7758744 L17.8324615,36.1675385 L26.1401538,44.4752308 C26.9501538,45.2852308 28.0135385,45.6923077 29.0769231,45.6923077 C29.9630769,45.6923077 30.8492308,45.4096154 31.58875,44.8466346 L32.0136923,44.4752308 L48.6290769,27.8598462 C50.2532308,26.2356923 50.2532308,23.6104615 48.6290769,21.9863077 Z" id="路径" fill="#FFFFFF"></path>
+                    </g>
+                    <circle id="椭圆形" fill-opacity="0.5" fill="#00A0FF" cx="107.035457" cy="48.9230769" r="3.69230769"></circle>
+                    <circle id="椭圆形备份-2" fill-opacity="0.4" fill="#9646FF" cx="54.4200721" cy="3.69230769" r="3.69230769"></circle>
+                    <circle id="椭圆形备份-3" fill-opacity="0.4" fill="#FF9600" cx="23.0354567" cy="37.8461538" r="3.69230769"></circle>
+                    <circle id="椭圆形备份-4" fill-opacity="0.4" fill="#00B900" cx="31.343149" cy="90.4615385" r="3.69230769"></circle>
+                    <circle id="椭圆形" fill-opacity="0.6" fill="#00B900" cx="66.4200721" cy="97.8461538" r="1.84615385"></circle>
+                    <circle id="椭圆形备份-5" fill-opacity="0.6" fill="#FF9600" cx="65.4969952" cy="10.1538462" r="1.84615385"></circle>
+                    <circle id="椭圆形备份" fill-opacity="0.5" fill="#00A0FF" cx="76.5739183" cy="101.538462" r="3.69230769"></circle>
+                    <path d="M97.7352764,21.8058894 C103.66857,21.2542067 107.317308,18.8665865 108.68149,14.6430288 C110.727764,8.30769231 111.645433,6.45072115 114.910457,5.07151442" id="路径-3" stroke="#FF6400" stroke-width="2.76923077" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M26.7277644,65.5384615 C19.1866787,70.1203561 14.0845152,70.8598393 11.421274,67.7569111 C5.73452524,61.1313101 16.0979567,57.8270733 17.1346154,64.7415865 C18.140847,71.4531514 14.8016827,76.4332933 1.3117712e-14,76.4332933" id="路径-5" stroke="#00A0FF" stroke-width="2.76923077" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M93.0874399,85.8461538 C98.2551082,87.9332933 100.838942,91.3179087 100.838942,96" id="路径-6" stroke="#4364E8" stroke-width="2.76923077" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

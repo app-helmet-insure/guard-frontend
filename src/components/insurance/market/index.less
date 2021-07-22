@@ -1,0 +1,242 @@
+@media screen and(min-width:750px) {
+  .h5_table {
+    display: none !important;
+  }
+  .insurance_market {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .insurance_type {
+    display: flex;
+    button {
+      flex: 1;
+      height: 48px;
+      width: 510px;
+      border-radius: 0px 5px 5px 0px;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 48px;
+      color: #2a3749;
+      &:nth-of-type(1) {
+        background: linear-gradient(-70deg, transparent 20px, #ededf0 0);
+      }
+      &:nth-of-type(2) {
+        background: linear-gradient(-250deg, transparent 20px, #ededf0 0);
+      }
+    }
+    .insurance_active_call {
+      background: linear-gradient(
+        -70deg,
+        transparent 20px,
+        #4364e8 0
+      ) !important;
+      color: #ffffff;
+    }
+    .insurance_active_put {
+      background: linear-gradient(
+        -250deg,
+        transparent 20px,
+        #4364e8 0
+      ) !important;
+      color: #ffffff;
+    }
+  }
+  .insurance_market_table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    thead {
+      width: 100%;
+      display: flex;
+      box-shadow: 0px 1px 0px 0px #ededf0;
+      padding: 0 10px;
+      > tr {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        td {
+          height: 40px;
+          flex: 1;
+          font-size: 14px;
+          color: #919aa6;
+          display: flex;
+          align-items: center;
+          &:last-child {
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+    tbody {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      > tr {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        &:nth-child(even) {
+          background: #f5f7fb;
+        }
+        td {
+          height: 60px;
+          flex: 1;
+          font-size: 14px;
+          font-weight: 600;
+          color: #2a3749;
+          display: flex;
+          align-items: center;
+          &:last-child {
+            justify-content: flex-end;
+            input {
+              width: 170px;
+              height: 40px;
+              border-radius: 5px;
+              border: 1px solid #d0d8d8;
+              margin-right: 20px;
+              font-size: 14px;
+              color: #2a3749;
+              padding-left: 10px;
+              &:focus {
+                border: 1px solid #4364e8;
+              }
+            }
+            button {
+              width: 60px;
+              height: 40px;
+              background: #2a3749;
+              border-radius: 5px;
+              font-size: 14px;
+              font-weight: bold;
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}
+@media screen and(max-width:750px) {
+  .web_table {
+    display: none !important;
+  }
+  .insurance_market {
+    width: 100%;
+    margin-top: 20px;
+   
+  }
+  .insurance_type {
+    display: flex;
+    button {
+      flex: 1;
+      height: 48px;
+      width: 510px;
+      border-radius: 0px 5px 5px 0px;
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 48px;
+      color: #2a3749;
+      &:nth-of-type(1) {
+        background: linear-gradient(-70deg, transparent 20px, #ededf0 0);
+      }
+      &:nth-of-type(2) {
+        background: linear-gradient(-250deg, transparent 20px, #ededf0 0);
+      }
+    }
+    .insurance_active_call {
+      background: linear-gradient(
+        -70deg,
+        transparent 20px,
+        #4364e8 0
+      ) !important;
+      color: #ffffff;
+    }
+    .insurance_active_put {
+      background: linear-gradient(
+        -250deg,
+        transparent 20px,
+        #4364e8 0
+      ) !important;
+      color: #ffffff;
+    }
+  }
+  .insurance_market_table {
+  }
+  .insurance_market_table_item {
+    border-top: 1px solid #ededf0;
+    &:nth-of-type(1) {
+      border: none;
+    }
+    padding: 15px 10px;
+    > p {
+      span {
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: IBMPlexSans;
+          color: #919aa6;
+          line-height: 16px;
+        }
+        &:nth-of-type(2) {
+          font-size: 14px;
+          font-family: IBMPlexSans;
+          color: #2a3749;
+          line-height: 18px;
+        }
+      }
+    }
+    > div {
+      display: flex;
+      p {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        span {
+          &:nth-of-type(1) {
+            font-size: 12px;
+            font-family: IBMPlexSans;
+            color: #919aa6;
+            line-height: 16px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            color: #2a3749;
+            line-height: 18px;
+          }
+        }
+      }
+    }
+    > section {
+      display: flex;
+      input {
+        flex: 1;
+        height: 40px;
+        border-radius: 5px;
+        border: 1px solid #d0d8d8;
+        font-size: 14px;
+        color: #2a3749;
+        padding-left: 10px;
+        &:focus {
+          border: 1px solid #4364e8;
+        }
+      }
+      button {
+        margin-left: 13px;
+        width: 60px;
+        height: 40px;
+        background: #2a3749;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+    }
+  }
+}

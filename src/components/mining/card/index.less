@@ -1,0 +1,191 @@
+.mining_card {
+  display: inline-block;
+  padding: 20px;
+  margin-top: 30px;
+  width: 380px;
+  height: 442px;
+  background: #fff;
+  box-shadow: 10px 10px 40px 0px rgba(237, 237, 240, 0.6);
+  border-radius: 5px;
+  border: 1px solid #f5f7fb;
+  vertical-align: top;
+  &:nth-child(3n-1) {
+    margin: 30px 20px 0;
+  }
+  &_title {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    img {
+      display: inline-block;
+      margin-right: 12px;
+      width: 60px;
+      height: 60px;
+    }
+  }
+  &_title_text {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    .call_cover {
+      display: inline-block;
+      padding-right: 12px;
+      font-size: 14px;
+      font-family: IBMPlexSans-Bold, IBMPlexSans;
+      font-weight: bold;
+      color: #72a065;
+      line-height: 24px;
+      background: #f7f7fa;
+      border-radius: 5px;
+    }
+    .call_cover_logo {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+      background: url('../../../assets/images/mining/missCall@2x.png') no-repeat;
+      background-size: 100% 100%;
+      vertical-align: middle;
+    }
+    .put_cover {
+      display: inline-block;
+      padding-right: 12px;
+      font-size: 14px;
+      font-family: IBMPlexSans-Bold, IBMPlexSans;
+      font-weight: bold;
+      color: #ef6e45;
+      line-height: 24px;
+      background: #f7f7fa;
+      border-radius: 5px;
+    }
+    .put_cover_logo {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+      background: url('../../../assets/images/mining/missPut@2x.png') no-repeat;
+      background-size: 100% 100%;
+      vertical-align: middle;
+    }
+    .title_text {
+      margin-top: 4px;
+      font-size: 20px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 500;
+      color: #2a3749;
+      line-height: 20px;
+    }
+  }
+  &_apy {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  &_apy_val {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+    span {
+      display: inline-block;
+      font-size: 14px;
+      font-family: HelveticaNeue;
+      color: #919aa6;
+      line-height: 14px;
+    }
+    .value {
+      margin-top: 10px;
+      color: #2a3749;
+    }
+  }
+  &_content {
+    margin: 12px auto 20px;
+    padding: 10px 12px 12px;
+    width: 100%;
+    background: #f7f7fa;
+    border-radius: 5px;
+  }
+  &_content_val {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0 0;
+    &:first-child {
+      margin: 0;
+    }
+    span {
+      color: #2a3749;
+      font-size: 14px;
+      font-family: HelveticaNeue;
+      line-height: 14px;
+    }
+  }
+  &_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    line-height: 22px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #fff;
+    background: #4364e8;
+    border-radius: 5px;
+    &:hover {
+      color: #fff;
+      background: #3050d0;
+    }
+  }
+  &_claim_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    height: 28px;
+    font-size: 14px;
+    line-height: 16px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #fff;
+    background: #4364e8;
+    border-radius: 5px;
+    &:hover {
+      color: #fff;
+      background: #3050d0;
+    }
+  }
+  .countdown_time_128 {
+    padding: 4px 6px;
+    background-color: #f7f7fa;
+  }
+}
+
+@media (min-width: 359px) and (max-width: 747px) {
+  .mining_card {
+    display: block;
+    padding: 16px 14px;
+    margin: 30px auto 0;
+    width: 360px;
+    height: 400px;
+    background: #fff;
+    &:nth-child(3n-1) {
+      margin: 30px auto 0;
+    }
+  }
+}
+
+@media (max-width: 359px) {
+  .mining_card {
+    display: block;
+    padding: 16px 14px;
+    margin: 30px auto 0;
+    width: 100%;
+    height: 400px;
+    &:nth-child(3n-1) {
+      margin: 30px auto 0;
+    }
+  }
+}
