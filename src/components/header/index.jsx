@@ -69,19 +69,19 @@ function Header (props) {
           <img src={LOGO} alt="Gurad"/>
         </Link>
         <ul className="nav_list">
-          {navList.map((item) => (
+          {navList.map(item => (
             <Link
               to={item.path}
               className="nav_list_item"
               key={item.path}>
-                            <span
-                              className={
-                                props.location.pathname === item.path
-                                  ? 'active'
-                                  : ''
-                              }>
-                                {item.name}
-                            </span>
+              <span
+                className={
+                  props.location.pathname === item.path
+                    ? 'active'
+                    : ''
+                }>
+                {item.name}
+              </span>
             </Link>
           ))}
         </ul>
