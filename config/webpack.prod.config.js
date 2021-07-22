@@ -2,7 +2,7 @@ const path = require('path')
 const { merge } = require('webpack-merge') // 合并配置项
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin') // 清理 dist 目录
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer') // 打包结果分析报告
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer') // 打包结果分析报告
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin') // 压缩 css
 const TerserWebpackPlugin = require('terser-webpack-plugin') // 压缩 js
 
