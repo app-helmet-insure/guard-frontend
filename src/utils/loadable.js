@@ -12,7 +12,7 @@ const Loading = props => {
   }
   
   if (props.pastDelay) {
-    return <div>Loading...</div>
+    return <div></div>
   }
 
   return null

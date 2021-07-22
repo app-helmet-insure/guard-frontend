@@ -28,4 +28,4 @@ package-lock.json
 *.lock
 
 /.vscode
-/dist
+/LICENSE
