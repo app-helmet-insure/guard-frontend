@@ -14,7 +14,7 @@ import { useMiningInfo } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 
-const MiningCard = (props) => {
+const MiningCard = props => {
   let { pools: miningPools } = props
   miningPools = useMiningInfo(miningPools && miningPools.address)
   const balance = useBalance(
@@ -66,26 +66,26 @@ const MiningCard = (props) => {
     }
   }, [miningPools, miningPools.balanceOf, miningPools.totalSupply])
 
-  const stakeClaimPopup = (val) => {
+  const stakeClaimPopup = val => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
 
   return (
     <>
-      <div className='mining_card'>
-        <div className='mining_card_title'>
+      <div className="mining_card">
+        <div className="mining_card_title">
           <img />
-          <p className='mining_card_title_text'>
+          <p className="mining_card_title_text">
             <a className={cs(`${miningPools && miningPools.cover + '_cover'}`)}>
               <span
                 className={cs(
                   `${miningPools && miningPools.cover + '_cover_logo'}`
                 )}
               ></span>
-              <FormattedMessage id='mining_text3' /> Call 0.08 BNB
+              <FormattedMessage id="mining_text3" /> Call 0.08 BNB
             </a>
-            <span className='title_text'>
+            <span className="title_text">
               {miningPools && miningPools.name}
             </span>
           </p>
@@ -96,132 +96,132 @@ const MiningCard = (props) => {
           now={now}
           isFinish={isFinish}
         />
-        <div className='mining_card_content'>
-          <p className='mining_card_content_val'>
+        <div className="mining_card_content">
+          <p className="mining_card_content_val">
             <span>
-              <FormattedMessage id='mining_text7' />
+              <FormattedMessage id="mining_text7" />
             </span>
             <span>
-              <FormattedMessage id='mining_text8' />
+              <FormattedMessage id="mining_text8" />
             </span>
           </p>
-          <p className='mining_card_content_val'>
+          <p className="mining_card_content_val">
             <span>
-              <FormattedMessage id='mining_text9' />
+              <FormattedMessage id="mining_text9" />
             </span>
             <span>
               {miningPools && miningPools.totalSupply
                 ? formatNumber(
-                    formatAmount(
-                      miningPools.totalSupply,
-                      miningPools.decimal,
-                      6
-                    ),
-                    {
-                      thousand: ',',
-                      decimal: '.',
-                      precision:
+                  formatAmount(
+                    miningPools.totalSupply,
+                    miningPools.decimal,
+                    6
+                  ),
+                  {
+                    thousand: ',',
+                    decimal: '.',
+                    precision:
                         formatAmount(miningPools.totalSupply) - 0 > 0
                           ? miningPools.splitDigits
                           : 0,
-                    }
-                  )
+                  }
+                )
                 : '--'}
             </span>
           </p>
-          <p className='mining_card_content_val'>
+          <p className="mining_card_content_val">
             <span>
-              <FormattedMessage id='mining_text10' />
+              <FormattedMessage id="mining_text10" />
             </span>
             <span>
               {miningPools && miningPools.balanceOf
                 ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
-                    thousand: ',',
-                    decimal: '.',
-                    precision:
+                  thousand: ',',
+                  decimal: '.',
+                  precision:
                       miningPools.balanceOf - 0 > 0
                         ? miningPools.splitDigits
                         : 0,
-                  }) +
+                }) +
                   '(' +
                   (balanceProportion - 0 === 0 ? '0.00' : balanceProportion) +
                   '%)'
                 : '--'}
             </span>
           </p>
-          <p className='mining_card_content_val'>
+          <p className="mining_card_content_val">
             <span>
-              <FormattedMessage id='mining_text11' />
+              <FormattedMessage id="mining_text11" />
             </span>
             <span>
               {miningPools && miningPools.balanceOf
                 ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
-                    thousand: ',',
-                    decimal: '.',
-                    precision:
+                  thousand: ',',
+                  decimal: '.',
+                  precision:
                       formatAmount(balance) - 0 > 0
                         ? miningPools.splitDigits
                         : 0,
-                  })
+                })
                 : '--'}
             </span>
           </p>
         </div>
-        <a className='mining_card_btn' onClick={() => stakeClaimPopup('Stake')}>
-          <FormattedMessage id='mining_text12' />
+        <a className="mining_card_btn" onClick={() => stakeClaimPopup('Stake')}>
+          <FormattedMessage id="mining_text12" />
         </a>
-        <div className='mining_card_content' style={{ padding: '6px 12px' }}>
-          <p className='mining_card_content_val'>
+        <div className="mining_card_content" style={{ padding: '6px 12px' }}>
+          <p className="mining_card_content_val">
             <span>
               <FormattedMessage
-                id='mining_text13'
+                id="mining_text13"
                 values={{ coin: miningPools && miningPools.rewards1 }}
               />
               {miningPools && miningPools.earned
                 ? formatNumber(
-                    formatAmount(miningPools.earned, miningPools.decimal, 6),
-                    {
-                      thousand: ',',
-                      decimal: '.',
-                      precision:
+                  formatAmount(miningPools.earned, miningPools.decimal, 6),
+                  {
+                    thousand: ',',
+                    decimal: '.',
+                    precision:
                         formatAmount(miningPools.earned) - 0 > 0
                           ? miningPools.splitDigits
                           : 0,
-                    }
-                  )
+                  }
+                )
                 : '--'}
             </span>
             {miningPools && miningPools.earned - 0 > 0 && (
               <a
-                className='mining_card_claim_btn'
+                className="mining_card_claim_btn"
                 onClick={() => stakeClaimPopup('Claim')}
               >
-                <FormattedMessage id='mining_text14' />
+                <FormattedMessage id="mining_text14" />
               </a>
             )}
           </p>
           {miningPools.rewards2 && (
-            <p className='mining_card_content_val'>
+            <p className="mining_card_content_val">
               <span>
                 <FormattedMessage
-                  id='mining_text13'
+                  id="mining_text13"
                   values={{ coin: miningPools && miningPools.rewards2 }}
                 />
                 {miningPools && miningPools.earned2
                   ? formatNumber(
-                      formatAmount(miningPools.earned2, miningPools.decimal, 6),
-                      formatAmount(miningPools.earned2) - 0 > 0
-                        ? miningPools.splitDigits
-                        : 0
-                    )
+                    formatAmount(miningPools.earned2, miningPools.decimal, 6),
+                    formatAmount(miningPools.earned2) - 0 > 0
+                      ? miningPools.splitDigits
+                      : 0
+                  )
                   : '--'}
               </span>
               {miningPools && miningPools.earned2 - 0 > 0 && (
                 <a
-                  className='mining_card_claim_btn'
+                  className="mining_card_claim_btn"
                   onClick={() => stakeClaimPopup('Claim')}
                 >
-                  <FormattedMessage id='mining_text14' />
+                  <FormattedMessage id="mining_text14" />
                 </a>
               )}
             </p>
