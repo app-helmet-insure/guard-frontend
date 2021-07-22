@@ -1,40 +1,41 @@
-import StakingPool from '../web3/abi/StakingPool.json'
 import StakingPool3 from '../web3/abi/StakingPool3.json'
 
 export default [
   {
-    name: 'WAR-USDT LPT',
-    icon: 'WAR-HT_small@2x.png',
-    rewards1: 'WAR',
-    rewards2: 'MDX',
-    address: '0x777d69a99fE220471f23e2643007f9d086B7d714', // 超募合约地址
-    rewards1Address: '0x910651F81a605a6Ef35d05527d24A72fecef8bF0',
-    rewards2Address: '0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c',
+    name: 'TESTB (DAO)',
+    icon: 'PAUL-HT_small@2x.png',
+    rewards1: 'TESTB',
+    rewards2: null,
+    address: '0xfdb3Fd63fded5092a1Cd889cF03cAD7CE97362a8',
+    rewards1Address: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4',
+    rewards2Address: null,
     // apr
-    valueAprToken: '0x910651F81a605a6Ef35d05527d24A72fecef8bF0', // WAR
-    valueAprPath: [],
-    rewardsAprPath: [],
-    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a',
-
-    MLP: '0x2eAB1e47Bf1660bf6De9437BD061db666111e041',
+    valueAprToken: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4', // WAR
+    valueAprPath: [
+      '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F', // WHT
+    ],
+    rewardsAprPath: [
+      '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F', // WHT
+    ],
+    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a', //usdt
+    MLP: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4', // WAR
     byLink:
-      'http://ht.mdex.com/#/add/0xa71EdC38d189767582C38A3145b5873052c3e47a/0x910651F81a605a6Ef35d05527d24A72fecef8bF0',
-    abi: StakingPool,
-    start_at: '1626350400',
+      'https://ht.mdex.com/#/swap?outputCurrency=0x910651f81a605a6ef35d05527d24a72fecef8bf0',
+    abi: StakingPool3,
+    start_at: '',
     time: '',
-    dueDate: null,
     openDate: null,
-    earnName: 'APR',
+    dueDate: null,
+    earnName: 'APY',
     status: 0,
-    rewards: 'LPT',
+    rewards: 'TESTB',
     decimal: 18,
-    is_coming: true,
-    splitDigits: 6,
-    mdexReward: true,
-    networkId: 128,
-    lpToken: 'MDEX LP Token',
-    mdexDaily: 1534.46,
-    mdexPid: '0x5a',
+    is_coming: false,
+    mdexReward: false,
+    networkId: 137,
+    mdexDaily: 0,
+    mdexPid: '',
+    splitDigits: 4,
     cover: 'put',
   },
 ]
