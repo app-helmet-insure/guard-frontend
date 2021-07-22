@@ -1,110 +1,184 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
+import {
+  getCurrentInsurance,
+  getInsuranceList,
+} from '../../../configs/insurance'
+import { useActiveWeb3React, getContract } from '../../../web3'
+import { toWei, fromWei } from 'web3-utils'
+import OrderABI from '../../../web3/abi/Order.json'
+import Erc20ABI from '../../../web3/abi/ERC20.json'
+const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 import './index.less'
-export const MyPolicyList = [
-  {
-    ID: 1,
-    TYPE: 'Call',
-    EXPIRY: '2021/03/25 00:00', // 到期时间
-    STRIKEPRICE: '0.8', // 出险价格
-    VOLUME: 105.642258,
-    STRIKEUNIT: 'MATIC',
-    COLLATERAL: 'GUARD',
-    PREMIUM: 0.5824951,
-    PRICE: 61.536097,
-    SETTLETOKEN: 'GUARD',
-  },
-  {
-    ID: 2,
-    TYPE: 'Put',
-    EXPIRY: '2021/03/25 00:00', // 到期时间
-    STRIKEPRICE: '0.8', // 出险价格
-    VOLUME: 105.642258,
-    STRIKEUNIT: 'MATIC',
-    COLLATERAL: 'GUARD',
-    PREMIUM: 0.5824951,
-    PRICE: 61.536097,
-    SETTLETOKEN: 'GUARD',
-  },
-  {
-    ID: 3,
-    TYPE: 'Call',
-    EXPIRY: '2021/03/25 00:00', // 到期时间
-    STRIKEPRICE: '0.8', // 出险价格
-    VOLUME: 105.642258,
-    STRIKEUNIT: 'MATIC',
-    COLLATERAL: 'GUARD',
-    PREMIUM: 0.5824951,
-    PRICE: 61.536097,
-    SETTLETOKEN: 'GUARD',
-  },
-  {
-    ID: 4,
-    TYPE: 'Put',
-    EXPIRY: '2021/03/25 00:00', // 到期时间
-    STRIKEPRICE: '0.8', // 出险价格
-    VOLUME: 105.642258,
-    STRIKEUNIT: 'MATIC',
-    COLLATERAL: 'GUARD',
-    PREMIUM: 0.5824951,
-    PRICE: 61.536097,
-    SETTLETOKEN: 'GUARD',
-  },
-]
-const MyPolicy = props => (
-  <div className="insurance_mypolicy">
-    <div className="insurance_mypolicy_list">
-      {MyPolicyList.map(item => (
-        <div className="insurance_mypolicy_item" key={item.ID}>
-          <section>
-            <div>
-              <img src={item.TYPE === 'Call' ? CallSvg : PutSvg} alt="" />
-              <span className={item.TYPE}>
-                {item.COLLATERAL +
-                  ' ' +
-                  item.TYPE +
-                  ' ' +
-                  item.STRIKEPRICE +
-                  ' ' +
-                  item.STRIKEUNIT}
-              </span>
-            </div>
-            <div>
-              <span>{item.EXPIRY}</span>
-              <span>ID: {item.ID}</span>
-            </div>
-          </section>
-          <section>
-            <div>
-              <span>出险价</span>
-              <span>{item.STRIKEPRICE}</span>
-              <span>{item.STRIKEUNIT}</span>
-            </div>
-            <div>
-              <span>持有量</span>
-              <span>{item.VOLUME}</span>
-              <span>{item.COLLATERAL}</span>
-            </div>
-          </section>
-          <section>
-            <div>
-              <span>保单单价</span>
-              <span>{item.PRICE} </span>
-              <span>{item.STRIKEUNIT}</span>
-            </div>
-            <div>
-              <span>保费</span>
-              <span>{item.PREMIUM}</span>
-              <span>{item.SETTLETOKEN}</span>
-            </div>
-          </section>
-          <section>
-            <button>撤销</button>
-          </section>
-        </div>
-      ))}
+
+const MyPolicy = props => {
+  const [PolicyList, setPolicyList] = useState([])
+  const { library, active, account } = useActiveWeb3React()
+  // 保单数据
+  const getPolicyList = () => {
+    getInsuranceList().then(res => {
+      if (res && res.data.data.options) {
+        const ReturnList = res.data.data.options
+        const FixListPush = []
+        ReturnList.forEach(item => {
+          const CurrentInsurance = getCurrentInsurance({
+            CollateralAddress: item.collateral,
+            UnderlyingAddress: item.underlying,
+          })
+          const {
+            type,
+            indextoken,
+            strikeprice_decimals,
+            collateral_symbol,
+            collateral_decimals,
+            underlying_symbol,
+            underlying_decimals,
+            insurance,
+            settleToken_symbol,
+          } = CurrentInsurance
+          const ResultItem = {
+            type,
+            expiry: item.expiry,
+            long: item.long,
+            short: item.short,
+            show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
+            strikePrice: item.strikePrice,
+            collateral: item.collateral,
+            collateral_symbol: collateral_symbol,
+            collateral_decimals: collateral_decimals,
+            underlying: item.underlying,
+            underlying_symbol: underlying_symbol,
+            underlying_decimals: underlying_decimals,
+            callToken: insurance,
+            putToken: indextoken,
+          }
+          item.asks.filter(itemAsk => {
+            const ResultItemAsk = {
+              askID: itemAsk.askID,
+              isCancel: itemAsk.isCancel,
+              show_ID:
+                itemAsk.seller.substr(0, 2) +
+                itemAsk.seller.substr(2, 3) +
+                '...' +
+                itemAsk.seller.substr(-4).toUpperCase(),
+              settleToken_symbol,
+              show_price: fromWei(itemAsk.price, strikeprice_decimals),
+              price: itemAsk.price,
+            }
+            const AllItem = Object.assign(ResultItemAsk, ResultItem)
+            if (itemAsk.binds.length) {
+              itemAsk.binds.forEach(itemBid => {
+                if (
+                  account &&
+                  itemBid.buyer.toUpperCase() === account.toUpperCase()
+                ) {
+                  const ResultItemBid = {
+                    bidID: itemBid.bidID,
+                    volume: itemAsk.volume,
+                    show_volume: fromWei(itemBid.volume, collateral_decimals),
+                  }
+                  const ReturnItem = Object.assign(ResultItemBid, AllItem)
+                  FixListPush.push(ReturnItem)
+                }
+              })
+            }
+          })
+        })
+        const FixList = FixListPush
+        setPolicyList(FixList)
+      }
+    })
+  }
+  const actionWithDraw = data => {
+    const OrderContracts = getContract(library, OrderABI, OrderAddress)
+    OrderContracts.methods.exercise(data.bidID).send({ from: account })
+  }
+  const actionApprove = data => {
+    const Erc20Contracts = getContract(library, Erc20ABI.abi, data.underlying)
+    const Infinitys =
+      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    Erc20Contracts.methods
+      .approve(OrderAddress, Infinitys)
+      .send({ from: account })
+  }
+  // 判断是否授权
+  const handleClickWithDraw = data => {
+    const Erc20Contracts = getContract(library, Erc20ABI.abi, data.underlying)
+    Erc20Contracts.methods
+      .allowance(account, OrderAddress)
+      .call()
+      .then(res => {
+        if (Number(res) <= 0) {
+          actionApprove(data)
+        } else {
+          actionWithDraw(data)
+        }
+      })
+  }
+
+  useEffect(() => {
+    getPolicyList()
+  }, [])
+  return (
+    <div className="insurance_mypolicy">
+      <div className="insurance_mypolicy_list">
+        {PolicyList.map(item => (
+          <div className="insurance_mypolicy_item" key={item.bidID}>
+            <section>
+              <div>
+                <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                <span className={item.TYPE}>
+                  {item.callToken +
+                    ' ' +
+                    item.type +
+                    ' ' +
+                    item.show_strikePrice +
+                    ' ' +
+                    item.putToken}
+                </span>
+              </div>
+              <div>
+                <span>{item.expiry}</span>
+                <span>ID: {item.bidID}</span>
+              </div>
+            </section>
+            <section>
+              <div>
+                <span>出险价</span>
+                <span>{item.show_strikePrice}</span>
+                <span>{item.putToken}</span>
+              </div>
+              <div>
+                <span>持有量</span>
+                <span>{item.show_volume}</span>
+                <span>{item.callToken}</span>
+              </div>
+            </section>
+            <section>
+              <div>
+                <span>保单单价</span>
+                <span>
+                  {' '}
+                  {(Number(item.show_price) * Number(item.show_volume)).toFixed(
+                    4
+                  )}{' '}
+                </span>
+                <span>{item.settleToken_symbol}</span>
+              </div>
+              <div>
+                <span>保费</span>
+                <span>{item.show_price}</span>
+                <span>{item.settleToken_symbol}</span>
+              </div>
+            </section>
+            <section>
+              <button onClick={() => handleClickWithDraw(item)}>出险</button>
+            </section>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 export default MyPolicy
