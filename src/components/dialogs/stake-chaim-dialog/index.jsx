@@ -142,13 +142,17 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
     if (isNaN(parseInt(miningPools && miningPools.balanceOf))) {
       return false
     }
+    if (loadFlag) return
+    setLoadFlag(true)
     const contract = getContract(library, miningPools.abi, miningPools.address)
     const method = miningPools.rewards2 ? 'getDoubleReward' : 'getReward'
     contract.methods[method]()
       .send({
         from: account,
       })
-      .on('transactionHash', (hash) => {})
+      .on('transactionHash', (hash) => {
+
+      })
       .on('receipt', (_, receipt) => {
         message.success({
           content: 'Claim success',
@@ -156,6 +160,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             color: '#2A3749',
           },
         })
+        setLoadFlag(false)
         setStakeInput(null)
         onClose()
       })
@@ -166,6 +171,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             color: '#2A3749',
           },
         })
+        setLoadFlag(false)
       })
   }
 
@@ -179,6 +185,8 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
     if (isNaN(parseInt(miningPools && miningPools.balanceOf))) {
       return false
     }
+    if (loadFlag) return
+    setLoadFlag(true)
     const contract = getContract(library, miningPools.abi, miningPools.address)
     contract.methods
       .exit()
@@ -193,6 +201,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             color: '#2A3749',
           },
         })
+        setLoadFlag(false)
         setStakeInput(null)
         onClose()
       })
@@ -203,6 +212,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             color: '#2A3749',
           },
         })
+        setLoadFlag(false)
       })
   }
 
@@ -267,6 +277,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
               type='primary'
               size='large'
               className='btn_primary'
+              loading={loadFlag}
               onClick={stakeOnConfirm}
             >
               <FormattedMessage id='stake_chain_dialog_text1' />
@@ -329,6 +340,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             type='primary'
             size='large'
             className='btn_primary_gray'
+            loading={loadFlag}
             onClick={onConfirm}
           >
             <FormattedMessage id='stake_chain_dialog_text4' />
@@ -369,6 +381,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             type='primary'
             size='large'
             className='btn_primary un_stake_claim'
+            loading={loadFlag}
             onClick={onConfirmAll}
           >
             <FormattedMessage id='stake_chain_dialog_text6' />
