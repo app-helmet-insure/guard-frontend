@@ -26,3 +26,5 @@ yarn-error.log*
 /.idea
 package-lock.json
 *.lock
+/.vscode
+/LICENSE
