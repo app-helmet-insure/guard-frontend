@@ -17,11 +17,25 @@
   .footer_link{
     flex: 1;
     justify-content: flex-end;
+    a{
+
+      width: 24px;
+      height: 24px;
+      margin: 0 24px;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      &:hover img,.telegram_svg{
+        filter: drop-shadow(#4364E8 24px 0);
+      }
+    }
     img{
       width: 24px;
       height: 24px;
-      margin: 0 20px;
-      cursor: pointer;
+      position: absolute;
+      left: -24px;
+      top: 0;
+      filter: drop-shadow(#C9C9C9 24px 0);
     }
   }
   .language_select{
