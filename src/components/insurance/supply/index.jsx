@@ -4,13 +4,15 @@ import Web3 from 'web3'
 import { toWei, fromWei } from 'web3-utils'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import { getCurrentInsurance } from '../../../configs/insurance'
-import './index.less'
-import { toFixed } from 'accounting'
 import OrderABI from '../../../web3/abi/Order.json'
 import Erc20ABI from '../../../web3/abi/ERC20.json'
+import './index.less'
+import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
+import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
+import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import { toFixed } from 'accounting'
 const NowTime = parseInt(Date.now() / 1000, 10)
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
-
 const Supply = props => {
   const [InsuranceType, setInsuranceType] = useState('Call')
   const [InsuranceDPR, setInsuranceDPR] = useState({
@@ -21,13 +23,20 @@ const Supply = props => {
   const [InsuranceSymbol, setInsuranceSymbol] = useState('TESTB')
   const [ApproveStatus, setApproveStatus] = useState(false)
   const [Earning, setEarning] = useState(0)
+  const [OpenWaiting, setOpenWaiting] = useState(false)
+  const [OpenSuccess, setOpenSuccess] = useState(false)
   const { balance } = useContext(VarContext)
   const { library, active, account } = useActiveWeb3React()
   const CurrentInsurance = getCurrentInsurance({
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
   })
-
+  const onSuccessClose = () => {
+    setOpenSuccess(false)
+  }
+  const onWaitClose = () => {
+    setOpenWaiting(false)
+  }
   // 获取授权状态
   const getApproveStatus = data => {
     if (InsuranceType === 'Call') {
@@ -76,6 +85,16 @@ const Supply = props => {
             price
           )
           .send({ from: account })
+          .on('transactionHash', hash => {
+            setOpenWaiting(true)
+          })
+          .on('receipt', (_, receipt) => {
+            setOpenWaiting(false)
+            setOpenSuccess(true)
+          })
+          .on('error', ereor => {
+            setOpenWaiting(false)
+          })
       } else {
         SellContracts.methods
           .sellOnETH(
@@ -87,6 +106,16 @@ const Supply = props => {
             price
           )
           .send({ from: account, value: toWei(InsuranceVolume) })
+          .on('transactionHash', hash => {
+            setOpenWaiting(true)
+          })
+          .on('receipt', (_, receipt) => {
+            setOpenWaiting(false)
+            setOpenSuccess(true)
+          })
+          .on('error', ereor => {
+            setOpenWaiting(false)
+          })
       }
     } else {
       if (InsuranceType === 'Call') {
@@ -101,6 +130,16 @@ const Supply = props => {
         Erc20Contracts.methods
           .approve(OrderAddress, Infinitys)
           .send({ from: account })
+          .on('transactionHash', hash => {
+            setOpenWaiting(true)
+          })
+          .on('receipt', (_, receipt) => {
+            setOpenWaiting(false)
+            setOpenSuccess(true)
+          })
+          .on('error', ereor => {
+            setOpenWaiting(false)
+          })
       }
     }
   }
@@ -190,6 +229,11 @@ const Supply = props => {
             : '授权'}
         </button>
       </div>
+      <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
+      <SuccessfulPurchaseDialog
+        visible={OpenSuccess}
+        onClose={onSuccessClose}
+      />
     </div>
   )
 }
