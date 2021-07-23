@@ -4,6 +4,7 @@ export default [
   {
     name: 'TESTB (DAO)',
     icon: 'PAUL-HT_small@2x.png',
+    shortToken: 'TESTB',
     rewards1: 'TESTB',
     rewards2: null,
     address: '0xfdb3Fd63fded5092a1Cd889cF03cAD7CE97362a8',
@@ -36,6 +37,7 @@ export default [
     mdexDaily: 0,
     mdexPid: '',
     splitDigits: 4,
-    cover: 'put',
+    cover: 'Call',
+    strikeprice: '0.6',
   },
 ]
