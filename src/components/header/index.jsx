@@ -3,6 +3,7 @@ import './index.less'
 import LOGO from '../../assets/images/logo.svg'
 import GuradSvg from '../../assets/images/gurad-icon.svg'
 import MenuSvg from '../../assets/images/menu.svg'
+import HelmetSvg from '../../assets/images/helmet.svg'
 import {useWeb3React} from '@web3-react/core'
 import {formatAddress} from '../../utils'
 import DrawerMenu from '../drawer-menu'
@@ -86,6 +87,13 @@ function Header (props) {
           ))}
         </ul>
         <div className="connect_wallet">
+          <a href="https://www.helmet.insure/">
+            <div className="to_helmet flex_center">
+              <img src={HelmetSvg} alt=""/>
+              <FormattedMessage id="header_text7" values={{name: 'Helmet'}}/>
+            </div>
+          </a>
+
           {!active ? (
             <div
               className="not_connect flex_center"
