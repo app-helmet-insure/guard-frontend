@@ -48,8 +48,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
   }, [miningPools, miningPools && miningPools.allowance])
 
   const onMax = () => {
-    let max = balance
-    setStakeInput(formatAmount(max, miningPools && miningPools.decimal, 6))
+    setStakeInput(balance)
   }
 
   const onChange = (e) => {
@@ -247,13 +246,10 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
             title={<FormattedMessage id='stake_chain_dialog_text2' />}
             value={
               miningPools
-                ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
+                ? formatNumber(balance, {
                     thousand: ',',
                     decimal: '.',
-                    precision:
-                      formatAmount(balance) - 0 > 0
-                        ? miningPools.splitDigits
-                        : 0,
+                    precision: balance - 0 > 0 ? miningPools.splitDigits : 0,
                   }) +
                   ' ' +
                   miningPools.rewards
