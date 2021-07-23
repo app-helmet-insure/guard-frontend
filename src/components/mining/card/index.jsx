@@ -184,13 +184,10 @@ const MiningCard = props => {
             </span>
             <span>
               {miningPools && miningPools.balanceOf
-                ? formatNumber(formatAmount(balance, miningPools.decimal, 6), {
+                ? formatNumber(balance, {
                     thousand: ',',
                     decimal: '.',
-                    precision:
-                      formatAmount(balance) - 0 > 0
-                        ? miningPools.splitDigits
-                        : 0,
+                    precision: balance - 0 > 0 ? miningPools.splitDigits : 0,
                   })
                 : '--'}
             </span>
