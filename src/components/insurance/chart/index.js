@@ -14,7 +14,7 @@ import {range, clone} from 'lodash'
 import './index.less'
 import BigNumber from 'bignumber.js'
 
-const API = 'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap03'
+const API = 'https://api.thegraph.com/subgraphs/name/app-helmet-insure/guard4quickswap'
 const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 /**
  * @param props
