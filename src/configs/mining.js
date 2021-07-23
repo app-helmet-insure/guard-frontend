@@ -12,12 +12,12 @@ export default [
     // apr
     valueAprToken: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4', // WAR
     valueAprPath: [
-      '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F', // WHT
+      '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // WMATIC
     ],
     rewardsAprPath: [
-      '0x5545153CCFcA01fbd7Dd11C0b23ba694D9509A6F', // WHT
+      '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // WMATIC
     ],
-    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a', //usdt
+    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a', // usdt
     MLP: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4', // WAR
     byLink:
       'https://ht.mdex.com/#/swap?outputCurrency=0x910651f81a605a6ef35d05527d24a72fecef8bf0',

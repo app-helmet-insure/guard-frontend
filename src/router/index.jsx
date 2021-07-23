@@ -22,6 +22,9 @@ function mapRoutes(routes_) {
 export default () => (
   <Switch>
     {mapRoutes(routerConfig)}
-    <Route component={() => (<div>404 Page not Found!</div>)} />
+    <Route component={() => {
+      window.location.href = '/'
+      return null
+    }}/>
   </Switch>
 )

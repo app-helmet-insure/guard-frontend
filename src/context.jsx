@@ -14,7 +14,8 @@ function Context (props) {
   // 块高度
   const [blockHeight, setBlockHeight] = useState(0)
   // 账户余额
-  const balance = useBalance(blockHeight)
+  const TESTB = '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4'
+  const balance = useBalance(blockHeight, TESTB)
 
   const web3 = injected.supportedChainIds.includes(chainId) ? getWeb3(library) : getHttpWeb3(ChainId.MATIC)
   const getBlockHeight = (callback) => {

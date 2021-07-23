@@ -3,6 +3,7 @@ import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { WAR_USDT_LPT } from '../web3/address'
 import ERC20_ABI from '../web3/abi/ERC20.json'
 import Web3 from 'web3'
+import {formatAmount} from '../utils/format'
 
 export const getContract = (library, abi, address) => {
   const web3 = new Web3(library.provider)
@@ -12,7 +13,7 @@ export const getContract = (library, abi, address) => {
 export const useBalance = (
   blockHeight,
   address = WAR_USDT_LPT.address,
-  abi = WAR_USDT_LPT.abi
+  abi = ERC20_ABI.abi
 ) => {
   const [balance, setBalance] = useState('0')
   const { account, library } = useWeb3ReactCore()
@@ -23,8 +24,9 @@ export const useBalance = (
         .balanceOf(account)
         .call()
         .then((balance_) => {
-          console.log('balance_', balance_)
-          setBalance(balance_.toString())
+          const resBalance = formatAmount(balance_)
+          console.log('balance', balance_, 'format', resBalance)
+          setBalance(resBalance)
         })
     }
   }, [account, blockHeight])
