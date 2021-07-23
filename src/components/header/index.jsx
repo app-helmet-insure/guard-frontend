@@ -76,7 +76,7 @@ function Header (props) {
               key={item.path}>
               <span
                 className={
-                  props.location.pathname === item.path
+                  props.location.pathname && props.location.pathname.indexOf(item.path) === 0
                     ? 'active'
                     : ''
                 }>

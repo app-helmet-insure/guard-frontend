@@ -52,6 +52,18 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
     setStakeInput(formatAmount(max, miningPools && miningPools.decimal, 6))
   }
 
+  const onChange = (e) => {
+    const { value } = e.target
+    const re = /^[0-9]+([.|,][0-9]+)?$/g
+    if (
+      value === '' ||
+      re.test(value) ||
+      (value.split('.').length === 2 && value.slice(value.length - 1) === '.')
+    ) {
+      setStakeInput(value)
+    }
+  }
+
   const onApprove = (e) => {
     if (!active) {
       return
@@ -69,7 +81,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('receipt', (_, receipt) => {
         message.success({
-          content: 'approve success',
+          content: formatMessage('mining_text16'),
           style: {
             color: '#2A3749',
           },
@@ -80,7 +92,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('error', (err, receipt) => {
         message.error({
-          content: 'approve error',
+          content: formatMessage('mining_text17'),
           style: {
             color: '#2A3749',
           },
@@ -113,7 +125,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('receipt', (_, receipt) => {
         message.success({
-          content: 'stake success',
+          content: formatMessage('mining_text18'),
           style: {
             color: '#2A3749',
           },
@@ -124,11 +136,12 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('error', (err, receipt) => {
         message.error({
-          content: 'stake error',
+          content: formatMessage('mining_text19'),
           style: {
             color: '#2A3749',
           },
         })
+        setLoadFlag(false)
       })
   }
 
@@ -155,7 +168,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('receipt', (_, receipt) => {
         message.success({
-          content: 'Claim success',
+          content: formatMessage('mining_text20'),
           style: {
             color: '#2A3749',
           },
@@ -166,7 +179,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('error', (err, receipt) => {
         message.error({
-          content: 'Claim error',
+          content: formatMessage('mining_text21'),
           style: {
             color: '#2A3749',
           },
@@ -196,7 +209,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       .on('transactionHash', (hash) => {})
       .on('receipt', (_, receipt) => {
         message.success({
-          content: 'Claim success',
+          content: formatMessage('mining_text22'),
           style: {
             color: '#2A3749',
           },
@@ -207,7 +220,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
       })
       .on('error', (err, receipt) => {
         message.error({
-          content: 'Claim error',
+          content: formatMessage('mining_text23'),
           style: {
             color: '#2A3749',
           },
@@ -250,10 +263,9 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
           <div>
             <Input
               value={stakeInput}
-              onChange={(e) => setStakeInput(e.target.value)}
+              onChange={onChange}
               placeholder={formatMessage('stake_chain_dialog_text3')}
               size='large'
-              type='number'
               suffix={
                 <div className='max_btn' onClick={onMax}>
                   Max
