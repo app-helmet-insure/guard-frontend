@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
+import NoData from '../../../assets/images/insurance/nodata.svg'
 import {
   getCurrentInsurance,
   getInsuranceList,
@@ -94,66 +95,74 @@ const MySupply = props => {
     OrderContracts.methods.cancel(AskID).send({ from: account })
   }
   useEffect(() => {
-    getPolicyList()
-  }, [])
+    if (account) {
+      getPolicyList()
+    }
+  }, [account])
   return (
     <div className="insurance_mysupply">
-      <div className="insurance_mysupply_list">
-        {SupplyList.map(item => (
-          <div className="insurance_mysupply_item" key={item.askID}>
-            <section>
-              <div>
-                <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
-                <span className={item.type}>
-                  {item.callToken +
-                    ' ' +
-                    item.type +
-                    ' ' +
-                    item.show_strikePrice +
-                    ' ' +
-                    item.putToken}
-                </span>
-              </div>
-              <div>
-                <span>{item.expiry}</span>
-                <span>ID: {item.askID}</span>
-              </div>
-            </section>
-            <section>
-              <div>
-                <span>出险价</span>
-                <span>{item.show_strikePrice}</span>
-                <span>{item.putToken}</span>
-              </div>
-              <div>
-                <span>持有量</span>
-                <span>{item.show_volume}</span>
-                <span>{item.callToken}</span>
-              </div>
-            </section>
-            <section>
-              <div>
-                <span>保单单价</span>
-                <span>
-                  {(Number(item.show_price) * Number(item.show_volume)).toFixed(
-                    4
-                  )}
-                </span>
-                <span>{item.settleToken_symbol}</span>
-              </div>
-              <div>
-                <span>保费</span>
-                <span>{item.show_price}</span>
-                <span>{item.settleToken_symbol}</span>
-              </div>
-            </section>
-            <section>
-              <button>Mining</button>
-              <button onClick={() => handleClickCancelOrder(item)}>撤销</button>
-            </section>
-          </div>
-        ))}
-      </div>
+      {SupplyList && SupplyList.length > 0 ? (
+        <div className="insurance_mysupply_list">
+          {SupplyList.map(item => (
+            <div className="insurance_mysupply_item" key={item.askID}>
+              <section>
+                <div>
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                  <span className={item.type}>
+                    {item.callToken +
+                      ' ' +
+                      item.type +
+                      ' ' +
+                      item.show_strikePrice +
+                      ' ' +
+                      item.putToken}
+                  </span>
+                </div>
+                <div>
+                  <span>{item.expiry}</span>
+                  <span>ID: {item.askID}</span>
+                </div>
+              </section>
+              <section>
+                <div>
+                  <span>出险价</span>
+                  <span>{item.show_strikePrice}</span>
+                  <span>{item.putToken}</span>
+                </div>
+                <div>
+                  <span>持有量</span>
+                  <span>{item.show_volume}</span>
+                  <span>{item.callToken}</span>
+                </div>
+              </section>
+              <section>
+                <div>
+                  <span>保单单价</span>
+                  <span>
+                    {(
+                      Number(item.show_price) * Number(item.show_volume)
+                    ).toFixed(4)}
+                  </span>
+                  <span>{item.settleToken_symbol}</span>
+                </div>
+                <div>
+                  <span>保费</span>
+                  <span>{item.show_price}</span>
+                  <span>{item.settleToken_symbol}</span>
+                </div>
+              </section>
+              <section>
+                <button>Mining</button>
+                <button onClick={() => handleClickCancelOrder(item)}>
+                  撤销
+                </button>
+              </section>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <img src={NoData} alt="" className="nodata" />
+      )}
     </div>
   )
 }
