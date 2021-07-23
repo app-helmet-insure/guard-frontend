@@ -63,18 +63,6 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
     }
   }
 
-  const onChange = (e) => {
-    const { value } = e.target
-    const re = /^[0-9]+([.|,][0-9]+)?$/g
-    if (
-      value === '' ||
-      re.test(value) ||
-      (value.split('.').length === 2 && value.slice(value.length - 1) === '.')
-    ) {
-      setStakeInput(value)
-    }
-  }
-
   const onApprove = (e) => {
     if (!active) {
       return
