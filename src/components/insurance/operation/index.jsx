@@ -7,7 +7,7 @@ import PutSvg from '@/assets/images/insurance/put.svg'
 import Select from '@/assets/images/insurance/select.svg'
 
 import './index.less'
-import {Chart} from '../../chart'
+import {Chart} from '../chart'
 const Operation = props => {
   const [ActionType, setActionType] = useState('')
   const [InsuranceTime] = useState('2021-07-21 24:00')
@@ -58,7 +58,11 @@ const Operation = props => {
               </button>
             </div>
           </div>
-          <div className="insurance_operation_right"><Chart /></div>
+          <div className="insurance_operation_right"><Chart
+            lpt_address={'0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827'}
+            over_price={1}
+            off_price={0.5}
+          /></div>
         </div>
         {ActionType === 'MARKET' ? <Market /> : ''}
         {ActionType === 'SUPPLY' ? <Supply props={InsuranceTime}/> : ''}
