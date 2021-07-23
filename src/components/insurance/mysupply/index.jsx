@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
 import NoData from '../../../assets/images/insurance/nodata.svg'
+import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
+import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import {
   getCurrentInsurance,
   getInsuranceList,
@@ -16,7 +18,14 @@ import './index.less'
 const MySupply = props => {
   const [SupplyList, setSupplyList] = useState([])
   const { library, active, account } = useActiveWeb3React()
-
+  const [OpenWaiting, setOpenWaiting] = useState(false)
+  const [OpenSuccess, setOpenSuccess] = useState(false)
+  const onSuccessClose = () => {
+    setOpenSuccess(false)
+  }
+  const onWaitClose = () => {
+    setOpenWaiting(false)
+  }
   // 保单数据
   const getPolicyList = () => {
     getInsuranceList().then(res => {
@@ -92,7 +101,19 @@ const MySupply = props => {
     console.log(data)
     const AskID = data.askID
     const OrderContracts = getContract(library, OrderABI, OrderAddress)
-    OrderContracts.methods.cancel(AskID).send({ from: account })
+    OrderContracts.methods
+      .cancel(AskID)
+      .send({ from: account })
+      .on('transactionHash', hash => {
+        setOpenWaiting(true)
+      })
+      .on('receipt', (_, receipt) => {
+        setOpenWaiting(false)
+        setOpenSuccess(true)
+      })
+      .on('error', ereor => {
+        setOpenWaiting(false)
+      })
   }
   useEffect(() => {
     if (account) {
@@ -163,6 +184,11 @@ const MySupply = props => {
       ) : (
         <img src={NoData} alt="" className="nodata" />
       )}
+      <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
+      <SuccessfulPurchaseDialog
+        visible={OpenSuccess}
+        onClose={onSuccessClose}
+      />
     </div>
   )
 }

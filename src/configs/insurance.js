@@ -70,10 +70,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'TESTB',
       settleToken_address: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4',
       settleToken_decimals: 'ether',
-      strikeprice: '0.4',
+      strikeprice: '0.004',
       strikeprice_decimals: 'ether',
       lastprice: '0.6',
-      expiry: 1626969600,
+      expiry: 1627228800,
     },
     {
       type: 'Call',
@@ -92,10 +92,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'TESTB',
       settleToken_address: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4',
       settleToken_decimals: 'ether',
-      strikeprice: '0.8',
+      strikeprice: '0.008',
       strikeprice_decimals: 'ether',
       lastprice: '0.6',
-      expiry: 1626969600,
+      expiry: 1627228800,
     },
   ]
   return config.filter(

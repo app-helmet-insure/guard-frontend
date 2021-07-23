@@ -119,12 +119,12 @@ const MyPolicy = props => {
         setOpenWaiting(false)
       })
   }
-  const actionApprove = data => {
-    const Erc20Contracts = getContract(library, Erc20ABI.abi, data.underlying)
+  const actionApprove = adress => {
+    const Erc20Contracts = getContract(library, Erc20ABI.abi, adress)
     const Infinitys =
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     Erc20Contracts.methods
-      .approve(FactoryAddress, Infinitys)
+      .approve(OrderAddress, Infinitys)
       .send({ from: account })
       .on('transactionHash', hash => {
         setOpenWaiting(true)
@@ -139,18 +139,39 @@ const MyPolicy = props => {
   }
   // 判断是否授权
   const handleClickWithDraw = data => {
-    const Erc20Contracts = getContract(library, Erc20ABI.abi, data.underlying)
-    Erc20Contracts.methods
-      .allowance(account, FactoryAddress)
+    console.log(data)
+    const Erc20ContractsUnderlying = getContract(
+      library,
+      Erc20ABI.abi,
+      data.long
+    )
+    const Erc20ContractsLong = getContract(library, Erc20ABI.abi, data.long)
+    const LongApprove = Erc20ContractsLong.methods
+      .allowance(account, OrderAddress)
       .call()
       .then(res => {
         console.log(res)
         if (Number(res) <= 0) {
-          actionApprove(data)
-        } else {
-          actionWithDraw(data)
+          actionApprove(data.long)
+          return false
         }
+        return true
+        
       })
+    const UnderlyingApprove = Erc20ContractsUnderlying.methods
+      .allowance(account, OrderAddress)
+      .call()
+      .then(res => {
+        if (Number(res) <= 0) {
+          actionApprove(data.underlying)
+          return false
+        }
+        return true
+        
+      })
+    if (LongApprove && UnderlyingApprove) {
+      actionWithDraw(data)
+    }
   }
 
   useEffect(() => {
