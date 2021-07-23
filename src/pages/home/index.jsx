@@ -25,9 +25,9 @@ function Home () {
                 <a href="https://github.com/app-helmet-insure" target="_blank">
                   <Button className="btn_github btn_primary" ghost type="primary" icon={<img src={GithubSvg} alt="" className="btn_icon"/>}>View GitHub</Button>
                 </a>
-                {/* <Link to="/insurance">*/}
-                {/*  <Button className="btn_lauch_app btn_primary" type="primary" icon={<img src={LauchAppSvg} alt="" className="btn_icon"/>}>Lauch APP</Button>*/}
-                {/* </Link>*/}
+                <Link to="/insurance">
+                  <Button className="btn_lauch_app btn_primary" type="primary" icon={<img src={LauchAppSvg} alt="" className="btn_icon"/>}>Lauch APP</Button>
+                </Link>
               </div>
             </div>
             <div className="poster">
