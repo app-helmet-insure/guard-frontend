@@ -12,14 +12,15 @@ export const getContract = (library, abi, address) => {
 
 export const useBalance = (
   blockHeight,
-  address = WAR_USDT_LPT.address,
+  address,
   abi = ERC20_ABI.abi
 ) => {
   const [balance, setBalance] = useState('0')
   const { account, library } = useWeb3ReactCore()
   useMemo(() => {
-    if (account) {
+    if (account && address) {
       const contract = getContract(library, abi, address)
+      console.log(contract)
       contract.methods
         .balanceOf(account)
         .call()
@@ -29,7 +30,7 @@ export const useBalance = (
           setBalance(resBalance)
         })
     }
-  }, [account, blockHeight])
+  }, [account, blockHeight, address])
 
   return balance
 }
