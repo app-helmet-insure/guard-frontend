@@ -13,7 +13,7 @@ function Context (props) {
 
   // 块高度
   const [blockHeight, setBlockHeight] = useState(0)
-  // 账户余额
+  // 当前账户余额
   const TESTB = '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4'
   const balance = useBalance(blockHeight, TESTB)
 
