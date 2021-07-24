@@ -124,6 +124,7 @@ const Market = props => {
       Type: InsuranceType,
       Insurance: InsuranceSymbol,
     })
+    console.log(CurrentInsurance)
     const { settleToken_address } = CurrentInsurance
     const Erc20Contracts = getContract(
       library,

@@ -14,11 +14,11 @@ function Context (props) {
   // 块高度
   const [blockHeight, setBlockHeight] = useState(0)
   // 当前账户余额
-  const TESTB = '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4'
+  const TESTB = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
   const balance = useBalance(blockHeight, TESTB)
 
   const web3 = injected.supportedChainIds.includes(chainId) ? getWeb3(library) : getHttpWeb3(ChainId.MATIC)
-  const getBlockHeight = (callback) => {
+  const getBlockHeight = callback => {
     web3.eth.getBlockNumber().then(height => {
       console.log('height', height)
       setBlockHeight(height)
