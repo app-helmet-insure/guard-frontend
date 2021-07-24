@@ -38,64 +38,66 @@ const MyPolicy = props => {
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
           })
-          const {
-            type,
-            indextoken,
-            strikeprice_decimals,
-            collateral_symbol,
-            collateral_decimals,
-            underlying_symbol,
-            underlying_decimals,
-            insurance,
-            settleToken_symbol,
-          } = CurrentInsurance
-          const ResultItem = {
-            type,
-            expiry: item.expiry,
-            long: item.long,
-            short: item.short,
-            show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
-            strikePrice: item.strikePrice,
-            collateral: item.collateral,
-            collateral_symbol: collateral_symbol,
-            collateral_decimals: collateral_decimals,
-            underlying: item.underlying,
-            underlying_symbol: underlying_symbol,
-            underlying_decimals: underlying_decimals,
-            callToken: insurance,
-            putToken: indextoken,
-          }
-          item.asks.filter(itemAsk => {
-            const ResultItemAsk = {
-              askID: itemAsk.askID,
-              isCancel: itemAsk.isCancel,
-              show_ID:
-                itemAsk.seller.substr(0, 2) +
-                itemAsk.seller.substr(2, 3) +
-                '...' +
-                itemAsk.seller.substr(-4).toUpperCase(),
+          if (CurrentInsurance) {
+            const {
+              type,
+              indextoken,
+              strikeprice_decimals,
+              collateral_symbol,
+              collateral_decimals,
+              underlying_symbol,
+              underlying_decimals,
+              insurance,
               settleToken_symbol,
-              show_price: fromWei(itemAsk.price, strikeprice_decimals),
-              price: itemAsk.price,
+            } = CurrentInsurance
+            const ResultItem = {
+              type,
+              expiry: item.expiry,
+              long: item.long,
+              short: item.short,
+              show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
+              strikePrice: item.strikePrice,
+              collateral: item.collateral,
+              collateral_symbol: collateral_symbol,
+              collateral_decimals: collateral_decimals,
+              underlying: item.underlying,
+              underlying_symbol: underlying_symbol,
+              underlying_decimals: underlying_decimals,
+              callToken: insurance,
+              putToken: indextoken,
             }
-            const AllItem = Object.assign(ResultItemAsk, ResultItem)
-            if (itemAsk.binds.length) {
-              itemAsk.binds.forEach(itemBid => {
-                if (
-                  account &&
-                  itemBid.buyer.toUpperCase() === account.toUpperCase()
-                ) {
-                  const ResultItemBid = {
-                    bidID: itemBid.bidID,
-                    volume: itemAsk.volume,
-                    show_volume: fromWei(itemBid.volume, collateral_decimals),
+            item.asks.filter(itemAsk => {
+              const ResultItemAsk = {
+                askID: itemAsk.askID,
+                isCancel: itemAsk.isCancel,
+                show_ID:
+                  itemAsk.seller.substr(0, 2) +
+                  itemAsk.seller.substr(2, 3) +
+                  '...' +
+                  itemAsk.seller.substr(-4).toUpperCase(),
+                settleToken_symbol,
+                show_price: fromWei(itemAsk.price, strikeprice_decimals),
+                price: itemAsk.price,
+              }
+              const AllItem = Object.assign(ResultItemAsk, ResultItem)
+              if (itemAsk.binds.length) {
+                itemAsk.binds.forEach(itemBid => {
+                  if (
+                    account &&
+                    itemBid.buyer.toUpperCase() === account.toUpperCase()
+                  ) {
+                    const ResultItemBid = {
+                      bidID: itemBid.bidID,
+                      volume: itemAsk.volume,
+                      show_volume: fromWei(itemBid.volume, collateral_decimals),
+                    }
+                    const ReturnItem = Object.assign(ResultItemBid, AllItem)
+                    FixListPush.push(ReturnItem)
                   }
-                  const ReturnItem = Object.assign(ResultItemBid, AllItem)
-                  FixListPush.push(ReturnItem)
-                }
-              })
-            }
-          })
+                })
+              }
+            })
+          }
         })
         const FixList = FixListPush
         setPolicyList(FixList)
@@ -156,7 +158,6 @@ const MyPolicy = props => {
           return false
         }
         return true
-        
       })
     const UnderlyingApprove = Erc20ContractsUnderlying.methods
       .allowance(account, OrderAddress)
@@ -167,7 +168,6 @@ const MyPolicy = props => {
           return false
         }
         return true
-        
       })
     if (LongApprove && UnderlyingApprove) {
       actionWithDraw(data)
@@ -183,7 +183,7 @@ const MyPolicy = props => {
     <div className="insurance_mypolicy">
       {PolicyList && PolicyList.length > 0 ? (
         <div className="insurance_mypolicy_list">
-          {PolicyList.map(item => (
+          {PolicyList.map((item, index) => (
             <div className="insurance_mypolicy_item" key={item.bidID}>
               <section>
                 <div>

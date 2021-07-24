@@ -4,6 +4,7 @@ import {
   getCurrentInsurance,
   getInsuranceList,
 } from '../../../configs/insurance'
+import NoData from '../../../assets/images/insurance/nodata.svg'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
@@ -13,13 +14,14 @@ import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
 const Market = props => {
+  console.log(props, 'market')
   const [InsuranceType, setInsuranceType] = useState('Call')
-  const [InsuranceSymbol, setInsuranceSymbol] = useState('TESTB')
   const [PolicyList, setPolicyList] = useState([])
   const [ApproveStatus, setApproveStatus] = useState(false)
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
+  const { InsuranceSymbol } = props
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -88,9 +90,12 @@ const Market = props => {
               if (itemAsk.binds.length) {
                 let number = 0
                 if (itemAsk.binds.length > 1) {
-                  itemAsk.binds.forEach(itembid => (number += Number(
-                    fromWei(itembid.volume, collateral_decimals)
-                  )))
+                  itemAsk.binds.forEach(
+                    itembid =>
+                      (number += Number(
+                        fromWei(itembid.volume, collateral_decimals)
+                      ))
+                  )
                 } else {
                   number = Number(fromWei(itemAsk.binds[0].volume))
                 }
@@ -154,7 +159,6 @@ const Market = props => {
           })
           .on('error', ereor => {
             setOpenWaiting(false)
-
           })
       }
     } else {
@@ -182,7 +186,6 @@ const Market = props => {
         })
         .on('error', ereor => {
           setOpenWaiting(false)
-
         })
     }
   }
@@ -197,86 +200,97 @@ const Market = props => {
 
   return (
     <div className="insurance_market">
-      <div className="insurance_type">
-        <button
-          onClick={() => setInsuranceType('Call')}
-          className={InsuranceType === 'Call' ? 'insurance_active_call' : ''}
-        >
-          Cover Miss Out
-        </button>
-        <button
-          onClick={() => setInsuranceType('Put')}
-          className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
-        >
-          Cover 50% Off
-        </button>
-      </div>
-      <table className="insurance_market_table web_table">
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>保费(MATIC)</td>
-            <td>保单数量</td>
-            <td>操作</td>
-          </tr>
-        </thead>
-        <tbody>
-          {PolicyList.map(item => (
-            <tr
-              className="insurance_market_table_item"
-              key={'web' + item.askID}
+      {PolicyList.length > 0 ? (
+        <div className="insurance_market_wrap">
+          <div className="insurance_type">
+            <button
+              onClick={() => setInsuranceType('Call')}
+              className={
+                InsuranceType === 'Call' ? 'insurance_active_call' : ''
+              }
             >
-              <td>{item.show_ID}</td>
-              <td>{item.show_price}</td>
-              <td>{item.show_volume}</td>
-              <td>
-                <input
-                  type="text"
-                  value={item.buy_volume}
-                  onChange={e => {
-                    item.buy_volume = e.target.value
-                  }}
-                />
-                <button onClick={() => handleClickBuyInurance(item)}>
-                  {ApproveStatus ? '购买' : '授权'}
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="insurance_market_table h5_table">
-        {PolicyList.map(item => (
-          <div className="insurance_market_table_item" key={'h5' + item.askID}>
-            <p>
-              <span>ID</span>
-              <span>{item.show_ID}</span>
-            </p>
-            <div>
-              <p>
-                <span>保费(MATIC)</span>
-                <span>{item.show_price}</span>
-              </p>
-              <p>
-                <span>保单数量</span>
-                <span>{item.show_volume}</span>
-              </p>
-            </div>
-            <section>
-              <input
-                type="text"
-                value={item.buy_volume}
-                onChange={e => {
-                  item.buy_volume = e.target.value
-                }}
-              />
-              <button onClick={() => handleClickBuyInurance(item)}>
-                {ApproveStatus ? '购买' : '授权'}
-              </button>
-            </section>
+              Cover Miss Out
+            </button>
+            <button
+              onClick={() => setInsuranceType('Put')}
+              className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
+            >
+              Cover 50% Off
+            </button>
           </div>
-        ))}
-      </div>
+          <table className="insurance_market_table web_table">
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>保费(MATIC)</td>
+                <td>保单数量</td>
+                <td>操作</td>
+              </tr>
+            </thead>
+            <tbody>
+              {PolicyList.map(item => (
+                <tr
+                  className="insurance_market_table_item"
+                  key={'web' + item.askID}
+                >
+                  <td>{item.show_ID}</td>
+                  <td>{item.show_price}</td>
+                  <td>{item.show_volume}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={item.buy_volume}
+                      onChange={e => {
+                        item.buy_volume = e.target.value
+                      }}
+                    />
+                    <button onClick={() => handleClickBuyInurance(item)}>
+                      {ApproveStatus ? '购买' : '授权'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="insurance_market_table h5_table">
+            {PolicyList.map(item => (
+              <div
+                className="insurance_market_table_item"
+                key={'h5' + item.askID}
+              >
+                <p>
+                  <span>ID</span>
+                  <span>{item.show_ID}</span>
+                </p>
+                <div>
+                  <p>
+                    <span>保费(MATIC)</span>
+                    <span>{item.show_price}</span>
+                  </p>
+                  <p>
+                    <span>保单数量</span>
+                    <span>{item.show_volume}</span>
+                  </p>
+                </div>
+                <section>
+                  <input
+                    type="text"
+                    value={item.buy_volume}
+                    onChange={e => {
+                      item.buy_volume = e.target.value
+                    }}
+                  />
+                  <button onClick={() => handleClickBuyInurance(item)}>
+                    {ApproveStatus ? '购买' : '授权'}
+                  </button>
+                </section>
+              </div>
+            ))}
+          </div>
+        </div >
+      ) : (
+        <img src={NoData} alt="" className="nodata" />
+      )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}

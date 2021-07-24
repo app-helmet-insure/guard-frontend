@@ -37,59 +37,61 @@ const MySupply = props => {
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
           })
-          const {
-            type,
-            indextoken,
-            strikeprice_decimals,
-            collateral_symbol,
-            collateral_decimals,
-            underlying_symbol,
-            underlying_decimals,
-            insurance,
-            settleToken_symbol,
-          } = CurrentInsurance
-          const ResultItem = {
-            type,
-            expiry: item.expiry,
-            long: item.long,
-            short: item.short,
-            show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
-            strikePrice: item.strikePrice,
-            collateral: item.collateral,
-            collateral_symbol: collateral_symbol,
-            collateral_decimals: collateral_decimals,
-            underlying: item.underlying,
-            underlying_symbol: underlying_symbol,
-            underlying_decimals: underlying_decimals,
-            callToken: insurance,
-            putToken: indextoken,
-          }
-          item.asks.filter(itemAsk => {
-            const ResultItemAsk = {
-              askID: itemAsk.askID,
-              isCancel: itemAsk.isCancel,
-              show_ID:
-                itemAsk.seller.substr(0, 2) +
-                itemAsk.seller.substr(2, 3) +
-                '...' +
-                itemAsk.seller.substr(-4).toUpperCase(),
+          if (CurrentInsurance) {
+            const {
+              type,
+              indextoken,
+              strikeprice_decimals,
+              collateral_symbol,
+              collateral_decimals,
+              underlying_symbol,
+              underlying_decimals,
+              insurance,
               settleToken_symbol,
-              show_price: fromWei(itemAsk.price, strikeprice_decimals),
-              price: itemAsk.price,
-              volume: itemAsk.volume,
-              show_volume: fromWei(itemAsk.volume, collateral_decimals),
+            } = CurrentInsurance
+            const ResultItem = {
+              type,
+              expiry: item.expiry,
+              long: item.long,
+              short: item.short,
+              show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
+              strikePrice: item.strikePrice,
+              collateral: item.collateral,
+              collateral_symbol: collateral_symbol,
+              collateral_decimals: collateral_decimals,
+              underlying: item.underlying,
+              underlying_symbol: underlying_symbol,
+              underlying_decimals: underlying_decimals,
+              callToken: insurance,
+              putToken: indextoken,
             }
-            if (item.binds) {
-              console.log(1)
-            }
-            const AllItem = Object.assign(ResultItemAsk, ResultItem)
-            if (
-              !AllItem.isCancel &&
-              itemAsk.seller.toUpperCase() === account.toUpperCase()
-            ) {
-              FixListPush.push(AllItem)
-            }
-          })
+            item.asks.filter(itemAsk => {
+              const ResultItemAsk = {
+                askID: itemAsk.askID,
+                isCancel: itemAsk.isCancel,
+                show_ID:
+                  itemAsk.seller.substr(0, 2) +
+                  itemAsk.seller.substr(2, 3) +
+                  '...' +
+                  itemAsk.seller.substr(-4).toUpperCase(),
+                settleToken_symbol,
+                show_price: fromWei(itemAsk.price, strikeprice_decimals),
+                price: itemAsk.price,
+                volume: itemAsk.volume,
+                show_volume: fromWei(itemAsk.volume, collateral_decimals),
+              }
+              if (item.binds) {
+                console.log(1)
+              }
+              const AllItem = Object.assign(ResultItemAsk, ResultItem)
+              if (
+                !AllItem.isCancel &&
+                itemAsk.seller.toUpperCase() === account.toUpperCase()
+              ) {
+                FixListPush.push(AllItem)
+              }
+            })
+          }
         })
         const FixList = FixListPush
         setSupplyList(FixList)

@@ -27,7 +27,7 @@ const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 export const Chart = props => {
 
   const {lpt_address, over_price, off_price} = props
-
+  console.log(lpt_address, over_price, off_price)
   const [price, setPrice] = useState(0)
 
   const loadData = async () => {

@@ -7,10 +7,12 @@ import PutSvg from '@/assets/images/insurance/put.svg'
 import Select from '@/assets/images/insurance/select.svg'
 
 import './index.less'
-import {Chart} from '../chart'
+import { Chart } from '../chart'
 const Operation = props => {
   const [ActionType, setActionType] = useState('')
   const [InsuranceTime] = useState('2021-07-21 24:00')
+  const { InsuranceSymbol, PairUSDC } = props
+  console.log(props)
   const handleChilciActiveType = Type => {
     if (Type === ActionType) {
       setActionType('')
@@ -20,7 +22,6 @@ const Operation = props => {
   }
   return (
     <div className="insurance_operation_wrap">
-
       <div className="insurance_operation">
         <div className="insurance_control">
           <div className="insurance_operation_left">
@@ -47,25 +48,33 @@ const Operation = props => {
             <div className="buttons">
               <button
                 className="market"
-                onClick={() => handleChilciActiveType('MARKET')}>
+                onClick={() => handleChilciActiveType('MARKET')}
+              >
                 Buy Insurance <img src={Select} alt="" />
               </button>
               <button
                 className="supply"
-                onClick={() => handleChilciActiveType('SUPPLY')}>
+                onClick={() => handleChilciActiveType('SUPPLY')}
+              >
                 Supply
                 <img src={Select} alt="" />
               </button>
             </div>
           </div>
-          <div className="insurance_operation_right"><Chart
-            lpt_address={'0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827'}
-            over_price={1}
-            off_price={0.5}
-          /></div>
+          <div className="insurance_operation_right">
+            <Chart
+              lpt_address={PairUSDC}
+              over_price={1}
+              off_price={0.5}
+            />
+          </div>
         </div>
-        {ActionType === 'MARKET' ? <Market /> : ''}
-        {ActionType === 'SUPPLY' ? <Supply props={InsuranceTime}/> : ''}
+        {ActionType === 'MARKET' ? (
+          <Market InsuranceSymbol={InsuranceSymbol} />
+        ) : (
+          ''
+        )}
+        {ActionType === 'SUPPLY' ? <Supply props={InsuranceTime} /> : ''}
       </div>
     </div>
   )

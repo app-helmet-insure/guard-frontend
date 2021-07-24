@@ -7,7 +7,7 @@ import PolicyTab from '@/components/insurance/policytab'
 import Supply from '@/components/insurance/supply'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-
+import { InsuranceTypeList } from '../../configs/insurance'
 const Insurance = props => (
   <div>
     <Header {...props} />
@@ -15,7 +15,13 @@ const Insurance = props => (
       <div className="insurance_container">
         <Banner />
         <ShowData />
-        <Operation />
+        {InsuranceTypeList.map(insurance => (
+          <Operation
+            InsuranceSymbol={insurance.InsuranceSymbol}
+            PairUSDC={insurance.PairUSDC}
+            key={insurance.InsuranceSymbol}
+          />
+        ))}
         <PolicyTab />
       </div>
     </div>
