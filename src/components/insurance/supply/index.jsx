@@ -20,7 +20,7 @@ const Supply = props => {
     show: '0.07%',
   })
   const [InsuranceVolume, setInsuranceVolume] = useState('')
-  const [InsuranceSymbol, setInsuranceSymbol] = useState('TESTB')
+  const { InsuranceSymbol } = props
   const [ApproveStatus, setApproveStatus] = useState(false)
   const [Earning, setEarning] = useState(0)
   const [OpenWaiting, setOpenWaiting] = useState(false)
@@ -39,24 +39,21 @@ const Supply = props => {
   }
   // 获取授权状态
   const getApproveStatus = data => {
-    if (InsuranceType === 'Call') {
-      const { collateral_address } = CurrentInsurance
-      const Erc20Contracts = getContract(
-        library,
-        Erc20ABI.abi,
-        collateral_address
-      )
-      Erc20Contracts.methods
-        .allowance(account, OrderAddress)
-        .call()
-        .then(res => {
-          if (Number(res) > 0) {
-            setApproveStatus(true)
-          }
-        })
-    } else {
-      setApproveStatus(true)
-    }
+    const { collateral_address } = CurrentInsurance
+    const Erc20Contracts = getContract(
+      library,
+      Erc20ABI.abi,
+      collateral_address
+    )
+    Erc20Contracts.methods
+      .allowance(account, OrderAddress)
+      .call()
+      .then(res => {
+        console.log(res, Number(res) > 0)
+        if (Number(res) > 0) {
+          setApproveStatus(true)
+        }
+      })
   }
   // 发布保险
   const handleClickSupplyInsurance = () => {
@@ -72,75 +69,83 @@ const Supply = props => {
       const _expiry = CurrentInsurance.expiry
       const settleToken = CurrentInsurance.settleToken_address
       const price = toWei(0.1 + '', CurrentInsurance.settleToken_decimals)
-      if (InsuranceType === 'Call') {
-        SellContracts.methods
-          .sell(
-            _private,
-            _collateral,
-            _underlying,
-            _strikePrice,
-            _expiry,
-            toWei(InsuranceVolume),
-            settleToken,
-            price
-          )
-          .send({ from: account })
-          .on('transactionHash', hash => {
-            setOpenWaiting(true)
-          })
-          .on('receipt', (_, receipt) => {
-            setOpenWaiting(false)
-            setOpenSuccess(true)
-          })
-          .on('error', ereor => {
-            setOpenWaiting(false)
-          })
-      } else {
-        SellContracts.methods
-          .sellOnETH(
-            _private,
-            _underlying,
-            _strikePrice,
-            _expiry,
-            settleToken,
-            price
-          )
-          .send({ from: account, value: toWei(InsuranceVolume) })
-          .on('transactionHash', hash => {
-            setOpenWaiting(true)
-          })
-          .on('receipt', (_, receipt) => {
-            setOpenWaiting(false)
-            setOpenSuccess(true)
-          })
-          .on('error', ereor => {
-            setOpenWaiting(false)
-          })
-      }
-    } else {
-      if (InsuranceType === 'Call') {
-        const { collateral_address } = CurrentInsurance
-        const Erc20Contracts = getContract(
-          library,
-          Erc20ABI.abi,
-          collateral_address
+      // if (InsuranceType === 'Call') {
+      console.log(
+        _private,
+        _collateral,
+        _underlying,
+        _strikePrice,
+        _expiry,
+        toWei(InsuranceVolume),
+        settleToken,
+        price
+      )
+      SellContracts.methods
+        .sell(
+          _private,
+          _collateral,
+          _underlying,
+          _strikePrice,
+          _expiry,
+          toWei(InsuranceVolume),
+          settleToken,
+          price
         )
-        const Infinitys =
-          '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
-        Erc20Contracts.methods
-          .approve(OrderAddress, Infinitys)
-          .send({ from: account })
-          .on('transactionHash', hash => {
-            setOpenWaiting(true)
-          })
-          .on('receipt', (_, receipt) => {
-            setOpenWaiting(false)
-            setOpenSuccess(true)
-          })
-          .on('error', ereor => {
-            setOpenWaiting(false)
-          })
-      }
+        .send({ from: account })
+        .on('transactionHash', hash => {
+          setOpenWaiting(true)
+        })
+        .on('receipt', (_, receipt) => {
+          setOpenWaiting(false)
+          setOpenSuccess(true)
+        })
+        .on('error', ereor => {
+          setOpenWaiting(false)
+        })
+      // } else {
+      // SellContracts.methods
+      //   .sellOnETH(
+      //     _private,
+      //     _underlying,
+      //     _strikePrice,
+      //     _expiry,
+      //     settleToken,
+      //     price
+      //   )
+      //   .send({ from: account, value: toWei(InsuranceVolume) })
+      //   .on('transactionHash', hash => {
+      //     setOpenWaiting(true)
+      //   })
+      //   .on('receipt', (_, receipt) => {
+      //     setOpenWaiting(false)
+      //     setOpenSuccess(true)
+      //   })
+      //   .on('error', ereor => {
+      //     setOpenWaiting(false)
+      //   })
+      // }
+    } else {
+      const { collateral_address } = CurrentInsurance
+      const Erc20Contracts = getContract(
+        library,
+        Erc20ABI.abi,
+        collateral_address
+      )
+      const Infinitys =
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+      Erc20Contracts.methods
+        .approve(OrderAddress, Infinitys)
+        .send({ from: account })
+        .on('transactionHash', hash => {
+          setOpenWaiting(true)
+        })
+        .on('receipt', (_, receipt) => {
+          setOpenWaiting(false)
+          setOpenSuccess(true)
+        })
+        .on('error', ereor => {
+          setOpenWaiting(false)
+        })
     }
   }
   useEffect(() => {

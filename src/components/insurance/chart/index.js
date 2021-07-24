@@ -136,7 +136,7 @@ export const Chart = props => {
     const [data, min, max] = await loadData()
     console.log('data', data)
 
-    Highcharts.chart(document.getElementsByClassName('chart_body')[0], {
+    Highcharts.chart(document.getElementsByClassName('chart_body_' + lpt_address)[0], {
       title: {
         text: null,
       },
@@ -250,7 +250,7 @@ export const Chart = props => {
           {price} USDC
         </div>
       </div>
-      <div className="chart_body">
+      <div className={'chart_body_' + lpt_address}>
       </div>
     </div>
   )

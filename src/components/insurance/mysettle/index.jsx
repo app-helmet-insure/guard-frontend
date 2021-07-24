@@ -141,12 +141,12 @@ const MySettle = props => {
                 newArr.push(items)
               }
             })
-            // const FixList = newArr.filter(
-            //   newItem =>
-            //     Number(item.col) + Number(item.claimBalance) > 0 &&
-            //     Number(item.und) > 0
-            // )
-            setSettleList(newArr)
+            const FixList = newArr.filter(
+              newItem =>
+                Number(newItem.col) + Number(newItem.claimBalance) > 0 ||
+                Number(newItem.und) > 0
+            )
+            setSettleList(FixList)
           }
         })
       }
@@ -183,7 +183,7 @@ const MySettle = props => {
     <div className="insurance_mysettle">
       {SettleList && SettleList.length > 0 ? (
         <div className="insurance_mysettle_list">
-          {SettleList.map((item, index) => {
+          {SettleList.map((item, index) => (
             <div className="insurance_mysettle_item" key={index}>
               <section>
                 <div>
@@ -231,7 +231,7 @@ const MySettle = props => {
                 </button>
               </section>
             </div>
-          })}
+          ))}
         </div>
       ) : (
         <img src={NoData} alt="" className="nodata" />

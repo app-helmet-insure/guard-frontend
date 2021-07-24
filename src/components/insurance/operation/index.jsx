@@ -5,14 +5,21 @@ import LogoSvg from '@/assets/images/insurance/logo.svg'
 import CallSvg from '@/assets/images/insurance/call.svg'
 import PutSvg from '@/assets/images/insurance/put.svg'
 import Select from '@/assets/images/insurance/select.svg'
-
+import { getCurrentInsurance } from '../../../configs/insurance'
 import './index.less'
 import { Chart } from '../chart'
 const Operation = props => {
   const [ActionType, setActionType] = useState('')
   const [InsuranceTime] = useState('2021-07-21 24:00')
   const { InsuranceSymbol, PairUSDC } = props
-  console.log(props)
+  const PutCurrentInsurance = getCurrentInsurance({
+    Type: 'Put',
+    Insurance: InsuranceSymbol,
+  })
+  const CallCurrentInsurance = getCurrentInsurance({
+    Type: 'Call',
+    Insurance: InsuranceSymbol,
+  })
   const handleChilciActiveType = Type => {
     if (Type === ActionType) {
       setActionType('')
@@ -34,14 +41,20 @@ const Operation = props => {
                 <img src={CallSvg} alt="" />
                 <div>
                   <span>Cover Miss Out Pirce</span>
-                  <span>2.0000 Matic</span>
+                  <span>
+                    {CallCurrentInsurance.strikeprice}{' '}
+                    {CallCurrentInsurance.indextoken}
+                  </span>
                 </div>
               </div>
               <div className="put price_cell">
                 <img src={PutSvg} alt="" />
                 <div>
                   <span>50% Off Price</span>
-                  <span>2.0000 Matic</span>
+                  <span>
+                    {PutCurrentInsurance.strikeprice}{' '}
+                    {PutCurrentInsurance.indextoken}
+                  </span>
                 </div>
               </div>
             </div>
@@ -62,11 +75,7 @@ const Operation = props => {
             </div>
           </div>
           <div className="insurance_operation_right">
-            <Chart
-              lpt_address={PairUSDC}
-              over_price={1}
-              off_price={0.5}
-            />
+            <Chart lpt_address={PairUSDC} over_price={1} off_price={0.5} />
           </div>
         </div>
         {ActionType === 'MARKET' ? (
@@ -74,7 +83,11 @@ const Operation = props => {
         ) : (
           ''
         )}
-        {ActionType === 'SUPPLY' ? <Supply props={InsuranceTime} /> : ''}
+        {ActionType === 'SUPPLY' ? (
+          <Supply InsuranceSymbol={InsuranceSymbol} />
+        ) : (
+          ''
+        )}
       </div>
     </div>
   )

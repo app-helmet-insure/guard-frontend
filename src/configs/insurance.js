@@ -5,7 +5,7 @@ import axios from 'axios'
 export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
-    PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
+    PairUSDC: '',
   },
   {
     InsuranceSymbol: 'MATIC',
@@ -115,7 +115,7 @@ export const getCurrentInsurance = ({
       underlying_decimals_number: 18,
       underlying_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       settleToken_symbol: 'GUARD',
-      settleToken_address: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4',
+      settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.0002',
       strikeprice_decimals: 'ether',
@@ -160,7 +160,7 @@ export const getCurrentInsurance = ({
       underlying_decimals_number: 18,
       underlying_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       settleToken_symbol: 'GUARD',
-      settleToken_address: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4',
+      settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.0002',
       strikeprice_decimals: 'ether',
@@ -205,7 +205,7 @@ export const getCurrentInsurance = ({
       underlying_decimals_number: 18,
       underlying_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       settleToken_symbol: 'GUARD',
-      settleToken_address: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4',
+      settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.0002',
       strikeprice_decimals: 'ether',
