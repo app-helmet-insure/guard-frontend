@@ -8,6 +8,8 @@ import { useActiveWeb3React, getContract } from '../../../web3'
 import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
 import Erc20ABI from '../../../web3/abi/ERC20.json'
+import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
+import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
 const Market = props => {
@@ -16,7 +18,14 @@ const Market = props => {
   const [PolicyList, setPolicyList] = useState([])
   const [ApproveStatus, setApproveStatus] = useState(false)
   const { library, active, account } = useActiveWeb3React()
-
+  const [OpenWaiting, setOpenWaiting] = useState(false)
+  const [OpenSuccess, setOpenSuccess] = useState(false)
+  const onSuccessClose = () => {
+    setOpenSuccess(false)
+  }
+  const onWaitClose = () => {
+    setOpenWaiting(false)
+  }
   // 保单数据
   const getPolicyList = () => {
     const CurrentInsurance = getCurrentInsurance({
@@ -75,21 +84,22 @@ const Market = props => {
                 show_price: fromWei(itemAsk.price, strikeprice_decimals),
                 price: itemAsk.price,
                 volume: itemAsk.volume,
-                show_volume: fromWei(itemAsk.volume, collateral_decimals),
               }
               if (itemAsk.binds.length) {
-                let number
+                let number = 0
                 if (itemAsk.binds.length > 1) {
-                  number = itemAsk.binds.reduce(
-                    (prev, next) =>
-                      Number(fromWei(prev.volume, collateral_decimals)) +
-                      Number(fromWei(next.volume, collateral_decimals))
-                  )
+                  itemAsk.binds.forEach(itembid => (number += Number(
+                    fromWei(itembid.volume, collateral_decimals)
+                  )))
                 } else {
                   number = Number(fromWei(itemAsk.binds[0].volume))
                 }
                 ResultItem.show_volume =
                   Number(fromWei(itemAsk.volume, collateral_decimals)) - number
+              } else {
+                ResultItem.show_volume = Number(
+                  fromWei(itemAsk.volume, collateral_decimals)
+                )
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               if (!AllItem.isCancel) {
@@ -131,7 +141,21 @@ const Market = props => {
         const BuyContracts = getContract(library, OrderABI, OrderAddress)
         const AskID = data.askID
         const Volume = toWei(data.buy_volume, data.collateral_decimals)
-        BuyContracts.methods.buy(AskID, Volume).send({ from: account })
+        BuyContracts.methods
+          .buy(AskID, Volume)
+          .send({ from: account })
+          .on('transactionHash', hash => {
+            setOpenWaiting(true)
+          })
+          .on('receipt', (_, receipt) => {
+            setOpenWaiting(false)
+            setOpenSuccess(true)
+            getPolicyList()
+          })
+          .on('error', ereor => {
+            setOpenWaiting(false)
+
+          })
       }
     } else {
       const CurrentInsurance = getCurrentInsurance({
@@ -149,6 +173,17 @@ const Market = props => {
       Erc20Contracts.methods
         .approve(OrderAddress, Infinitys)
         .send({ from: account })
+        .on('transactionHash', hash => {
+          setOpenWaiting(true)
+        })
+        .on('receipt', (_, receipt) => {
+          setOpenWaiting(false)
+          setOpenSuccess(true)
+        })
+        .on('error', ereor => {
+          setOpenWaiting(false)
+
+        })
     }
   }
   useEffect(() => {
@@ -187,7 +222,10 @@ const Market = props => {
         </thead>
         <tbody>
           {PolicyList.map(item => (
-            <tr className="insurance_market_table_item" key={'web' + item.ID}>
+            <tr
+              className="insurance_market_table_item"
+              key={'web' + item.askID}
+            >
               <td>{item.show_ID}</td>
               <td>{item.show_price}</td>
               <td>{item.show_volume}</td>
@@ -209,7 +247,7 @@ const Market = props => {
       </table>
       <div className="insurance_market_table h5_table">
         {PolicyList.map(item => (
-          <div className="insurance_market_table_item" key={'h5' + item.ID}>
+          <div className="insurance_market_table_item" key={'h5' + item.askID}>
             <p>
               <span>ID</span>
               <span>{item.show_ID}</span>
@@ -239,6 +277,11 @@ const Market = props => {
           </div>
         ))}
       </div>
+      <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
+      <SuccessfulPurchaseDialog
+        visible={OpenSuccess}
+        onClose={onSuccessClose}
+      />
     </div>
   )
 }

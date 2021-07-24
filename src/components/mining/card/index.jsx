@@ -109,7 +109,14 @@ const MiningCard = props => {
                   `${miningPools && miningPools.cover + '_cover_logo'}`
                 )}
               ></span>
-              <FormattedMessage id='mining_text3' /> Call 0.08 BNB
+              {miningPools ? (
+                <>
+                  <FormattedMessage id='mining_text3' /> {miningPools.cover}{' '}
+                  {miningPools.strikeprice} {miningPools.shortToken}
+                </>
+              ) : (
+                '--'
+              )}
             </a>
             <span className='title_text'>
               {miningPools && miningPools.name}

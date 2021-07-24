@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
+import NoData from '../../../assets/images/insurance/nodata.svg'
 import {
   getCurrentInsurance,
   getInsuranceList,
@@ -127,8 +128,11 @@ const MySettle = props => {
               newArr.push(items)
             }
           })
-          const FixList = newArr
-          console.log(FixList)
+          const FixList = newArr.filter(
+            newItem =>
+              Number(item.col) + Number(item.claimBalance) > 0 &&
+              Number(item.und) > 0
+          )
           setSettleList(FixList)
         })
       }
@@ -147,69 +151,67 @@ const MySettle = props => {
     }
   }
   useEffect(() => {
-    getPolicyList()
-  }, [])
+    if (account) {
+      getPolicyList()
+    }
+  }, [account])
   return (
     <div className="insurance_mysettle">
-      <div className="insurance_mysettle_list">
-        {SettleList.map((item, index) => {
-          // eslint-disable-next-line no-lone-blocks
-          {
-            if (
-              Number(item.col) + Number(item.claimBalance) > 0 &&
-              Number(item.und) > 0
-            ) {
-              <div className="insurance_mysettle_item" key={index}>
-                <section>
-                  <div>
-                    <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
-                    <span className={item.type}>
-                      {item.callToken +
-                        ' ' +
-                        item.type +
-                        ' ' +
-                        item.show_strikePrice +
-                        ' ' +
-                        item.putToken}
-                    </span>
-                  </div>
-                </section>
-                <section>
-                  <div>
-                    <span>计价资产</span>
-                    <span>
-                      {item.type === 'Call'
-                        ? Number(item.col) + Number(item.claimBalance)
-                        : item.und}
-                    </span>
-                    <span>
-                      {item.type === 'Call' ? item.callToken : item.putToken}
-                    </span>
-                  </div>
-                </section>
-                <section>
-                  <div>
-                    <span>基础资产</span>
-                    <span>
-                      {item.type === 'Call'
-                        ? item.und
-                        : Number(item.col) + Number(item.claimBalance)}
-                    </span>
-                    <span>
-                      {item.type === 'Call' ? item.putToken : item.callToken}
-                    </span>
-                  </div>
-                </section>
-                <section>
-                  <button onClick={() => handleClickClaimOrder(item)}>
-                    取回
-                  </button>
-                </section>
-              </div>
-            }
-          }
-        })}
-      </div>
+      {SettleList && SettleList.length > 0 ? (
+        <div className="insurance_mysettle_list">
+          {SettleList.map((item, index) => {
+            <div className="insurance_mysettle_item" key={index}>
+              <section>
+                <div>
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                  <span className={item.type}>
+                    {item.callToken +
+                      ' ' +
+                      item.type +
+                      ' ' +
+                      item.show_strikePrice +
+                      ' ' +
+                      item.putToken}
+                  </span>
+                </div>
+              </section>
+              <section>
+                <div>
+                  <span>计价资产</span>
+                  <span>
+                    {item.type === 'Call'
+                      ? Number(item.col) + Number(item.claimBalance)
+                      : item.und}
+                  </span>
+                  <span>
+                    {item.type === 'Call' ? item.callToken : item.putToken}
+                  </span>
+                </div>
+              </section>
+              <section>
+                <div>
+                  <span>基础资产</span>
+                  <span>
+                    {item.type === 'Call'
+                      ? item.und
+                      : Number(item.col) + Number(item.claimBalance)}
+                  </span>
+                  <span>
+                    {item.type === 'Call' ? item.putToken : item.callToken}
+                  </span>
+                </div>
+              </section>
+              <section>
+                <button onClick={() => handleClickClaimOrder(item)}>
+                  取回
+                </button>
+              </section>
+            </div>
+          })}
+        </div>
+      ) : (
+        <img src={NoData} alt="" className="nodata" />
+      )}
     </div>
   )
 }

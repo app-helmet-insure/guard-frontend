@@ -6,23 +6,21 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 import mining from '../../configs/mining'
 
-const Mining = (props) => {
-  return (
-    <div>
-      <Header {...props}/>
-      <div className="page_box">
-        <div className="mining_index">
-          <MiningBanner/>
-          <div className="mining_index_content">
-            {mining.map((item, index) => (
-              <MiningCard pools={item} key={index}/>
-            ))}
-          </div>
+const Mining = props => (
+  <div>
+    <Header {...props} />
+    <div className="page_box">
+      <div className="mining_index">
+        <MiningBanner />
+        <div className="mining_index_content">
+          {mining.map((item, index) => (
+            <MiningCard pools={item} key={index} />
+          ))}
         </div>
       </div>
-      <Footer/>
     </div>
-  )
-}
+    <Footer />
+  </div>
+)
 
 export default Mining
