@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, {useState, useMemo, useEffect, useContext} from 'react'
 import { FormattedMessage } from 'react-intl'
 import './index.less'
 import { connect } from 'react-redux'
@@ -8,17 +8,18 @@ import BigNumber from 'bignumber.js'
 import { formatNumber } from 'accounting'
 import { formatAmount, splitFormat } from '../../../utils/format'
 import { useBalance } from '../../../hooks/index'
-import { useBlockHeight } from '../../../web3/index'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import { useMiningInfo, useAPR, useMdxARP } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
+import {VarContext} from '../../../context'
 
 const MiningCard = props => {
   let { pools: miningPools } = props
+  const {blockHeight} = useContext(VarContext)
   miningPools = useMiningInfo(miningPools && miningPools.address)
   const balance = useBalance(
-    useBlockHeight(),
+    blockHeight,
     miningPools && miningPools.MLP,
     ERC20.abi
   )
@@ -58,7 +59,7 @@ const MiningCard = props => {
   //     setPercentage((apr * 100 + mdexApr * 100).toFixed(2))
   //   }
   // }, [apr, mdexApr])
-  useMemo(() => {
+  useEffect(() => {
     let timerId = null
     const fn = () => {
       timerId = setTimeout(() => {
@@ -108,7 +109,14 @@ const MiningCard = props => {
                   `${miningPools && miningPools.cover + '_cover_logo'}`
                 )}
               ></span>
-              <FormattedMessage id='mining_text3' /> Call 0.08 BNB
+              {miningPools ? (
+                <>
+                  <FormattedMessage id='mining_text3' /> {miningPools.cover}{' '}
+                  {miningPools.strikeprice} {miningPools.shortToken}
+                </>
+              ) : (
+                '--'
+              )}
             </a>
             <span className='title_text'>
               {miningPools && miningPools.name}

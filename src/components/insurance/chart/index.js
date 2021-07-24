@@ -14,8 +14,8 @@ import {range, clone} from 'lodash'
 import './index.less'
 import BigNumber from 'bignumber.js'
 
-const API = 'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap03'
-const WMATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
+const API = 'https://api.thegraph.com/subgraphs/name/app-helmet-insure/guard4quickswap'
+const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 /**
  * @param props
  *  - lpt_address // pair token address
@@ -27,7 +27,7 @@ const WMATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
 export const Chart = props => {
 
   const {lpt_address, over_price, off_price} = props
-
+  console.log(lpt_address, over_price, off_price)
   const [price, setPrice] = useState(0)
 
   const loadData = async () => {
@@ -65,10 +65,13 @@ export const Chart = props => {
       query
     })
 
+    console.log('ret', ret)
+
     // init data
 
-    const start_time = Math.floor(dayjs().startOf('hour').unix() - 24 * 3600)
-    const timeline = range(start_time, start_time + 24 * 3600, 3600).map(timestamp => ({
+    const end_time = dayjs().startOf('hour').unix()
+    const start_time = Math.floor(end_time - 24 * 3600)
+    const timeline = range(start_time, end_time, 3600).map(timestamp => ({
       timestamp, value: 0
     }))
 
@@ -83,19 +86,20 @@ export const Chart = props => {
       pairHourData = clone(pairHourData).reverse()
 
       pairHourData.map(hour_data => {
-        if (WMATIC_ADDRESS.toLowerCase() === token1) {
+        if (USDC_ADDRESS.toLowerCase() !== token1) {
           last_price = new BigNumber(hour_data.reserve1).dividedBy(new BigNumber(hour_data.reserve0)).toFixed(6) * 1
         } else {
           last_price = new BigNumber(hour_data.reserve0).dividedBy(new BigNumber(hour_data.reserve1)).toFixed(6) * 1
         }
-        
+
         const index = timeline.findIndex(line => hour_data.hourStartUnix === line.timestamp)
         if (index !== -1) {
           timeline[index].value = last_price
         }
+        console.log('index', index)
 
         if (hour_data.hourStartUnix <= start_time) {
-          pre_price = hour_data
+          pre_price = last_price
         }
 
         return hour_data
@@ -130,8 +134,9 @@ export const Chart = props => {
 
   const initChart = async () => {
     const [data, min, max] = await loadData()
+    console.log('data', data)
 
-    Highcharts.chart(document.getElementsByClassName('chart_body')[0], {
+    Highcharts.chart(document.getElementsByClassName('chart_body_' + lpt_address)[0], {
       title: {
         text: null,
       },
@@ -242,10 +247,10 @@ export const Chart = props => {
           Last Pirce:
         </div>
         <div className="chart_header_price">
-          {price} MATIC
+          {price} USDC
         </div>
       </div>
-      <div className="chart_body">
+      <div className={'chart_body_' + lpt_address}>
       </div>
     </div>
   )

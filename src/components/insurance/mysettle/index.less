@@ -1,92 +1,100 @@
 .insurance_mysettle {
-    width: 100%;
+  width: 100%;
+  flex: 1;
+  position: relative;
+  > .nodata {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 .insurance_mysettle_list {
-    width: 100%;
+  width: 100%;
 }
 .insurance_mysettle_item {
-    width: 100%;
+  width: 100%;
+  display: flex;
+  height: 80px;
+  border-bottom: 1px solid #ededf0;
+  section {
+    height: 100%;
     display: flex;
-    height: 80px;
-    border-bottom: 1px solid #ededf0;
-    section {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    flex-direction: column;
+    justify-content: center;
+    &:nth-of-type(1) {
+      flex: 1;
+      div {
         &:nth-of-type(1) {
-            flex: 1;
-            div {
-                &:nth-of-type(1) {
-                    display: flex;
-                    img {
-                        width: 24px;
-                        margin-right: 6px;
-                    }
-                    .Call {
-                        font-size: 14px;
-                        font-weight: bold;
-                        color: #72a065;
-                    }
-                    .Put {
-                        font-size: 14px;
-                        font-weight: bold;
-                        color: #ef6e45;
-                    }
-                }
-                &:nth-of-type(2) {
-                    margin-top: 10px;
-                    font-size: 14px;
-                    color: #919aa6;
-                    span {
-                        &:nth-of-type(2) {
-                            margin-left: 8px;
-                        }
-                    }
-                }
-            }
+          display: flex;
+          img {
+            width: 24px;
+            margin-right: 6px;
+          }
+          .Call {
+            font-size: 14px;
+            font-weight: bold;
+            color: #72a065;
+          }
+          .Put {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ef6e45;
+          }
         }
-        &:nth-of-type(2),
-        &:nth-of-type(3) {
-            flex: 1;
-            div {
-                span {
-                    font-size: 14px;
-                    font-weight: 500;
-                    color: #2a3749;
-                    line-height: 14px;
-                    &:nth-of-type(1) {
-                        color: #919aa6;
-                    }
-                    &:nth-of-type(2) {
-                        margin: 0 4px 0 8px;
-                    }
-                }
-                &:nth-of-type(2) {
-                    margin-top: 13px;
-                }
+        &:nth-of-type(2) {
+          margin-top: 10px;
+          font-size: 14px;
+          color: #919aa6;
+          span {
+            &:nth-of-type(2) {
+              margin-left: 8px;
             }
+          }
         }
-        &:nth-of-type(4) {
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
-            align-items: center;
-            button {
-                min-width: 64px;
-                height: 40px;
-                background: #2a3749;
-                border-radius: 5px;
-                font-size: 14px;
-                font-weight: bold;
-                color: #ffffff;
-                line-height: 17px;
-                &:nth-of-type(1) {
-                    margin-right: 10px;
-                    background: #4364e8;
-                }
-            }
-        }
+      }
     }
+    &:nth-of-type(2),
+    &:nth-of-type(3) {
+      flex: 1;
+      div {
+        span {
+          font-size: 14px;
+          font-weight: 500;
+          color: #2a3749;
+          line-height: 14px;
+          &:nth-of-type(1) {
+            color: #919aa6;
+          }
+          &:nth-of-type(2) {
+            margin: 0 4px 0 8px;
+          }
+        }
+        &:nth-of-type(2) {
+          margin-top: 13px;
+        }
+      }
+    }
+    &:nth-of-type(4) {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      button {
+        min-width: 64px;
+        height: 40px;
+        background: #2a3749;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 17px;
+        &:nth-of-type(1) {
+          margin-right: 10px;
+          background: #4364e8;
+        }
+      }
+    }
+  }
 }
