@@ -43,6 +43,7 @@ const Market = props => {
       underlying_address,
       underlying_decimals,
       settleToken_symbol,
+      settleToken_decimals,
       strikeprice_decimals,
     } = CurrentInsurance
     getInsuranceList().then(res => {
@@ -83,7 +84,7 @@ const Market = props => {
                   '...' +
                   itemAsk.seller.substr(-4).toUpperCase(),
                 settleToken_symbol,
-                show_price: fromWei(itemAsk.price, strikeprice_decimals),
+                show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
                 volume: itemAsk.volume,
               }
@@ -287,7 +288,7 @@ const Market = props => {
               </div>
             ))}
           </div>
-        </div >
+        </div>
       ) : (
         <img src={NoData} alt="" className="nodata" />
       )}

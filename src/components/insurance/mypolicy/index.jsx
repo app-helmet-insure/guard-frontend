@@ -12,6 +12,7 @@ import OrderABI from '../../../web3/abi/Order.json'
 import Erc20ABI from '../../../web3/abi/ERC20.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import moment from 'moment'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
@@ -49,10 +50,14 @@ const MyPolicy = props => {
               underlying_decimals,
               insurance,
               settleToken_symbol,
+              settleToken_decimals,
             } = CurrentInsurance
             const ResultItem = {
               type,
               expiry: item.expiry,
+              show_expiry: moment(new Date(item.expiry * 1000)).format(
+                'YYYY/MM/DD HH:mm:ss'
+              ),
               long: item.long,
               short: item.short,
               show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
@@ -76,7 +81,7 @@ const MyPolicy = props => {
                   '...' +
                   itemAsk.seller.substr(-4).toUpperCase(),
                 settleToken_symbol,
-                show_price: fromWei(itemAsk.price, strikeprice_decimals),
+                show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
@@ -104,23 +109,7 @@ const MyPolicy = props => {
       }
     })
   }
-  const actionWithDraw = data => {
-    console.log(data)
-    const OrderContracts = getContract(library, OrderABI, OrderAddress)
-    OrderContracts.methods
-      .exercise(data.bidID)
-      .send({ from: account })
-      .on('transactionHash', hash => {
-        setOpenWaiting(true)
-      })
-      .on('receipt', (_, receipt) => {
-        setOpenWaiting(false)
-        setOpenSuccess(true)
-      })
-      .on('error', ereor => {
-        setOpenWaiting(false)
-      })
-  }
+  
   const actionApprove = adress => {
     const Erc20Contracts = getContract(library, Erc20ABI.abi, adress)
     const Infinitys =
@@ -139,41 +128,60 @@ const MyPolicy = props => {
         setOpenWaiting(false)
       })
   }
-  // 判断是否授权
-  const handleClickWithDraw = data => {
-    console.log(data)
+  const getLongApporve = data => {
+    const Erc20ContractsLong = getContract(library, Erc20ABI.abi, data.long)
+    return Erc20ContractsLong.methods
+      .allowance(account, OrderAddress)
+      .call()
+      .then(res => {
+        console.log(res)
+        if (Number(res) > 0) {
+          return true
+        }
+        actionApprove(data.long)
+        return false
+      })
+  }
+  const getUnderlyingApprove = data => {
     const Erc20ContractsUnderlying = getContract(
       library,
       Erc20ABI.abi,
       data.long
     )
-    const Erc20ContractsLong = getContract(library, Erc20ABI.abi, data.long)
-    const LongApprove = Erc20ContractsLong.methods
+    return Erc20ContractsUnderlying.methods
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
-        console.log(res)
-        if (Number(res) <= 0) {
-          actionApprove(data.long)
-          return false
+        if (Number(res) > 0) {
+          return true
         }
-        return true
+        actionApprove(data.underlying)
+        return false
       })
-    const UnderlyingApprove = Erc20ContractsUnderlying.methods
-      .allowance(account, OrderAddress)
-      .call()
-      .then(res => {
-        if (Number(res) <= 0) {
-          actionApprove(data.underlying)
-          return false
-        }
-        return true
-      })
-    if (LongApprove && UnderlyingApprove) {
-      actionWithDraw(data)
+  }
+  // 判断是否授权
+  const handleClickWithDraw = async data => {
+    const LongApproveStatus = await getLongApporve(data)
+    const UnderlyingApproveStatus = await getUnderlyingApprove(data)
+    console.log(LongApproveStatus, UnderlyingApproveStatus)
+    
+    if (LongApproveStatus && UnderlyingApproveStatus) {
+      const OrderContracts = getContract(library, OrderABI, OrderAddress)
+      OrderContracts.methods
+        .exercise(data.bidID)
+        .send({ from: account })
+        .on('transactionHash', hash => {
+          setOpenWaiting(true)
+        })
+        .on('receipt', (_, receipt) => {
+          setOpenWaiting(false)
+          setOpenSuccess(true)
+        })
+        .on('error', ereor => {
+          setOpenWaiting(false)
+        })
     }
   }
-
   useEffect(() => {
     if (account) {
       getPolicyList()
@@ -199,7 +207,7 @@ const MyPolicy = props => {
                   </span>
                 </div>
                 <div>
-                  <span>{item.expiry}</span>
+                  <span>{item.show_expiry}</span>
                   <span>ID: {item.bidID}</span>
                 </div>
               </section>
@@ -218,16 +226,14 @@ const MyPolicy = props => {
               <section>
                 <div>
                   <span>保单单价</span>
-                  <span>
-                    {(
-                      Number(item.show_price) * Number(item.show_volume)
-                    ).toFixed(4)}
-                  </span>
+                  <span>{Number(item.show_price).toFixed(4)}</span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
                 <div>
                   <span>保费</span>
-                  <span>{item.show_price}</span>
+                  <span>
+                    {Number(item.show_price) * Number(item.show_volume)}
+                  </span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>

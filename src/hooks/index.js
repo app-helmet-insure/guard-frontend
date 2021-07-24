@@ -15,6 +15,7 @@ export const getContract = (library, abi, address) => {
 export const useBalance = (
   blockHeight,
   address,
+  decimals = 'ether',
   abi = ERC20_ABI.abi
 ) => {
   const [balance, setBalance] = useState('0')
@@ -22,12 +23,11 @@ export const useBalance = (
   useMemo(() => {
     if (account && address) {
       const contract = getContract(library, abi, address)
-      console.log(contract)
       contract.methods
         .balanceOf(account)
         .call()
         .then(balance_ => {
-          const resBalance = formatAmount(balance_)
+          const resBalance = formatAmount(balance_, decimals)
           console.log('balance', balance_, 'format', resBalance)
           setBalance(resBalance)
         })
@@ -47,7 +47,8 @@ export const useEthBalance = (address = null) => {
     if (library && active) {
       const web3 = getWeb3(library)
       web3.eth.getBalance(address).then(_balance => {
-        setBalance(_balance)
+        const resBalance = formatAmount(_balance)
+        setBalance(resBalance)
       })
     }
   }, [active, blockHeight])

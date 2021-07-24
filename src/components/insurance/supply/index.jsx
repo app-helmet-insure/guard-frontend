@@ -11,6 +11,7 @@ import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import { toFixed } from 'accounting'
+import { useBalance, useEthBalance } from '../../../hooks'
 const NowTime = parseInt(Date.now() / 1000, 10)
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const Supply = props => {
@@ -25,12 +26,19 @@ const Supply = props => {
   const [Earning, setEarning] = useState(0)
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
-  const { balance } = useContext(VarContext)
   const { library, active, account } = useActiveWeb3React()
   const CurrentInsurance = getCurrentInsurance({
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
   })
+  const Balance =
+    CurrentInsurance.collateral_symbol === 'MATIC'
+      ? useEthBalance()
+      : useBalance(
+        0,
+        CurrentInsurance.collateral_address,
+        CurrentInsurance.collateral_decimals_number
+      )
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -51,8 +59,9 @@ const Supply = props => {
       .then(res => {
         console.log(res, Number(res) > 0)
         if (Number(res) > 0) {
-          setApproveStatus(true)
+          return setApproveStatus(true)
         }
+        setApproveStatus(false)
       })
   }
   // 发布保险
@@ -69,61 +78,64 @@ const Supply = props => {
       const _expiry = CurrentInsurance.expiry
       const settleToken = CurrentInsurance.settleToken_address
       const price = toWei(0.1 + '', CurrentInsurance.settleToken_decimals)
-      // if (InsuranceType === 'Call') {
       console.log(
         _private,
         _collateral,
         _underlying,
         _strikePrice,
         _expiry,
-        toWei(InsuranceVolume),
+        toWei(InsuranceVolume, CurrentInsurance.collateral_decimals),
         settleToken,
         price
       )
-      SellContracts.methods
-        .sell(
-          _private,
-          _collateral,
-          _underlying,
-          _strikePrice,
-          _expiry,
-          toWei(InsuranceVolume),
-          settleToken,
-          price
-        )
-        .send({ from: account })
-        .on('transactionHash', hash => {
-          setOpenWaiting(true)
-        })
-        .on('receipt', (_, receipt) => {
-          setOpenWaiting(false)
-          setOpenSuccess(true)
-        })
-        .on('error', ereor => {
-          setOpenWaiting(false)
-        })
-      // } else {
-      // SellContracts.methods
-      //   .sellOnETH(
-      //     _private,
-      //     _underlying,
-      //     _strikePrice,
-      //     _expiry,
-      //     settleToken,
-      //     price
-      //   )
-      //   .send({ from: account, value: toWei(InsuranceVolume) })
-      //   .on('transactionHash', hash => {
-      //     setOpenWaiting(true)
-      //   })
-      //   .on('receipt', (_, receipt) => {
-      //     setOpenWaiting(false)
-      //     setOpenSuccess(true)
-      //   })
-      //   .on('error', ereor => {
-      //     setOpenWaiting(false)
-      //   })
-      // }
+      if (CurrentInsurance.collateral_symbol !== 'MATIC') {
+        SellContracts.methods
+          .sell(
+            _private,
+            _collateral,
+            _underlying,
+            _strikePrice,
+            _expiry,
+            toWei(InsuranceVolume, CurrentInsurance.collateral_decimals),
+            settleToken,
+            price
+          )
+          .send({ from: account })
+          .on('transactionHash', hash => {
+            setOpenWaiting(true)
+          })
+          .on('receipt', (_, receipt) => {
+            setOpenWaiting(false)
+            setOpenSuccess(true)
+          })
+          .on('error', ereor => {
+            setOpenWaiting(false)
+          })
+      } else {
+        SellContracts.methods
+          .sellOnETH(
+            _private,
+            _underlying,
+            _strikePrice,
+            _expiry,
+            settleToken,
+            price
+          )
+          .send({
+            from: account,
+            value: toWei(InsuranceVolume, CurrentInsurance.collateral_decimals),
+          })
+          .on('transactionHash', hash => {
+            setOpenWaiting(true)
+          })
+          .on('receipt', (_, receipt) => {
+            setOpenWaiting(false)
+            setOpenSuccess(true)
+          })
+          .on('error', ereor => {
+            setOpenWaiting(false)
+          })
+      }
     } else {
       const { collateral_address } = CurrentInsurance
       const Erc20Contracts = getContract(
@@ -221,7 +233,7 @@ const Supply = props => {
           <span>{CurrentInsurance.collateral_symbol}</span>
         </div>
         <p className="left">
-          可用余额: {balance} {CurrentInsurance.collateral_symbol}
+          可用余额: {Balance} {CurrentInsurance.collateral_symbol}
         </p>
         <button
           className="confirm"

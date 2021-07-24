@@ -2,6 +2,21 @@ import Order from '../web3/abi/Order.json'
 import { getPairPrice } from '../hooks/quickswap'
 import Item from 'antd/lib/list/Item'
 import axios from 'axios'
+// noether: ‘0’
+// wei: ‘1’
+// Kwei: ‘1000’
+// femtoether: ‘1000’
+// mwei: ‘1000000’
+// picoether: ‘1000000’
+// gwei: ‘1000000000’
+// nanoether: ‘1000000000’
+// microether: ‘1000000000000’
+// milliether: ‘1000000000000000’
+// ether: ‘1000000000000000000’
+// kether: ‘1000000000000000000000’
+// mether: ‘1000000000000000000000000’
+// gether: ‘1000000000000000000000000000’
+// tether: ‘1000000000000000000000000000000’
 export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
@@ -39,8 +54,8 @@ export const getCurrentInsurance = ({
       indextoken: 'USDC',
       collateral_chainid: 137,
       collateral_symbol: 'USDC',
-      collateral_decimals: 'ether',
-      collateral_decimals_number: 18,
+      collateral_decimals: 'mwei',
+      collateral_decimals_number: 6,
       collateral_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       underlying_chainid: 137,
       underlying_symbol: 'GUARD',
@@ -51,7 +66,7 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.0005',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'tether',
       lastprice: '0.001',
       expiry: 1626969600,
     },
@@ -67,7 +82,7 @@ export const getCurrentInsurance = ({
       underlying_chainid: 137,
       underlying_symbol: 'USDC',
       underlying_decimals: 'ether',
-      underlying_decimals_number: 18,
+      underlying_decimals_number: 6,
       underlying_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
@@ -84,8 +99,8 @@ export const getCurrentInsurance = ({
       indextoken: 'USDC',
       collateral_chainid: 137,
       collateral_symbol: 'USDC',
-      collateral_decimals: 'ether',
-      collateral_decimals_number: 18,
+      collateral_decimals: 'mwei',
+      collateral_decimals_number: 6,
       collateral_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       underlying_chainid: 137,
       underlying_symbol: 'MATIC',
@@ -96,7 +111,7 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.00005',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'tether',
       lastprice: '0.0001',
       expiry: 1627228800,
     },
@@ -129,8 +144,8 @@ export const getCurrentInsurance = ({
       indextoken: 'USDC',
       collateral_chainid: 137,
       collateral_symbol: 'USDC',
-      collateral_decimals: 'ether',
-      collateral_decimals_number: 18,
+      collateral_decimals: 'mwei',
+      collateral_decimals_number: 6,
       collateral_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       underlying_chainid: 137,
       underlying_symbol: 'QUICK',
@@ -141,7 +156,7 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.00005',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'tether',
       lastprice: '0.0001',
       expiry: 1627228800,
     },
@@ -174,8 +189,8 @@ export const getCurrentInsurance = ({
       indextoken: 'USDC',
       collateral_chainid: 137,
       collateral_symbol: 'USDC',
-      collateral_decimals: 'ether',
-      collateral_decimals_number: 18,
+      collateral_decimals: 'mwei',
+      collateral_decimals_number: 6,
       collateral_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       underlying_chainid: 137,
       underlying_symbol: 'ETH',
@@ -186,7 +201,7 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.00005',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'tether',
       lastprice: '0.0001',
       expiry: 1627228800,
     },

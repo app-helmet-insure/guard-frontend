@@ -57,14 +57,14 @@ const MySettle = props => {
               .methods.balanceOf(account)
               .call()
               .then(long => {
-                const balance = fromWei(long)
+                const balance = fromWei(long, CurrentInsurance.collateral_decimals)
                 return balance
               })
             const shortBalance = await getContract(library, PoolABI, item.short)
               .methods.balanceOf(account)
               .call()
               .then(short => {
-                const balance = fromWei(short)
+                const balance = fromWei(short, CurrentInsurance.collateral_decimals)
                 return balance
               })
             if (Number(longBalance) > 0 && Number(shortBalance) > 0) {
@@ -154,7 +154,6 @@ const MySettle = props => {
   }
   // 撤销订单
   const handleClickClaimOrder = data => {
-    console.log(data)
     const OrderContracts = getContract(library, FactoryABI, FactoryAddress)
     if (Number(data.claimBalance) !== 0) {
       OrderContracts.methods
@@ -166,6 +165,7 @@ const MySettle = props => {
         .on('receipt', (_, receipt) => {
           setOpenWaiting(false)
           setOpenSuccess(true)
+          getPolicyList()
         })
         .on('error', ereor => {
           setOpenWaiting(false)
@@ -208,7 +208,7 @@ const MySettle = props => {
                       : item.und}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.callToken : item.putToken}
+                    {item.type === 'Call' ? item.putToken : item.callToken}
                   </span>
                 </div>
               </section>
@@ -221,7 +221,7 @@ const MySettle = props => {
                       : Number(item.col) + Number(item.claimBalance)}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.putToken : item.callToken}
+                    {item.type === 'Call' ? item.callToken : item.putToken}
                   </span>
                 </div>
               </section>
