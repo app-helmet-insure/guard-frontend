@@ -10,26 +10,14 @@ const createContractERC20 = (chainId, address) => {
   return new web3.eth.Contract(ERC20.abi, address) // WAR_ADDRESS(chainId)
 }
 
-export const useAllowance = (contract_address, address, owner_address, _chainId) => {
-  const { account, active, library, chainId } = useActiveWeb3React()
-  const [allowance, setAllowance] = useState(0)
-  const {blockHeight} = useContext(VarContext)
-  useEffect(() => {
-    if (!_chainId && !chainId) {
-      return () => { }
-    }
-    const contract = createContractERC20(_chainId || chainId, contract_address)
-    try {
-      contract.methods
-        .allowance(owner_address, address)
-        .call()
-        .then((res) => {
-          setAllowance(res)
-        })
-    } catch (e) {
-      console.log('load token allowance error:', e)
-    }
-    return () => { }
-  }, [account, library, active, blockHeight])
-  return allowance
+export const getAllowance = (miningPools) => {
+  const { chainId } = useActiveWeb3React()
+  const contract = createContractERC20(miningPools.networkId || chainId, miningPools.rewards1Address)
+  return contract.methods
+    .allowance(miningPools.mineMountainAddress, miningPools.address)
+    .call()
+    .then((res) => {
+      console.log('allowance', res)
+      return res
+    })
 }

@@ -21,10 +21,9 @@ import {
   MDEX_POOL_ADDRESS,
   MDEX_ADDRESS,
   MDEX_ROUTER_ADDRESS,
-  MDEX_FACTORY_ADDRESS,
   getRpcUrl,
 } from '../web3/address'
-import { useAllowance } from './wallet'
+import { getAllowance } from './wallet'
 
 export const useMiningInfo = (address = '') => {
   const { account } = useActiveWeb3React()
@@ -81,137 +80,110 @@ export const useMiningInfo = (address = '') => {
   return miningPoolsInfo
 }
 
-export const useTotalRewards = (address, abi, _chainId) => {
-  const [total, setTotal] = useState(0)
-  const { blockHeight } = useContext(VarContext)
-  var web3 = new Web3(new Web3.providers.HttpProvider(getRpcUrl(_chainId)))
-  const contract = new web3.eth.Contract(abi, address)
-  useMemo(() => {
-    if (address) {
-      contract.methods
-        .rewards(ADDRESS_0)
-        .call()
-        .then((_total) => {
-          setTotal(_total)
-        })
-    }
-    return () => {}
-  }, [blockHeight])
-  return total
+export const getTotalRewards = (miningPools) => {
+  const web3 = new Web3(new Web3.providers.HttpProvider(getRpcUrl(miningPools.networkId)))
+  const contract = new web3.eth.Contract(miningPools.abi, miningPools.address)
+  return contract.methods
+    .rewards(ADDRESS_0)
+    .call()
+    .then((totalRewards) => {
+      console.log('totalRewards', totalRewards)
+      return totalRewards
+    })
 }
 
-export const useSpan = (address, abi, _chainId) => {
-  const [span, setSpan] = useState(0)
-  const { blockHeight } = useContext(VarContext)
-  useMemo(() => {
-    if (address) {
-      var web3 = new Web3(new Web3.providers.HttpProvider(getRpcUrl(_chainId)))
-      const contract = new web3.eth.Contract(abi, address)
-      contract.methods
-        .rewardsDuration()
-        .call()
-        .then((_span) => {
-          setSpan(_span)
-        })
-    }
-    return () => {}
-  }, [blockHeight])
-  return span
+export const getSpan = (address, abi, _chainId) => {
+  const web3 = new Web3(new Web3.providers.HttpProvider(getRpcUrl(_chainId)))
+  const contract = new web3.eth.Contract(abi, address)
+  return contract.methods
+    .rewardsDuration()
+    .call()
+    .then((_span) => {
+      return _span
+    })
 }
 
 /**
  * 获取ltp的价值
  * @param address
  */
-export const useLTPValue = (
+export const getLTPValue = (
   address,
   token_address,
   pool_address,
   pool_abi,
-  _chainId
+  miningPools
 ) => {
-  const [value, setValue] = useState(0)
-  const { blockHeight } = useContext(VarContext)
-  useMemo(() => {
-    if (pool_address) {
-      const multicallProvider = getOnlyMultiCallProvider(_chainId)
+  const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
+  const poolContract = new Contract(pool_address, pool_abi)
 
-      const pool_contract = new Contract(pool_address, pool_abi)
+  if (miningPools.poolType === 1) {
+    // 报错默认是token
+    return multicallProvider.all([poolContract.totalSupply()]).then((data) => {
+      data = processResult(data)
+      const [poolTotalSupply] = data
+      return new BigNumber(poolTotalSupply)
+    })
+  }
 
-      const contract = new Contract(address, LPT)
-
-      const promise_list = [
-        contract.token0(),
-        contract.token1(),
-        contract.getReserves(),
-        contract.totalSupply(),
-        pool_contract.totalSupply(),
-      ]
-      multicallProvider
-        .all(promise_list)
-        .then((data) => {
-          data = processResult(data)
-          const [
-            token0_address,
-            token1_address,
-            [_reserve0, _reserve1],
-            totalSupply,
-            poolTotalSupply,
-          ] = data
-          if (token_address == token0_address) {
-            setValue(
-              new BigNumber(_reserve0)
-                .multipliedBy(new BigNumber(2))
-                .multipliedBy(
-                  new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
-                )
-            )
-          } else if (token_address == token1_address) {
-            setValue(
-              new BigNumber(_reserve1)
-                .multipliedBy(new BigNumber(2))
-                .multipliedBy(
-                  new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
-                )
-            )
-          }
-        })
-        .catch((e) => {
-          // 报错默认是token
-          multicallProvider.all([pool_contract.totalSupply()]).then((data) => {
-            data = processResult(data)
-            const [poolTotalSupply] = data
-            setValue(new BigNumber(poolTotalSupply))
-          })
-        })
-    }
-    return () => {}
-  }, [blockHeight])
-  return value
+  const contract = new Contract(address, LPT)
+  const promise_list = [
+    contract.token0(),
+    contract.token1(),
+    contract.getReserves(),
+    contract.totalSupply(),
+    poolContract.totalSupply(),
+  ]
+  return multicallProvider
+    .all(promise_list)
+    .then((data) => {
+      data = processResult(data)
+      debugger
+      const [
+        token0_address,
+        token1_address,
+        [_reserve0, _reserve1],
+        totalSupply,
+        poolTotalSupply,
+      ] = data
+      if (token_address === token0_address) {
+        return new BigNumber(_reserve0)
+          .multipliedBy(new BigNumber(2))
+          .multipliedBy(
+            new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
+          )
+      }
+      if (token_address === token1_address) {
+        return new BigNumber(_reserve1)
+          .multipliedBy(new BigNumber(2))
+          .multipliedBy(
+            new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
+          )
+      }
+      return 0
+    })
 }
 
-export const useMDexPrice = (
+export const getMDexPrice = (
   address1,
   address2,
   amount = 1,
   path = [],
-  _chainId
+  miningPools
 ) => {
   const FEE_RADIO = '0.003'
-  const blockHeight = useBlockHeight()
-  const [price, setPrice] = useState(0)
-  const [fee, setFee] = useState(0)
 
-  const multicallProvider = getOnlyMultiCallProvider(_chainId)
+  const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
   const getPairPrice = (address1, address2, amount) => {
-    const factory = new Contract(MDEX_FACTORY_ADDRESS(_chainId), MDexFactory)
+    console.log('address1, address2', address1, address2)
+    const factory = new Contract(miningPools.factoryAddress, miningPools.factoryAbi) // MDEX_FACTORY_ADDRESS(_chainId), MDexFactory
     const promise_list = [factory.getPair(address1, address2)]
-
     // console.log('request___3')
     return multicallProvider.all(promise_list).then((data) => {
       let [pair_address] = processResult(data)
+      console.log('pair_address', pair_address)
       const pair_contract = new Contract(pair_address, LPT)
-      const mdex_router_contract = new Contract(MDEX_ROUTER_ADDRESS, MDexRouter)
+      const mdex_router_contract = new Contract(miningPools.routerAddress, miningPools.routerAbi)
       const promiseList = [
         pair_contract.token0(),
         pair_contract.token1(),
@@ -255,10 +227,12 @@ export const useMDexPrice = (
             })
         }
       })
+    }).catch(e => {
+      console.log('eee',e)
     })
   }
 
-  const getPrice = async (address1, address2, amount, path, _chainId) => {
+  const getPrice = async (address1, address2, amount, path) => {
     const _path = [address1, ...path, address2]
     let _price = 0
     _price = amount
@@ -282,193 +256,145 @@ export const useMDexPrice = (
     return [_price, _fee]
   }
 
-  useMemo(() => {
-    if (Web3.utils.isAddress(address1) && amount > 0 && blockHeight > 0) {
-      // use path
-      getPrice(address1, address2, amount, path, _chainId).then(
-        ([_price, _fee]) => {
-          setPrice(_price)
-          setFee(_fee)
-        }
-      )
-    }
-    return () => {}
-  }, [blockHeight, address1, address2, amount])
-  if (amount == 0) return ['0', '0']
+  if (amount === 0) return ['0', '0']
+  return getPrice(address1, address2, amount, path, miningPools.networkId)
 
-  return [price, fee]
 }
 
-export const useAPR = (
-  pool_address,
-  pool_abi,
-  lpt_address,
-  reward1_address,
-  valueAprToken,
-  valueAprPath,
-  rewardsAprPath,
-  settleToken,
+
+export const getAPR = async (
+  miningPools,
   mode = 1,
-  _chainId
 ) => {
-  const { blockHeight } = useContext(VarContext)
-  // const [yearReward, setYearReward] = useState(0)
-  const [apr, setApr] = useState(0)
-
-  const [reward1Vol, setReward1Vol] = useState('0')
-  const [rewardsTotalValue, setRewardsTotalValue] = useState('0')
-  const [lptTotalValue, setLptTotalValue] = useState('0')
-
   // 获取奖励1在矿山的总量
-  const allowance = useAllowance(
-    reward1_address,
-    pool_address,
-    MINE_MOUNTAIN_ADDRESS(_chainId),
-    _chainId
-  )
+  const allowance = await getAllowance(miningPools)
+  // console.log('apr_allowance', allowance)
 
   // 获取奖励1未发放的量
-  const unClaimReward = useTotalRewards(pool_address, pool_abi, _chainId)
+  const unClaimReward = await getTotalRewards(miningPools)
+  // console.log('unClaimReward', unClaimReward)
 
-  const span = useSpan(pool_address, pool_abi, _chainId)
-
-  // 奖励1的价值
-  // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
+  // 计算奖励的量
+  const reward1Vol = new BigNumber(allowance).minus(new BigNumber(unClaimReward)).toString()
 
   // 矿池总的LPT的价值
-  const lptValue = useLTPValue(
-    lpt_address,
-    valueAprToken,
-    pool_address,
-    pool_abi,
-    _chainId
+  const lptValue = await getLTPValue(
+    miningPools.MLP,
+    miningPools.valueAprToken,
+    miningPools.address,
+    miningPools.abi,
+    miningPools
   )
 
   // 通过转换后的lpt价格
-  const [lptTotalPrice] = useMDexPrice(
-    valueAprToken,
-    settleToken,
+  const [lptTotalPrice] =  await getMDexPrice(
+    miningPools.valueAprToken,
+    miningPools.settleToken,
     1,
-    valueAprPath,
-    _chainId
+    miningPools.valueAprPath,
+    miningPools
   )
+
+  const lptTotalValue = new BigNumber(lptTotalPrice)
+    .multipliedBy(new BigNumber(lptValue))
+    .toString()
 
   // 奖励转换后的价格
-  const [rewardsTotalPrice] = useMDexPrice(
-    reward1_address,
-    settleToken,
+  const [rewardsTotalPrice] = await getMDexPrice(
+    miningPools.rewards1Address,
+    miningPools.settleToken,
     1,
-    rewardsAprPath,
-    _chainId
+    miningPools.rewardsAprPath,
+    miningPools
   )
+  // console.log('rewardsTotalPrice', rewardsTotalPrice)
 
-  useMemo(() => {
-    setLptTotalValue(
-      new BigNumber(lptTotalPrice)
-        .multipliedBy(new BigNumber(lptValue))
-        .toString()
+  const rewardsTotalValue = new BigNumber(rewardsTotalPrice)
+    .multipliedBy(new BigNumber(reward1Vol))
+    .toString()
+
+  const span = await getSpan(miningPools.address, miningPools.abi, miningPools.networkId)
+  console.log('span', span)
+  // 奖励1的价值
+  // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
+
+  let apr = '0'
+  if (lptTotalValue && rewardsTotalValue && span > 0) {
+    const dayRate = new BigNumber(1).div(
+      new BigNumber(span).div(new BigNumber(86400))
     )
-  }, [lptTotalPrice])
-
-  useMemo(() => {
-    setRewardsTotalValue(
-      new BigNumber(rewardsTotalPrice)
-        .multipliedBy(new BigNumber(reward1Vol))
-        .toString()
-    )
-  }, [rewardsTotalPrice])
-
-  // 计算奖励的量
-  useMemo(() => {
-    if (allowance && pool_address) {
-      const reward1_vol = new BigNumber(allowance).minus(
-        new BigNumber(unClaimReward)
-      )
-      setReward1Vol(reward1_vol.toString())
-    }
-  }, [allowance, unClaimReward, _chainId])
-
-  useMemo(() => {
-    if (lptTotalValue && rewardsTotalValue && span > 0) {
-      const dayRate = new BigNumber(1).div(
-        new BigNumber(span).div(new BigNumber(86400))
-      )
-
-      if (mode === 1) {
-        // 奖励的war
-        const yearReward = dayRate
-          .multipliedBy(new BigNumber(rewardsTotalValue))
-          .multipliedBy(new BigNumber(365))
-          .toFixed(0, 1)
-        // setYearReward(yearReward)
-        if (yearReward > 0) {
-          const _arp = new BigNumber(yearReward)
-            .div(new BigNumber(lptTotalValue))
-            .toString()
-          setApr(_arp)
-        }
-      } else if (mode === 2) {
-        const _arp = dayRate
-          .multipliedBy(new BigNumber(rewardsTotalValue))
-          .dividedBy(new BigNumber(lptTotalValue))
-          .plus(new BigNumber(1))
-          .exponentiatedBy(new BigNumber(365))
-        if (_arp > 0) {
-          setApr(_arp)
-        }
+    if (mode === 1) {
+      // 奖励的war
+      const yearReward = dayRate
+        .multipliedBy(new BigNumber(rewardsTotalValue))
+        .multipliedBy(new BigNumber(365))
+        .toFixed(0, 1)
+      // setYearReward(yearReward)
+      if (yearReward > 0) {
+        const _arp = new BigNumber(yearReward)
+          .div(new BigNumber(lptTotalValue))
+          .toString()
+        apr = _arp
+      }
+    } else if (mode === 2) {
+      const _arp = dayRate
+        .multipliedBy(new BigNumber(rewardsTotalValue))
+        .dividedBy(new BigNumber(lptTotalValue))
+        .plus(new BigNumber(1))
+        .exponentiatedBy(new BigNumber(365))
+      if (_arp > 0) {
+        apr = _arp
       }
     }
-    return () => {}
-  }, [span, lptTotalValue, rewardsTotalValue, blockHeight])
+  }
   return apr
 }
 
-export const useMdxARP = (
-  pool_address,
-  pool_abi,
-  lpt_address,
-  _chainId,
-  daily,
-  pid
-) => {
+export const useMdxARP = (miningPools) => {
   // mdx 年释放总量 * 价值 /
-  const multicallProvider = getOnlyMultiCallProvider(_chainId)
+  const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
   const [apr, setApr] = useState(0)
-   const { blockHeight } = useContext(VarContext)
+  const { blockHeight } = useContext(VarContext)
 
-  const lptValue = useLTPValue(
-    lpt_address,
-    WAR_ADDRESS(ChainId.HECO),
-    pool_address,
-    pool_abi,
-    _chainId
-  )
-  const [mdex2warPrice, mdex2warPriceFee] = useMDexPrice(
-    MDEX_ADDRESS,
-    WAR_ADDRESS(ChainId.HECO),
-    daily,
-    [USDT_ADDRESS(ChainId.HECO)],
-    _chainId // 取价格的chainId只有在HECO上有
-  )
-  useMemo(() => {
-    if (pool_address && lptValue > 0 && mdex2warPrice > 0) {
-      const contract = new Contract(MDEX_POOL_ADDRESS, MDexPool)
-      const pool_contract = new Contract(pool_address, pool_abi)
-      const promiseList = [contract.poolInfo(pid), pool_contract.totalSupply()]
-      // console.log('request___2')
-      multicallProvider.all(promiseList).then((data) => {
-        data = processResult(data)
-        const [poolInfo, totalSupply] = data
-        const totalAmount = poolInfo[5]
-        const radio = new BigNumber(totalSupply).div(new BigNumber(totalAmount))
-        const totalRewardValue = radio
-          .multipliedBy(new BigNumber(numToWei(mdex2warPrice)))
-          .multipliedBy(new BigNumber(365))
-        const apr = totalRewardValue.div(lptValue).toString()
-        setApr(apr)
-      })
-    }
-  }, [lptValue, mdex2warPrice, blockHeight])
+  const getData = async () =>{
+
+    const lptValue = 0 //await getLTPValue(
+      // miningPools.MLP,
+      // miningPools.quickToken,
+      // miningPools.address,
+      // miningPools.abi,
+      // miningPools
+    // )
+    console.log('lptValue__', lptValue)
+  }
+  const [mdex2warPrice, mdex2warPriceFee] = ['0','0']
+
+  //   useMDexPrice(
+  //   MDEX_ADDRESS,
+  //   WAR_ADDRESS(ChainId.HECO),
+  //   daily,
+  //   [USDT_ADDRESS(ChainId.HECO)],
+  //   _chainId // 取价格的chainId只有在HECO上有
+  // )
+  // useMemo(() => {
+  //   if (pool_address && lptValue > 0 && mdex2warPrice > 0) {
+  //     const contract = new Contract(MDEX_POOL_ADDRESS, MDexPool)
+  //     const pool_contract = new Contract(pool_address, pool_abi)
+  //     const promiseList = [contract.poolInfo(pid), pool_contract.totalSupply()]
+  //     // console.log('request___2')
+  //     multicallProvider.all(promiseList).then((data) => {
+  //       data = processResult(data)
+  //       const [poolInfo, totalSupply] = data
+  //       const totalAmount = poolInfo[5]
+  //       const radio = new BigNumber(totalSupply).div(new BigNumber(totalAmount))
+  //       const totalRewardValue = radio
+  //         .multipliedBy(new BigNumber(numToWei(mdex2warPrice)))
+  //         .multipliedBy(new BigNumber(365))
+  //       const apr = totalRewardValue.div(lptValue).toString()
+  //       setApr(apr)
+  //     })
+  //   }
+  // }, [lptValue, mdex2warPrice, blockHeight])
   return apr
 }
 

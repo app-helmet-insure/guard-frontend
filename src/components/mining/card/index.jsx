@@ -9,7 +9,7 @@ import { formatNumber } from 'accounting'
 import { formatAmount, splitFormat } from '../../../utils/format'
 import { useBalance } from '../../../hooks/index'
 import ERC20 from '../../../web3/abi/ERC20.json'
-import { useMiningInfo, useAPR, useMdxARP } from '../../../hooks/mining'
+import { useMiningInfo, getAPR, useMdxARP } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 import {VarContext} from '../../../context'
@@ -23,20 +23,23 @@ const MiningCard = props => {
     miningPools && miningPools.MLP,
     ERC20.abi
   )
-  // const apr = useAPR(
-  //   miningPools.address,
-  //   miningPools.abi,
-  //   miningPools.MLP,
-  //   miningPools.rewards1Address,
-  //   miningPools.valueAprToken,
-  //   miningPools.valueAprPath,
-  //   miningPools.rewardsAprPath,
-  //   miningPools.settleToken,
-  //   miningPools.earnName === 'APY' ? 2 : 1,
-  //   miningPools.networkId
-  // )
+  const [apr, setApr] = useState('0')
+  useMemo(() => {
+    if (blockHeight !== 0) {
+      // getAPR(
+      //   miningPools,
+      //   miningPools.earnName === 'APY' ? 2 : 1,
+      // ).then(_apr => {
+      //   console.log('_apr', _apr)
+      //   setApr(_apr)
+      // })
+    }
+  }, [blockHeight])
 
-  // const mdexApr = useMdxARP(
+  // 奖励2的apr
+  const mdexApr = useMdxARP(miningPools)
+
+  //   useMdxARP(
   //   miningPools.mdexReward ? miningPools.address : null,
   //   miningPools.abi,
   //   miningPools.MLP,
@@ -44,6 +47,8 @@ const MiningCard = props => {
   //   miningPools.mdexDaily,
   //   miningPools.mdexPid
   // )
+  console.log('mdexApr', mdexApr)
+
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
   const [tabFlag, setTabFlag] = useState('Stake')
@@ -54,6 +59,9 @@ const MiningCard = props => {
     miningPools.dueDate &&
     miningPools.dueDate <= now &&
     miningPools.openDate < now
+
+
+
   // useMemo(() => {
   //   if (!isNaN(apr) && apr > 0 && (!miningPools.mdexReward || mdexApr > 0)) {
   //     setPercentage((apr * 100 + mdexApr * 100).toFixed(2))

@@ -35,16 +35,16 @@ export function USDT_ADDRESS(chainId) {
   }
 }
 
-export function MDEX_FACTORY_ADDRESS(chainId) {
-  switch (chainId) {
-    case ChainId.BSC:
-      return '0xb0b670fc1F7724119963018DB0BfA86aDb22d941'
-    case ChainId.HECO:
-      return '0xb0b670fc1F7724119963018DB0BfA86aDb22d941'
-    default:
-      return '0xb0b670fc1F7724119963018DB0BfA86aDb22d941'
-  }
-}
+// export function MDEX_FACTORY_ADDRESS(chainId) {
+//   switch (chainId) {
+//     case ChainId.BSC:
+//       return '0xb0b670fc1F7724119963018DB0BfA86aDb22d941'
+//     case ChainId.HECO:
+//       return '0xb0b670fc1F7724119963018DB0BfA86aDb22d941'
+//     default:
+//       return '0xb0b670fc1F7724119963018DB0BfA86aDb22d941'
+//   }
+// }
 
 export const WAR_USDT_LPT = {
   address: '0x2eAB1e47Bf1660bf6De9437BD061db666111e041',
@@ -60,11 +60,11 @@ export const MULTICALL_NETWORKS = {
 export function MINE_MOUNTAIN_ADDRESS(chainId) {
   switch (chainId) {
     case ChainId.BSC:
-      return '0xEEC6169616d6E50560E52460A2C74f74Cdf57b6F'
+      return '0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd'
     case ChainId.HECO:
-      return '0xEEC6169616d6E50560E52460A2C74f74Cdf57b6F'
+      return '0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd'
     default:
-      return '0xEEC6169616d6E50560E52460A2C74f74Cdf57b6F'
+      return '0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd'
   }
 }
 
