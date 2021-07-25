@@ -11,7 +11,7 @@ import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import { toFixed } from 'accounting'
-import { useBalance } from '../../../hooks'
+import { useBalance, useEthBalance } from '../../../hooks'
 const NowTime = parseInt(Date.now() / 1000, 10)
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const Supply = props => {
@@ -31,7 +31,14 @@ const Supply = props => {
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
   })
-  const balance = CurrentInsurance.collateral_symbol === 'MATIC' ? useETHBalance() : useBalance(1000000000, CurrentInsurance.collateral_address)
+  const Balance =
+    CurrentInsurance.collateral_symbol === 'MATIC'
+      ? useEthBalance()
+      : useBalance(
+        0,
+        CurrentInsurance.collateral_address,
+        CurrentInsurance.collateral_decimals_number
+      )
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -74,19 +81,18 @@ const Supply = props => {
       )
       const _expiry = CurrentInsurance.expiry
       const settleToken = CurrentInsurance.settleToken_address
-      console.log(Earning)
-      const price = toWei(Earning + '', CurrentInsurance.settleToken_decimals)
+      const price = toWei(0.1 + '', CurrentInsurance.settleToken_decimals)
+      console.log(
+        _private,
+        _collateral,
+        _underlying,
+        _strikePrice,
+        _expiry,
+        toWei(InsuranceVolume, CurrentInsurance.collateral_decimals),
+        settleToken,
+        price
+      )
       if (CurrentInsurance.collateral_symbol !== 'MATIC') {
-        console.log(
-          _private,
-          _collateral,
-          _underlying,
-          _strikePrice,
-          _expiry,
-          toWei(InsuranceVolume),
-          settleToken,
-          price
-        )
         SellContracts.methods
           .sell(
             _private,
@@ -94,7 +100,7 @@ const Supply = props => {
             _underlying,
             _strikePrice,
             _expiry,
-            toWei(InsuranceVolume),
+            toWei(InsuranceVolume, CurrentInsurance.collateral_decimals),
             settleToken,
             price
           )
@@ -119,7 +125,10 @@ const Supply = props => {
             settleToken,
             price
           )
-          .send({ from: account, value: toWei(InsuranceVolume) })
+          .send({
+            from: account,
+            value: toWei(InsuranceVolume, CurrentInsurance.collateral_decimals),
+          })
           .on('transactionHash', hash => {
             setOpenWaiting(true)
           })
@@ -234,7 +243,7 @@ const Supply = props => {
           <span>{CurrentInsurance.collateral_symbol}</span>
         </div>
         <p className="left">
-          可用余额: {balance} {CurrentInsurance.collateral_symbol}
+          可用余额: {Balance} {CurrentInsurance.collateral_symbol}
         </p>
         <button
           className="confirm"

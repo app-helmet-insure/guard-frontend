@@ -14,6 +14,7 @@ import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 import './index.less'
+import moment from 'moment'
 
 const MySupply = props => {
   const [SupplyList, setSupplyList] = useState([])
@@ -48,10 +49,14 @@ const MySupply = props => {
               underlying_decimals,
               insurance,
               settleToken_symbol,
+              settleToken_decimals,
             } = CurrentInsurance
             const ResultItem = {
               type,
               expiry: item.expiry,
+              show_expiry: moment(new Date(item.expiry * 1000)).format(
+                'YYYY/MM/DD HH:mm:ss'
+              ),
               long: item.long,
               short: item.short,
               show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
@@ -75,13 +80,31 @@ const MySupply = props => {
                   '...' +
                   itemAsk.seller.substr(-4).toUpperCase(),
                 settleToken_symbol,
-                show_price: fromWei(itemAsk.price, strikeprice_decimals),
+                show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
                 volume: itemAsk.volume,
                 show_volume: fromWei(itemAsk.volume, collateral_decimals),
               }
-              if (item.binds) {
-                console.log(1)
+              if (itemAsk.binds.length) {
+                let number = 0
+                if (itemAsk.binds.length > 1) {
+                  itemAsk.binds.forEach(
+                    itembid =>
+                      (number += Number(
+                        fromWei(itembid.volume, collateral_decimals)
+                      ))
+                  )
+                } else {
+                  number = Number(fromWei(itemAsk.binds[0].volume))
+                }
+                ResultItem.show_besold = number
+                ResultItem.show_unsold =
+                  Number(fromWei(itemAsk.volume, collateral_decimals)) - number
+              } else {
+                ResultItem.show_besold = 0
+                ResultItem.show_unsold = Number(
+                  fromWei(itemAsk.volume, collateral_decimals)
+                )
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               if (
@@ -94,6 +117,7 @@ const MySupply = props => {
           }
         })
         const FixList = FixListPush
+        console.log(FixList)
         setSupplyList(FixList)
       }
     })
@@ -143,7 +167,7 @@ const MySupply = props => {
                   </span>
                 </div>
                 <div>
-                  <span>{item.expiry}</span>
+                  <span>{item.show_expiry}</span>
                   <span>ID: {item.askID}</span>
                 </div>
               </section>
@@ -154,13 +178,6 @@ const MySupply = props => {
                   <span>{item.putToken}</span>
                 </div>
                 <div>
-                  <span>持有量</span>
-                  <span>{item.show_volume}</span>
-                  <span>{item.callToken}</span>
-                </div>
-              </section>
-              <section>
-                <div>
                   <span>保单单价</span>
                   <span>
                     {(
@@ -169,10 +186,17 @@ const MySupply = props => {
                   </span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
+              </section>
+              <section>
                 <div>
-                  <span>保费</span>
-                  <span>{item.show_price}</span>
-                  <span>{item.settleToken_symbol}</span>
+                  <span>已出售</span>
+                  <span>{item.show_besold}</span>
+                  <span>{item.callToken}</span>
+                </div>
+                <div>
+                  <span>未出售</span>
+                  <span>{item.show_unsold}</span>
+                  <span>{item.callToken}</span>
                 </div>
               </section>
               <section>
