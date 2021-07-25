@@ -11,8 +11,7 @@ const createContractERC20 = (chainId, address) => {
 }
 
 export const getAllowance = (miningPools) => {
-  const { chainId } = useActiveWeb3React()
-  const contract = createContractERC20(miningPools.networkId || chainId, miningPools.rewards1Address)
+  const contract = createContractERC20(miningPools.networkId, miningPools.rewards1Address)
   return contract.methods
     .allowance(miningPools.mineMountainAddress, miningPools.address)
     .call()

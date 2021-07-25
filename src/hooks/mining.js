@@ -1,83 +1,63 @@
-import React, {useState, useMemo, useContext} from 'react'
+import React from 'react'
 import Web3 from 'web3'
 import BigNumber from 'bignumber.js'
-import { useActiveWeb3React, useBlockHeight } from '../web3'
 import ERC20 from '../web3/abi/ERC20.json'
 import LPT from '../web3/abi/LPT.json'
-import MDexFactory from '../web3/abi/MDexFactory.json'
 import MDexPool from '../web3/abi/MDexPool.json'
-import MDexRouter from '../web3/abi/MDexRouter.json'
 import { numToWei } from '../utils/format'
 import Mining from '../configs/mining'
 import { processResult, getOnlyMultiCallProvider } from '../web3/multicall'
 import { Contract } from 'ethers-multicall-x'
-import {VarContext} from '../context'
 import {
-  ChainId,
   ADDRESS_0,
-  WAR_ADDRESS,
-  USDT_ADDRESS,
-  MINE_MOUNTAIN_ADDRESS,
   MDEX_POOL_ADDRESS,
   MDEX_ADDRESS,
-  MDEX_ROUTER_ADDRESS,
   getRpcUrl,
 } from '../web3/address'
 import { getAllowance } from './wallet'
 
-export const useMiningInfo = (address = '') => {
-  const { account } = useActiveWeb3React()
+export const getMiningInfo = (address, account) => {
   // const blockHeight = useBlockHeight()
-  const {blockHeight} = useContext(VarContext)
   const pool = Mining.find(o => o.address === address)
-
-  const now = parseInt(Date.now() / 1000)
-
-  const [miningPoolsInfo, setMiningPoolsInfo] = useState(pool)
-
-  useMemo(() => {
-    const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
-    const pool_contract = new Contract(pool.address, pool.abi)
-    const currency_token = new Contract(pool.MLP, ERC20.abi)
-    const promise_list = [
-      pool_contract.begin(), // 开始时间
-      pool_contract.totalSupply(), // 总抵押
-    ]
-    if (account) {
-      promise_list.push(
-        pool_contract.earned(account), // 奖励1
-        pool_contract.balanceOf(account), // 我的抵押
-        currency_token.allowance(account, pool.address),
-      )
-      if (pool.rewards2) {
-        promise_list.push(pool_contract.earned2(account))
-      }
+  const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
+  const pool_contract = new Contract(pool.address, pool.abi)
+  const currency_token = new Contract(pool.MLP, ERC20.abi)
+  const promise_list = [
+    pool_contract.begin(), // 开始时间
+    pool_contract.totalSupply(), // 总抵押
+  ]
+  if (account) {
+    promise_list.push(
+      pool_contract.earned(account), // 奖励1
+      pool_contract.balanceOf(account), // 我的抵押
+      currency_token.allowance(account, pool.address),
+    )
+    if (pool.rewards2) {
+      promise_list.push(pool_contract.earned2(account))
     }
-    multicallProvider
-      .all(promise_list)
-      .then(data => {
-        data = processResult(data)
-        const [
-          begin,
-          totalSupply,
-          earned = 0,
-          balanceOf = 0,
-          currency_allowance = 0,
-          earned2 = 0,
-        ] = data
-        const newPool = Object.assign({}, pool, {
-          start_at: begin,
-          earned,
-          earned2,
-          totalSupply,
-          balanceOf: Web3.utils.fromWei(String(balanceOf), 'ether'),
-          allowance: currency_allowance,
-        })
-        setMiningPoolsInfo(newPool)
+  }
+  return multicallProvider
+    .all(promise_list)
+    .then(data => {
+      data = processResult(data)
+      const [
+        begin,
+        totalSupply,
+        earned = 0,
+        balanceOf = 0,
+        currency_allowance = 0,
+        earned2 = 0,
+      ] = data
+      const newPool = Object.assign({}, pool, {
+        start_at: begin,
+        earned,
+        earned2,
+        totalSupply,
+        balanceOf: Web3.utils.fromWei(String(balanceOf), 'ether'),
+        allowance: currency_allowance,
       })
-
-  }, [account, address, blockHeight])
-  return miningPoolsInfo
+      return newPool
+    })
 }
 
 export const getTotalRewards = (miningPools) => {
@@ -171,16 +151,15 @@ export const getMDexPrice = (
   path = [],
   miningPools
 ) => {
+  if (amount === 0) return ['0', '0']
   const FEE_RADIO = '0.003'
 
   const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
-  const getPairPrice = (address1, address2, amount) => {
-    console.log('address1, address2', address1, address2)
+  const getPairPrice = (address1_, address2_, amount_) => {
     const factory = new Contract(miningPools.factoryAddress, miningPools.factoryAbi) // MDEX_FACTORY_ADDRESS(_chainId), MDexFactory
-    const promise_list = [factory.getPair(address1, address2)]
-    // console.log('request___3')
+    const promise_list = [factory.getPair(address1_, address2_)]
     return multicallProvider.all(promise_list).then((data) => {
-      let [pair_address] = processResult(data)
+      const [pair_address] = processResult(data)
       console.log('pair_address', pair_address)
       const pair_contract = new Contract(pair_address, LPT)
       const mdex_router_contract = new Contract(miningPools.routerAddress, miningPools.routerAbi)
@@ -196,7 +175,7 @@ export const getMDexPrice = (
         const { _reserve0, _reserve1 } = getReserves
         const mdexRouterList1 = [
           mdex_router_contract.getAmountOut(
-            numToWei(amount),
+            numToWei(amount_),
             _reserve1,
             _reserve0
           ),
@@ -214,7 +193,7 @@ export const getMDexPrice = (
           return multicallProvider
             .all(mdexRouterList1)
             .then((amountOutData) => {
-              let [amountOut] = processResult(amountOutData)
+              const [amountOut] = processResult(amountOutData)
               return Web3.utils.fromWei(amountOut, 'ether')
             })
         } else if (token1.toLowerCase() == address2.toLowerCase()) {
@@ -222,17 +201,17 @@ export const getMDexPrice = (
           return multicallProvider
             .all(mdexRouterList2)
             .then((amountOutData) => {
-              let [amountOut] = processResult(amountOutData)
+              const [amountOut] = processResult(amountOutData)
               return Web3.utils.fromWei(amountOut, 'ether')
             })
         }
       })
     }).catch(e => {
-      console.log('eee',e)
+      console.log('eee', e)
     })
   }
 
-  const getPrice = async (address1, address2, amount, path) => {
+  const getPrice = async () => {
     const _path = [address1, ...path, address2]
     let _price = 0
     _price = amount
@@ -256,9 +235,7 @@ export const getMDexPrice = (
     return [_price, _fee]
   }
 
-  if (amount === 0) return ['0', '0']
-  return getPrice(address1, address2, amount, path, miningPools.networkId)
-
+  return getPrice()
 }
 
 
@@ -350,51 +327,46 @@ export const getAPR = async (
   return apr
 }
 
-export const useMdxARP = (miningPools) => {
+export const useMdxARP = async (miningPools) => {
   // mdx 年释放总量 * 价值 /
   const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
-  const [apr, setApr] = useState(0)
-  const { blockHeight } = useContext(VarContext)
+  const lptValue = await getLTPValue(
+    miningPools.MLP,
+    miningPools.quickToken,
+    miningPools.address,
+    miningPools.abi,
+    miningPools
+  )
 
-  const getData = async () =>{
+  console.log('lptValue__', lptValue)
 
-    const lptValue = 0 //await getLTPValue(
-      // miningPools.MLP,
-      // miningPools.quickToken,
-      // miningPools.address,
-      // miningPools.abi,
-      // miningPools
-    // )
-    console.log('lptValue__', lptValue)
+
+  const [mdex2warPrice] = getMDexPrice(
+    MDEX_ADDRESS,
+    miningPools.quickToken,
+    miningPools.mdexDaily,
+    miningPools.rewardsAprPath,
+    miningPools.networkId, // 取价格的chainId只有在HECO上有
+    miningPools
+  )
+  console.log('mdex2warPrice', mdex2warPrice)
+
+  let apr = '0'
+  if (lptValue > 0 && mdex2warPrice > 0) {
+    const contract = new Contract(MDEX_POOL_ADDRESS, MDexPool)
+    const pool_contract = new Contract(miningPools.address, miningPools.abi)
+    const promiseList = [contract.poolInfo(miningPools.mdexPid), pool_contract.totalSupply()]
+    multicallProvider.all(promiseList).then((data) => {
+      data = processResult(data)
+      const [poolInfo, totalSupply] = data
+      const totalAmount = poolInfo[5]
+      const radio = new BigNumber(totalSupply).div(new BigNumber(totalAmount))
+      const totalRewardValue = radio
+        .multipliedBy(new BigNumber(numToWei(mdex2warPrice)))
+        .multipliedBy(new BigNumber(365))
+      apr = totalRewardValue.div(lptValue).toString()
+    })
   }
-  const [mdex2warPrice, mdex2warPriceFee] = ['0','0']
-
-  //   useMDexPrice(
-  //   MDEX_ADDRESS,
-  //   WAR_ADDRESS(ChainId.HECO),
-  //   daily,
-  //   [USDT_ADDRESS(ChainId.HECO)],
-  //   _chainId // 取价格的chainId只有在HECO上有
-  // )
-  // useMemo(() => {
-  //   if (pool_address && lptValue > 0 && mdex2warPrice > 0) {
-  //     const contract = new Contract(MDEX_POOL_ADDRESS, MDexPool)
-  //     const pool_contract = new Contract(pool_address, pool_abi)
-  //     const promiseList = [contract.poolInfo(pid), pool_contract.totalSupply()]
-  //     // console.log('request___2')
-  //     multicallProvider.all(promiseList).then((data) => {
-  //       data = processResult(data)
-  //       const [poolInfo, totalSupply] = data
-  //       const totalAmount = poolInfo[5]
-  //       const radio = new BigNumber(totalSupply).div(new BigNumber(totalAmount))
-  //       const totalRewardValue = radio
-  //         .multipliedBy(new BigNumber(numToWei(mdex2warPrice)))
-  //         .multipliedBy(new BigNumber(365))
-  //       const apr = totalRewardValue.div(lptValue).toString()
-  //       setApr(apr)
-  //     })
-  //   }
-  // }, [lptValue, mdex2warPrice, blockHeight])
   return apr
 }
 
