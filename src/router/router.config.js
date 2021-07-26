@@ -3,9 +3,9 @@
 import Home from '../pages/home'
 import Insurance from '../pages/insurance'
 import Mining from '../pages/mining'
-import MyPolicylicy from '../components/insurance/mypolicy'
-import MySupply from '../components/insurance/mysupply'
-import MySettle from '../components/insurance/mysettle'
+import MyPolicylicy from '../pages/mypolicy'
+import MySupply from '../pages/mysupply'
+import MySettle from '../pages/mysettle'
 
 export default [
   {
