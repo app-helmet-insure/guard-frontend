@@ -21,15 +21,15 @@ export const navList = [
     path: '/insurance',
     children: [
       {
-        name: '我的保单',
+        name:  <FormattedMessage id='header_text1' />,
         path: '/mypolicy',
       },
       {
-        name: '我发布的保险',
+        name:  <FormattedMessage id='mysupply_text1' />,
         path: '/mysupply',
       },
       {
-        name: '我的结算',
+        name:  <FormattedMessage id='mysettle_text1' />,
         path: '/mysettle',
       },
     ],

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { FormattedMessage } from 'react-intl'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
 import NoData from '../../../assets/images/insurance/nodata.svg'
@@ -196,15 +197,17 @@ const MySettle = props => {
     }
   }, [account])
   return (
-    <div className="insurance_mysettle">
-      <h2 className="insurance_mysettle_title">我的结算</h2>
+    <div className='insurance_mysettle'>
+      <h2 className='insurance_mysettle_title'>
+        <FormattedMessage id='mysettle_text1' />
+      </h2>
       {SettleList && SettleList.length > 0 ? (
-        <div className="insurance_mysettle_list">
+        <div className='insurance_mysettle_list'>
           {SettleList.map((item, index) => (
-            <div className="insurance_mysettle_item" key={index}>
+            <div className='insurance_mysettle_item' key={index}>
               <section>
                 <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt='' />
                   <span className={item.type}>
                     {item.callToken +
                       ' ' +
@@ -216,9 +219,11 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
-              <section className="mysettle_section_pc">
+              <section className='mysettle_section_pc'>
                 <div>
-                  <span>计价资产</span>
+                  <span>
+                    <FormattedMessage id='mysettle_text2' />
+                  </span>
                   <span>
                     {item.type === 'Call'
                       ? Number(item.col) + Number(item.claimBalance)
@@ -229,9 +234,11 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
-              <section className="mysettle_section_pc">
+              <section className='mysettle_section_pc'>
                 <div>
-                  <span>基础资产</span>
+                  <span>
+                    <FormattedMessage id='mysettle_text3' />
+                  </span>
                   <span>
                     {item.type === 'Call'
                       ? item.und
@@ -242,9 +249,11 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
-              <section className="mysettle_section_h5">
+              <section className='mysettle_section_h5'>
                 <div>
-                  <span className="mysettle_price_title">计价资产</span>
+                  <span className='mysettle_price_title'>
+                    <FormattedMessage id='mysettle_text2' />
+                  </span>
                   <p>
                     <span>
                       {item.type === 'Call'
@@ -257,7 +266,9 @@ const MySettle = props => {
                   </p>
                 </div>
                 <div>
-                  <span className="mysettle_price_title">基础资产</span>
+                  <span className='mysettle_price_title'>
+                    <FormattedMessage id='mysettle_text3' />
+                  </span>
                   <p>
                     <span>
                       {item.type === 'Call'
@@ -272,14 +283,14 @@ const MySettle = props => {
               </section>
               <section>
                 <button onClick={() => handleClickClaimOrder(item)}>
-                  取回
+                  <FormattedMessage id='mysettle_text4' />
                 </button>
               </section>
             </div>
           ))}
         </div>
       ) : (
-        <img src={NoData} alt="" className="nodata" />
+        <img src={NoData} alt='' className='nodata' />
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog

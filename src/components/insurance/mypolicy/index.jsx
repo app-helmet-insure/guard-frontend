@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { FormattedMessage } from 'react-intl'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
 import NoData from '../../../assets/images/insurance/nodata.svg'
@@ -196,7 +197,9 @@ const MyPolicy = props => {
   }, [account])
   return (
     <div className='insurance_mypolicy'>
-      <h2 className='insurance_mypolicy_title'>我的保单</h2>
+      <h2 className='insurance_mypolicy_title'>
+        <FormattedMessage id='mypolicy_text1' />
+      </h2>
       {PolicyList && PolicyList.length > 0 ? (
         <div className='insurance_mypolicy_list'>
           {PolicyList.map((item, index) => (
@@ -221,42 +224,56 @@ const MyPolicy = props => {
               </section>
               <section className='section_pc'>
                 <div>
-                  <span>出险价</span>
+                  <span>
+                    <FormattedMessage id='mypolicy_text2' />
+                  </span>
                   <span>{item.show_strikePrice}</span>
                   <span>{item.putToken}</span>
                 </div>
                 <div>
-                  <span>持有量</span>
+                  <span>
+                    <FormattedMessage id='mypolicy_text3' />
+                  </span>
                   <span>{item.show_volume}</span>
                   <span>{item.callToken}</span>
                 </div>
               </section>
               <section className='section_pc'>
                 <div>
-                  <span>保单单价</span>
+                  <span>
+                    <FormattedMessage id='mypolicy_text4' />
+                  </span>
                   <span>{Number(item.show_price).toFixed(8)}</span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
                 <div>
-                  <span>保费</span>
                   <span>
-                    {Number(new BigNumber(
-                      Number(item.show_price) * Number(item.show_volume)
-                    ).toString()).toFixed(8)}
+                    <FormattedMessage id='mypolicy_text5' />
+                  </span>
+                  <span>
+                    {Number(
+                      new BigNumber(
+                        Number(item.show_price) * Number(item.show_volume)
+                      ).toString()
+                    ).toFixed(8)}
                   </span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
               <section className='section_h5'>
                 <div>
-                  <span className='mypolicy_price_title'>出险价</span>
+                  <span className='mypolicy_price_title'>
+                    <FormattedMessage id='mypolicy_text2' />
+                  </span>
                   <p>
                     <span>{item.show_strikePrice}</span>
                     <span>{item.putToken}</span>
                   </p>
                 </div>
                 <div>
-                  <span className='mypolicy_price_title'>保单单价</span>
+                  <span className='mypolicy_price_title'>
+                    <FormattedMessage id='mypolicy_text4' />
+                  </span>
                   <p>
                     <span>{Number(item.show_price).toFixed(8)}</span>
                     <span>{item.settleToken_symbol}</span>
@@ -265,14 +282,18 @@ const MyPolicy = props => {
               </section>
               <section className='section_h5'>
                 <div>
-                  <span className='mypolicy_price_title'>持有量</span>
+                  <span className='mypolicy_price_title'>
+                    <FormattedMessage id='mypolicy_text3' />
+                  </span>
                   <p>
                     <span>{item.show_volume}</span>
                     <span>{item.callToken}</span>
                   </p>
                 </div>
                 <div>
-                  <span className='mypolicy_price_title'>保费</span>
+                  <span className='mypolicy_price_title'>
+                    <FormattedMessage id='mypolicy_text5' />
+                  </span>
                   <p>
                     <span>
                       {new BigNumber(
@@ -284,7 +305,9 @@ const MyPolicy = props => {
                 </div>
               </section>
               <section>
-                <button onClick={() => handleClickWithDraw(item)}>出险</button>
+                <button onClick={() => handleClickWithDraw(item)}>
+                  <FormattedMessage id='mypolicy_text6' />
+                </button>
               </section>
             </div>
           ))}
