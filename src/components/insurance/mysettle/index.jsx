@@ -196,14 +196,15 @@ const MySettle = props => {
     }
   }, [account])
   return (
-    <div className="insurance_mysettle">
+    <div className='insurance_mysettle'>
+      <h2 className='insurance_mysettle_title'>我的结算</h2>
       {SettleList && SettleList.length > 0 ? (
-        <div className="insurance_mysettle_list">
+        <div className='insurance_mysettle_list'>
           {SettleList.map((item, index) => (
-            <div className="insurance_mysettle_item" key={index}>
+            <div className='insurance_mysettle_item' key={index}>
               <section>
                 <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt='' />
                   <span className={item.type}>
                     {item.callToken +
                       ' ' +
@@ -215,7 +216,7 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
-              <section>
+              <section className='mysettle_section_pc'>
                 <div>
                   <span>计价资产</span>
                   <span>
@@ -228,7 +229,7 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
-              <section>
+              <section className='mysettle_section_pc'>
                 <div>
                   <span>基础资产</span>
                   <span>
@@ -241,6 +242,34 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
+              <section className='mysettle_section_h5'>
+                <div>
+                  <span className='mysettle_price_title'>计价资产</span>
+                  <p>
+                    <span>
+                      {item.type === 'Call'
+                        ? Number(item.col) + Number(item.claimBalance)
+                        : item.und}
+                    </span>
+                    <span>
+                      {item.type === 'Call' ? item.putToken : item.callToken}
+                    </span>
+                  </p>
+                </div>
+                <div>
+                  <span className='mysettle_price_title'>基础资产</span>
+                  <p>
+                    <span>
+                      {item.type === 'Call'
+                        ? item.und
+                        : Number(item.col) + Number(item.claimBalance)}
+                    </span>
+                    <span>
+                      {item.type === 'Call' ? item.callToken : item.putToken}
+                    </span>
+                  </p>
+                </div>
+              </section>
               <section>
                 <button onClick={() => handleClickClaimOrder(item)}>
                   取回
@@ -250,7 +279,7 @@ const MySettle = props => {
           ))}
         </div>
       ) : (
-        <img src={NoData} alt="" className="nodata" />
+        <img src={NoData} alt='' className='nodata' />
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
