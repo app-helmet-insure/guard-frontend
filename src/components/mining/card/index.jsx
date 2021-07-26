@@ -18,40 +18,41 @@ import {useActiveWeb3React} from '../../../web3'
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
   const {account} = useActiveWeb3React()
-  const [miningPools, setMiningPools] = useState(null)
-  useMemo(() => {
-    getMiningInfo(props.pools.address, account).then(setMiningPools)
-  }, [blockHeight, account])
-  const balance = useBalance(
-    blockHeight,
-    miningPools && miningPools.MLP,
-    ERC20.abi
-  )
-
 
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
   const [tabFlag, setTabFlag] = useState('Stake')
   const [aprPercentage, setPercentage] = useState('-')
   const [now, setNow] = useState(parseInt(Date.now() / 1000))
+
+  const [miningPools, setMiningPools] = useState(null)
+  const [apr, setApr] = useState('0')
+  const [mdexApr, setMdexApr] = useState('0')
+  // 获取池子信息
+  useMemo(() => {
+    if (blockHeight !== 0) {
+      getMiningInfo(props.pools.address, account).then((miningPools_)=>{
+        setMiningPools(miningPools_)
+        getAPR(
+          miningPools_,
+          miningPools_.earnName === 'APY' ? 2 : 1,
+        ).then(setApr)
+        // 奖励2的apr
+        getMdxARP(miningPools_).then(setMdexApr)
+      })
+    }
+  }, [blockHeight, account])
+  // 获取池子余额
+  const balance = useBalance(
+    blockHeight,
+    miningPools && miningPools.MLP,
+    ERC20.abi
+  )
   const isFinish =
     miningPools &&
     miningPools.dueDate &&
     miningPools.dueDate <= now &&
     miningPools.openDate < now
-
-  const [apr, setApr] = useState('0')
-  const [mdexApr, setMdexApr] = useState('0')
-  useMemo(() => {
-    if (blockHeight !== 0 && miningPools) {
-      getAPR(
-        miningPools,
-        miningPools.earnName === 'APY' ? 2 : 1,
-      ).then(setApr)
-      // 奖励2的apr
-      getMdxARP(miningPools).then(setMdexApr)
-    }
-  }, [blockHeight, miningPools])
 
   useMemo(() => {
     console.log('apr', apr, mdexApr)
