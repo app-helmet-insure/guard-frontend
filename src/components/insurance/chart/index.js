@@ -215,8 +215,8 @@ export const Chart = props => {
 
   const initChart = async () => {
     const [data, min, max] = await loadDataByBlock()
-
-    Highcharts.chart(document.getElementById(`chart_${lpt_address}`), {
+    const chartDom = document.getElementById(`chart_${lpt_address}`)
+    chartDom && Highcharts.chart(chartDom, {
       title: {
         text: null,
       },

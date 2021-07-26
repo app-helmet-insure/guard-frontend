@@ -1,34 +1,41 @@
-import loadable from '@/utils/loadable'
+// import loadable from '@/utils/loadable' // 懒加载
+
+import Home from '../pages/home'
+import Insurance from '../pages/insurance'
+import Mining from '../pages/mining'
+import MyPolicylicy from '../pages/mypolicy'
+import MySupply from '../pages/mysupply'
+import MySettle from '../pages/mysettle'
 
 export default [
   {
     path: '/',
-    component: loadable('/home'),
+    component: Home, // loadable('/home'),
     exact: true,
   },
   {
     path: '/insurance',
-    component: loadable('/insurance'),
+    component: Insurance,
     exact: true,
   },
   {
     path: '/mining',
-    component: loadable('/mining/index'),
+    component: Mining,
     exact: true,
   },
   {
     path: '/mypolicy',
-    component: loadable('/mypolicy/index'),
+    component: MyPolicylicy,
     exact: true,
   },
   {
     path: '/mysupply',
-    component: loadable('/mysupply/index'),
+    component: MySupply,
     exact: true,
   },
   {
     path: '/mysettle',
-    component: loadable('/mysettle/index'),
+    component: MySettle,
     exact: true,
   },
 ]

@@ -107,3 +107,36 @@ body ::-webkit-scrollbar {
 .ant-input[disabled] {
     background-color: #fff !important;
 }
+.ant-select-selector {
+    position: relative;
+    height: 48px !important;
+    &::before {
+        content: 'DPR';
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 14px;
+        color: #919AA6;
+    }
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-radius: 5px !important;   
+}
+.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    border-color: #4364E8 !important;
+    box-shadow: none !important;
+}
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+    border-color: #4364E8 !important; 
+}
+.ant-select-selection-item {
+    text-align: right !important;
+}
+.ant-select-item-option-content {
+    text-align: right;
+    padding-right: 18px;
+}
+.ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder {
+    line-height: 48px !important;
+}

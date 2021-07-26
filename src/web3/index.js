@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import Web3 from 'web3'
 import {getRpcUrl} from './address'
+import { Context } from 'react-intl/src/components/injectIntl'
 
 export const addToken = async (address, symbol, icon) =>{
   try {

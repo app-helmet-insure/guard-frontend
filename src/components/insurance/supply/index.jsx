@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useMemo } from 'react'
 import { VarContext } from '../../../context'
 import Web3 from 'web3'
+import { Select } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { toWei, fromWei } from 'web3-utils'
 import { useActiveWeb3React, getContract } from '../../../web3'
@@ -15,6 +16,8 @@ import { toFixed } from 'accounting'
 import BigNumber from 'bignumber.js'
 import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
+
+const { Option } = Select
 const NowTime = parseInt(Date.now() / 1000, 10)
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const DPRlist = [
@@ -38,6 +41,7 @@ const Supply = props => {
   const [IndexPrice, setIndexPrice] = useState(0)
   const [GuardPrice, setGuardPrice] = useState({ Call: 0, Put: 0 })
   const { library, active, account } = useActiveWeb3React()
+  const [dprVal, setDprVal] = useState('0.07%')
   const CurrentInsurance = getCurrentInsurance({
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
@@ -268,6 +272,12 @@ const Supply = props => {
     InsuranceType,
     DprStatus,
   ])
+
+  const setDpr = val => {
+    setDprVal(val)
+    setInsuranceDPR(val)
+  }
+
   return (
     <div className="insurance_supply">
       <div className="insurance_type">
@@ -291,10 +301,21 @@ const Supply = props => {
           </span>
           <span>
             <FormattedMessage id="insurance_text7" />
-            {CurrentInsurance.strikeprice} USD
+            {CurrentInsurance.strikeprice} USDC
           </span>
         </p>
-        <div className="dpr">
+        <Select value={dprVal} onChange={setDpr}>
+          {DPRlist.map(dpr => (
+            <Option
+              value={dpr.show}
+              key={dpr.show}
+              disabled={dpr.show === dprVal}
+            >
+              {dpr.show}
+            </Option>
+          ))}
+        </Select>
+        {/* <div className='dpr'>
           <input
             type="text"
             readOnly
@@ -318,7 +339,7 @@ const Supply = props => {
           ) : (
             ''
           )}
-        </div>
+        </div> */}
         <p className="left">
           <FormattedMessage id="insurance_text8" />
           {Earning} GUARD
@@ -361,4 +382,5 @@ const Supply = props => {
     </div>
   )
 }
+
 export default Supply
