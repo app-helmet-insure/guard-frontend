@@ -57,14 +57,20 @@ const MySettle = props => {
               .methods.balanceOf(account)
               .call()
               .then(long => {
-                const balance = fromWei(long, CurrentInsurance.collateral_decimals)
+                const balance = fromWei(
+                  long,
+                  CurrentInsurance.collateral_decimals
+                )
                 return balance
               })
             const shortBalance = await getContract(library, PoolABI, item.short)
               .methods.balanceOf(account)
               .call()
               .then(short => {
-                const balance = fromWei(short, CurrentInsurance.collateral_decimals)
+                const balance = fromWei(
+                  short,
+                  CurrentInsurance.collateral_decimals
+                )
                 return balance
               })
             if (Number(longBalance) > 0 && Number(shortBalance) > 0) {
@@ -125,9 +131,18 @@ const MySettle = props => {
                   callToken: insurance,
                   putToken: indextoken,
                   claimBalance: 0,
-                  col: toWei(SettleInfo.col),
-                  fee: toWei(SettleInfo.fee),
-                  und: toWei(SettleInfo.und),
+                  col: fromWei(
+                    SettleInfo.col,
+                    CurrentInsurance.collateral_decimals
+                  ),
+                  fee: fromWei(
+                    SettleInfo.fee,
+                    CurrentInsurance.settleToken_decimals
+                  ),
+                  und: fromWei(
+                    SettleInfo.und,
+                    CurrentInsurance.underlying_decimals
+                  ),
                 })
               } catch (error) {
                 console.log(error)
@@ -146,6 +161,7 @@ const MySettle = props => {
                 Number(newItem.col) + Number(newItem.claimBalance) > 0 ||
                 Number(newItem.und) > 0
             )
+            console.log
             setSettleList(FixList)
           }
         })
@@ -181,6 +197,7 @@ const MySettle = props => {
   }, [account])
   return (
     <div className="insurance_mysettle">
+      <h2 className="insurance_mysettle_title">我的结算</h2>
       {SettleList && SettleList.length > 0 ? (
         <div className="insurance_mysettle_list">
           {SettleList.map((item, index) => (
@@ -199,7 +216,7 @@ const MySettle = props => {
                   </span>
                 </div>
               </section>
-              <section>
+              <section className="mysettle_section_pc">
                 <div>
                   <span>计价资产</span>
                   <span>
@@ -208,11 +225,11 @@ const MySettle = props => {
                       : item.und}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.putToken : item.callToken}
+                    {item.type === 'Call' ? item.callToken : item.putToken}
                   </span>
                 </div>
               </section>
-              <section>
+              <section className="mysettle_section_pc">
                 <div>
                   <span>基础资产</span>
                   <span>
@@ -221,8 +238,36 @@ const MySettle = props => {
                       : Number(item.col) + Number(item.claimBalance)}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.callToken : item.putToken}
+                    {item.type === 'Call' ? item.putToken : item.callToken}
                   </span>
+                </div>
+              </section>
+              <section className="mysettle_section_h5">
+                <div>
+                  <span className="mysettle_price_title">计价资产</span>
+                  <p>
+                    <span>
+                      {item.type === 'Call'
+                        ? Number(item.col) + Number(item.claimBalance)
+                        : item.und}
+                    </span>
+                    <span>
+                      {item.type === 'Call' ? item.callToken : item.putToken}
+                    </span>
+                  </p>
+                </div>
+                <div>
+                  <span className="mysettle_price_title">基础资产</span>
+                  <p>
+                    <span>
+                      {item.type === 'Call'
+                        ? item.und
+                        : Number(item.col) + Number(item.claimBalance)}
+                    </span>
+                    <span>
+                      {item.type === 'Call' ? item.putToken : item.callToken}
+                    </span>
+                  </p>
                 </div>
               </section>
               <section>

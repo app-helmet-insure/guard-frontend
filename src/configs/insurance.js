@@ -2,6 +2,11 @@ import Order from '../web3/abi/Order.json'
 import { getPairPrice } from '../hooks/quickswap'
 import Item from 'antd/lib/list/Item'
 import axios from 'axios'
+import GuardLogoSvg from '../assets/images/insurance/guard_logo.png'
+import ETHLogoSvg from '../assets/images/insurance/eth_logo.svg'
+import MaticLogoSvg from '../assets/images/insurance/matic_logo.svg'
+import QuickLogoSvg from '../assets/images/insurance/quick_logo.png'
+import moment from 'moment'
 // noether: ‘0’
 // wei: ‘1’
 // Kwei: ‘1000’
@@ -21,18 +26,30 @@ export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
     PairUSDC: '',
+    Logo: GuardLogoSvg,
+    Expiry: moment(new Date(1627401600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    ShowName: 'Guard'
   },
   {
     InsuranceSymbol: 'MATIC',
     PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
+    Logo: MaticLogoSvg,
+    Expiry: moment(new Date(1627401600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    ShowName: 'Matic'
   },
   {
     InsuranceSymbol: 'QUICK',
     PairUSDC: '0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb',
+    Logo: QuickLogoSvg,
+    Expiry: moment(new Date(1627401600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    ShowName: 'Quick'
   },
   {
     InsuranceSymbol: 'ETH',
     PairUSDC: '0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d',
+    Logo: ETHLogoSvg,
+    Expiry: moment(new Date(1627401600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    ShowName: 'ETH'
   },
 ]
 export const getCurrentInsurance = ({
@@ -68,7 +85,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.1500',
       strikeprice_decimals: 'tether',
       lastprice: '0.300',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     {
       type: 'Call',
@@ -88,9 +105,9 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '0.6000',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'mwei',
       lastprice: '0.300',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     // MATIC
     {
@@ -113,7 +130,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.460273',
       strikeprice_decimals: 'tether',
       lastprice: '0.920547',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     {
       type: 'Call',
@@ -133,9 +150,9 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '1.841094',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'mwei',
       lastprice: '0.920547',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     // QUICK
     {
@@ -158,7 +175,7 @@ export const getCurrentInsurance = ({
       strikeprice: '1072',
       strikeprice_decimals: 'tether',
       lastprice: '2144',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     {
       type: 'Call',
@@ -178,9 +195,9 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '4288',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'mwei',
       lastprice: '2144',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     // ETH
     {
@@ -203,7 +220,7 @@ export const getCurrentInsurance = ({
       strikeprice: '163',
       strikeprice_decimals: 'tether',
       lastprice: '326',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
     {
       type: 'Call',
@@ -223,9 +240,9 @@ export const getCurrentInsurance = ({
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
       strikeprice: '652',
-      strikeprice_decimals: 'ether',
+      strikeprice_decimals: 'mwei',
       lastprice: '326',
-      expiry: 1627315200,
+      expiry: 1627401600,
     },
   ]
   return config.filter(
