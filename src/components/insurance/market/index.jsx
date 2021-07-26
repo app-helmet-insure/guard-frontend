@@ -252,7 +252,7 @@ const Market = props => {
                 </td>
                 <td>
                   <FormattedMessage id='insurance_text19' />
-                  (MATIC)
+                  (GUARD)
                 </td>
                 <td>
                   <FormattedMessage id='insurance_text20' />
@@ -307,7 +307,7 @@ const Market = props => {
                   <p>
                     <span>
                       <FormattedMessage id='insurance_text19' />
-                      (MATIC)
+                      (GUARD)
                     </span>
                     <span>{item.show_price}</span>
                   </p>
