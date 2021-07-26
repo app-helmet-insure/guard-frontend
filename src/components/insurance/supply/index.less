@@ -1,203 +1,269 @@
 @media screen and (min-width: 750px) {
-    .insurance_form {
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-        width: 360px;
-        margin: 30px auto 0;
-        .between {
-            display: flex;
-            justify-content: space-between;
-            span {
-                &:nth-of-type(1) {
-                    font-size: 14px;
-                    color: #2a3749;
-                }
-                &:nth-of-type(2) {
-                    font-size: 14px;
-                    color: #2a3749;
-                }
-            }
-        }
-        .dpr {
-            width: 100%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            input {
-                font-family: PingFangSC-Regular, PingFang SC;
-                padding-left: 50px;
-                padding-right: 70px;
-                width: 100%;
-                height: 48px;
-                border-radius: 5px;
-                font-size: 14px;
-                border: 1px solid #d0d8d8;
-                &:focus {
-                    border: 1px solid #4364e8;
-                }
-            }
-            .name {
-                position: absolute;
-                left: 16px;
-            }
-            .number {
-                position: absolute;
-                right: 10px;
-            }
-            > span {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                color: #919aa6;
-                line-height: 15px;
-            }
-        }
-        .volume {
-            width: 100%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            input {
-                font-family: PingFangSC-Regular, PingFang SC;
-                padding-left: 16px;
-                padding-right: 70px;
-                font-size: 14px;
-                width: 100%;
-                height: 48px;
-                border-radius: 5px;
-                border: 1px solid #d0d8d8;
-                &:focus {
-                    border: 1px solid #4364e8;
-                }
-            }
-            > span {
-                position: absolute;
-                right: 10px;
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                color: #919aa6;
-                line-height: 15px;
-            }
-        }
-        .left {
-            margin-top: 8px;
-            font-size: 14px;
-            color: #2a3749;
-        }
-        .confirm {
-            width: 100%;
-            height: 48px;
-            background: #2a3749;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #ffffff;
-            line-height: 20px;
-        }
-    }
-}
-@media screen and(max-width:750px) {
-    .insurance_form {
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin: 30px auto 0;
-        .between {
-            display: flex;
-            justify-content: space-between;
-            span {
-                &:nth-of-type(1) {
-                    font-size: 14px;
-                    color: #2a3749;
-                }
-                &:nth-of-type(2) {
-                    font-size: 14px;
-                    color: #2a3749;
-                }
-            }
-        }
-        .dpr {
-            width: 100%;
-            input {
-                padding-left: 16px;
-                width: 100%;
-                height: 48px;
-                border-radius: 5px;
-                border: 1px solid #d0d8d8;
-                &:focus {
-                    border: 1px solid #4364e8;
-                }
-            }
-        }
-        .volume {
-            width: 100%;
-            input {
-                padding-left: 16px;
-                width: 100%;
-                height: 48px;
-                border-radius: 5px;
-                border: 1px solid #d0d8d8;
-                &:focus {
-                    border: 1px solid #4364e8;
-                }
-            }
-        }
-        .left {
-            margin-top: 8px;
-            font-size: 14px;
-            color: #2a3749;
-        }
-        .confirm {
-            width: 100%;
-            height: 48px;
-            background: #2a3749;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #ffffff;
-            line-height: 20px;
-        }
-    }
-}
-.insurance_supply {
-    width: 100%;
-    margin: 20px auto 30px;
-}
-.insurance_type {
+  .insurance_form {
+    margin-top: 30px;
     display: flex;
-    button {
-        flex: 1;
-        height: 48px;
-        width: 510px;
-        height: 48px;
-        border-radius: 0px 5px 5px 0px;
-        border: none;
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 48px;
-        color: #2a3749;
+    flex-direction: column;
+    width: 360px;
+    margin: 30px auto 0;
+    .between {
+      display: flex;
+      justify-content: space-between;
+      span {
         &:nth-of-type(1) {
-            background: linear-gradient(-70deg, transparent 20px, #ededf0 0);
+          font-size: 14px;
+          color: #2a3749;
         }
         &:nth-of-type(2) {
-            background: linear-gradient(-250deg, transparent 20px, #ededf0 0);
+          font-size: 14px;
+          color: #2a3749;
         }
+      }
     }
-    .insurance_active_call {
-        background: linear-gradient(
-            -70deg,
-            transparent 20px,
-            #4364e8 0
-        ) !important;
-        color: #ffffff;
+    .dpr {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      position: relative;
+      input {
+        font-family: PingFangSC-Regular, PingFang SC;
+        padding-left: 50px;
+        padding-right: 70px;
+        width: 100%;
+        height: 48px;
+        border-radius: 5px;
+        font-size: 14px;
+        border: 1px solid #d0d8d8;
+        cursor: pointer;
+        &:focus {
+          border: 1px solid #4364e8;
+        }
+      }
+      .name {
+        position: absolute;
+        left: 16px;
+      }
+      .number {
+        position: absolute;
+        right: 10px;
+      }
+      > span {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: #919aa6;
+        line-height: 15px;
+      }
+      .select {
+        width: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        background: #eee;
+        left: 0;
+        top: 100%;
+        z-index: 1;
+        > div {
+          height: 48px;
+          width: 100%;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: #919aa6;
+          line-height: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding-right: 10px;
+          cursor: pointer;
+        }
+      }
     }
-    .insurance_active_put {
-        background: linear-gradient(
-            -250deg,
-            transparent 20px,
-            #4364e8 0
-        ) !important;
-        color: #ffffff;
+    .volume {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      input {
+        font-family: PingFangSC-Regular, PingFang SC;
+        padding-left: 16px;
+        padding-right: 70px;
+        font-size: 14px;
+        width: 100%;
+        height: 48px;
+        border-radius: 5px;
+        border: 1px solid #d0d8d8;
+        &:focus {
+          border: 1px solid #4364e8;
+        }
+      }
+      > span {
+        position: absolute;
+        right: 10px;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: #919aa6;
+        line-height: 15px;
+      }
     }
+    .left {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #2a3749;
+    }
+    .confirm {
+      width: 100%;
+      height: 48px;
+      background: #2a3749;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 20px;
+    }
+  }
+}
+@media screen and(max-width:750px) {
+  .insurance_form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 30px auto 0;
+    .between {
+      display: flex;
+      justify-content: space-between;
+      span {
+        &:nth-of-type(1) {
+          font-size: 14px;
+          color: #2a3749;
+        }
+        &:nth-of-type(2) {
+          font-size: 14px;
+          color: #2a3749;
+        }
+      }
+    }
+    .dpr {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      position: relative;
+      input {
+        font-family: PingFangSC-Regular, PingFang SC;
+        padding-left: 50px;
+        padding-right: 70px;
+        width: 100%;
+        height: 48px;
+        border-radius: 5px;
+        font-size: 14px;
+        border: 1px solid #d0d8d8;
+        cursor: pointer;
+        &:focus {
+          border: 1px solid #4364e8;
+        }
+      }
+      .name {
+        position: absolute;
+        left: 16px;
+      }
+      .number {
+        position: absolute;
+        right: 10px;
+      }
+      > span {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: #919aa6;
+        line-height: 15px;
+      }
+      .select {
+        width: 100%;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        background: #eee;
+        left: 0;
+        top: 100%;
+        z-index: 1;
+        > div {
+          height: 48px;
+          width: 100%;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: #919aa6;
+          line-height: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding-right: 10px;
+          cursor: pointer;
+        }
+      }
+    }
+    .volume {
+      width: 100%;
+      input {
+        padding-left: 16px;
+        width: 100%;
+        height: 48px;
+        border-radius: 5px;
+        border: 1px solid #d0d8d8;
+        &:focus {
+          border: 1px solid #4364e8;
+        }
+      }
+    }
+    .left {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #2a3749;
+    }
+    .confirm {
+      width: 100%;
+      height: 48px;
+      background: #2a3749;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 20px;
+    }
+  }
+}
+.insurance_supply {
+  width: 100%;
+  margin: 20px auto 30px;
+}
+.insurance_type {
+  display: flex;
+  button {
+    flex: 1;
+    height: 48px;
+    width: 510px;
+    height: 48px;
+    border-radius: 0px 5px 5px 0px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 48px;
+    color: #2a3749;
+    &:nth-of-type(1) {
+      background: linear-gradient(-70deg, transparent 20px, #ededf0 0);
+    }
+    &:nth-of-type(2) {
+      background: linear-gradient(-250deg, transparent 20px, #ededf0 0);
+    }
+  }
+  .insurance_active_call {
+    background: linear-gradient(-70deg, transparent 20px, #4364e8 0) !important;
+    color: #ffffff;
+  }
+  .insurance_active_put {
+    background: linear-gradient(
+      -250deg,
+      transparent 20px,
+      #4364e8 0
+    ) !important;
+    color: #ffffff;
+  }
 }
