@@ -2,11 +2,11 @@ import React from 'react'
 import {Drawer} from 'antd'
 import './index.less'
 import LogoSvg from '../../assets/images/logo2.svg'
-import LoadingSvg from '../../assets/images/loading.svg'
 import {FormattedMessage} from 'react-intl'
 import {formatAddress} from '../../utils'
 import {navList} from '../header'
 import {Link} from 'react-router-dom'
+import HelmetSvg from '../../assets/images/helmet.svg'
 
 function DrawerMenu ({account, active, chainId, visible, setVisible, connectWalletClick, location}) {
   const onClose = () => {
@@ -52,6 +52,10 @@ function DrawerMenu ({account, active, chainId, visible, setVisible, connectWall
         {/*  <FormattedMessage id="header_text4"/>*/}
         {/*  <img src={LoadingSvg} alt="" className="loading_ani"/>*/}
         {/* </div>*/}
+        <a href="https://www.helmet.insure/" className="btn to_helmet flex_center">
+            <img src={HelmetSvg} alt=""/>
+            <FormattedMessage id="header_text7" values={{name: 'Helmet'}}/>
+        </a>
       </div>
     </Drawer>
   )

@@ -51,6 +51,7 @@ const Supply = props => {
       : useBalance(
         0,
         CurrentInsurance.collateral_address,
+        Erc20ABI.abi,
         CurrentInsurance.collateral_decimals_number
       )
   const onSuccessClose = () => {
