@@ -29,7 +29,7 @@ export const navList = [
         path: '/mysupply',
       },
       {
-        name: '我的结束',
+        name: '我的结算',
         path: '/mysettle',
       },
     ],
