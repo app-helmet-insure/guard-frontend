@@ -19,9 +19,9 @@ export const useBalance = (
   decimals = 18,
 ) => {
   const [balance, setBalance] = useState('0')
-  const { account, library } = useWeb3ReactCore()
+  const { account, library, active } = useWeb3ReactCore()
   useMemo(() => {
-    if (account && address && blockHeight !== 0) {
+    if (active && address && blockHeight !== 0) {
       const contract = getContract(library, abi, address)
       contract.methods
         .balanceOf(account)
@@ -32,7 +32,7 @@ export const useBalance = (
           setBalance(resBalance)
         }).catch(e=>{})
     }
-  }, [account, blockHeight, address])
+  }, [account, active, blockHeight, address])
 
   return balance
 }
