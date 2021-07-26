@@ -182,7 +182,7 @@ const MySupply = props => {
                   <span>
                     {(
                       Number(item.show_price) * Number(item.show_volume)
-                    ).toFixed(4)}
+                    ).toFixed(8)}
                   </span>
                   <span>{item.settleToken_symbol}</span>
                 </div>

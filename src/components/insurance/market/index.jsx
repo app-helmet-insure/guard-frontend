@@ -28,6 +28,7 @@ const Market = props => {
   const onWaitClose = () => {
     setOpenWaiting(false)
   }
+ 
   // 保单数据
   const getPolicyList = () => {
     const CurrentInsurance = getCurrentInsurance({

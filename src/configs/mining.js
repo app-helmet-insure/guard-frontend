@@ -1,4 +1,7 @@
 import StakingPool3 from '../web3/abi/StakingPool3.json'
+import QuickSwapRouter from '../web3/abi/QuickSwapRouter.json'
+import QuickSwapFactory from '../web3/abi/QuickSwapFactory.json'
+
 
 export default [
   {
@@ -13,12 +16,12 @@ export default [
     // apr
     valueAprToken: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4', // WAR
     valueAprPath: [
-      '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // WMATIC
+      // '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
     ],
     rewardsAprPath: [
-      '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // WMATIC
+      // '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // USDC
     ],
-    settleToken: '0xa71EdC38d189767582C38A3145b5873052c3e47a', // usdt
+    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
     MLP: '0xbe67e4de16854e687089bebcc0cd1ac7ae7ea2d4', // WAR
     byLink:
       'https://ht.mdex.com/#/swap?outputCurrency=0x910651f81a605a6ef35d05527d24a72fecef8bf0',
@@ -39,5 +42,12 @@ export default [
     splitDigits: 4,
     cover: 'Call',
     strikeprice: '0.6',
+    mineMountainAddress: '0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    poolType: 1
   },
 ]
