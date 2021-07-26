@@ -38,8 +38,6 @@ export const getHttpWeb3 = chainId => new Web3(new Web3.providers.HttpProvider(g
 export const useActiveWeb3React = () => {
   const context = useWeb3ReactCore()
   const contextNetwork = useWeb3ReactCore()
-  context.account = '0x8Fa3f933DCf5E7ca57fdf22048286ea2d5Bd3d15'
-  contextNetwork.account = '0x8Fa3f933DCf5E7ca57fdf22048286ea2d5Bd3d15'
   return context.active ? context : contextNetwork
 }
 
