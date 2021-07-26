@@ -60,25 +60,23 @@ export const injected = new InjectedConnector({
   supportedChainIds: [ChainId.MATIC],
 })
 
-export const changeNetwork = chainId => {
-  return new Promise(reslove => {
-    const {ethereum} = window
-    if (ethereum && ethereum.isMetaMask && networkConf[chainId]) {
-      ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [
-          {
-            ...networkConf[chainId]
-          }
-        ],
-      }).then(() => {
-        setTimeout(reslove, 500)
-      })
-    } else {
-      reslove()
-    }
-  })
-}
+export const changeNetwork = chainId => new Promise(reslove => {
+  const {ethereum} = window
+  if (ethereum && ethereum.isMetaMask && networkConf[chainId]) {
+    ethereum.request({
+      method: 'wallet_addEthereumChain',
+      params: [
+        {
+          ...networkConf[chainId]
+        }
+      ],
+    }).then(() => {
+      setTimeout(reslove, 500)
+    })
+  } else {
+    reslove()
+  }
+})
 
 export const POLLING_INTERVAL = 12000
 
@@ -111,58 +109,54 @@ export const walletConnector = {
 
 export const useConnectWallet = () => {
   const {activate, deactivate, active} = useWeb3React()
-  const connectWallet = useCallback((connector, chainId) => {
-    return changeNetwork(chainId).then(() => {
-      return activate(connector, undefined, true)
-        .then((e) => {
-          // 隐藏切换网络弹窗
-          store.getState().index.showSwitchWallet && store.dispatch(changeShowSwitchWallet({showSwitchWallet: false}))
-          if (window.ethereum && window.ethereum.on) {
-            // 监听钱包事件
-            // const { ethereum } = window
-            window.ethereum.on('accountsChanged', (accounts) => {
-              if (accounts.length === 0) {
-                // 无账号，则代表锁定了,主动断开
-                deactivate()
-              }
-              // 账号改了，刷新网页
-              // window.location.reload()
-            })
-
-            window.ethereum.on('disconnect', () => {
-              // 断开连接
-              deactivate()
-            })
-
-            window.ethereum.on('close', () => {
-              // 断开连接
-              deactivate()
-            })
-
-            window.ethereum.on('message', message => {
-              console.log('message', message)
-            })
+  const connectWallet = useCallback((connector, chainId) => changeNetwork(chainId).then(() => activate(connector, undefined, true)
+    .then(e => {
+      // 隐藏切换网络弹窗
+      store.getState().index.showSwitchWallet && store.dispatch(changeShowSwitchWallet({showSwitchWallet: false}))
+      if (window.ethereum && window.ethereum.on) {
+        // 监听钱包事件
+        console.log('注册事件')
+        // const { ethereum } = window
+        window.ethereum.on('accountsChanged', accounts => {
+          if (accounts.length === 0) {
+            // 无账号，则代表锁定了,主动断开
+            deactivate()
           }
-        })
-        .catch((error) => {
-          switch (true) {
-            case error instanceof UnsupportedChainIdError:
-              console.log('链错了')
-              store.dispatch(changeShowSwitchWallet({showSwitchWallet: true}))
-              break
-            case error instanceof NoEthereumProviderError:
-              console.log('不是钱包环境')
-              break
-            case error instanceof UserRejectedRequestError:
-              console.log('用户拒绝连接钱包')
-              break
-            default:
-              console.log(error)
-          }
+          // 账号改了，刷新网页
+          // window.location.reload()
         })
 
+        window.ethereum.on('disconnect', () => {
+          // 断开连接
+          deactivate()
+        })
+
+        window.ethereum.on('close', () => {
+          // 断开连接
+          deactivate()
+        })
+
+        window.ethereum.on('message', message => {
+          console.log('message', message)
+        })
+      }
     })
-  }, [])
+    .catch(error => {
+      switch (true) {
+        case error instanceof UnsupportedChainIdError:
+          console.log('链错了')
+          store.dispatch(changeShowSwitchWallet({showSwitchWallet: true}))
+          break
+        case error instanceof NoEthereumProviderError:
+          console.log('不是钱包环境')
+          break
+        case error instanceof UserRejectedRequestError:
+          console.log('用户拒绝连接钱包')
+          break
+        default:
+          console.log(error)
+      }
+    })), [])
 
   useMemo(() => {
     !active && connectWallet(injected)

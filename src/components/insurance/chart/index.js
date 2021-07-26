@@ -94,7 +94,6 @@ export const Chart = props => {
         if (index !== -1) {
           timeline[index].value = last_price
         }
-        console.log('index', index)
 
         if (hour_data.hourStartUnix <= start_time) {
           pre_price = last_price
@@ -216,8 +215,8 @@ export const Chart = props => {
 
   const initChart = async () => {
     const [data, min, max] = await loadDataByBlock()
-
-    Highcharts.chart(document.getElementById(`chart_${lpt_address}`), {
+    const chartDom = document.getElementById(`chart_${lpt_address}`)
+    chartDom && Highcharts.chart(chartDom, {
       title: {
         text: null,
       },

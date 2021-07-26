@@ -30,13 +30,14 @@ const MyPolicy = props => {
   const onWaitClose = () => {
     setOpenWaiting(false)
   }
+
   // 保单数据
   const getPolicyList = () => {
+    const BidContracts = getContract(library, OrderABI, OrderAddress)
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
-        console.log(res)
         const FilterList = ReturnList.filter(
           item => Number(item.expiry) >= 1627315200
         )
@@ -66,7 +67,10 @@ const MyPolicy = props => {
               ),
               long: item.long,
               short: item.short,
-              show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
+              show_strikePrice:
+                type === 'Call'
+                  ? fromWei(item.strikePrice, strikeprice_decimals)
+                  : 1 / fromWei(item.strikePrice, strikeprice_decimals),
               strikePrice: item.strikePrice,
               collateral: item.collateral,
               collateral_symbol: collateral_symbol,
@@ -97,37 +101,80 @@ const MyPolicy = props => {
                     account &&
                     itemBid.buyer.toUpperCase() === account.toUpperCase()
                   ) {
+                    const BidInfo = BidContracts.methods
+                      .bids(itemBid.bidID)
+                      .call()
                     const ResultItemBid = {
                       bidID: itemBid.bidID,
                       volume: itemAsk.volume,
                       show_volume: fromWei(itemBid.volume, collateral_decimals),
+                      remain: BidInfo.remain,
                     }
                     const ReturnItem = Object.assign(ResultItemBid, AllItem)
                     if (ReturnItem.type === 'Put') {
                       ReturnItem.show_volume = Number(
-                        ReturnItem.show_volume / ReturnItem.show_strikePrice
+                        ReturnItem.show_volume /
+                          (1 /
+                            fromWei(
+                              ResultItem.strikePrice,
+                              strikeprice_decimals
+                            ))
                       ).toFixed(8)
                     } else {
                       ReturnItem.show_volume = Number(
                         ReturnItem.show_volume
                       ).toFixed(8)
                     }
-                    FixListPush.push(ReturnItem)
+                    if (Number(ResultItem.remain) !== 0) {
+                      FixListPush.push(ReturnItem)
+                    }
                   }
                 })
               }
             })
           }
         })
-        console.log(FixListPush)
         const FixList = FixListPush
         setPolicyList(FixList)
       }
     })
   }
 
-  const actionApprove = adress => {
-    const Erc20Contracts = getContract(library, Erc20ABI.abi, adress)
+  // 判断是否授权
+  const handleClickWithDraw = async data => {
+    // eslint-disable-next-line no-use-before-define
+    const LongApproveStatus = await getLongApporve(data)
+    // eslint-disable-next-line no-use-before-define
+    const UnderlyingApproveStatus = await getUnderlyingApprove(data)
+    if (!LongApproveStatus || !UnderlyingApproveStatus) {
+      // eslint-disable-next-line no-use-before-define
+      actionApproveLong(data)
+    }
+    if (LongApproveStatus && UnderlyingApproveStatus) {
+      // eslint-disable-next-line no-use-before-define
+      actionWithDraw(data)
+    }
+  }
+  const actionWithDraw = data => {
+    const OrderContracts = getContract(library, OrderABI, OrderAddress)
+    OrderContracts.methods
+      .exercise(data.bidID)
+      .send({ from: account })
+      .on('transactionHash', hash => {
+        setOpenWaiting(true)
+      })
+      .on('receipt', (_, receipt) => {
+        setOpenWaiting(false)
+        setOpenSuccess(true)
+        getPolicyList()
+      })
+      .on('error', ereor => {
+        setOpenWaiting(false)
+      })
+  }
+  const actionApproveUnderlying = data => {
+    setOpenSuccess(false)
+    const Erc20Contracts = getContract(library, Erc20ABI.abi, data.underlying)
     const Infinitys =
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     Erc20Contracts.methods
@@ -139,6 +186,26 @@ const MyPolicy = props => {
       .on('receipt', (_, receipt) => {
         setOpenWaiting(false)
         setOpenSuccess(true)
+        actionWithDraw(data)
+      })
+      .on('error', ereor => {
+        setOpenWaiting(false)
+      })
+  }
+  const actionApproveLong = data => {
+    const Erc20Contracts = getContract(library, Erc20ABI.abi, data.long)
+    const Infinitys =
+      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    Erc20Contracts.methods
+      .approve(OrderAddress, Infinitys)
+      .send({ from: account })
+      .on('transactionHash', hash => {
+        setOpenWaiting(true)
+      })
+      .on('receipt', (_, receipt) => {
+        setOpenWaiting(false)
+        setOpenSuccess(true)
+        actionApproveUnderlying(data)
       })
       .on('error', ereor => {
         setOpenWaiting(false)
@@ -150,11 +217,9 @@ const MyPolicy = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
-        console.log(res)
         if (Number(res) > 0) {
           return true
         }
-        actionApprove(data.long)
         return false
       })
   }
@@ -171,32 +236,8 @@ const MyPolicy = props => {
         if (Number(res) > 0) {
           return true
         }
-        actionApprove(data.underlying)
         return false
       })
-  }
-  // 判断是否授权
-  const handleClickWithDraw = async data => {
-    const LongApproveStatus = await getLongApporve(data)
-    const UnderlyingApproveStatus = await getUnderlyingApprove(data)
-    console.log(data)
-    if (LongApproveStatus && UnderlyingApproveStatus) {
-      const OrderContracts = getContract(library, OrderABI, OrderAddress)
-      OrderContracts.methods
-        .exercise(data.bidID)
-        .send({ from: account })
-        .on('transactionHash', hash => {
-          setOpenWaiting(true)
-        })
-        .on('receipt', (_, receipt) => {
-          setOpenWaiting(false)
-          setOpenSuccess(true)
-          getPolicyList()
-        })
-        .on('error', ereor => {
-          setOpenWaiting(false)
-        })
-    }
   }
   useEffect(() => {
     if (account) {
