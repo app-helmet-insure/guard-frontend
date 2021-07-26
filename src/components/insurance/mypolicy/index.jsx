@@ -77,7 +77,6 @@ const MyPolicy = props => {
               putToken: indextoken,
             }
             item.asks.filter(itemAsk => {
-              console.log(itemAsk)
               const ResultItemAsk = {
                 askID: itemAsk.askID,
                 isCancel: itemAsk.isCancel,
@@ -103,6 +102,15 @@ const MyPolicy = props => {
                       show_volume: fromWei(itemBid.volume, collateral_decimals),
                     }
                     const ReturnItem = Object.assign(ResultItemBid, AllItem)
+                    if (ReturnItem.type === 'Put') {
+                      ReturnItem.show_volume = Number(
+                        ReturnItem.show_volume / ReturnItem.show_strikePrice
+                      ).toFixed(8)
+                    } else {
+                      ReturnItem.show_volume = Number(
+                        ReturnItem.show_volume
+                      ).toFixed(8)
+                    }
                     FixListPush.push(ReturnItem)
                   }
                 })

@@ -11,6 +11,7 @@ import OrderABI from '../../../web3/abi/Order.json'
 import Erc20ABI from '../../../web3/abi/ERC20.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import BigNumber from 'bignumber.js'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
 const Market = props => {
@@ -36,6 +37,7 @@ const Market = props => {
       Insurance: InsuranceSymbol,
     })
     const {
+      type,
       insurance,
       collateral_symbol,
       collateral_address,
@@ -62,6 +64,7 @@ const Market = props => {
         if (FilterList) {
           FilterList.forEach(item => {
             const ResultItem = {
+              type,
               expiry: item.expiry,
               long: item.long,
               short: item.short,
@@ -109,6 +112,13 @@ const Market = props => {
                 )
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
+              if (AllItem.type === 'Put') {
+                AllItem.show_volume = Number(
+                  AllItem.show_volume / AllItem.show_strikePrice
+                ).toFixed(8)
+              } else {
+                AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
+              }
               if (!AllItem.isCancel) {
                 FixListPush.push(AllItem)
               }
@@ -147,7 +157,22 @@ const Market = props => {
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(library, OrderABI, OrderAddress)
         const AskID = data.askID
-        const Volume = toWei(data.buy_volume, data.collateral_decimals)
+        let Volume
+        if (data.type === 'Put') {
+          if (data.buy_volume === data.show_volume) {
+            Volume = data.volume
+          } else {
+            Volume = toWei(
+              new BigNumber(
+                (data.buy_volume * data.show_strikePrice).toFixed(6)
+              ).toString(),
+              data.collateral_decimals
+            )
+          }
+        } else {
+          Volume = toWei(data.buy_volume, data.collateral_decimals)
+        }
+        console.log(Volume)
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: account })
