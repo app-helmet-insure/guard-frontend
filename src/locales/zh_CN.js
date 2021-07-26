@@ -2,7 +2,7 @@ export default {
   mining_text1: '挖矿是token奖励挖矿活动',
   mining_text2:
     '你可以通过不同的LPT 和 Short Token 挖出多重token奖励，请注意池子的到期日提示',
-  mining_text3: 'GURAD',
+  mining_text3: 'GUARD',
   mining_text4: 'Pool APY',
   mining_text5: '倒计时',
   mining_text6: '永久有效',
