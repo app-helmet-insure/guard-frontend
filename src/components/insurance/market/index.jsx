@@ -299,7 +299,7 @@ const Market = props => {
               >
                 <p>
                   <span>
-                    <FormattedMessage id='insurance_text18' />
+                    <FormattedMessage id='insurance_text18' />: {' '}
                   </span>
                   <span>{item.show_ID}</span>
                 </p>
