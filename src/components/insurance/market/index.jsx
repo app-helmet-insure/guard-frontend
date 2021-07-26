@@ -28,7 +28,7 @@ const Market = props => {
   const onWaitClose = () => {
     setOpenWaiting(false)
   }
- 
+
   // 保单数据
   const getPolicyList = () => {
     const CurrentInsurance = getCurrentInsurance({
@@ -202,24 +202,22 @@ const Market = props => {
 
   return (
     <div className="insurance_market">
+      <div className="insurance_type">
+        <button
+          onClick={() => setInsuranceType('Call')}
+          className={InsuranceType === 'Call' ? 'insurance_active_call' : ''}
+        >
+          Cover Miss Out
+        </button>
+        <button
+          onClick={() => setInsuranceType('Put')}
+          className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
+        >
+          Cover 50% Off
+        </button>
+      </div>
       {PolicyList.length > 0 ? (
         <div className="insurance_market_wrap">
-          <div className="insurance_type">
-            <button
-              onClick={() => setInsuranceType('Call')}
-              className={
-                InsuranceType === 'Call' ? 'insurance_active_call' : ''
-              }
-            >
-              Cover Miss Out
-            </button>
-            <button
-              onClick={() => setInsuranceType('Put')}
-              className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
-            >
-              Cover 50% Off
-            </button>
-          </div>
           <table className="insurance_market_table web_table">
             <thead>
               <tr>
@@ -291,7 +289,9 @@ const Market = props => {
           </div>
         </div>
       ) : (
-        <img src={NoData} alt="" className="nodata" />
+        <div className="nodata">
+          <img src={NoData} alt="" />
+        </div>
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
