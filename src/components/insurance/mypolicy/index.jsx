@@ -35,7 +35,11 @@ const MyPolicy = props => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
-        ReturnList.forEach(item => {
+        console.log(res)
+        const FilterList = ReturnList.filter(
+          item => Number(item.expiry) >= 1627315200
+        )
+        FilterList.forEach(item => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
@@ -235,9 +239,9 @@ const MyPolicy = props => {
                 <div>
                   <span>保费</span>
                   <span>
-                    {new BigNumber(
+                    {Number(new BigNumber(
                       Number(item.show_price) * Number(item.show_volume)
-                    ).toString()}
+                    ).toString()).toFixed(8)}
                   </span>
                   <span>{item.settleToken_symbol}</span>
                 </div>

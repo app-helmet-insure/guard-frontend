@@ -19,6 +19,9 @@ const Insurance = props => (
           <Operation
             InsuranceSymbol={insurance.InsuranceSymbol}
             PairUSDC={insurance.PairUSDC}
+            Logo={insurance.Logo}
+            Expiry={insurance.Expiry}
+            ShowName={insurance.ShowName}
             key={insurance.InsuranceSymbol}
           />
         ))}

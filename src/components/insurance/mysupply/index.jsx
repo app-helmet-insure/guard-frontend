@@ -33,7 +33,10 @@ const MySupply = props => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
-        ReturnList.forEach(item => {
+        const FilterList = ReturnList.filter(
+          item => Number(item.expiry) >= 1627315200
+        )
+        FilterList.forEach(item => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
@@ -95,7 +98,7 @@ const MySupply = props => {
                       ))
                   )
                 } else {
-                  number = Number(fromWei(itemAsk.binds[0].volume))
+                  number = Number(fromWei(itemAsk.binds[0].volume, collateral_decimals))
                 }
                 ResultItem.show_besold = number
                 ResultItem.show_unsold =

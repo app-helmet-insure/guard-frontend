@@ -254,7 +254,7 @@ const Supply = props => {
       <div className="insurance_form">
         <p className="between">
           <span>Insurance Price</span>
-          <span>Guard: 2.0000 USD</span>
+          <span>Guard: {CurrentInsurance.strikeprice} USD</span>
         </p>
         <div className="dpr">
           <input
