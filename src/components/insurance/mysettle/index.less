@@ -1,97 +1,218 @@
-.insurance_mysettle {
-  width: 100%;
-  flex: 1;
-  position: relative;
-  > .nodata {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+@media screen and (min-width: 750px) {
+  .insurance_mysettle {
+    width: 100%;
+    flex: 1;
+    position: relative;
+    > .nodata {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
-}
-.insurance_mysettle_list {
-  width: 100%;
-}
-.insurance_mysettle_item {
-  width: 100%;
-  display: flex;
-  height: 80px;
-  border-bottom: 1px solid #ededf0;
-  section {
-    height: 100%;
+  .insurance_mysettle_title {
+    display: none;
+  }
+  .mysettle_section_h5 {
+    display: none !important;
+  }
+  .insurance_mysettle_list {
+    width: 100%;
+  }
+  .insurance_mysettle_item {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    &:nth-of-type(1) {
-      flex: 1;
-      div {
-        &:nth-of-type(1) {
-          display: flex;
-          img {
-            width: 24px;
-            margin-right: 6px;
+    height: 80px;
+    border-bottom: 1px solid #ededf0;
+    section {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      &:nth-of-type(1) {
+        flex: 1;
+        div {
+          &:nth-of-type(1) {
+            display: flex;
+            img {
+              width: 24px;
+              margin-right: 6px;
+            }
+            .Call {
+              font-size: 14px;
+              font-weight: bold;
+              color: #72a065;
+            }
+            .Put {
+              font-size: 14px;
+              font-weight: bold;
+              color: #ef6e45;
+            }
           }
-          .Call {
+          &:nth-of-type(2) {
+            margin-top: 10px;
             font-size: 14px;
-            font-weight: bold;
-            color: #72a065;
-          }
-          .Put {
-            font-size: 14px;
-            font-weight: bold;
-            color: #ef6e45;
-          }
-        }
-        &:nth-of-type(2) {
-          margin-top: 10px;
-          font-size: 14px;
-          color: #919aa6;
-          span {
-            &:nth-of-type(2) {
-              margin-left: 8px;
+            color: #919aa6;
+            span {
+              &:nth-of-type(2) {
+                margin-left: 8px;
+              }
             }
           }
         }
       }
-    }
-    &:nth-of-type(2),
-    &:nth-of-type(3) {
-      flex: 1;
-      div {
-        span {
-          font-size: 14px;
-          font-weight: 500;
-          color: #2a3749;
-          line-height: 14px;
-          &:nth-of-type(1) {
-            color: #919aa6;
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
+        flex: 1;
+        div {
+          span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2a3749;
+            line-height: 14px;
+            &:nth-of-type(1) {
+              color: #919aa6;
+            }
+            &:nth-of-type(2) {
+              margin: 0 4px 0 8px;
+            }
           }
           &:nth-of-type(2) {
-            margin: 0 4px 0 8px;
+            margin-top: 13px;
           }
         }
-        &:nth-of-type(2) {
-          margin-top: 13px;
+      }
+      &:last-of-type {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        button {
+          min-width: 64px;
+          height: 40px;
+          background: #2a3749;
+          border-radius: 5px;
+          font-size: 14px;
+          font-weight: bold;
+          color: #ffffff;
+          line-height: 17px;
+          &:nth-of-type(1) {
+            margin-right: 10px;
+            background: #4364e8;
+          }
         }
       }
     }
-    &:nth-of-type(4) {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      align-items: center;
-      button {
-        min-width: 64px;
-        height: 40px;
-        background: #2a3749;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #ffffff;
-        line-height: 17px;
-        &:nth-of-type(1) {
-          margin-right: 10px;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .insurance_mysettle {
+    padding: 0 16px 34px;
+    width: 100%;
+    flex: 1;
+    position: relative;
+    background-color: #fff;
+    > .nodata {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  .mysettle_section_pc {
+    display: none !important;
+  }
+   .insurance_mysettle_title {
+    margin-bottom: 0;
+    font-size: 16px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #2A3749;
+    line-height: 60px;
+  }
+  .insurance_mysettle_list {
+    width: 100%;
+  }
+  .insurance_mysettle_item {
+    padding: 16px 10px 20px;
+    margin-bottom: 10px;
+    box-shadow: 10px 10px 40px 0px rgba(237, 237, 240, 0.6);
+    border-radius: 5px;
+    border: 1px solid #F5F7FB;
+    section {
+      &:nth-of-type(1) {
+        div {
+          &:nth-of-type(1) {
+            img {
+              width: 24px;
+              margin-right: 6px;
+            }
+            .Call {
+              font-size: 14px;
+              font-weight: bold;
+              color: #72a065;
+            }
+            .Put {
+              font-size: 14px;
+              font-weight: bold;
+              color: #ef6e45;
+            }
+          }
+          &:nth-of-type(2) {
+            margin-top: 6px;
+            font-size: 14px;
+            color: #919aa6;
+            span {
+              &:nth-of-type(2) {
+                margin-left: 8px;
+              }
+            }
+          }
+        }
+      }
+      &:nth-of-type(4),
+      &:nth-of-type(5) {
+        display: flex;
+        justify-content: space-between;
+        div {
+          display: flex;
+          flex-direction: column;
+          margin-top: 16px;
+          width: 50%;
+          word-break: break-all;
+          span {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2a3749;
+            line-height: 14px;
+          }
+          .mysettle_price_title {
+            color: #919aa6 !important;
+          }
+          p {
+            margin-bottom: 0;
+          }
+          &:last-of-type {
+            text-align: right;
+          }
+        }
+      }
+      &:last-of-type {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        button {
+          margin-top: 16px;
+          width: 100%;
+          height: 40px;
+          background: #2a3749;
+          border-radius: 5px;
+          font-size: 14px;
+          font-weight: bold;
+          color: #ffffff;
+          line-height: 17px;
           background: #4364e8;
         }
       }

@@ -243,7 +243,7 @@ export const getAPR = async (
   miningPools,
   mode = 1,
 ) => {
-  // 获取奖励1在矿山的总量
+  // 获取奖励1在矿山的总量,矿山授权矿池的额度
   const allowance = await getAllowance(miningPools)
   // console.log('apr_allowance', allowance)
 
@@ -253,7 +253,7 @@ export const getAPR = async (
 
   // 计算奖励的量
   const reward1Vol = new BigNumber(allowance).minus(new BigNumber(unClaimReward)).toString()
-
+  // console.log('reward1Vol', reward1Vol, unClaimReward)
   // 矿池总的LPT的价值
   const lptValue = await getLTPValue(
     miningPools.MLP,
@@ -262,6 +262,7 @@ export const getAPR = async (
     miningPools.abi,
     miningPools
   )
+  // console.log('lptValue', lptValue)
 
   // 通过转换后的lpt价格
   const [lptTotalPrice] =  await getMDexPrice(
@@ -271,6 +272,7 @@ export const getAPR = async (
     miningPools.valueAprPath,
     miningPools
   )
+  // console.log('lptTotalPrice', lptTotalPrice)
 
   const lptTotalValue = new BigNumber(lptTotalPrice)
     .multipliedBy(new BigNumber(lptValue))
@@ -286,12 +288,14 @@ export const getAPR = async (
   )
   // console.log('rewardsTotalPrice', rewardsTotalPrice)
 
+  // 价格*量 = 总价值
   const rewardsTotalValue = new BigNumber(rewardsTotalPrice)
     .multipliedBy(new BigNumber(reward1Vol))
     .toString()
+  // console.log('reward1Vol', reward1Vol)
 
   const span = await getSpan(miningPools.address, miningPools.abi, miningPools.networkId)
-  console.log('span', span)
+  // console.log('span', span)
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
@@ -300,8 +304,9 @@ export const getAPR = async (
     const dayRate = new BigNumber(1).div(
       new BigNumber(span).div(new BigNumber(86400))
     )
+    // 普通模式
     if (mode === 1) {
-      // 奖励的war
+      // 年奖励率
       const yearReward = dayRate
         .multipliedBy(new BigNumber(rewardsTotalValue))
         .multipliedBy(new BigNumber(365))
@@ -313,7 +318,9 @@ export const getAPR = async (
           .toString()
         apr = _arp
       }
-    } else if (mode === 2) {
+    } else if (mode === 2) { // APY
+      // 利滚利模式
+      // console.log('rewardsTotalValue,', rewardsTotalValue)
       const _arp = dayRate
         .multipliedBy(new BigNumber(rewardsTotalValue))
         .dividedBy(new BigNumber(lptTotalValue))
@@ -327,7 +334,7 @@ export const getAPR = async (
   return apr
 }
 
-export const useMdxARP = async (miningPools) => {
+export const getMdxARP = async (miningPools) => {
   // mdx 年释放总量 * 价值 /
   const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
   const lptValue = await getLTPValue(

@@ -17,25 +17,25 @@ import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
 
 export const navList = [
   {
-    name: <FormattedMessage id="header_text1"/>,
+    name: <FormattedMessage id='header_text1' />,
     path: '/insurance',
     children: [
       {
         name: '我的保单',
-        path: '/1',
+        path: '/mypolicy',
       },
       {
         name: '我发布的保险',
-        path: '/2',
+        path: '/mysupply',
       },
       {
-        name: '我的结束',
-        path: '/3',
+        name: '我的结算',
+        path: '/mysettle',
       },
     ],
   },
   {
-    name: <FormattedMessage id="header_text2"/>,
+    name: <FormattedMessage id='header_text2' />,
     path: '/mining',
   },
 ]

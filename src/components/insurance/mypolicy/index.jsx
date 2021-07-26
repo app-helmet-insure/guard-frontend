@@ -35,7 +35,11 @@ const MyPolicy = props => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
-        ReturnList.forEach(item => {
+        console.log(res)
+        const FilterList = ReturnList.filter(
+          item => Number(item.expiry) >= 1627315200
+        )
+        FilterList.forEach(item => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
@@ -191,14 +195,15 @@ const MyPolicy = props => {
     }
   }, [account])
   return (
-    <div className="insurance_mypolicy">
+    <div className='insurance_mypolicy'>
+      <h2 className='insurance_mypolicy_title'>我的保单</h2>
       {PolicyList && PolicyList.length > 0 ? (
-        <div className="insurance_mypolicy_list">
+        <div className='insurance_mypolicy_list'>
           {PolicyList.map((item, index) => (
-            <div className="insurance_mypolicy_item" key={item.bidID}>
+            <div className='insurance_mypolicy_item' key={item.bidID}>
               <section>
                 <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt='' />
                   <span className={item.type}>
                     {item.callToken +
                       ' ' +
@@ -214,7 +219,7 @@ const MyPolicy = props => {
                   <span>ID: {item.bidID}</span>
                 </div>
               </section>
-              <section>
+              <section className='section_pc'>
                 <div>
                   <span>出险价</span>
                   <span>{item.show_strikePrice}</span>
@@ -226,7 +231,7 @@ const MyPolicy = props => {
                   <span>{item.callToken}</span>
                 </div>
               </section>
-              <section>
+              <section className='section_pc'>
                 <div>
                   <span>保单单价</span>
                   <span>{Number(item.show_price).toFixed(8)}</span>
@@ -235,11 +240,47 @@ const MyPolicy = props => {
                 <div>
                   <span>保费</span>
                   <span>
-                    {new BigNumber(
+                    {Number(new BigNumber(
                       Number(item.show_price) * Number(item.show_volume)
-                    ).toString()}
+                    ).toString()).toFixed(8)}
                   </span>
                   <span>{item.settleToken_symbol}</span>
+                </div>
+              </section>
+              <section className='section_h5'>
+                <div>
+                  <span className='mypolicy_price_title'>出险价</span>
+                  <p>
+                    <span>{item.show_strikePrice}</span>
+                    <span>{item.putToken}</span>
+                  </p>
+                </div>
+                <div>
+                  <span className='mypolicy_price_title'>保单单价</span>
+                  <p>
+                    <span>{Number(item.show_price).toFixed(8)}</span>
+                    <span>{item.settleToken_symbol}</span>
+                  </p>
+                </div>
+              </section>
+              <section className='section_h5'>
+                <div>
+                  <span className='mypolicy_price_title'>持有量</span>
+                  <p>
+                    <span>{item.show_volume}</span>
+                    <span>{item.callToken}</span>
+                  </p>
+                </div>
+                <div>
+                  <span className='mypolicy_price_title'>保费</span>
+                  <p>
+                    <span>
+                      {new BigNumber(
+                        Number(item.show_price) * Number(item.show_volume)
+                      ).toString()}
+                    </span>
+                    <span>{item.settleToken_symbol}</span>
+                  </p>
                 </div>
               </section>
               <section>
@@ -249,7 +290,7 @@ const MyPolicy = props => {
           ))}
         </div>
       ) : (
-        <img src={NoData} alt="" className="nodata" />
+        <img src={NoData} alt='' className='nodata' />
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
