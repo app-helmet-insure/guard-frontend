@@ -76,7 +76,7 @@ const Operation = props => {
             </div>
           </div>
           <div className="insurance_operation_right">
-            <Chart lpt_address={PairUSDC} over_price={1} off_price={0.5} />
+            <Chart lpt_address={PairUSDC} over_price={CallCurrentInsurance.strikeprice} off_price={PutCurrentInsurance.strikeprice} />
           </div>
         </div>
         {ActionType === 'MARKET' ? (
