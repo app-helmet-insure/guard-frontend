@@ -238,11 +238,7 @@ const Supply = props => {
     InsuranceVolume,
     InsuranceSymbol,
     InsuranceType,
-<<<<<<< HEAD
-    ApproveStatus,
-=======
     DprStatus,
->>>>>>> master
   ])
   return (
     <div className="insurance_supply">
@@ -288,11 +284,7 @@ const Supply = props => {
             ''
           )}
         </div>
-<<<<<<< HEAD
-        <p className="left">预期最大收益: {Earning.toFixed(8)} GUARD</p>
-=======
         <p className="left">预期最大收益: {Earning} GUARD</p>
->>>>>>> master
         <div className="volume">
           <input
             type="text"
