@@ -35,6 +35,7 @@ export default {
   header_text6: 'CONNECT WALLET',
   header_text7: 'Flash to {name}',
   header_text8: 'WalletConnect',
+  header_text9: 'Insurance',
   install_metamask_dialog_text1:
     "You'll need to install {wallet} tocontinue.once you have it installed,go ahead and",
   install_metamask_dialog_text2: 'refresh the page',

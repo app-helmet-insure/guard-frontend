@@ -22,6 +22,7 @@ export const useBalance = (
   const { account, library, active } = useWeb3ReactCore()
   useMemo(() => {
     if (active && address && blockHeight !== 0) {
+      console.log(active, address, account)
       const contract = getContract(library, abi, address)
       contract.methods
         .balanceOf(account)

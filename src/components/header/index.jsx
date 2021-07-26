@@ -21,7 +21,7 @@ export const navList = [
     path: '/insurance',
     children: [
       {
-        name:  <FormattedMessage id='header_text1' />,
+        name:  <FormattedMessage id='header_text9' />,
         path: '/mypolicy',
       },
       {
