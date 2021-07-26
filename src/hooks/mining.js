@@ -48,6 +48,7 @@ export const getMiningInfo = (address, account) => {
         currency_allowance = 0,
         earned2 = 0,
       ] = data
+      console.log('begin', begin)
       const newPool = Object.assign({}, pool, {
         start_at: begin,
         earned,
@@ -173,23 +174,15 @@ export const getMDexPrice = (
       return multicallProvider.all(promiseList).then((promiseListData) => {
         const [token0, token1, getReserves] = promiseListData
         const { _reserve0, _reserve1 } = getReserves
-        const mdexRouterList1 = [
-          mdex_router_contract.getAmountOut(
-            numToWei(amount_),
-            _reserve1,
-            _reserve0
-          ),
-        ]
-        const mdexRouterList2 = [
-          mdex_router_contract.getAmountOut(
-            numToWei(amount),
-            _reserve0,
-            _reserve1
-          ),
-        ]
-
         // console.log('request___5')
         if (token0.toLowerCase() == address2.toLowerCase()) {
+          const mdexRouterList1 = [
+            mdex_router_contract.getAmountOut(
+              numToWei(amount_),
+              _reserve1,
+              _reserve0
+            ),
+          ]
           return multicallProvider
             .all(mdexRouterList1)
             .then((amountOutData) => {
@@ -198,6 +191,13 @@ export const getMDexPrice = (
             })
         } else if (token1.toLowerCase() == address2.toLowerCase()) {
           // console.log(numToWei(amount), _reserve0, _reserve1)
+          const mdexRouterList2 = [
+            mdex_router_contract.getAmountOut(
+              numToWei(amount),
+              _reserve0,
+              _reserve1
+            ),
+          ]
           return multicallProvider
             .all(mdexRouterList2)
             .then((amountOutData) => {
