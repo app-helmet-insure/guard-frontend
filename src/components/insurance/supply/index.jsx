@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { VarContext } from '../../../context'
 import Web3 from 'web3'
+import { FormattedMessage } from 'react-intl'
 import { toWei, fromWei } from 'web3-utils'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import { getCurrentInsurance } from '../../../configs/insurance'
@@ -236,40 +237,47 @@ const Supply = props => {
     DprStatus,
   ])
   return (
-    <div className="insurance_supply">
-      <div className="insurance_type">
+    <div className='insurance_supply'>
+      <div className='insurance_type'>
         <button
           onClick={() => setInsuranceType('Call')}
           className={InsuranceType === 'Call' ? 'insurance_active_call' : ''}
         >
-          Cover Miss Out
+          <FormattedMessage id='insurance_text4' />
         </button>
         <button
           onClick={() => setInsuranceType('Put')}
           className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
         >
-          Cover 50% Off
+          <FormattedMessage id='insurance_text5' />
         </button>
       </div>
-      <div className="insurance_form">
-        <p className="between">
-          <span>Insurance Price</span>
-          <span>Guard: {CurrentInsurance.strikeprice} USD</span>
+      <div className='insurance_form'>
+        <p className='between'>
+          <span>
+            <FormattedMessage id='insurance_text6' />
+          </span>
+          <span>
+            <FormattedMessage id='insurance_text7' />
+            {CurrentInsurance.strikeprice} USD
+          </span>
         </p>
-        <div className="dpr">
+        <div className='dpr'>
           <input
-            type="text"
+            type='text'
             readOnly
-            onChange={e => {
+            onChange={(e) => {
               setInsuranceDPR(e.target.value)
             }}
             onClick={() => handleClickDpr(!DprStatus)}
           />
-          <span className="name">DPR</span>
-          <span className="number">{InsuranceDPR.show}</span>
+          <span className='name'>
+            <FormattedMessage id='insurance_text13' />
+          </span>
+          <span className='number'>{InsuranceDPR.show}</span>
           {DprStatus ? (
-            <div className="select">
-              {DPRlist.map(dpr => (
+            <div className='select'>
+              {DPRlist.map((dpr) => (
                 <div key={dpr.show} onClick={() => handleClickDpr(false, dpr)}>
                   {dpr.show}
                 </div>
@@ -279,30 +287,38 @@ const Supply = props => {
             ''
           )}
         </div>
-        <p className="left">预期最大收益: {Earning} GUARD</p>
-        <div className="volume">
+        <p className='left'>
+          <FormattedMessage id='insurance_text8' />
+          {Earning} GUARD
+        </p>
+        <div className='volume'>
           <input
-            type="text"
+            type='text'
             value={InsuranceVolume}
-            maxLength="6"
-            onChange={e => {
+            maxLength='6'
+            onChange={(e) => {
               setInsuranceVolume(e.target.value)
             }}
           />
           <span>{CurrentInsurance.collateral_symbol}</span>
         </div>
-        <p className="left">
-          可用余额: {Balance} {CurrentInsurance.collateral_symbol}
+        <p className='left'>
+          <FormattedMessage id='insurance_text9' />
+          {Balance} {CurrentInsurance.collateral_symbol}
         </p>
         <button
-          className="confirm"
+          className='confirm'
           onClick={() => handleClickSupplyInsurance()}
         >
-          {ApproveStatus
-            ? InsuranceType === 'Call'
-              ? '立即创建翻倍险'
-              : '立即创建腰斩险'
-            : '授权'}
+          {ApproveStatus ? (
+            InsuranceType === 'Call' ? (
+              <FormattedMessage id='insurance_text10' />
+            ) : (
+              <FormattedMessage id='insurance_text11' />
+            )
+          ) : (
+            <FormattedMessage id='insurance_text12' />
+          )}
         </button>
       </div>
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />

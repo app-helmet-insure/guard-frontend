@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Supply from '@/components/insurance/supply'
 import Market from '@/components/insurance/market'
-
+import { FormattedMessage } from 'react-intl'
 import CallSvg from '@/assets/images/insurance/call.svg'
 import PutSvg from '@/assets/images/insurance/put.svg'
 import Select from '@/assets/images/insurance/select.svg'
@@ -28,30 +28,34 @@ const Operation = props => {
     }
   }
   return (
-    <div className="insurance_operation_wrap">
-      <div className="insurance_operation">
-        <div className="insurance_control">
-          <div className="insurance_operation_left">
-            <div className="logo">
-              <img src={Logo} alt="" />
+    <div className='insurance_operation_wrap'>
+      <div className='insurance_operation'>
+        <div className='insurance_control'>
+          <div className='insurance_operation_left'>
+            <div className='logo'>
+              <img src={Logo} alt='' />
               <p>{ShowName}</p>
               <span>{Expiry}</span>
             </div>
-            <div className="price">
-              <div className="call price_cell">
-                <img src={CallSvg} alt="" />
+            <div className='price'>
+              <div className='call price_cell'>
+                <img src={CallSvg} alt='' />
                 <div>
-                  <span>Cover Miss Out Pirce</span>
+                  <span>
+                    <FormattedMessage id='insurance_text14' />
+                  </span>
                   <span>
                     {CallCurrentInsurance.strikeprice}{' '}
                     {CallCurrentInsurance.indextoken}
                   </span>
                 </div>
               </div>
-              <div className="put price_cell">
-                <img src={PutSvg} alt="" />
+              <div className='put price_cell'>
+                <img src={PutSvg} alt='' />
                 <div>
-                  <span>50% Off Price</span>
+                  <span>
+                    <FormattedMessage id='insurance_text15' />
+                  </span>
                   <span>
                     {PutCurrentInsurance.strikeprice}{' '}
                     {PutCurrentInsurance.indextoken}
@@ -59,24 +63,27 @@ const Operation = props => {
                 </div>
               </div>
             </div>
-            <div className="buttons">
+            <div className='buttons'>
               <button
-                className="market"
+                className='market'
                 onClick={() => handleChilciActiveType('MARKET')}
               >
-                Buy Insurance <img src={Select} alt="" />
+                <FormattedMessage id='insurance_text16' /> <img src={Select} alt='' />
               </button>
               <button
-                className="supply"
+                className='supply'
                 onClick={() => handleChilciActiveType('SUPPLY')}
               >
-                Supply
-                <img src={Select} alt="" />
+                <FormattedMessage id='insurance_text17' /> <img src={Select} alt='' />
               </button>
             </div>
           </div>
-          <div className="insurance_operation_right">
-            <Chart lpt_address={PairUSDC} over_price={CallCurrentInsurance.strikeprice} off_price={PutCurrentInsurance.strikeprice} />
+          <div className='insurance_operation_right'>
+            <Chart
+              lpt_address={PairUSDC}
+              over_price={CallCurrentInsurance.strikeprice}
+              off_price={PutCurrentInsurance.strikeprice}
+            />
           </div>
         </div>
         {ActionType === 'MARKET' ? (
