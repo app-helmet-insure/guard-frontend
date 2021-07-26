@@ -2,9 +2,11 @@ import React from 'react'
 import {Modal} from 'antd'
 import './index.less'
 import SuccessSvg from '../../../assets/images/success.svg'
+import FailSvg from '../../../assets/images/fail.png'
 import {FormattedMessage} from 'react-intl'
-import {Link} from 'react-router-dom'
-function SuccessfulPurchaseDialog({visible, onClose}) {
+
+
+function SuccessfulPurchaseDialog({visible, onClose, message, status = 'success'}) {
   return (
     <Modal
       visible={visible}
@@ -15,11 +17,11 @@ function SuccessfulPurchaseDialog({visible, onClose}) {
       wrapClassName="successful_purchase_dialog_wrap"
     >
       <div className="text_center">
-        <img src={SuccessSvg} alt=""/>
+        {
+          status === 'success' ? <img src={SuccessSvg} alt=""/> : <img src={FailSvg} alt=""/>
+        }
         <p>
-          <FormattedMessage id="successful_purchase_dialog_text1" values={{
-            title: <Link to="" className="link">
-              <FormattedMessage id="successful_purchase_dialog_text2"/> </Link>}}/>
+          {message ? message : (status === 'success' ? <FormattedMessage id="successful_purchase_dialog_text1"/> : <FormattedMessage id="successful_purchase_dialog_text3"/>)}
         </p>
       </div>
     </Modal>

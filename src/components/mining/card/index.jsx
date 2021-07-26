@@ -17,7 +17,8 @@ import {useActiveWeb3React} from '../../../web3'
 
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
-  const {account} = useActiveWeb3React()
+  const {account, active} = useActiveWeb3React()
+  console.log('active', active)
 
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)

@@ -27,13 +27,14 @@ export default {
   HourM: 'h',
   MinM: 'm',
   SecondM: 's',
-  header_text1: 'Insurance',
-  header_text2: 'Mining',
+  header_text1: 'INSURANCE',
+  header_text2: 'MINING',
   header_text3: 'Connect to a wallet',
   header_text4: 'Pending',
-  header_text5: 'Connect to your {wallet} Wallet',
+  header_text5: 'Connect to your {wallet} Wallet ',
   header_text6: 'CONNECT WALLET',
   header_text7: 'Flash to {name}',
+  header_text8: 'WalletConnect',
   install_metamask_dialog_text1:
     "You'll need to install {wallet} tocontinue.once you have it installed,go ahead and",
   install_metamask_dialog_text2: 'refresh the page',
@@ -54,9 +55,9 @@ export default {
   waiting_confirmation_dialog_text1: 'Waiting for confirmation',
   waiting_confirmation_dialog_text2:
     'Please confirm the transaction in your wallet',
-  successful_purchase_dialog_text1:
-    'Insurance purchase successful, please check in',
+  successful_purchase_dialog_text1: 'Success',
   successful_purchase_dialog_text2: ' my policy',
+  successful_purchase_dialog_text3: 'Fail',
   submit_insurance_dialog_text1: 'Tip',
   submit_insurance_dialog_text2:
     'Do you want to buy {num} {doubleInsurance}, The policy fee is {fee}, The expected return is {profit}.',
