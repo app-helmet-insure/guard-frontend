@@ -148,14 +148,15 @@ const MySupply = props => {
     }
   }, [account])
   return (
-    <div className="insurance_mysupply">
+    <div className='insurance_mysupply'>
+      <h2 className='insurance_mysupply_title'>我发布的保险</h2>
       {SupplyList && SupplyList.length > 0 ? (
-        <div className="insurance_mysupply_list">
-          {SupplyList.map(item => (
-            <div className="insurance_mysupply_item" key={item.askID}>
+        <div className='insurance_mysupply_list'>
+          {SupplyList.map((item) => (
+            <div className='insurance_mysupply_item' key={item.askID}>
               <section>
                 <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt='' />
                   <span className={item.type}>
                     {item.callToken +
                       ' ' +
@@ -171,7 +172,7 @@ const MySupply = props => {
                   <span>ID: {item.askID}</span>
                 </div>
               </section>
-              <section>
+              <section className='mysupply_section_pc'>
                 <div>
                   <span>出险价</span>
                   <span>{item.show_strikePrice}</span>
@@ -187,7 +188,7 @@ const MySupply = props => {
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
-              <section>
+              <section className='mysupply_section_pc'>
                 <div>
                   <span>已出售</span>
                   <span>{item.show_besold}</span>
@@ -197,6 +198,42 @@ const MySupply = props => {
                   <span>未出售</span>
                   <span>{item.show_unsold}</span>
                   <span>{item.callToken}</span>
+                </div>
+              </section>
+              <section className='mysupply_section_h5'>
+                <div>
+                  <span className='mysupply_price_title'>出险价</span>
+                  <p>
+                    <span>{item.show_strikePrice}</span>
+                    <span>{item.putToken}</span>
+                  </p>
+                </div>
+                <div>
+                  <span className='mysupply_price_title'>保单单价</span>
+                  <p>
+                    <span>
+                      {(
+                        Number(item.show_price) * Number(item.show_volume)
+                      ).toFixed(8)}
+                    </span>
+                    <span>{item.settleToken_symbol}</span>
+                  </p>
+                </div>
+              </section>
+              <section className='mysupply_section_h5'>
+                <div>
+                  <span className='mysupply_price_title'>已出售</span>
+                  <p>
+                    <span>{item.show_besold}</span>
+                    <span>{item.callToken}</span>
+                  </p>
+                </div>
+                <div>
+                  <span className='mysupply_price_title'>未出售</span>
+                  <p>
+                    <span>{item.show_unsold}</span>
+                    <span>{item.callToken}</span>
+                  </p>
                 </div>
               </section>
               <section>
@@ -209,7 +246,7 @@ const MySupply = props => {
           ))}
         </div>
       ) : (
-        <img src={NoData} alt="" className="nodata" />
+        <img src={NoData} alt='' className='nodata' />
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
