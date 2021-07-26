@@ -272,7 +272,7 @@ const Supply = props => {
             {CurrentInsurance.strikeprice} USDC
           </span>
         </p>
-        <Select value={dprVal} onChange={setDpr} defaultOpen={true}>
+        <Select value={dprVal} onChange={setDpr}>
           {DPRlist.map((dpr) => (
             <Option
               value={dpr.show}
