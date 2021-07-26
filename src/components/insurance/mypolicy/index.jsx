@@ -78,7 +78,6 @@ const MyPolicy = props => {
               putToken: indextoken,
             }
             item.asks.filter(itemAsk => {
-              console.log(itemAsk)
               const ResultItemAsk = {
                 askID: itemAsk.askID,
                 isCancel: itemAsk.isCancel,
@@ -104,6 +103,15 @@ const MyPolicy = props => {
                       show_volume: fromWei(itemBid.volume, collateral_decimals),
                     }
                     const ReturnItem = Object.assign(ResultItemBid, AllItem)
+                    if (ReturnItem.type === 'Put') {
+                      ReturnItem.show_volume = Number(
+                        ReturnItem.show_volume / ReturnItem.show_strikePrice
+                      ).toFixed(8)
+                    } else {
+                      ReturnItem.show_volume = Number(
+                        ReturnItem.show_volume
+                      ).toFixed(8)
+                    }
                     FixListPush.push(ReturnItem)
                   }
                 })
@@ -196,17 +204,17 @@ const MyPolicy = props => {
     }
   }, [account])
   return (
-    <div className='insurance_mypolicy'>
-      <h2 className='insurance_mypolicy_title'>
-        <FormattedMessage id='mypolicy_text1' />
+    <div className="insurance_mypolicy">
+      <h2 className="insurance_mypolicy_title">
+        <FormattedMessage id="mypolicy_text1" />
       </h2>
       {PolicyList && PolicyList.length > 0 ? (
-        <div className='insurance_mypolicy_list'>
+        <div className="insurance_mypolicy_list">
           {PolicyList.map((item, index) => (
-            <div className='insurance_mypolicy_item' key={item.bidID}>
+            <div className="insurance_mypolicy_item" key={item.bidID}>
               <section>
                 <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt='' />
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
                   <span className={item.type}>
                     {item.callToken +
                       ' ' +
@@ -222,33 +230,33 @@ const MyPolicy = props => {
                   <span>ID: {item.bidID}</span>
                 </div>
               </section>
-              <section className='section_pc'>
+              <section className="section_pc">
                 <div>
                   <span>
-                    <FormattedMessage id='mypolicy_text2' />
+                    <FormattedMessage id="mypolicy_text2" />
                   </span>
                   <span>{item.show_strikePrice}</span>
                   <span>{item.putToken}</span>
                 </div>
                 <div>
                   <span>
-                    <FormattedMessage id='mypolicy_text3' />
+                    <FormattedMessage id="mypolicy_text3" />
                   </span>
                   <span>{item.show_volume}</span>
                   <span>{item.callToken}</span>
                 </div>
               </section>
-              <section className='section_pc'>
+              <section className="section_pc">
                 <div>
                   <span>
-                    <FormattedMessage id='mypolicy_text4' />
+                    <FormattedMessage id="mypolicy_text4" />
                   </span>
                   <span>{Number(item.show_price).toFixed(8)}</span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
                 <div>
                   <span>
-                    <FormattedMessage id='mypolicy_text5' />
+                    <FormattedMessage id="mypolicy_text5" />
                   </span>
                   <span>
                     {Number(
@@ -260,10 +268,10 @@ const MyPolicy = props => {
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
-              <section className='section_h5'>
+              <section className="section_h5">
                 <div>
-                  <span className='mypolicy_price_title'>
-                    <FormattedMessage id='mypolicy_text2' />
+                  <span className="mypolicy_price_title">
+                    <FormattedMessage id="mypolicy_text2" />
                   </span>
                   <p>
                     <span>{item.show_strikePrice}</span>
@@ -271,8 +279,8 @@ const MyPolicy = props => {
                   </p>
                 </div>
                 <div>
-                  <span className='mypolicy_price_title'>
-                    <FormattedMessage id='mypolicy_text4' />
+                  <span className="mypolicy_price_title">
+                    <FormattedMessage id="mypolicy_text4" />
                   </span>
                   <p>
                     <span>{Number(item.show_price).toFixed(8)}</span>
@@ -280,10 +288,10 @@ const MyPolicy = props => {
                   </p>
                 </div>
               </section>
-              <section className='section_h5'>
+              <section className="section_h5">
                 <div>
-                  <span className='mypolicy_price_title'>
-                    <FormattedMessage id='mypolicy_text3' />
+                  <span className="mypolicy_price_title">
+                    <FormattedMessage id="mypolicy_text3" />
                   </span>
                   <p>
                     <span>{item.show_volume}</span>
@@ -291,8 +299,8 @@ const MyPolicy = props => {
                   </p>
                 </div>
                 <div>
-                  <span className='mypolicy_price_title'>
-                    <FormattedMessage id='mypolicy_text5' />
+                  <span className="mypolicy_price_title">
+                    <FormattedMessage id="mypolicy_text5" />
                   </span>
                   <p>
                     <span>
@@ -306,14 +314,14 @@ const MyPolicy = props => {
               </section>
               <section>
                 <button onClick={() => handleClickWithDraw(item)}>
-                  <FormattedMessage id='mypolicy_text6' />
+                  <FormattedMessage id="mypolicy_text6" />
                 </button>
               </section>
             </div>
           ))}
         </div>
       ) : (
-        <img src={NoData} alt='' className='nodata' />
+        <img src={NoData} alt="" className="nodata" />
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
