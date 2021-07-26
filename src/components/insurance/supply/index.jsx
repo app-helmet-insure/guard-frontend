@@ -79,7 +79,7 @@ const Supply = props => {
     CurrentInsurance.collateral_symbol === 'MATIC'
       ? useEthBalance()
       : useBalance(
-        0,
+        1,
         CurrentInsurance.collateral_address,
         Erc20ABI.abi,
         CurrentInsurance.collateral_decimals_number
@@ -348,7 +348,7 @@ const Supply = props => {
           <input
             type="text"
             value={InsuranceVolume}
-            maxLength="6"
+            maxLength="7"
             onChange={e => {
               setInsuranceVolume(e.target.value)
             }}
