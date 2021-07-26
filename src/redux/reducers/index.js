@@ -1,10 +1,11 @@
-import { LANGUAGE } from '../actions/index'
+import {LANGUAGE, SHOW_SWITCH_WALLET} from '../actions/index'
 
 const language = window.localStorage.getItem('guard_frontend_language') || 'en'
 
 // 初始化state
 const initState = {
   language: language,
+  showSwitchWallet: false
 }
 
 // reducer
@@ -15,6 +16,11 @@ export default function reducer(state = initState, action) {
       return {
         ...state,
         language: action.params.language,
+      }
+    case SHOW_SWITCH_WALLET:
+      return {
+        ...state,
+        showSwitchWallet: action.params.showSwitchWallet,
       }
     default:
       return state

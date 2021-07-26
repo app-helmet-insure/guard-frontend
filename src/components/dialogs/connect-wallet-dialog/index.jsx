@@ -53,7 +53,7 @@ function ConnectWallDialog({visible, onClose}) {
           </div>
           <div className="wallet_item flex_center" onClick={onConnectWallSanCode}>
             <img src={MathSvg} alt=""/>
-            <p><FormattedMessage id="header_text5" values={{wallet: 'Math'}}/></p>
+            <p><FormattedMessage id="header_text8"/></p>
           </div>
         </div>
       </Modal>

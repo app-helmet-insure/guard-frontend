@@ -1,4 +1,5 @@
 import {ChainId} from './address'
+import {changeShowSwitchWallet} from '../redux/actions/index'
 import {
   InjectedConnector,
   NoEthereumProviderError,
@@ -7,6 +8,7 @@ import {
 import {UnsupportedChainIdError, useWeb3React} from '@web3-react/core'
 import {WalletConnectConnector} from '@web3-react/walletconnect-connector'
 import {useCallback, useEffect, useMemo} from 'react'
+import store from '../redux/store'
 
 export const SCAN_ADDRESS = {
   [ChainId.BSC]: 'https://bscscan.com',
@@ -55,7 +57,7 @@ const networkConf = {
 
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [ChainId.MATIC, ChainId.BSC, ChainId.HECO],
+  supportedChainIds: [ChainId.MATIC],
 })
 
 export const changeNetwork = chainId => {
@@ -113,9 +115,10 @@ export const useConnectWallet = () => {
     return changeNetwork(chainId).then(() => {
       return activate(connector, undefined, true)
         .then((e) => {
+          // 隐藏切换网络弹窗
+          store.getState().index.showSwitchWallet && store.dispatch(changeShowSwitchWallet({showSwitchWallet: false}))
           if (window.ethereum && window.ethereum.on) {
             // 监听钱包事件
-            console.log('注册事件')
             // const { ethereum } = window
             window.ethereum.on('accountsChanged', (accounts) => {
               if (accounts.length === 0) {
@@ -139,13 +142,13 @@ export const useConnectWallet = () => {
             window.ethereum.on('message', message => {
               console.log('message', message)
             })
-
           }
         })
         .catch((error) => {
           switch (true) {
             case error instanceof UnsupportedChainIdError:
               console.log('链错了')
+              store.dispatch(changeShowSwitchWallet({showSwitchWallet: true}))
               break
             case error instanceof NoEthereumProviderError:
               console.log('不是钱包环境')
@@ -164,6 +167,7 @@ export const useConnectWallet = () => {
   useMemo(() => {
     !active && connectWallet(injected)
     window.ethereum && window.ethereum.on('networkChanged', () => {
+
       // 切换网络后，尝试连接
       !active && connectWallet(injected)
     })

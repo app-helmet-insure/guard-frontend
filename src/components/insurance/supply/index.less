@@ -201,7 +201,10 @@
       }
     }
     .volume {
+      position: relative;
       width: 100%;
+      display: flex;
+      align-items: center;
       input {
         padding-left: 16px;
         width: 100%;
@@ -211,6 +214,14 @@
         &:focus {
           border: 1px solid #4364e8;
         }
+      }
+       > span {
+        position: absolute;
+        right: 10px;
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: #919aa6;
+        line-height: 15px;
       }
     }
     .left {

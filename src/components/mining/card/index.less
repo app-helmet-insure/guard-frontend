@@ -85,7 +85,7 @@
   &_apy_val {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    // align-items: center;
     margin-bottom: 0;
     span {
       display: inline-block;
@@ -97,6 +97,9 @@
     .value {
       margin-top: 10px;
       color: #2a3749;
+    }
+    &:last-child {
+      text-align: right;
     }
   }
   &_content {
@@ -119,6 +122,19 @@
       font-size: 14px;
       font-family: HelveticaNeue;
       line-height: 14px;
+    }
+  }
+  &_content_rewards {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &_content_rewards_val {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    span {
+      line-height: 20px;
     }
   }
   &_content_icon {
