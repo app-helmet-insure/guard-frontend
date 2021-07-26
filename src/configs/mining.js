@@ -48,6 +48,7 @@ export default [
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
-    poolType: 1
+    poolType: 1,
+    reward2DailyProduction: '0.2', // 奖励2日产量
   },
 ]

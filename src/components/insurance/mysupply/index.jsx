@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { FormattedMessage } from 'react-intl'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
 import NoData from '../../../assets/images/insurance/nodata.svg'
@@ -33,7 +34,10 @@ const MySupply = props => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
-        ReturnList.forEach(item => {
+        const FilterList = ReturnList.filter(
+          item => Number(item.expiry) >= 1627315200
+        )
+        FilterList.forEach(item => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
@@ -95,7 +99,9 @@ const MySupply = props => {
                       ))
                   )
                 } else {
-                  number = Number(fromWei(itemAsk.binds[0].volume))
+                  number = Number(
+                    fromWei(itemAsk.binds[0].volume, collateral_decimals)
+                  )
                 }
                 ResultItem.show_besold = number
                 ResultItem.show_unsold =
@@ -107,6 +113,17 @@ const MySupply = props => {
                 )
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
+              if (AllItem.type === 'Put') {
+                AllItem.show_besold = Number(
+                  AllItem.show_besold / AllItem.show_strikePrice
+                ).toFixed(8)
+                AllItem.show_unsold = Number(
+                  AllItem.show_unsold / AllItem.show_strikePrice
+                ).toFixed(8)
+              } else {
+                AllItem.show_besold = Number(AllItem.show_besold).toFixed(8)
+                AllItem.show_unsold = Number(AllItem.show_unsold).toFixed(8)
+              }
               if (
                 !AllItem.isCancel &&
                 itemAsk.seller.toUpperCase() === account.toUpperCase()
@@ -149,6 +166,9 @@ const MySupply = props => {
   }, [account])
   return (
     <div className="insurance_mysupply">
+      <h2 className="insurance_mysupply_title">
+        <FormattedMessage id="mysupply_text1" />
+      </h2>
       {SupplyList && SupplyList.length > 0 ? (
         <div className="insurance_mysupply_list">
           {SupplyList.map(item => (
@@ -171,14 +191,18 @@ const MySupply = props => {
                   <span>ID: {item.askID}</span>
                 </div>
               </section>
-              <section>
+              <section className="mysupply_section_pc">
                 <div>
-                  <span>出险价</span>
+                  <span>
+                    <FormattedMessage id="mypolicy_text2" />
+                  </span>
                   <span>{item.show_strikePrice}</span>
                   <span>{item.putToken}</span>
                 </div>
                 <div>
-                  <span>保单单价</span>
+                  <span>
+                    <FormattedMessage id="mypolicy_text4" />
+                  </span>
                   <span>
                     {(
                       Number(item.show_price) * Number(item.show_volume)
@@ -187,22 +211,74 @@ const MySupply = props => {
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
-              <section>
+              <section className="mysupply_section_pc">
                 <div>
-                  <span>已出售</span>
+                  <span>
+                    <FormattedMessage id="mysupply_text2" />
+                  </span>
                   <span>{item.show_besold}</span>
                   <span>{item.callToken}</span>
                 </div>
                 <div>
-                  <span>未出售</span>
+                  <span>
+                    <span>
+                      <FormattedMessage id="mysupply_text3" />
+                    </span>
+                  </span>
                   <span>{item.show_unsold}</span>
                   <span>{item.callToken}</span>
                 </div>
               </section>
+              <section className="mysupply_section_h5">
+                <div>
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mypolicy_text2" />
+                  </span>
+                  <p>
+                    <span>{item.show_strikePrice}</span>
+                    <span>{item.putToken}</span>
+                  </p>
+                </div>
+                <div>
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mypolicy_text4" />
+                  </span>
+                  <p>
+                    <span>
+                      {(
+                        Number(item.show_price) * Number(item.show_volume)
+                      ).toFixed(8)}
+                    </span>
+                    <span>{item.settleToken_symbol}</span>
+                  </p>
+                </div>
+              </section>
+              <section className="mysupply_section_h5">
+                <div>
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mysupply_text2" />
+                  </span>
+                  <p>
+                    <span>{item.show_besold}</span>
+                    <span>{item.callToken}</span>
+                  </p>
+                </div>
+                <div>
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mysupply_text3" />
+                  </span>
+                  <p>
+                    <span>{item.show_unsold}</span>
+                    <span>{item.callToken}</span>
+                  </p>
+                </div>
+              </section>
               <section>
-                <button>Mining</button>
+                <button>
+                  <FormattedMessage id="mysupply_text4" />
+                </button>
                 <button onClick={() => handleClickCancelOrder(item)}>
-                  撤销
+                  <FormattedMessage id="mysupply_text5" />
                 </button>
               </section>
             </div>

@@ -9,7 +9,7 @@ import {formatNumber} from 'accounting'
 import {formatAmount, splitFormat} from '../../../utils/format'
 import {useBalance} from '../../../hooks/index'
 import ERC20 from '../../../web3/abi/ERC20.json'
-import {getMiningInfo, getAPR, useMdxARP} from '../../../hooks/mining'
+import {getMiningInfo, getAPR, getMdxARP} from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 import {VarContext} from '../../../context'
@@ -42,7 +42,6 @@ const MiningCard = props => {
 
   const [apr, setApr] = useState('0')
   const [mdexApr, setMdexApr] = useState('0')
-  console.log('apr', apr, mdexApr)
   useMemo(() => {
     if (blockHeight !== 0 && miningPools) {
       getAPR(
@@ -50,11 +49,12 @@ const MiningCard = props => {
         miningPools.earnName === 'APY' ? 2 : 1,
       ).then(setApr)
       // 奖励2的apr
-      useMdxARP(miningPools).then(setMdexApr)
+      getMdxARP(miningPools).then(setMdexApr)
     }
   }, [blockHeight, miningPools])
 
   useMemo(() => {
+    console.log('apr', apr, mdexApr)
     if (apr > 0 && miningPools && (!miningPools.mdexReward || mdexApr > 0)) {
       setPercentage((apr * 100 + mdexApr * 100).toFixed(2))
     }

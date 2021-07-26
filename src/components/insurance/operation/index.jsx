@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Supply from '@/components/insurance/supply'
 import Market from '@/components/insurance/market'
-import LogoSvg from '@/assets/images/insurance/logo.svg'
+
 import CallSvg from '@/assets/images/insurance/call.svg'
 import PutSvg from '@/assets/images/insurance/put.svg'
 import Select from '@/assets/images/insurance/select.svg'
@@ -11,7 +11,7 @@ import { Chart } from '../chart'
 const Operation = props => {
   const [ActionType, setActionType] = useState('')
   const [InsuranceTime] = useState('2021-07-21 24:00')
-  const { InsuranceSymbol, PairUSDC } = props
+  const { InsuranceSymbol, PairUSDC, Logo, Expiry, ShowName } = props
   const PutCurrentInsurance = getCurrentInsurance({
     Type: 'Put',
     Insurance: InsuranceSymbol,
@@ -33,8 +33,9 @@ const Operation = props => {
         <div className="insurance_control">
           <div className="insurance_operation_left">
             <div className="logo">
-              <img src={LogoSvg} alt="" />
-              <span>{InsuranceTime}</span>
+              <img src={Logo} alt="" />
+              <p>{ShowName}</p>
+              <span>{Expiry}</span>
             </div>
             <div className="price">
               <div className="call price_cell">
@@ -75,7 +76,7 @@ const Operation = props => {
             </div>
           </div>
           <div className="insurance_operation_right">
-            <Chart lpt_address={PairUSDC} over_price={1} off_price={0.5} />
+            <Chart lpt_address={PairUSDC} over_price={CallCurrentInsurance.strikeprice} off_price={PutCurrentInsurance.strikeprice} />
           </div>
         </div>
         {ActionType === 'MARKET' ? (
