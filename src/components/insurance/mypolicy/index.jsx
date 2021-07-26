@@ -16,6 +16,7 @@ import moment from 'moment'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
+import BigNumber from 'bignumber.js'
 
 const MyPolicy = props => {
   const [PolicyList, setPolicyList] = useState([])
@@ -72,6 +73,7 @@ const MyPolicy = props => {
               putToken: indextoken,
             }
             item.asks.filter(itemAsk => {
+              console.log(itemAsk)
               const ResultItemAsk = {
                 askID: itemAsk.askID,
                 isCancel: itemAsk.isCancel,
@@ -104,12 +106,13 @@ const MyPolicy = props => {
             })
           }
         })
+        console.log(FixListPush)
         const FixList = FixListPush
         setPolicyList(FixList)
       }
     })
   }
-  
+
   const actionApprove = adress => {
     const Erc20Contracts = getContract(library, Erc20ABI.abi, adress)
     const Infinitys =
@@ -163,8 +166,6 @@ const MyPolicy = props => {
   const handleClickWithDraw = async data => {
     const LongApproveStatus = await getLongApporve(data)
     const UnderlyingApproveStatus = await getUnderlyingApprove(data)
-    console.log(LongApproveStatus, UnderlyingApproveStatus)
-    
     if (LongApproveStatus && UnderlyingApproveStatus) {
       const OrderContracts = getContract(library, OrderABI, OrderAddress)
       OrderContracts.methods
@@ -176,6 +177,7 @@ const MyPolicy = props => {
         .on('receipt', (_, receipt) => {
           setOpenWaiting(false)
           setOpenSuccess(true)
+          getPolicyList()
         })
         .on('error', ereor => {
           setOpenWaiting(false)
@@ -226,13 +228,15 @@ const MyPolicy = props => {
               <section>
                 <div>
                   <span>保单单价</span>
-                  <span>{Number(item.show_price).toFixed(4)}</span>
+                  <span>{Number(item.show_price).toFixed(8)}</span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
                 <div>
                   <span>保费</span>
                   <span>
-                    {Number(item.show_price) * Number(item.show_volume)}
+                    {new BigNumber(
+                      Number(item.show_price) * Number(item.show_volume)
+                    ).toString()}
                   </span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
