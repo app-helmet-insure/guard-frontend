@@ -13,8 +13,10 @@ import {range, clone} from 'lodash'
 
 import './index.less'
 import BigNumber from 'bignumber.js'
+import {getHttpWeb3} from '../../../web3'
+import {ChainId} from '../../../web3/address'
 
-const API = 'https://api.thegraph.com/subgraphs/name/app-helmet-insure/guard4quickswap'
+const API = 'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06'
 const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 /**
  * @param props
@@ -25,16 +27,16 @@ const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
  * @constructor
  */
 export const Chart = props => {
+  const client = new ApolloClient({
+    uri: API,
+    cache: new InMemoryCache()
+  })
 
   const {lpt_address, over_price, off_price} = props
-  console.log(lpt_address, over_price, off_price)
-  const [price, setPrice] = useState(0)
+
+  const [price, setPrice] = useState('-')
 
   const loadData = async () => {
-    const client = new ApolloClient({
-      uri: API,
-      cache: new InMemoryCache()
-    })
 
     const query = gql`
       {
@@ -64,11 +66,7 @@ export const Chart = props => {
     const ret = await client.query({
       query
     })
-
-    console.log('ret', ret)
-
     // init data
-
     const end_time = dayjs().startOf('hour').unix()
     const start_time = Math.floor(end_time - 24 * 3600)
     const timeline = range(start_time, end_time, 3600).map(timestamp => ({
@@ -131,12 +129,95 @@ export const Chart = props => {
     return [data, min, max]
   }
 
+  const loadDataByBlock = async () => {
+    const web3 = getHttpWeb3(ChainId.MATIC)
+    const current_height = await web3.eth.getBlockNumber()
+    const current_block = await web3.eth.getBlock(current_height)
+    // 当前块高度 - 出块时间
+    const last_block = await web3.eth.getBlock(current_height - 50000)
+
+    const {timestamp: current_timestamp} = current_block
+    const {timestamp: last_timestamp} = last_block
+    const agv_block_interval = (current_timestamp - last_timestamp) /  50000
+
+    const end_time = dayjs().startOf('hour').unix()
+    const start_time = Math.floor(end_time - 24 * 3600)
+
+    const timeline = range(start_time, end_time, 3600).map((timestamp, index) => ({
+      timestamp,
+      value: 0,
+      block: current_height - Math.floor(((24 - index) * 3600) / agv_block_interval)
+    }))
+
+    const block_query_arr = []
+    timeline.map(item => {
+      block_query_arr.push(`
+        t${item.timestamp}: pair(
+          id: "${lpt_address.toLowerCase()}"
+          block: {number: ${item.block}}
+        ) {
+          token0 {
+            id
+          }
+          token1 {
+            id
+          }
+          token0Price
+          token1Price
+        }
+      `)
+    })
+
+
+    const query = gql`
+      {
+        ${block_query_arr.join('')}
+      }
+    `
+    const ret = await client.query({
+      query
+    })
+    let max = 0, min = Math.pow(10, 10)
+    let last_price = 0
+
+    const data = timeline.map(item => {
+      const hour_data = ret.data[`t${item.timestamp}`]
+      let _price = 0
+      if (hour_data !== null) {
+        if (hour_data.token0.id === USDC_ADDRESS.toLowerCase()) {
+          _price = hour_data.token0Price
+        } else if (hour_data.token1.id === USDC_ADDRESS.toLowerCase()) {
+          _price = hour_data.token0Price
+        }
+      }
+      _price = new BigNumber(_price).toFixed(6, 1).toString() * 1
+
+      last_price = _price
+
+      if (_price > max) {
+        max = _price
+      }
+
+      if (_price < min) {
+        min = _price
+      }
+
+      return [
+        item.timestamp * 1000,
+        _price
+      ]
+    })
+
+    setPrice(last_price)
+    return [data, min, max]
+
+  }
+
 
   const initChart = async () => {
-    const [data, min, max] = await loadData()
-    console.log('data', data)
+    const [data, min, max] = await loadDataByBlock()
 
-    Highcharts.chart(document.getElementsByClassName('chart_body_' + lpt_address)[0], {
+    Highcharts.chart(document.getElementById(`chart_${lpt_address}`), {
       title: {
         text: null,
       },
@@ -250,7 +331,7 @@ export const Chart = props => {
           {price} USDC
         </div>
       </div>
-      <div className={'chart_body_' + lpt_address}>
+      <div id={`chart_${lpt_address}`} className={'chart_body'}>
       </div>
     </div>
   )
