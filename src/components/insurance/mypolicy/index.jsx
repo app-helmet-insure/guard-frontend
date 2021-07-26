@@ -166,6 +166,7 @@ const MyPolicy = props => {
   const handleClickWithDraw = async data => {
     const LongApproveStatus = await getLongApporve(data)
     const UnderlyingApproveStatus = await getUnderlyingApprove(data)
+    console.log(data)
     if (LongApproveStatus && UnderlyingApproveStatus) {
       const OrderContracts = getContract(library, OrderABI, OrderAddress)
       OrderContracts.methods
