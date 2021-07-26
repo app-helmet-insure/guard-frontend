@@ -5,8 +5,8 @@ import QuickSwapFactory from '../web3/abi/QuickSwapFactory.json'
 
 export default [
   {
-    name: 'TESTB (DAO)',
-    icon: 'PAUL-HT_small@2x.png',
+    name: 'Guard-USDC LPT',
+    icon: 'Guard-USDC',
     shortToken: 'TESTB',
     rewards1: 'TESTB',
     rewards2: null,
