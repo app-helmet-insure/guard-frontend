@@ -1,7 +1,7 @@
 import React from 'react'
 import {Drawer} from 'antd'
 import './index.less'
-import LogoSvg from '../../assets/images/logo.svg'
+import LogoSvg from '../../assets/images/logo_h5.svg'
 import {FormattedMessage} from 'react-intl'
 import {formatAddress} from '../../utils'
 import {navList} from '../header'

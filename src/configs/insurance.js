@@ -25,7 +25,7 @@ import moment from 'moment'
 export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
-    PairUSDC: '',
+    PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
     Logo: GuardLogoSvg,
     Expiry: moment(new Date(1627401600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Guard'

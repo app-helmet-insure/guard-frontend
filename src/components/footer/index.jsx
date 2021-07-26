@@ -11,7 +11,7 @@ import {changeLanguage} from '../../redux/actions'
 
 import {languageConfig} from '../../locales/intl'
 
-function renderLanguage(props) {
+function renderLanguage (props) {
   const list = []
   for (const i in languageConfig) {
     list.push((
@@ -26,9 +26,8 @@ function renderLanguage(props) {
   }
 }
 
-function Footer(props) {
+function Footer (props) {
   const renderLanguageData = renderLanguage(props)
-  console.log(renderLanguageData)
   return (
     <div className="footer">
       <div className="powered flex_center powered_pc_v">Powered by GUARD Core team</div>

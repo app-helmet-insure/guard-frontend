@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import './index.less'
+import { FormattedMessage } from 'react-intl'
 import {
   getCurrentInsurance,
   getInsuranceList,
@@ -114,7 +115,7 @@ const Market = props => {
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               if (AllItem.type === 'Put') {
                 AllItem.show_volume = Number(
-                  AllItem.show_volume / AllItem.show_strikePrice
+                  AllItem.show_volume / (1 / AllItem.show_strikePrice)
                 ).toFixed(8)
               } else {
                 AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
@@ -159,7 +160,7 @@ const Market = props => {
         const AskID = data.askID
         let Volume
         if (data.type === 'Put') {
-          if (data.buy_volume === data.show_volume) {
+          if (data.buy_volume >= data.show_volume) {
             Volume = data.volume
           } else {
             Volume = toWei(
@@ -170,9 +171,12 @@ const Market = props => {
             )
           }
         } else {
-          Volume = toWei(data.buy_volume, data.collateral_decimals)
+          if (data.buy_volume >= data.show_volume) {
+            Volume = data.volume
+          } else {
+            Volume = toWei(data.buy_volume, data.collateral_decimals)
+          }
         }
-        console.log(Volume)
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: account })
@@ -232,13 +236,13 @@ const Market = props => {
           onClick={() => setInsuranceType('Call')}
           className={InsuranceType === 'Call' ? 'insurance_active_call' : ''}
         >
-          Cover Miss Out
+          <FormattedMessage id="insurance_text4" />
         </button>
         <button
           onClick={() => setInsuranceType('Put')}
           className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
         >
-          Cover 50% Off
+          <FormattedMessage id="insurance_text5" />
         </button>
       </div>
       {PolicyList.length > 0 ? (
@@ -246,10 +250,19 @@ const Market = props => {
           <table className="insurance_market_table web_table">
             <thead>
               <tr>
-                <td>ID</td>
-                <td>保费(MATIC)</td>
-                <td>保单数量</td>
-                <td>操作</td>
+                <td>
+                  <FormattedMessage id="insurance_text18" />
+                </td>
+                <td>
+                  <FormattedMessage id="insurance_text19" />
+                  (MATIC)
+                </td>
+                <td>
+                  <FormattedMessage id="insurance_text20" />
+                </td>
+                <td>
+                  <FormattedMessage id="insurance_text21" />
+                </td>
               </tr>
             </thead>
             <tbody>
@@ -270,7 +283,11 @@ const Market = props => {
                       }}
                     />
                     <button onClick={() => handleClickBuyInurance(item)}>
-                      {ApproveStatus ? '购买' : '授权'}
+                      {ApproveStatus ? (
+                        <FormattedMessage id="insurance_text22" />
+                      ) : (
+                        <FormattedMessage id="stake_chain_dialog_text7" />
+                      )}
                     </button>
                   </td>
                 </tr>
@@ -284,16 +301,23 @@ const Market = props => {
                 key={'h5' + item.askID}
               >
                 <p>
-                  <span>ID</span>
+                  <span>
+                    <FormattedMessage id="insurance_text18" />
+                  </span>
                   <span>{item.show_ID}</span>
                 </p>
                 <div>
                   <p>
-                    <span>保费(MATIC)</span>
+                    <span>
+                      <FormattedMessage id="insurance_text19" />
+                      (MATIC)
+                    </span>
                     <span>{item.show_price}</span>
                   </p>
                   <p>
-                    <span>保单数量</span>
+                    <span>
+                      <FormattedMessage id="insurance_text20" />
+                    </span>
                     <span>{item.show_volume}</span>
                   </p>
                 </div>
@@ -306,7 +330,11 @@ const Market = props => {
                     }}
                   />
                   <button onClick={() => handleClickBuyInurance(item)}>
-                    {ApproveStatus ? '购买' : '授权'}
+                    {ApproveStatus ? (
+                      <FormattedMessage id="insurance_text22" />
+                    ) : (
+                      <FormattedMessage id="stake_chain_dialog_text7" />
+                    )}
                   </button>
                 </section>
               </div>
