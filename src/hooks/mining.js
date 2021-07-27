@@ -281,7 +281,7 @@ export const getAPR = async (
 
   // 通过转换后的lpt价格
   let lptTotalValue
-  if(miningPools.valueAprToken !== miningPools.settleToken){
+  if (miningPools.valueAprToken !== miningPools.settleToken) {
     const [lptTotalPrice] =  await getMDexPrice(
       miningPools.valueAprToken,
       miningPools.settleToken,
@@ -289,7 +289,7 @@ export const getAPR = async (
       miningPools.valueAprPath,
       miningPools
     )
-    // console.log('lptTotalPrice', lptTotalPrice)
+    // console.log('lptTotalPrice', miningPools.name, lptTotalPrice, lptValue)
 
     lptTotalValue = new BigNumber(lptTotalPrice)
       .multipliedBy(new BigNumber(lptValue))
@@ -307,9 +307,10 @@ export const getAPR = async (
     miningPools.rewardsAprPath,
     miningPools
   )
+
   // console.log('rewardsTotalPrice', rewardsTotalPrice)
 
-  // 价格*量 = 总价值
+  // 价格*量 = 奖励总价值
   const rewardsTotalValue = new BigNumber(rewardsTotalPrice)
     .multipliedBy(new BigNumber(reward1Vol))
     .toString()
@@ -320,7 +321,7 @@ export const getAPR = async (
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
-  // console.log('lptTotalValue', lptTotalValue, rewardsTotalValue, span, mode)
+  // console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     const dayRate = new BigNumber(1).div(

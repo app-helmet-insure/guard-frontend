@@ -1,7 +1,7 @@
 export default {
   mining_text1: 'Guard Mining Campaigns.',
   mining_text2:
-    'You can farm dedicated Guard tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).',
+    'You can farm dedicated Guard tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs) and Short tokens.',
   mining_text3: 'GUARD',
   mining_text4: 'Pool APY',
   mining_text5: 'CountDown',
@@ -27,13 +27,13 @@ export default {
   HourM: 'h',
   MinM: 'm',
   SecondM: 's',
-  header_text1: 'Insurance',
+  header_text1: 'Insurance(Short)',
   header_text2: 'Mining',
   header_text3: 'Connect to a wallet',
   header_text4: 'Pending',
   header_text5: 'Connect to your {wallet} Wallet ',
   header_text6: 'CONNECT WALLET',
-  header_text7: 'Flash to {name}',
+  header_text7: 'Switch to {name}',
   header_text8: 'WalletConnect',
   header_text9: 'Insurance',
   install_metamask_dialog_text1:

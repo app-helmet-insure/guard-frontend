@@ -2,7 +2,7 @@ import React from 'react'
 import {Modal} from 'antd'
 import './index.less'
 import SuccessSvg from '../../../assets/images/success.svg'
-import FailSvg from '../../../assets/images/fail.png'
+import FailSvg from '../../../assets/images/fail.svg'
 import {FormattedMessage} from 'react-intl'
 
 

@@ -68,8 +68,7 @@ function Header (props) {
       <div className='header_token_contract_address'>
         <span></span>
         <p>
-          Guard is now on polygon . Token Contract Address
-          :0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
+          Guard is now on quickswap.exchange. Token Contract Address: 0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
           <a
             href='https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8'
             target='_blank'
@@ -78,7 +77,7 @@ function Header (props) {
           </a>
         </p>
       </div>
-      <div style={{width: '100%', background: '#fff'}}>
+      <div style={{ width: '100%', background: '#fff' }}>
         <div className='header'>
           <Link to='/' className='logo'>
             <img src={LOGO} alt='Gurad' />

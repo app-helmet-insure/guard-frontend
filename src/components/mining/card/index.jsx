@@ -14,7 +14,7 @@ import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 import {VarContext} from '../../../context'
 import {useActiveWeb3React} from '../../../web3'
-import {min} from 'moment'
+import GuardLogoSvg from '../../../assets/images/mining/pool/GUARD.png'
 
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
@@ -44,12 +44,13 @@ const MiningCard = props => {
       })
     }
   }, [blockHeight, account])
-  // 获取池子余额
+  // 获取池子token个人账户可使用余额
   const balance = useBalance(
     blockHeight,
     miningPools && miningPools.MLP,
     ERC20.abi
   )
+  console.log(miningPools && miningPools.name, balance)
   const isFinish =
     miningPools &&
     miningPools.dueDate &&
@@ -147,7 +148,7 @@ const MiningCard = props => {
             {miningPools && (
               <img
                 className="mining_card_content_icon"
-                src={miningPools.icon}
+                src={GuardLogoSvg}
               />
             )}
           </p>
