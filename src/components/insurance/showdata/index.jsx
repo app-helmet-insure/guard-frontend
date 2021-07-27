@@ -25,7 +25,8 @@ const ShowData = props => {
     }
     const guardPrice = await useIndexPrice(library, calldata)
     console.log(guardPrice)
-    setGuardPrice(guardPrice)
+    const fixguardPrice = Number(guardPrice).toFixed(2)
+    setGuardPrice(fixguardPrice)
   }
   useEffect(() => {
     if (account) {
@@ -41,7 +42,7 @@ const ShowData = props => {
             <span>
               <FormattedMessage id="insurance_text1" />
             </span>
-            <span>{GuardPrice}</span>
+            <span>{GuardPrice} USDC</span>
           </p>
         </div>
         <div className="insurance_data_icon2 data_item">
