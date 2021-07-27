@@ -65,60 +65,74 @@ function Header (props) {
   }
   return (
     <>
-      <div className="header">
-        <Link to="/" className="logo">
-          <img src={LOGO} alt="Gurad"/>
-        </Link>
-        <ul className="nav_list">
-          {navList.map(item => (
-            <Link
-              to={item.path}
-              className="nav_list_item"
-              key={item.path}>
-              <span
-                className={
-                  props.location.pathname && props.location.pathname.indexOf(item.path) === 0
-                    ? 'active'
-                    : ''
-                }>
-                {item.name}
-              </span>
-            </Link>
-          ))}
-        </ul>
-        <div className="connect_wallet">
-          <a href="https://www.helmet.insure/">
-            <div className="to_helmet flex_center">
-              <img src={HelmetSvg} alt=""/>
-              <FormattedMessage id="header_text7" values={{name: 'Helmet'}}/>
-            </div>
+      <div className='header_token_contract_address'>
+        <span></span>
+        <p>
+          Guard is now on polygon . Token Contract Address
+          :0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
+          <a
+            href='https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8'
+            target='_blank'
+          >
+            Exchange now
           </a>
+        </p>
+      </div>
+      <div style={{width: '100%', background: '#fff'}}>
+        <div className='header'>
+          <Link to='/' className='logo'>
+            <img src={LOGO} alt='Gurad' />
+          </Link>
+          <ul className='nav_list'>
+            {navList.map((item) => (
+              <Link to={item.path} className='nav_list_item' key={item.path}>
+                <span
+                  className={
+                    props.location.pathname &&
+                    props.location.pathname.indexOf(item.path) === 0
+                      ? 'active'
+                      : ''
+                  }
+                >
+                  {item.name}
+                </span>
+              </Link>
+            ))}
+          </ul>
+          <div className='connect_wallet'>
+            <a href='https://www.helmet.insure/'>
+              <div className='to_helmet flex_center'>
+                <img src={HelmetSvg} alt='' />
+                <FormattedMessage
+                  id='header_text7'
+                  values={{ name: 'Helmet' }}
+                />
+              </div>
+            </a>
 
-          {!active ? (
-            <div
-              className="not_connect flex_center"
-              onClick={connectWalletClick}>
-              <FormattedMessage id="header_text6"/>
-            </div>
-          ) : (
-            <div className="connected" onClick={connectWalletClick}>
-              <div className="balance flex_center">
-                <img src={GuradSvg} alt=""/>
-                {balance}
+            {!active ? (
+              <div
+                className='not_connect flex_center'
+                onClick={connectWalletClick}
+              >
+                <FormattedMessage id='header_text6' />
               </div>
-              <div className="address flex_center">
-                {formatAddress(account)}
-                <span/>
+            ) : (
+              <div className='connected' onClick={connectWalletClick}>
+                <div className='balance flex_center'>
+                  <img src={GuradSvg} alt='' />
+                  {balance}
+                </div>
+                <div className='address flex_center'>
+                  {formatAddress(account)}
+                  <span />
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-        <div className="menu_tab">
-          <img
-            src={MenuSvg}
-            alt=""
-            onClick={() => setVisibleMenu(true)}
-          />
+            )}
+          </div>
+          <div className='menu_tab'>
+            <img src={MenuSvg} alt='' onClick={() => setVisibleMenu(true)} />
+          </div>
         </div>
       </div>
       <DrawerMenu
@@ -132,7 +146,10 @@ function Header (props) {
           ...props,
         }}
       />
-      <DisconnectedWalletDialog visible={visibleDisconnectConnectWall} onClose={()=> setVisibleDisconnectConnectWall(false)}/>
+      <DisconnectedWalletDialog
+        visible={visibleDisconnectConnectWall}
+        onClose={() => setVisibleDisconnectConnectWall(false)}
+      />
       <ConnectWallDialog
         visible={visibleConnectWall}
         onClose={() => setVisibleConnectWall(false)}
