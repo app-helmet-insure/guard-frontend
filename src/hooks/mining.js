@@ -103,6 +103,7 @@ export const getLTPValue = (
     return multicallProvider.all([poolContract.totalSupply()]).then((data) => {
       data = processResult(data)
       const [poolTotalSupply] = data
+      console.log('poolTotalSupply', poolTotalSupply)
       return new BigNumber(poolTotalSupply)
     })
   }
@@ -262,7 +263,7 @@ export const getAPR = async (
     miningPools.abi,
     miningPools
   )
-  // console.log('lptValue', lptValue)
+  console.log('lptValue', lptValue)
 
   // 通过转换后的lpt价格
   const [lptTotalPrice] =  await getMDexPrice(
@@ -299,6 +300,7 @@ export const getAPR = async (
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
+  console.log('lptTotalValue', lptTotalValue, rewardsTotalValue, span)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     const dayRate = new BigNumber(1).div(
