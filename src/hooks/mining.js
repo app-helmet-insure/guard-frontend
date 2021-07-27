@@ -295,6 +295,7 @@ export const getAPR = async (
       .multipliedBy(new BigNumber(lptValue))
       .toString()
   } else {
+    console.log('lptTotalValue',miningPools.name, lptValue)
     lptTotalValue = lptValue
   }
 
@@ -321,7 +322,7 @@ export const getAPR = async (
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
-  // console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
+  console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     const dayRate = new BigNumber(1).div(

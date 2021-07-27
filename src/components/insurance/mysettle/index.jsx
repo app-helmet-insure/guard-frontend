@@ -171,9 +171,10 @@ const MySettle = props => {
   // 撤销订单
   const handleClickClaimOrder = data => {
     const OrderContracts = getContract(library, FactoryABI, FactoryAddress)
+    console.log(data)
     if (Number(data.claimBalance) !== 0) {
       OrderContracts.methods
-        .burn(data.short, toWei(data.claimBalance))
+        .burn(data.short, toWei(data.claimBalance, data.collateral_decimals))
         .send({ from: account })
         .on('transactionHash', hash => {
           setOpenWaiting(true)

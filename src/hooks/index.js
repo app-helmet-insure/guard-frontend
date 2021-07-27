@@ -25,7 +25,7 @@ export const useBalance = (
       // console.log(active, address, account)
       const contract = getContract(library, abi, address)
       contract.methods
-        .balanceOf(account)
+        .balanceOf(address)
         .call()
         .then(balance_ => {
           const resBalance = formatAmount(balance_, decimals)
@@ -38,6 +38,7 @@ export const useBalance = (
 
   return balance
 }
+
 
 export const useEthBalance = (address = null) => {
   const { account, active, library } = useWeb3ReactCore()
