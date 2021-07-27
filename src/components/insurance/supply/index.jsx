@@ -297,8 +297,7 @@ const Supply = props => {
             <FormattedMessage id="insurance_text6" />
           </span>
           <span>
-            <FormattedMessage id="insurance_text7" />
-            {CurrentInsurance.strikeprice} USDC
+            {CurrentInsurance.insurance} {CurrentInsurance.strikeprice} USDC
           </span>
         </p>
         <Select
