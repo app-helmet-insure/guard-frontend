@@ -16,7 +16,7 @@ export const getAllowance = (miningPools) => {
     .allowance(miningPools.mineMountainAddress, miningPools.address)
     .call()
     .then((res) => {
-      console.log('allowance', res)
+      // console.log('allowance', res)
       return res
     })
 }

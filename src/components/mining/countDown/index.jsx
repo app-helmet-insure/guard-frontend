@@ -1,10 +1,10 @@
 import React from 'react'
 import cs from 'classnames'
-import { FormattedMessage } from 'react-intl'
+import {FormattedMessage} from 'react-intl'
 import Timer from 'react-compound-timer'
 import './index.less'
 
-export default function Countdown({ pools, aprPercentage, now, isFinish }) {
+export default function Countdown ({pools, aprPercentage, now, isFinish}) {
   let left_time = 0
   if (pools && pools.openDate > now) {
     left_time = (pools && pools.openDate - now) * 1000
@@ -12,27 +12,27 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
     left_time = (pools.dueDate - now) * 1000
   }
   return (
-    <div className='mining_card_apy'>
-      <p className='mining_card_apy_val'>
+    <div className="mining_card_apy">
+      <p className="mining_card_apy_val">
         {/* pools.openDate 带有倒计时 */}
         <span>{pools && pools.earnName}</span>
-        <span className='value'>
+        <span className="value">
           {pools && pools.name && !pools.start_at && aprPercentage + '%'}
           {pools &&
-            pools.start_at &&
-            (pools.start_at > now ? '-%' : aprPercentage + '%')}
+          pools.start_at &&
+          (pools.start_at > now ? '-%' : aprPercentage + '%')}
         </span>
       </p>
       {pools && pools.openDate && (
-        <p className='mining_card_apy_val'>
+        <p className="mining_card_apy_val">
           <span>
-            <FormattedMessage id='mining_text5' />
+            <FormattedMessage id="mining_text5"/>
           </span>
           {pools && pools.openDate > now && !pools.dueDate && (
             <Timer
               initialTime={left_time}
               key={left_time}
-              direction='backward'
+              direction="backward"
               formatValue={(number) => {
                 if (number === 0) return '00'
                 if (number < 10) {
@@ -47,9 +47,9 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                     `value ${pools && 'countdown_time_' + pools.networkId}`
                   )}
                 >
-                  <Timer.Hours />
+                  <Timer.Hours/>
                   <b>
-                    <FormattedMessage id='HourM' />
+                    <FormattedMessage id="HourM"/>
                   </b>
                 </span>{' '}
                 <i>/</i>{' '}
@@ -59,9 +59,9 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                   )}
                 >
                   {' '}
-                  <Timer.Minutes />
+                  <Timer.Minutes/>
                   <b>
-                    <FormattedMessage id='MinM' />
+                    <FormattedMessage id="MinM"/>
                   </b>
                 </span>
                 <i>/</i>{' '}
@@ -71,9 +71,9 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                   )}
                 >
                   {' '}
-                  <Timer.Seconds />
+                  <Timer.Seconds/>
                   <b>
-                    <FormattedMessage id='SecondM' />
+                    <FormattedMessage id="SecondM"/>
                   </b>
                 </span>
               </span>
@@ -83,7 +83,7 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
             <Timer
               initialTime={left_time}
               key={left_time}
-              direction='backward'
+              direction="backward"
               formatValue={(number) => {
                 if (number === 0) return '00'
                 if (number < 10) {
@@ -98,9 +98,9 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                     `value ${pools && 'countdown_time_' + pools.networkId}`
                   )}
                 >
-                  <Timer.Hours />
+                  <Timer.Hours/>
                   <b>
-                    <FormattedMessage id='HourM' />
+                    <FormattedMessage id="HourM"/>
                   </b>
                 </span>{' '}
                 <i>/</i>{' '}
@@ -110,9 +110,9 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                   )}
                 >
                   {' '}
-                  <Timer.Minutes />
+                  <Timer.Minutes/>
                   <b>
-                    <FormattedMessage id='MinM' />
+                    <FormattedMessage id="MinM"/>
                   </b>
                 </span>
               </span>
@@ -122,7 +122,7 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
             <Timer
               initialTime={left_time}
               key={left_time}
-              direction='backward'
+              direction="backward"
               formatValue={(number) => {
                 if (number === 0) return '00'
                 if (number < 10) {
@@ -137,9 +137,9 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                     `value ${pools && 'countdown_time_' + pools.networkId}`
                   )}
                 >
-                  <Timer.Days />
+                  <Timer.Days/>
                   <b>
-                    <FormattedMessage id='DayM' />
+                    <FormattedMessage id="DayM"/>
                   </b>
                 </span>{' '}
                 <i>/</i>{' '}
@@ -148,34 +148,34 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
                     `value ${pools && 'countdown_time_' + pools.networkId}`
                   )}
                 >
-                  <Timer.Hours />
+                  <Timer.Hours/>
                   <b>
-                    <FormattedMessage id='HourM' />
+                    <FormattedMessage id="HourM"/>
                   </b>
                 </span>
               </span>
             </Timer>
           )}
           {isFinish && (
-            <span className='value'>
-              <FormattedMessage id='mining_text15' />
+            <span className="value">
+              <FormattedMessage id="mining_text15"/>
             </span>
           )}
           {pools && !pools.dueDate && pools.openDate <= now && (
-            <span className='value'>
-              <FormattedMessage id='mining_text6' />
+            <span className="value">
+              <FormattedMessage id="mining_text6"/>
             </span>
           )}
         </p>
       )}
       {pools && !pools.openDate && left_time <= 0 && (
-        <p className='mining_card_apy_val'>
+        <p className="mining_card_apy_val">
           <span>
-            <FormattedMessage id='mining_text5' />
+            <FormattedMessage id="mining_text5"/>
           </span>
-          <span className='value'>
+          <span className="value">
             {' '}
-            <FormattedMessage id='mining_text6' />
+            <FormattedMessage id="mining_text6"/>
           </span>
         </p>
       )}
