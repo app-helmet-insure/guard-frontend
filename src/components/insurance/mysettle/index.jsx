@@ -80,10 +80,10 @@ const MySettle = props => {
                 expiry: item.expiry,
                 long: item.long,
                 short: item.short,
-                show_strikePrice: fromWei(
-                  item.strikePrice,
-                  strikeprice_decimals
-                ),
+                show_strikePrice:
+                  type === 'Call'
+                    ? fromWei(item.strikePrice, strikeprice_decimals)
+                    : 1 / fromWei(item.strikePrice, strikeprice_decimals),
                 strikePrice: item.strikePrice,
                 collateral: item.collateral,
                 collateral_symbol: collateral_symbol,
