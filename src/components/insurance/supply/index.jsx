@@ -217,6 +217,7 @@ const Supply = props => {
         .on('receipt', (_, receipt) => {
           setOpenWaiting(false)
           setOpenSuccess(true)
+          getApproveStatus()
         })
         .on('error', ereor => {
           setOpenWaiting(false)
