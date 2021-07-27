@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 import ERC20 from '../web3/abi/ERC20.json'
 import LPT from '../web3/abi/LPT.json'
 import MDexPool from '../web3/abi/MDexPool.json'
-import { numToWei } from '../utils/format'
+import {fromWei, numToWei} from '../utils/format'
 import Mining from '../configs/mining'
 import { processResult, getOnlyMultiCallProvider } from '../web3/multicall'
 import { Contract } from 'ethers-multicall-x'
@@ -40,6 +40,7 @@ export const getMiningInfo = (address, account) => {
     .all(promise_list)
     .then(data => {
       data = processResult(data)
+      console.log('data', pool.name, data)
       const [
         begin,
         totalSupply,
@@ -54,7 +55,7 @@ export const getMiningInfo = (address, account) => {
         earned,
         earned2,
         totalSupply,
-        balanceOf: Web3.utils.fromWei(String(balanceOf), 'ether'),
+        balanceOf: fromWei(balanceOf, pool.mlpDecimal),
         allowance: currency_allowance,
       })
       return newPool
