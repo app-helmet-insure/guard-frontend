@@ -11,11 +11,12 @@ import { getBalance, getShortTokenValue } from '../../../hooks/insurance'
 import { formatNumber } from 'accounting'
 import './index.less'
 import axios from 'axios'
+import {formatAmount} from '../../../utils/format'
 
 const ShowData = props => {
   const { library, active, account } = useActiveWeb3React()
-  const [Data1, setData1Price] = useState(0)
-  const [Data2, setData2Price] = useState(0)
+  const [Data1, setData1Price] = useState('-')
+  const [Data2, setData2Price] = useState('-')
   const currentGuardPrice = async () => {
     const calldata = {
       collateral_chainid: 137,
@@ -40,7 +41,7 @@ const ShowData = props => {
   const Data3 = 100000
   const getData2 = async () => {
     const Datas = await getShortTokenValue(library)
-    setData2Price(Datas)
+    setData2Price(formatAmount(Datas, 0))
     console.log(Datas)
   }
   useEffect(() => {
