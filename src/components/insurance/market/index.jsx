@@ -115,7 +115,7 @@ const Market = props => {
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               if (AllItem.type === 'Put') {
                 AllItem.show_volume = Number(
-                  AllItem.show_volume / AllItem.show_strikePrice
+                  AllItem.show_volume / (1 / AllItem.show_strikePrice)
                 ).toFixed(8)
               } else {
                 AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
@@ -160,7 +160,7 @@ const Market = props => {
         const AskID = data.askID
         let Volume
         if (data.type === 'Put') {
-          if (data.buy_volume === data.show_volume) {
+          if (data.buy_volume >= data.show_volume) {
             Volume = data.volume
           } else {
             Volume = toWei(
@@ -171,9 +171,12 @@ const Market = props => {
             )
           }
         } else {
-          Volume = toWei(data.buy_volume, data.collateral_decimals)
+          if (data.buy_volume >= data.show_volume) {
+            Volume = data.volume
+          } else {
+            Volume = toWei(data.buy_volume, data.collateral_decimals)
+          }
         }
-        console.log(Volume)
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: account })
@@ -227,45 +230,45 @@ const Market = props => {
   }, [InsuranceType, InsuranceSymbol])
 
   return (
-    <div className='insurance_market'>
-      <div className='insurance_type'>
+    <div className="insurance_market">
+      <div className="insurance_type">
         <button
           onClick={() => setInsuranceType('Call')}
           className={InsuranceType === 'Call' ? 'insurance_active_call' : ''}
         >
-          <FormattedMessage id='insurance_text4' />
+          <FormattedMessage id="insurance_text4" />
         </button>
         <button
           onClick={() => setInsuranceType('Put')}
           className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
         >
-          <FormattedMessage id='insurance_text5' />
+          <FormattedMessage id="insurance_text5" />
         </button>
       </div>
       {PolicyList.length > 0 ? (
-        <div className='insurance_market_wrap'>
-          <table className='insurance_market_table web_table'>
+        <div className="insurance_market_wrap">
+          <table className="insurance_market_table web_table">
             <thead>
               <tr>
                 <td>
-                  <FormattedMessage id='insurance_text18' />
+                  <FormattedMessage id="insurance_text18" />
                 </td>
                 <td>
-                  <FormattedMessage id='insurance_text19' />
+                  <FormattedMessage id="insurance_text19" />
                   (GUARD)
                 </td>
                 <td>
-                  <FormattedMessage id='insurance_text20' />
+                  <FormattedMessage id="insurance_text20" />
                 </td>
                 <td>
-                  <FormattedMessage id='insurance_text21' />
+                  <FormattedMessage id="insurance_text21" />
                 </td>
               </tr>
             </thead>
             <tbody>
-              {PolicyList.map((item) => (
+              {PolicyList.map(item => (
                 <tr
-                  className='insurance_market_table_item'
+                  className="insurance_market_table_item"
                   key={'web' + item.askID}
                 >
                   <td>{item.show_ID}</td>
@@ -273,17 +276,17 @@ const Market = props => {
                   <td>{item.show_volume}</td>
                   <td>
                     <input
-                      type='text'
+                      type="text"
                       value={item.buy_volume}
-                      onChange={(e) => {
+                      onChange={e => {
                         item.buy_volume = e.target.value
                       }}
                     />
                     <button onClick={() => handleClickBuyInurance(item)}>
                       {ApproveStatus ? (
-                        <FormattedMessage id='insurance_text22' />
+                        <FormattedMessage id="insurance_text22" />
                       ) : (
-                        <FormattedMessage id='stake_chain_dialog_text7' />
+                        <FormattedMessage id="stake_chain_dialog_text7" />
                       )}
                     </button>
                   </td>
@@ -291,46 +294,46 @@ const Market = props => {
               ))}
             </tbody>
           </table>
-          <div className='insurance_market_table h5_table'>
-            {PolicyList.map((item) => (
+          <div className="insurance_market_table h5_table">
+            {PolicyList.map(item => (
               <div
-                className='insurance_market_table_item'
+                className="insurance_market_table_item"
                 key={'h5' + item.askID}
               >
                 <p>
                   <span>
-                    <FormattedMessage id='insurance_text18' />: {' '}
+                    <FormattedMessage id="insurance_text18" />: {' '}
                   </span>
                   <span>{item.show_ID}</span>
                 </p>
                 <div>
                   <p>
                     <span>
-                      <FormattedMessage id='insurance_text19' />
+                      <FormattedMessage id="insurance_text19" />
                       (GUARD)
                     </span>
                     <span>{item.show_price}</span>
                   </p>
                   <p>
                     <span>
-                      <FormattedMessage id='insurance_text20' />
+                      <FormattedMessage id="insurance_text20" />
                     </span>
                     <span>{item.show_volume}</span>
                   </p>
                 </div>
                 <section>
                   <input
-                    type='text'
+                    type="text"
                     value={item.buy_volume}
-                    onChange={(e) => {
+                    onChange={e => {
                       item.buy_volume = e.target.value
                     }}
                   />
                   <button onClick={() => handleClickBuyInurance(item)}>
                     {ApproveStatus ? (
-                      <FormattedMessage id='insurance_text22' />
+                      <FormattedMessage id="insurance_text22" />
                     ) : (
-                      <FormattedMessage id='stake_chain_dialog_text7' />
+                      <FormattedMessage id="stake_chain_dialog_text7" />
                     )}
                   </button>
                 </section>
@@ -339,8 +342,8 @@ const Market = props => {
           </div>
         </div>
       ) : (
-        <div className='nodata'>
-          <img src={NoData} alt='' />
+        <div className="nodata">
+          <img src={NoData} alt="" />
         </div>
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />

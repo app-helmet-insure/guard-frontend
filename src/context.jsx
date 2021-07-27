@@ -17,9 +17,8 @@ function Context (props) {
   const balance = useBalance(blockHeight, '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8')
 
   const web3 = injected.supportedChainIds.includes(chainId) ? getWeb3(library) : getHttpWeb3(ChainId.MATIC)
-  const getBlockHeight = (callback) => {
+  const getBlockHeight = callback => {
     web3.eth.getBlockNumber().then(height => {
-      console.log('height', height)
       setBlockHeight(height)
       callback && callback()
       return height

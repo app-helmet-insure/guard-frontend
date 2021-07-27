@@ -67,7 +67,10 @@ const MySupply = props => {
               ),
               long: item.long,
               short: item.short,
-              show_strikePrice: fromWei(item.strikePrice, strikeprice_decimals),
+              show_strikePrice:
+                type === 'Call'
+                  ? fromWei(item.strikePrice, strikeprice_decimals)
+                  : 1 / fromWei(item.strikePrice, strikeprice_decimals),
               strikePrice: item.strikePrice,
               collateral: item.collateral,
               collateral_symbol: collateral_symbol,
@@ -119,10 +122,12 @@ const MySupply = props => {
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               if (AllItem.type === 'Put') {
                 AllItem.show_besold = Number(
-                  AllItem.show_besold / AllItem.show_strikePrice
+                  AllItem.show_besold /
+                    (1 / fromWei(ResultItem.strikePrice, strikeprice_decimals))
                 ).toFixed(8)
                 AllItem.show_unsold = Number(
-                  AllItem.show_unsold / AllItem.show_strikePrice
+                  AllItem.show_unsold /
+                    (1 / fromWei(ResultItem.strikePrice, strikeprice_decimals))
                 ).toFixed(8)
               } else {
                 AllItem.show_besold = Number(AllItem.show_besold).toFixed(8)

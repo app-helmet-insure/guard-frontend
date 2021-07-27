@@ -94,7 +94,6 @@ export const Chart = props => {
         if (index !== -1) {
           timeline[index].value = last_price
         }
-        console.log('index', index)
 
         if (hour_data.hourStartUnix <= start_time) {
           pre_price = last_price
