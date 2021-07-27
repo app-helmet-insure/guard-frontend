@@ -192,9 +192,10 @@ const MySettle = props => {
     }
   }
   useEffect(() => {
-    if (account) {
-      getPolicyList()
+    if (!account) {
+      return
     }
+    getPolicyList()
   }, [account])
   return (
     <div className="insurance_mysettle">
@@ -230,7 +231,7 @@ const MySettle = props => {
                       : item.und}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.callToken : item.putToken}
+                    {item.type === 'Call' ? item.putToken : item.callToken}
                   </span>
                 </div>
               </section>
@@ -245,7 +246,7 @@ const MySettle = props => {
                       : Number(item.col) + Number(item.claimBalance)}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.putToken : item.callToken}
+                    {item.type === 'Call' ? item.callToken : item.putToken}
                   </span>
                 </div>
               </section>
@@ -276,7 +277,7 @@ const MySettle = props => {
                         : Number(item.col) + Number(item.claimBalance)}
                     </span>
                     <span>
-                      {item.type === 'Call' ? item.putToken : item.callToken}
+                      {item.type === 'Call' ? item.callToken : item.putToken}
                     </span>
                   </p>
                 </div>

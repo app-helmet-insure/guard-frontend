@@ -259,9 +259,10 @@ const MyPolicy = props => {
       })
   }
   useEffect(() => {
-    if (account) {
-      getPolicyList()
+    if (!account) {
+      return
     }
+    getPolicyList()
   }, [account])
   return (
     <div className="insurance_mypolicy">
