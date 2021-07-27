@@ -7,10 +7,19 @@ import {formatAddress} from '../../utils'
 import {navList} from '../header'
 import {Link} from 'react-router-dom'
 import HelmetSvg from '../../assets/images/helmet.svg'
+import {connect} from 'react-redux'
+import {changeLanguage} from '../../redux/actions'
+import {languageConfig} from '../../locales/intl'
 
-function DrawerMenu ({account, active, chainId, visible, setVisible, connectWalletClick, location}) {
+function DrawerMenu ({account, active, chainId, visible, setVisible, connectWalletClick, location, changeLanguage, language}) {
   const onClose = () => {
     setVisible(false)
+  }
+  const languageList = []
+  for (const i in languageConfig) {
+    languageList.push((
+      <div key={i} className={language === i ? 'active' : ''} onClick={() => changeLanguage({language: i})}>{languageConfig[i].title}</div>
+    ))
   }
 
   return (
@@ -32,8 +41,7 @@ function DrawerMenu ({account, active, chainId, visible, setVisible, connectWall
             </React.Fragment>
           ))
         }
-        <div>简体中文</div>
-        <div>English</div>
+        {languageList}
       </div>
       <div className="wall">
         {
@@ -60,4 +68,8 @@ function DrawerMenu ({account, active, chainId, visible, setVisible, connectWall
     </Drawer>
   )
 }
-export default DrawerMenu
+export default connect(
+  state => state.index, {
+    changeLanguage
+  }
+)(DrawerMenu)

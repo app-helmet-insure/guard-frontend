@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Modal } from 'antd'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
-import MathSvg from '../../../assets/images/math.svg'
+import MathSvg from '../../../assets/images/walletConnect.png'
 import MetamaskSvg from '../../../assets/images/metamask.svg'
 import './index.less'
 import {injected, useConnectWallet, walletConnector} from '../../../web3/connectors'

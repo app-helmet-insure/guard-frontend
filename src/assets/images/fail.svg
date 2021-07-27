@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="130px" height="130px" viewBox="0 0 130 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <path d="M36,0 C55.8495,0 72,16.1505 72,36 C72,55.8495 55.8495,72 36,72 C16.1505,72 0,55.8495 0,36 C0,16.1505 16.1505,0 36,0 Z" id="path-1"></path>
+        <filter x="-1.4%" y="-1.4%" width="102.8%" height="102.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="-2" dy="-2" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="05-弹窗" transform="translate(-1491.000000, -781.000000)">
+            <g id="success备份" transform="translate(1491.000000, 781.000000)">
+                <g id="编组-6">
+                    <rect id="矩形" x="0" y="0" width="130" height="130"></rect>
+                    <g id="编组-5" transform="translate(65.291667, 64.583333) scale(1, -1) translate(-65.291667, -64.583333) translate(3.000000, 7.166667)">
+                        <circle id="椭圆形" fill-opacity="0.5" fill="#00A0FF" cx="115.955078" cy="53" r="4"></circle>
+                        <circle id="椭圆形备份-2" fill-opacity="0.4" fill="#9646FF" cx="58.9550781" cy="4" r="4"></circle>
+                        <circle id="椭圆形备份-3" fill-opacity="0.4" fill="#FF9600" cx="24.9550781" cy="41" r="4"></circle>
+                        <circle id="椭圆形备份-4" fill-opacity="0.4" fill="#00B900" cx="33.9550781" cy="98" r="4"></circle>
+                        <circle id="椭圆形" fill-opacity="0.6" fill="#00B900" cx="71.9550781" cy="106" r="2"></circle>
+                        <circle id="椭圆形备份-5" fill-opacity="0.6" fill="#FF9600" cx="70.9550781" cy="11" r="2"></circle>
+                        <circle id="椭圆形备份" fill-opacity="0.5" fill="#00A0FF" cx="82.9550781" cy="110" r="4"></circle>
+                        <path d="M105.879883,23.6230469 C112.307617,23.0253906 116.260417,20.4388021 117.738281,15.8632813 C119.955078,9 120.949219,6.98828125 124.486328,5.49414062" id="路径-3" stroke="#FF6400" stroke-width="2.76923077" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M28.9550781,71 C20.7855686,75.9637191 15.2582248,76.7648259 12.3730469,73.4033203 C6.21240234,66.2255859 17.4394531,62.6459961 18.5625,70.1367187 C19.6525842,77.4075806 16.0351562,82.8027344 1.42108547e-14,82.8027344" id="路径-5" stroke="#00A0FF" stroke-width="2.76923077" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M100.844727,93 C106.443034,95.2610677 109.242188,98.9277344 109.242188,104" id="路径-6" stroke="#4364E8" stroke-width="2.76923077" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </g>
+                </g>
+                <g id="编组-17" transform="translate(37.000000, 29.000000)">
+                    <g id="路径">
+                        <use fill="#EF6E45" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    </g>
+                    <path d="M36.3461538,13.5 C38.6402597,13.5 40.5,15.3597403 40.5,17.6538462 L40.499,31.5 L54.3461538,31.5 C56.6402597,31.5 58.5,33.3597403 58.5,35.6538462 L58.5,36.3461538 C58.5,38.6402597 56.6402597,40.5 54.3461538,40.5 L40.499,40.5 L40.5,54.3461538 C40.5,56.6402597 38.6402597,58.5 36.3461538,58.5 L35.6538462,58.5 C33.3597403,58.5 31.5,56.6402597 31.5,54.3461538 L31.499,40.5 L17.6538462,40.5 C15.3597403,40.5 13.5,38.6402597 13.5,36.3461538 L13.5,35.6538462 C13.5,33.3597403 15.3597403,31.5 17.6538462,31.5 L31.499,31.5 L31.5,17.6538462 C31.5,15.3597403 33.3597403,13.5 35.6538462,13.5 L36.3461538,13.5 Z" id="形状结合" fill="#FFFFFF" transform="translate(36.000000, 36.000000) rotate(45.000000) translate(-36.000000, -36.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
