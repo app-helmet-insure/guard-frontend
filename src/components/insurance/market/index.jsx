@@ -13,6 +13,7 @@ import Erc20ABI from '../../../web3/abi/ERC20.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import BigNumber from 'bignumber.js'
+import { numberFormat } from 'highcharts'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
 const Market = props => {
@@ -24,7 +25,6 @@ const Market = props => {
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
   const { InsuranceSymbol } = props
-  console.log(library, active, '################')
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -93,6 +93,9 @@ const Market = props => {
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
                 volume: itemAsk.volume,
+                premium:
+                  fromWei(itemAsk.price, settleToken_decimals) *
+                  fromWei(itemAsk.volume, collateral_decimals),
               }
               if (itemAsk.binds.length) {
                 let number = 0
@@ -121,12 +124,16 @@ const Market = props => {
               } else {
                 AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
               }
-              if (!AllItem.isCancel) {
+              if (!AllItem.isCancel && AllItem.premium > 0.000000001) {
                 FixListPush.push(AllItem)
               }
             })
           })
-          const FixList = FixListPush
+
+          const FixList = FixListPush.sort(
+            (a, b) => Number(b.show_volume) - Number(a.show_volume)
+          )
+          console.log(FixListPush)
           setPolicyList(FixList)
         }
       }
@@ -138,7 +145,6 @@ const Market = props => {
       Type: InsuranceType,
       Insurance: InsuranceSymbol,
     })
-    console.log(CurrentInsurance)
     const { settleToken_address } = CurrentInsurance
     const Erc20Contracts = getContract(
       library,
@@ -216,6 +222,7 @@ const Market = props => {
         .on('receipt', (_, receipt) => {
           setOpenWaiting(false)
           setOpenSuccess(true)
+          getApproveStatus()
         })
         .on('error', ereor => {
           setOpenWaiting(false)
@@ -228,8 +235,6 @@ const Market = props => {
     }
     if (InsuranceType || InsuranceSymbol) {
       getPolicyList()
-    }
-    if (InsuranceSymbol) {
       getApproveStatus()
     }
   }, [InsuranceType, InsuranceSymbol, active])
@@ -277,7 +282,7 @@ const Market = props => {
                   key={'web' + item.askID}
                 >
                   <td>{item.show_ID}</td>
-                  <td>{item.show_price}</td>
+                  <td>{item.premium.toFixed(8)}</td>
                   <td>{item.show_volume}</td>
                   <td>
                     <input
@@ -287,7 +292,12 @@ const Market = props => {
                         item.buy_volume = e.target.value
                       }}
                     />
-                    <button onClick={() => handleClickBuyInurance(item)}>
+                    <button
+                      onClick={() => handleClickBuyInurance(item)}
+                      className={
+                        Number(item.show_volume) === 0 ? 'hiddenButton' : ''
+                      }
+                    >
                       {ApproveStatus ? (
                         <FormattedMessage id="insurance_text22" />
                       ) : (
@@ -317,7 +327,7 @@ const Market = props => {
                       <FormattedMessage id="insurance_text19" />
                       (GUARD)
                     </span>
-                    <span>{item.show_price}</span>
+                    <span> {item.premium.toFixed(8)}</span>
                   </p>
                   <p>
                     <span>
@@ -334,7 +344,12 @@ const Market = props => {
                       item.buy_volume = e.target.value
                     }}
                   />
-                  <button onClick={() => handleClickBuyInurance(item)}>
+                  <button
+                    onClick={() => handleClickBuyInurance(item)}
+                    className={
+                      Number(item.show_volume) === 0 ? 'hiddenButton' : ''
+                    }
+                  >
                     {ApproveStatus ? (
                       <FormattedMessage id="insurance_text22" />
                     ) : (

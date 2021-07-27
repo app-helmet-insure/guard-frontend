@@ -231,7 +231,7 @@ const MySettle = props => {
                       : item.und}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.putToken : item.callToken}
+                    {item.type === 'Call' ? item.collateral_symbol : item.underlying_symbol}
                   </span>
                 </div>
               </section>
@@ -246,7 +246,7 @@ const MySettle = props => {
                       : Number(item.col) + Number(item.claimBalance)}
                   </span>
                   <span>
-                    {item.type === 'Call' ? item.callToken : item.putToken}
+                    {item.type === 'Call' ? item.underlying_symbol : item.collateral_symbol}
                   </span>
                 </div>
               </section>
