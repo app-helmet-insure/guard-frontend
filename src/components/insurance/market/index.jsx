@@ -24,6 +24,7 @@ const Market = props => {
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
   const { InsuranceSymbol } = props
+  console.log(library, active, '################')
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -222,13 +223,16 @@ const Market = props => {
     }
   }
   useEffect(() => {
+    if (!active) {
+      return
+    }
     if (InsuranceType || InsuranceSymbol) {
       getPolicyList()
     }
     if (InsuranceSymbol) {
       getApproveStatus()
     }
-  }, [InsuranceType, InsuranceSymbol])
+  }, [InsuranceType, InsuranceSymbol, active])
 
   return (
     <div className="insurance_market">
@@ -303,7 +307,7 @@ const Market = props => {
               >
                 <p>
                   <span>
-                    <FormattedMessage id="insurance_text18" />: {' '}
+                    <FormattedMessage id="insurance_text18" />:{' '}
                   </span>
                   <span>{item.show_ID}</span>
                 </p>

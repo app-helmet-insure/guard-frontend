@@ -155,7 +155,7 @@ export const getShortTokenValue = library =>
         UnderlyingAddress: item.underlying,
       })
       if (CurrentInsurance) {
-        const { type, insurance, collateral_decimals } = CurrentInsurance
+        const {type, insurance, collateral_decimals} = CurrentInsurance
         item.type = type
         item.insurance = insurance
         item.asks.forEach(itemAsk => {
@@ -170,16 +170,17 @@ export const getShortTokenValue = library =>
     PutList.forEach(item => {
       PutValue += Number(item.show_volume)
     })
-    const CallValue = 0
-    const promise_list = []
+    let CallValue = 0
     const CallList = ShortList.filter(item => item.type === 'Call')
-    CallList.forEach(async (item, index) => {
+    return Promise.all(CallList.map((item, index) => {
       const CurrentInsurance = getCurrentInsurance({
         CollateralAddress: item.collateral,
         UnderlyingAddress: item.underlying,
       })
-      promise_list.push(await getPrice(library, CurrentInsurance))
-      // CallValue += Number(item.show_volume) * Pricex
+      return getPrice(library, CurrentInsurance)
+    })).then(price_list => {
+      CallValue = price_list.reduce((sum, price, index) => sum + price * CallList[index].show_volume, 0)
+      console.log('CallValue , PutValue', CallValue , PutValue)
+      return CallValue + PutValue
     })
-    return PutValue + CallValue
   })

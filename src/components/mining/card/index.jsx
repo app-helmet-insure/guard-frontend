@@ -105,7 +105,7 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
-  console.log('miningPools', miningPools)
+
   return (
     <>
       <div className="mining_card">
@@ -125,7 +125,7 @@ const MiningCard = props => {
               {miningPools ? (
                 <>
                   {miningPools.name.toUpperCase()} {miningPools.cover}{' '}
-                  {miningPools.strikeprice} {miningPools.shortToken}
+                  {miningPools.strikeprice} USDC
                 </>
               ) : (
                 '--'

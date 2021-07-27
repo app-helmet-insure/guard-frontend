@@ -228,6 +228,9 @@ const Supply = props => {
     setInsuranceDPR({ number: data.key, show: data.value })
   }
   useEffect(() => {
+    if (!active) {
+      return
+    }
     const DaysRemain = Math.ceil((CurrentInsurance.expiry - NowTime) / 86400)
     const { strikeprice } = CurrentInsurance
     if (InsuranceDPR || InsuranceVolume) {
@@ -273,6 +276,7 @@ const Supply = props => {
     InsuranceSymbol,
     InsuranceType,
     DprStatus,
+    active,
   ])
 
   return (
