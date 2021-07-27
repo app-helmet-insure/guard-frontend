@@ -77,7 +77,7 @@ export default {
     '*某些钱包可能不支持更改网络。如果您无法更改钱包中的网络，您可以考虑切换到不同的钱包。',
   switch_wallet_dialog_text4: '切换钱包',
   insurance_text1: 'Guard 价格',
-  insurance_text2: 'LONG 当前总价值',
+  insurance_text2: 'Short 当前总价值',
   insurance_text3: 'Guard 铸造总量',
   insurance_text23: 'Helmet 销毁总量',
   insurance_text4: '翻倍险',
