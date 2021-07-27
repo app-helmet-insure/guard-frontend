@@ -1,13 +1,16 @@
-import StakingPool3 from '../web3/abi/StakingPool3.json'
 import StakingPool from '../web3/abi/StakingPool.json'
 import QuickSwapRouter from '../web3/abi/QuickSwapRouter.json'
 import QuickSwapFactory from '../web3/abi/QuickSwapFactory.json'
 
+// import GuardLogoSvg from '../assets/images/mining/pool/GUARD.png'
+import ETHLogoSvg from '../assets/images/mining/pool/ETH.svg'
+import MaticLogoSvg from '../assets/images/mining/pool/MATIC.svg'
+import QuickLogoSvg from '../assets/images/mining/pool/QUICK.png'
 
 export default [
   {
     name: 'Quick Short',
-    icon: 'Guard-USDC',
+    icon: QuickLogoSvg,
     shortToken: 'QUICK',
     rewards1: 'GUARD',
     rewards2: null,
@@ -15,12 +18,12 @@ export default [
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
     rewards2Address: null,
     // apr
-    valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // LPT: lpt*2 Short： 抵押物
+    valueAprToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13', // LPT: lpt*2 Short： 抵押物
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
     MLP: '0x62e4210cA2B844EeeD5e906dE6a7C5EF9A69C372', // 质押的资产
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     abi: StakingPool,
     start_at: 1627401600,
     time: '',
@@ -48,7 +51,7 @@ export default [
   },
   {
     name: 'Matic Short',
-    icon: 'Guard-USDC',
+    icon: MaticLogoSvg,
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
@@ -56,12 +59,12 @@ export default [
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
     rewards2Address: null,
     // apr
-    valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
+    valueAprToken: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    MLP: '0xdBac5ccD625cCC9f373F1EC0163DF8f55f24F35C', // 质押的资产 stakingToken
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    MLP: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // 质押的资产 stakingToken
+    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
     abi: StakingPool,
     start_at: 1627401600,
     time: '',
@@ -89,7 +92,7 @@ export default [
   },
   {
     name: 'Quick Short',
-    icon: 'Guard-USDC',
+    icon: QuickLogoSvg,
     shortToken: 'QUICK',
     rewards1: 'GUARD',
     rewards2: null,
@@ -97,12 +100,12 @@ export default [
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
     rewards2Address: null,
     // apr
-    valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
+    valueAprToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
     MLP: '0x4d37D091dfD455fa25CA645453cC85BC9A3f02cB', // 质押的资产
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
     abi: StakingPool,
     start_at: 1627401600,
     time: '',
@@ -130,7 +133,7 @@ export default [
   },
   {
     name: 'Matic Short',
-    icon: 'Guard-USDC',
+    icon: MaticLogoSvg,
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
@@ -138,7 +141,7 @@ export default [
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
     rewards2Address: null,
     // apr
-    valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
+    valueAprToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
@@ -171,19 +174,19 @@ export default [
   },
   {
     name: 'Eth Short',
-    icon: 'Guard-USDC',
-    shortToken: 'MATIC',
+    icon: ETHLogoSvg,
+    shortToken: 'ETH',
     rewards1: 'GUARD',
     rewards2: null,
     address: '0x05f7bd01433bfab7b8511788e678de5fa92e276a',
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
     rewards2Address: null,
     // apr
-    valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
+    valueAprToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    MLP: '0x75a0669062c2a0bbc76719f542880c1185279549', // 质押的资产
+    MLP: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619', // 质押的资产
     byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
     abi: StakingPool,
     start_at: 1627401600,

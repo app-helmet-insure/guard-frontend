@@ -149,12 +149,12 @@ export const getLTPValue = (
   }
   // short
   if (miningPools.poolType === 3) {
-    const collateral = new Contract(token_address, ERC20) // quick的合约
-    const short = new Contract(address, ERC20) // quick的合约
-    return multicallProvider.all([poolContract.totalSupply(), collateral.balanceOf(pool_address), short.totalSupply()]).then((data) => {
+    const collateral = new Contract(token_address, ERC20.abi) // quick的合约
+    const short = new Contract(address, ERC20.abi) // quick的合约
+    return multicallProvider.all([poolContract.totalSupply(), collateral.balanceOf(address), short.totalSupply()]).then((data) => {
       data = processResult(data)
       const [poolTotalSupply, shortAmount, tokenTotalSupply] = data
-      // console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
+      console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
       return new BigNumber(poolTotalSupply).div(new BigNumber(shortAmount)).multipliedBy(tokenTotalSupply)
     })
   }
@@ -280,18 +280,24 @@ export const getAPR = async (
   // console.log('lptValue', lptValue)
 
   // 通过转换后的lpt价格
-  const [lptTotalPrice] =  await getMDexPrice(
-    miningPools.valueAprToken,
-    miningPools.settleToken,
-    1,
-    miningPools.valueAprPath,
-    miningPools
-  )
-  // console.log('lptTotalPrice', lptTotalPrice)
+  let lptTotalValue
+  if(miningPools.valueAprToken !== miningPools.settleToken){
+    const [lptTotalPrice] =  await getMDexPrice(
+      miningPools.valueAprToken,
+      miningPools.settleToken,
+      1,
+      miningPools.valueAprPath,
+      miningPools
+    )
+    // console.log('lptTotalPrice', lptTotalPrice)
 
-  const lptTotalValue = new BigNumber(lptTotalPrice)
-    .multipliedBy(new BigNumber(lptValue))
-    .toString()
+    lptTotalValue = new BigNumber(lptTotalPrice)
+      .multipliedBy(new BigNumber(lptValue))
+      .toString()
+  } else {
+    lptTotalValue = lptValue
+  }
+
 
   // 奖励转换后的价格
   const [rewardsTotalPrice] = await getMDexPrice(

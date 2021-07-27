@@ -37,8 +37,10 @@ const MiningCard = props => {
           miningPools_,
           miningPools_.earnName === 'APY' ? 2 : 1,
         ).then(setApr)
-        // 奖励2的apr
-        getMdxARP(miningPools_).then(setMdexApr)
+        if (miningPools_.mdexReward) {
+          // 奖励2的apr
+          getMdxARP(miningPools_).then(setMdexApr)
+        }
       })
     }
   }, [blockHeight, account])
@@ -57,7 +59,10 @@ const MiningCard = props => {
   useMemo(() => {
     console.log('apr', apr, mdexApr)
     if (apr > 0 && miningPools && (!miningPools.mdexReward || mdexApr > 0)) {
-      setPercentage((apr * 100 + mdexApr * 100).toFixed(2))
+      const percentage_ = (apr * 100 + mdexApr * 100).toFixed(2)
+      if (isFinite(percentage_)) {
+        setPercentage(percentage_)
+      }
     }
   }, [apr, mdexApr])
 
@@ -102,11 +107,9 @@ const MiningCard = props => {
     <>
       <div className="mining_card">
         <div className="mining_card_title">
-          {miningPools && miningPools.icon && (
+          {miningPools && (
             <img
-              src={require('../../../assets/images/mining/' +
-                miningPools.icon +
-                '_logo@2x.png')}
+              src={miningPools.icon}
             />
           )}
           <p className="mining_card_title_text">
@@ -141,12 +144,10 @@ const MiningCard = props => {
             <span>
               <FormattedMessage id="mining_text7"/>
             </span>
-            {miningPools && miningPools.icon && (
+            {miningPools && (
               <img
                 className="mining_card_content_icon"
-                src={require('../../../assets/images/mining/' +
-                  miningPools.icon +
-                  '@2x.png')}
+                src={miningPools.icon}
               />
             )}
           </p>
