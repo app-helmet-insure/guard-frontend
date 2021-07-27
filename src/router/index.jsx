@@ -19,7 +19,7 @@ function mapRoutes(routes_) {
   })
 }
 
-export default () => (
+export default (props) => (
   <Switch>
     {mapRoutes(routerConfig)}
     <Route component={() => {

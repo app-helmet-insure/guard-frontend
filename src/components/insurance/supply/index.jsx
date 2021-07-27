@@ -41,7 +41,6 @@ const Supply = props => {
   const [IndexPrice, setIndexPrice] = useState(0)
   const [GuardPrice, setGuardPrice] = useState({ Call: 0, Put: 0 })
   const { library, active, account } = useActiveWeb3React()
-  const [dprVal, setDprVal] = useState('0.07%')
   const CurrentInsurance = getCurrentInsurance({
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
@@ -92,7 +91,11 @@ const Supply = props => {
   }
   // 获取授权状态
   const getApproveStatus = data => {
-    const { collateral_address } = CurrentInsurance
+    const ApproveInsurance = getCurrentInsurance({
+      Type: InsuranceType,
+      Insurance: InsuranceSymbol,
+    })
+    const { collateral_address } = ApproveInsurance
     const Erc20Contracts = getContract(
       library,
       Erc20ABI.abi,
@@ -102,6 +105,7 @@ const Supply = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
+        console.log(res)
         if (Number(res) > 0) {
           return setApproveStatus(true)
         }
@@ -130,7 +134,7 @@ const Supply = props => {
       const _expiry = CurrentInsurance.expiry
       const settleToken = CurrentInsurance.settleToken_address
       const price = toWei(
-        new BigNumber(Earning).toString() + '',
+        new BigNumber((Earning / InsuranceVolume).toFixed(8)).toString() + '',
         CurrentInsurance.settleToken_decimals
       )
       const volume = toWei(
@@ -219,17 +223,14 @@ const Supply = props => {
         })
     }
   }
-  const handleClickDpr = (flag, data = '') => {
-    setDprStatus(flag)
-    if (data) {
-      setInsuranceDPR(data)
-    }
+  const handleClickDpr = data => {
+    setInsuranceDPR({ number: data.key, show: data.value })
   }
   useEffect(() => {
     const DaysRemain = Math.ceil((CurrentInsurance.expiry - NowTime) / 86400)
     const { strikeprice } = CurrentInsurance
     if (InsuranceDPR || InsuranceVolume) {
-      console.log(GuardPrice)
+      console.log(InsuranceDPR)
       if (InsuranceType === 'Call') {
         // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
         // 2. Premium = Number - Math.min((行权价-执行价),0)
@@ -260,7 +261,7 @@ const Supply = props => {
         setEarning(Expect)
       }
     }
-    if (InsuranceSymbol || InsuranceType) {
+    if (InsuranceType) {
       getApproveStatus()
       currentIndexPrice()
       currentGuardPrice()
@@ -272,11 +273,6 @@ const Supply = props => {
     InsuranceType,
     DprStatus,
   ])
-
-  const setDpr = val => {
-    setDprVal(val)
-    setInsuranceDPR(val)
-  }
 
   return (
     <div className="insurance_supply">
@@ -304,42 +300,20 @@ const Supply = props => {
             {CurrentInsurance.strikeprice} USDC
           </span>
         </p>
-        <Select value={dprVal} onChange={setDpr}>
+        <Select
+          defaultValue={InsuranceDPR.show}
+          onChange={(value, option) => handleClickDpr(option)}
+        >
           {DPRlist.map(dpr => (
             <Option
               value={dpr.show}
-              key={dpr.show}
-              disabled={dpr.show === dprVal}
+              key={dpr.number}
+              disabled={dpr.show === InsuranceDPR.show}
             >
               {dpr.show}
             </Option>
           ))}
         </Select>
-        {/* <div className='dpr'>
-          <input
-            type="text"
-            readOnly
-            onChange={e => {
-              setInsuranceDPR(e.target.value)
-            }}
-            onClick={() => handleClickDpr(!DprStatus)}
-          />
-          <span className="name">
-            <FormattedMessage id="insurance_text13" />
-          </span>
-          <span className="number">{InsuranceDPR.show}</span>
-          {DprStatus ? (
-            <div className="select">
-              {DPRlist.map(dpr => (
-                <div key={dpr.show} onClick={() => handleClickDpr(false, dpr)}>
-                  {dpr.show}
-                </div>
-              ))}
-            </div>
-          ) : (
-            ''
-          )}
-        </div> */}
         <p className="left">
           <FormattedMessage id="insurance_text8" />
           {Earning} GUARD

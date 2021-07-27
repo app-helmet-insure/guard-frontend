@@ -30,6 +30,10 @@ const MyPolicy = props => {
   const onWaitClose = () => {
     setOpenWaiting(false)
   }
+  const getBindItem = async bidID => {
+    const BidContracts = getContract(library, OrderABI, OrderAddress)
+    return await BidContracts.methods.bids(bidID).call()
+  }
 
   // 保单数据
   const getPolicyList = () => {
@@ -37,6 +41,8 @@ const MyPolicy = props => {
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
+        const AskAssign = []
+        const BidAssign = []
         const FixListPush = []
         const FilterList = ReturnList.filter(
           item => Number(item.expiry) >= 1627315200
@@ -83,6 +89,7 @@ const MyPolicy = props => {
             }
             item.asks.filter(itemAsk => {
               const ResultItemAsk = {
+                binds: itemAsk.binds,
                 askID: itemAsk.askID,
                 isCancel: itemAsk.isCancel,
                 show_ID:
@@ -91,51 +98,63 @@ const MyPolicy = props => {
                   '...' +
                   itemAsk.seller.substr(-4).toUpperCase(),
                 settleToken_symbol,
+                volume: itemAsk.volume,
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
-              if (itemAsk.binds.length) {
-                itemAsk.binds.forEach(itemBid => {
-                  if (
-                    account &&
-                    itemBid.buyer.toUpperCase() === account.toUpperCase()
-                  ) {
-                    const BidInfo = BidContracts.methods
-                      .bids(itemBid.bidID)
-                      .call()
-                    const ResultItemBid = {
-                      bidID: itemBid.bidID,
-                      volume: itemAsk.volume,
-                      show_volume: fromWei(itemBid.volume, collateral_decimals),
-                      remain: BidInfo.remain,
-                    }
-                    const ReturnItem = Object.assign(ResultItemBid, AllItem)
-                    if (ReturnItem.type === 'Put') {
-                      ReturnItem.show_volume = Number(
-                        ReturnItem.show_volume /
-                          (1 /
-                            fromWei(
-                              ResultItem.strikePrice,
-                              strikeprice_decimals
-                            ))
-                      ).toFixed(8)
-                    } else {
-                      ReturnItem.show_volume = Number(
-                        ReturnItem.show_volume
-                      ).toFixed(8)
-                    }
-                    if (Number(ResultItem.remain) !== 0) {
-                      FixListPush.push(ReturnItem)
-                    }
-                  }
-                })
+              AskAssign.push(AllItem)
+            })
+          }
+        })
+        AskAssign.forEach(itemAsks => {
+          const CurrentInsurance = getCurrentInsurance({
+            CollateralAddress: itemAsks.collateral,
+            UnderlyingAddress: itemAsks.underlying,
+          })
+          const {
+            strikeprice_decimals,
+            collateral_decimals,
+          } = CurrentInsurance
+          if (itemAsks.binds.length) {
+            itemAsks.binds.forEach(itemBid => {
+              if (
+                account &&
+                itemBid.buyer.toUpperCase() === account.toUpperCase()
+              ) {
+                const ResultItemBid = {
+                  bidID: itemBid.bidID,
+                  volume: itemAsks.volume,
+                  show_volume: fromWei(itemBid.volume, collateral_decimals),
+                }
+                const ReturnItem = Object.assign(ResultItemBid, itemAsks)
+                if (ReturnItem.type === 'Put') {
+                  ReturnItem.show_volume = Number(
+                    ReturnItem.show_volume /
+                      (1 / fromWei(itemAsks.strikePrice, strikeprice_decimals))
+                  ).toFixed(8)
+                } else {
+                  ReturnItem.show_volume = Number(
+                    ReturnItem.show_volume
+                  ).toFixed(8)
+                }
+                BidAssign.push(ReturnItem)
               }
             })
           }
         })
-        const FixList = FixListPush
-        setPolicyList(FixList)
+        BidAssign.forEach((itemBids, index) => {
+          getBindItem(itemBids.bidID).then(data => {
+            itemBids.remain = data.remain
+            FixListPush.push(itemBids)
+            if (index === BidAssign.length - 1) {
+              const list = FixListPush.filter(
+                filter => Number(filter.remain) !== 0
+              )
+              setPolicyList(list)
+            }
+          })
+        })
       }
     })
   }

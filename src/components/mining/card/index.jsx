@@ -31,7 +31,7 @@ const MiningCard = props => {
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0) {
-      getMiningInfo(props.pools.address, account).then((miningPools_) => {
+      getMiningInfo(props.pools.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
         getAPR(
           miningPools_,

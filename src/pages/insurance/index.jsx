@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './index.less'
+import { FormattedMessage } from 'react-intl'
 import Banner from '@/components/insurance/banner'
 import ShowData from '@/components/insurance/showdata'
 import Operation from '@/components/insurance/operation'
@@ -16,8 +17,13 @@ const Insurance = (props) => (
         <Banner />
         <ShowData />
         <div className='insurance_container_list_type'>
-          <h2>保险列表</h2>
-          <p>Supply Policy to get SHORT token<span></span></p>
+          <h2>
+            <FormattedMessage id='insurance_text24' />
+          </h2>
+          <p>
+            <FormattedMessage id='insurance_text25' />
+            <span></span>
+          </p>
         </div>
         {InsuranceTypeList.map((insurance) => (
           <Operation

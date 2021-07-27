@@ -1,6 +1,4 @@
 import Order from '../web3/abi/Order.json'
-import { getPairPrice } from '../hooks/quickswap'
-import Item from 'antd/lib/list/Item'
 import axios from 'axios'
 import GuardLogoSvg from '../assets/images/insurance/guard_logo.png'
 import ETHLogoSvg from '../assets/images/insurance/eth_logo.svg'
@@ -28,28 +26,28 @@ export const InsuranceTypeList = [
     PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
     Logo: GuardLogoSvg,
     Expiry: moment(new Date(1630080000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-    ShowName: 'Guard'
+    ShowName: 'Guard',
   },
   {
     InsuranceSymbol: 'MATIC',
     PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
     Logo: MaticLogoSvg,
     Expiry: moment(new Date(1630080000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-    ShowName: 'Matic'
+    ShowName: 'Matic',
   },
   {
     InsuranceSymbol: 'QUICK',
     PairUSDC: '0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb',
     Logo: QuickLogoSvg,
     Expiry: moment(new Date(1630080000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-    ShowName: 'Quick'
+    ShowName: 'Quick',
   },
   {
     InsuranceSymbol: 'ETH',
     PairUSDC: '0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d',
     Logo: ETHLogoSvg,
     Expiry: moment(new Date(1630080000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-    ShowName: 'ETH'
+    ShowName: 'ETH',
   },
 ]
 export const getCurrentInsurance = ({
