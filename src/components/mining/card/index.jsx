@@ -14,7 +14,7 @@ import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 import {VarContext} from '../../../context'
 import {useActiveWeb3React} from '../../../web3'
-import {min} from 'moment'
+import GuardLogoSvg from '../../../assets/images/mining/pool/GUARD.png'
 
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
@@ -37,17 +37,21 @@ const MiningCard = props => {
           miningPools_,
           miningPools_.earnName === 'APY' ? 2 : 1,
         ).then(setApr)
-        // 奖励2的apr
-        getMdxARP(miningPools_).then(setMdexApr)
+        if (miningPools_.mdexReward) {
+          // 奖励2的apr
+          getMdxARP(miningPools_).then(setMdexApr)
+        }
       })
     }
   }, [blockHeight, account])
-  // 获取池子余额
+  // 获取池子token个人账户可使用余额
   const balance = useBalance(
     blockHeight,
     miningPools && miningPools.MLP,
-    ERC20.abi
+    ERC20.abi,
+    miningPools && miningPools.mlpDecimal
   )
+  // console.log(miningPools && miningPools.name + miningPools.cover, balance)
   const isFinish =
     miningPools &&
     miningPools.dueDate &&
@@ -57,7 +61,10 @@ const MiningCard = props => {
   useMemo(() => {
     console.log('apr', apr, mdexApr)
     if (apr > 0 && miningPools && (!miningPools.mdexReward || mdexApr > 0)) {
-      setPercentage((apr * 100 + mdexApr * 100).toFixed(2))
+      const percentage_ = (apr * 100 + mdexApr * 100).toFixed(2)
+      if (isFinite(percentage_)) {
+        setPercentage(percentage_)
+      }
     }
   }, [apr, mdexApr])
 
@@ -102,11 +109,9 @@ const MiningCard = props => {
     <>
       <div className="mining_card">
         <div className="mining_card_title">
-          {miningPools && miningPools.icon && (
+          {miningPools && (
             <img
-              src={require('../../../assets/images/mining/' +
-                miningPools.icon +
-                '_logo@2x.png')}
+              src={miningPools.icon}
             />
           )}
           <p className="mining_card_title_text">
@@ -118,7 +123,7 @@ const MiningCard = props => {
               ></span>
               {miningPools ? (
                 <>
-                  <FormattedMessage id="mining_text3"/> {miningPools.cover}{' '}
+                  {miningPools.name.toUpperCase()} {miningPools.cover}{' '}
                   {miningPools.strikeprice} {miningPools.shortToken}
                 </>
               ) : (
@@ -126,7 +131,7 @@ const MiningCard = props => {
               )}
             </a>
             <span className="title_text">
-              {miningPools && miningPools.name}
+              {miningPools && (miningPools.name + '  Short Token Pool')}
             </span>
           </p>
         </div>
@@ -141,12 +146,10 @@ const MiningCard = props => {
             <span>
               <FormattedMessage id="mining_text7"/>
             </span>
-            {miningPools && miningPools.icon && (
+            {miningPools && (
               <img
                 className="mining_card_content_icon"
-                src={require('../../../assets/images/mining/' +
-                  miningPools.icon +
-                  '@2x.png')}
+                src={GuardLogoSvg}
               />
             )}
           </p>
@@ -269,6 +272,7 @@ const MiningCard = props => {
           visible={visibleStakePopup}
           tab={tabFlag}
           pool={miningPools}
+          balance={balance}
           onClose={() => setVisibleStakePopup(false)}
         />
       )}

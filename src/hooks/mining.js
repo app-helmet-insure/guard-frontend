@@ -149,12 +149,12 @@ export const getLTPValue = (
   }
   // short
   if (miningPools.poolType === 3) {
-    const collateral = new Contract(token_address, ERC20) // quick的合约
-    const short = new Contract(address, ERC20) // quick的合约
-    return multicallProvider.all([poolContract.totalSupply(), collateral.balanceOf(pool_address), short.totalSupply()]).then((data) => {
+    const collateral = new Contract(token_address, ERC20.abi) // quick的合约
+    const short = new Contract(address, ERC20.abi) // quick的合约
+    return multicallProvider.all([poolContract.totalSupply(), collateral.balanceOf(address), short.totalSupply()]).then((data) => {
       data = processResult(data)
       const [poolTotalSupply, shortAmount, tokenTotalSupply] = data
-      // console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
+      console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
       return new BigNumber(poolTotalSupply).div(new BigNumber(shortAmount)).multipliedBy(tokenTotalSupply)
     })
   }
@@ -280,18 +280,24 @@ export const getAPR = async (
   // console.log('lptValue', lptValue)
 
   // 通过转换后的lpt价格
-  const [lptTotalPrice] =  await getMDexPrice(
-    miningPools.valueAprToken,
-    miningPools.settleToken,
-    1,
-    miningPools.valueAprPath,
-    miningPools
-  )
-  // console.log('lptTotalPrice', lptTotalPrice)
+  let lptTotalValue
+  if (miningPools.valueAprToken !== miningPools.settleToken) {
+    const [lptTotalPrice] =  await getMDexPrice(
+      miningPools.valueAprToken,
+      miningPools.settleToken,
+      1,
+      miningPools.valueAprPath,
+      miningPools
+    )
+    // console.log('lptTotalPrice', miningPools.name, lptTotalPrice, lptValue)
 
-  const lptTotalValue = new BigNumber(lptTotalPrice)
-    .multipliedBy(new BigNumber(lptValue))
-    .toString()
+    lptTotalValue = new BigNumber(lptTotalPrice)
+      .multipliedBy(new BigNumber(lptValue))
+      .toString()
+  } else {
+    lptTotalValue = lptValue
+  }
+
 
   // 奖励转换后的价格
   const [rewardsTotalPrice] = await getMDexPrice(
@@ -301,9 +307,10 @@ export const getAPR = async (
     miningPools.rewardsAprPath,
     miningPools
   )
+
   // console.log('rewardsTotalPrice', rewardsTotalPrice)
 
-  // 价格*量 = 总价值
+  // 价格*量 = 奖励总价值
   const rewardsTotalValue = new BigNumber(rewardsTotalPrice)
     .multipliedBy(new BigNumber(reward1Vol))
     .toString()
@@ -314,7 +321,7 @@ export const getAPR = async (
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
-  // console.log('lptTotalValue', lptTotalValue, rewardsTotalValue, span, mode)
+  // console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     const dayRate = new BigNumber(1).div(

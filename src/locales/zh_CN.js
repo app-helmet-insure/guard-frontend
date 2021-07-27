@@ -27,7 +27,7 @@ export default {
   HourM: '时',
   MinM: '分',
   SecondM: '秒',
-  header_text1: '保险',
+  header_text1: '保险（Short）',
   header_text2: '挖矿',
   header_text3: '连接钱包',
   header_text4: '等待中',
