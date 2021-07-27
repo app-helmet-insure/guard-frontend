@@ -21,7 +21,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    MLP: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // 质押的资产 stakingToken
+    MLP: '0xdBac5ccD625cCC9f373F1EC0163DF8f55f24F35C', // 质押的资产 stakingToken
     byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
     abi: StakingPool,
     start_at: 1627401600,
@@ -185,7 +185,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    MLP: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619', // 质押的资产
+    MLP: '0x75A0669062C2a0BbC76719f542880C1185279549', // 质押的资产
     byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
     abi: StakingPool,
     start_at: 1627401600,

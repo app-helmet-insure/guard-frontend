@@ -44,12 +44,13 @@ const MiningCard = props => {
       })
     }
   }, [blockHeight, account])
-  // 获取池子余额
+  // 获取池子token个人账户可使用余额
   const balance = useBalance(
     blockHeight,
     miningPools && miningPools.MLP,
     ERC20.abi
   )
+  console.log(miningPools && miningPools.name, balance)
   const isFinish =
     miningPools &&
     miningPools.dueDate &&
