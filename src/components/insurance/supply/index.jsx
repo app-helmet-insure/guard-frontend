@@ -135,7 +135,7 @@ const Supply = props => {
       const _expiry = CurrentInsurance.expiry
       const settleToken = CurrentInsurance.settleToken_address
       const price = toWei(
-        new BigNumber(Earning).toString() + '',
+        new BigNumber((Earning / InsuranceVolume).toFixed(8)).toString() + '',
         CurrentInsurance.settleToken_decimals
       )
       const volume = toWei(

@@ -37,6 +37,7 @@ const MyPolicy = props => {
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
+        const AskAssignArray = []
         const FixListPush = []
         const FilterList = ReturnList.filter(
           item => Number(item.expiry) >= 1627315200
@@ -83,6 +84,7 @@ const MyPolicy = props => {
             }
             item.asks.filter(itemAsk => {
               const ResultItemAsk = {
+                binds: itemAsk.binds,
                 askID: itemAsk.askID,
                 isCancel: itemAsk.isCancel,
                 show_ID:
@@ -95,47 +97,59 @@ const MyPolicy = props => {
                 price: itemAsk.price,
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
-              if (itemAsk.binds.length) {
-                itemAsk.binds.forEach(itemBid => {
+              AskAssignArray.push(AllItem)
+            })
+            AskAssignArray.filter(itemAsks => {
+              if (itemAsks.binds.length) {
+                const arr = itemAsks.binds.filter(async itemBid => {
                   if (
                     account &&
                     itemBid.buyer.toUpperCase() === account.toUpperCase()
                   ) {
-                    const BidInfo = BidContracts.methods
+                    return await BidContracts.methods
                       .bids(itemBid.bidID)
                       .call()
-                    const ResultItemBid = {
-                      bidID: itemBid.bidID,
-                      volume: itemAsk.volume,
-                      show_volume: fromWei(itemBid.volume, collateral_decimals),
-                      remain: BidInfo.remain,
-                    }
-                    const ReturnItem = Object.assign(ResultItemBid, AllItem)
-                    if (ReturnItem.type === 'Put') {
-                      ReturnItem.show_volume = Number(
-                        ReturnItem.show_volume /
-                          (1 /
-                            fromWei(
-                              ResultItem.strikePrice,
-                              strikeprice_decimals
-                            ))
-                      ).toFixed(8)
-                    } else {
-                      ReturnItem.show_volume = Number(
-                        ReturnItem.show_volume
-                      ).toFixed(8)
-                    }
-                    if (Number(ResultItem.remain) !== 0) {
-                      FixListPush.push(ReturnItem)
-                    }
+                      .then(resbid => {
+                        const ResultItemBid = {
+                          bidID: itemBid.bidID,
+                          volume: itemAsks.volume,
+                          show_volume: fromWei(
+                            itemBid.volume,
+                            collateral_decimals
+                          ),
+                          remain: resbid.remain,
+                        }
+                        const ReturnItem = Object.assign(
+                          ResultItemBid,
+                          itemAsks
+                        )
+                        if (ReturnItem.type === 'Put') {
+                          ReturnItem.show_volume = Number(
+                            ReturnItem.show_volume /
+                              (1 /
+                                fromWei(
+                                  ResultItem.strikePrice,
+                                  strikeprice_decimals
+                                ))
+                          ).toFixed(8)
+                        } else {
+                          ReturnItem.show_volume = Number(
+                            ReturnItem.show_volume
+                          ).toFixed(8)
+                        }
+                        if (Number(ResultItem.remain) !== 0) {
+                          FixListPush.push(ReturnItem)
+                        }
+                      })
                   }
                 })
+                console.log(arr)
               }
             })
+            const FixList = FixListPush
+            setPolicyList(FixList)
           }
         })
-        const FixList = FixListPush
-        setPolicyList(FixList)
       }
     })
   }
@@ -252,7 +266,7 @@ const MyPolicy = props => {
       {PolicyList && PolicyList.length > 0 ? (
         <div className="insurance_mypolicy_list">
           {PolicyList.map((item, index) => (
-            <div className="insurance_mypolicy_item" key={item.bidID}>
+            <div className="insurance_mypolicy_item" key={index}>
               <section>
                 <div>
                   <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
