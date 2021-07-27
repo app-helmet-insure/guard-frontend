@@ -48,9 +48,10 @@ const MiningCard = props => {
   const balance = useBalance(
     blockHeight,
     miningPools && miningPools.MLP,
-    ERC20.abi
+    ERC20.abi,
+    miningPools && miningPools.mlpDecimal
   )
-  console.log(miningPools && miningPools.name, balance)
+  // console.log(miningPools && miningPools.name + miningPools.cover, balance)
   const isFinish =
     miningPools &&
     miningPools.dueDate &&
@@ -122,7 +123,7 @@ const MiningCard = props => {
               ></span>
               {miningPools ? (
                 <>
-                  <FormattedMessage id="mining_text3"/> {miningPools.cover}{' '}
+                  {miningPools.name.toUpperCase()} {miningPools.cover}{' '}
                   {miningPools.strikeprice} {miningPools.shortToken}
                 </>
               ) : (
@@ -130,7 +131,7 @@ const MiningCard = props => {
               )}
             </a>
             <span className="title_text">
-              {miningPools && miningPools.name}
+              {miningPools && (miningPools.name + '  Short Token Pool')}
             </span>
           </p>
         </div>
@@ -271,6 +272,7 @@ const MiningCard = props => {
           visible={visibleStakePopup}
           tab={tabFlag}
           pool={miningPools}
+          balance={balance}
           onClose={() => setVisibleStakePopup(false)}
         />
       )}
