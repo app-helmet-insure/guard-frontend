@@ -91,7 +91,7 @@ const MiningCard = props => {
     if (miningPools && miningPools.balanceOf * 1 && miningPools.totalSupply) {
       setBalanceProportion(
         new BigNumber(miningPools.balanceOf)
-          .dividedBy(new BigNumber(formatAmount(miningPools.totalSupply)))
+          .dividedBy(new BigNumber(formatAmount(miningPools.totalSupply, miningPools.mlpDecimal)))
           .multipliedBy(new BigNumber(100))
           .toNumber()
           .toFixed(2) * 1
@@ -105,6 +105,7 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
+  console.log('miningPools', miningPools)
   return (
     <>
       <div className="mining_card">
@@ -162,14 +163,14 @@ const MiningCard = props => {
                 ? formatNumber(
                   formatAmount(
                     miningPools.totalSupply,
-                    miningPools.decimal,
+                    miningPools.mlpDecimal,
                     6
                   ),
                   {
                     thousand: ',',
                     decimal: '.',
                     precision:
-                      formatAmount(miningPools.totalSupply) - 0 > 0
+                      miningPools.totalSupply - 0 > 0
                         ? miningPools.splitDigits
                         : 0,
                   }
