@@ -171,19 +171,15 @@ export const getShortTokenValue = library =>
       PutValue += Number(item.show_volume)
     })
     const CallValue = 0
+    const promise_list = []
     const CallList = ShortList.filter(item => item.type === 'Call')
-    CallList.forEach((item, index) => {
+    CallList.forEach(async (item, index) => {
       const CurrentInsurance = getCurrentInsurance({
         CollateralAddress: item.collateral,
         UnderlyingAddress: item.underlying,
       })
-      const a = getPrice(library, CurrentInsurance).then(res => {
-        PutValue += Number(item.show_volume) * res
-        if (index + 1 === CallList.length) {
-          return PutValue
-        }
-      })
-      console.log(a)
+      promise_list.push(await getPrice(library, CurrentInsurance))
+      // CallValue += Number(item.show_volume) * Pricex
     })
     return PutValue + CallValue
   })
