@@ -48,7 +48,7 @@ export const getMiningInfo = (address, account) => {
         currency_allowance = 0,
         earned2 = 0,
       ] = data
-      console.log('begin', begin)
+      // console.log('begin', begin)
       const newPool = Object.assign({}, pool, {
         start_at: begin,
         earned,
@@ -68,7 +68,7 @@ export const getTotalRewards = (miningPools) => {
     .rewards(ADDRESS_0)
     .call()
     .then((totalRewards) => {
-      console.log('totalRewards', totalRewards)
+      // console.log('totalRewards', totalRewards)
       return totalRewards
     })
 }
@@ -103,47 +103,61 @@ export const getLTPValue = (
     return multicallProvider.all([poolContract.totalSupply()]).then((data) => {
       data = processResult(data)
       const [poolTotalSupply] = data
-      console.log('poolTotalSupply', poolTotalSupply)
+      // console.log('poolTotalSupply', poolTotalSupply)
       return new BigNumber(poolTotalSupply)
     })
   }
 
-  const contract = new Contract(address, LPT)
-  const promise_list = [
-    contract.token0(),
-    contract.token1(),
-    contract.getReserves(),
-    contract.totalSupply(),
-    poolContract.totalSupply(),
-  ]
-  return multicallProvider
-    .all(promise_list)
-    .then((data) => {
+  // lpt
+  if (miningPools.poolType === 2) {
+    const contract = new Contract(address, LPT)
+    const promise_list = [
+      contract.token0(),
+      contract.token1(),
+      contract.getReserves(),
+      contract.totalSupply(),
+      poolContract.totalSupply(),
+    ]
+    return multicallProvider
+      .all(promise_list)
+      .then((data) => {
+        data = processResult(data)
+        debugger
+        const [
+          token0_address,
+          token1_address,
+          [_reserve0, _reserve1],
+          totalSupply,
+          poolTotalSupply,
+        ] = data
+        if (token_address === token0_address) {
+          return new BigNumber(_reserve0)
+            .multipliedBy(new BigNumber(2))
+            .multipliedBy(
+              new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
+            )
+        }
+        if (token_address === token1_address) {
+          return new BigNumber(_reserve1)
+            .multipliedBy(new BigNumber(2))
+            .multipliedBy(
+              new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
+            )
+        }
+        return 0
+      })
+  }
+  // short
+  if (miningPools.poolType === 3) {
+    const collateral = new Contract(token_address, ERC20) // quick的合约
+    const short = new Contract(address, ERC20) // quick的合约
+    return multicallProvider.all([poolContract.totalSupply(), collateral.balanceOf(pool_address), short.totalSupply()]).then((data) => {
       data = processResult(data)
-      debugger
-      const [
-        token0_address,
-        token1_address,
-        [_reserve0, _reserve1],
-        totalSupply,
-        poolTotalSupply,
-      ] = data
-      if (token_address === token0_address) {
-        return new BigNumber(_reserve0)
-          .multipliedBy(new BigNumber(2))
-          .multipliedBy(
-            new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
-          )
-      }
-      if (token_address === token1_address) {
-        return new BigNumber(_reserve1)
-          .multipliedBy(new BigNumber(2))
-          .multipliedBy(
-            new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply))
-          )
-      }
-      return 0
+      const [poolTotalSupply, shortAmount, tokenTotalSupply] = data
+      // console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
+      return new BigNumber(poolTotalSupply).div(new BigNumber(shortAmount)).multipliedBy(tokenTotalSupply)
     })
+  }
 }
 
 export const getMDexPrice = (
@@ -162,7 +176,7 @@ export const getMDexPrice = (
     const promise_list = [factory.getPair(address1_, address2_)]
     return multicallProvider.all(promise_list).then((data) => {
       const [pair_address] = processResult(data)
-      console.log('pair_address', pair_address)
+      // console.log('pair_address', pair_address)
       const pair_contract = new Contract(pair_address, LPT)
       const mdex_router_contract = new Contract(miningPools.routerAddress, miningPools.routerAbi)
       const promiseList = [
@@ -263,7 +277,7 @@ export const getAPR = async (
     miningPools.abi,
     miningPools
   )
-  console.log('lptValue', lptValue)
+  // console.log('lptValue', lptValue)
 
   // 通过转换后的lpt价格
   const [lptTotalPrice] =  await getMDexPrice(
@@ -300,7 +314,7 @@ export const getAPR = async (
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
-  console.log('lptTotalValue', lptTotalValue, rewardsTotalValue, span)
+  // console.log('lptTotalValue', lptTotalValue, rewardsTotalValue, span, mode)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     const dayRate = new BigNumber(1).div(
@@ -319,6 +333,7 @@ export const getAPR = async (
           .div(new BigNumber(lptTotalValue))
           .toString()
         apr = _arp
+        // console.log('apr', apr)
       }
     } else if (mode === 2) { // APY
       // 利滚利模式
@@ -347,7 +362,7 @@ export const getMdxARP = async (miningPools) => {
     miningPools
   )
 
-  console.log('lptValue__', lptValue)
+  // console.log('lptValue__', lptValue)
 
 
   const [mdex2warPrice] = getMDexPrice(
@@ -358,7 +373,7 @@ export const getMdxARP = async (miningPools) => {
     miningPools.networkId, // 取价格的chainId只有在HECO上有
     miningPools
   )
-  console.log('mdex2warPrice', mdex2warPrice)
+  // console.log('mdex2warPrice', mdex2warPrice)
 
   let apr = '0'
   if (lptValue > 0 && mdex2warPrice > 0) {

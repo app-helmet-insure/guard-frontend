@@ -22,14 +22,14 @@ export const useBalance = (
   const { account, library, active } = useWeb3ReactCore()
   useMemo(() => {
     if (active && address && blockHeight !== 0) {
-      console.log(active, address, account)
+      // console.log(active, address, account)
       const contract = getContract(library, abi, address)
       contract.methods
         .balanceOf(account)
         .call()
         .then(balance_ => {
           const resBalance = formatAmount(balance_, decimals)
-          console.log('balance', balance_, 'format', resBalance)
+          // console.log('balance', balance_, 'format', resBalance)
           setBalance(resBalance)
         }).catch(e=>{})
     }
