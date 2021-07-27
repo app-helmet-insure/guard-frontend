@@ -174,17 +174,17 @@ const MySupply = props => {
     }
   }, [account])
   return (
-    <div className='insurance_mysupply'>
-      <h2 className='insurance_mysupply_title'>
-        <FormattedMessage id='mysupply_text1' />
+    <div className="insurance_mysupply">
+      <h2 className="insurance_mysupply_title">
+        <FormattedMessage id="mysupply_text1" />
       </h2>
       {SupplyList && SupplyList.length > 0 ? (
-        <div className='insurance_mysupply_list'>
-          {SupplyList.map((item) => (
-            <div className='insurance_mysupply_item' key={item.askID}>
+        <div className="insurance_mysupply_list">
+          {SupplyList.map(item => (
+            <div className="insurance_mysupply_item" key={item.askID}>
               <section>
                 <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt='' />
+                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
                   <span className={item.type}>
                     {item.callToken +
                       ' ' +
@@ -200,17 +200,17 @@ const MySupply = props => {
                   <span>ID: {item.askID}</span>
                 </div>
               </section>
-              <section className='mysupply_section_pc'>
+              <section className="mysupply_section_pc">
                 <div>
                   <span>
-                    <FormattedMessage id='mypolicy_text2' />
+                    <FormattedMessage id="mypolicy_text2" />
                   </span>
                   <span>{item.show_strikePrice}</span>
                   <span>{item.putToken}</span>
                 </div>
                 <div>
                   <span>
-                    <FormattedMessage id='mypolicy_text4' />
+                    <FormattedMessage id="mypolicy_text4" />
                   </span>
                   <span>
                     {(
@@ -220,10 +220,10 @@ const MySupply = props => {
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
-              <section className='mysupply_section_pc'>
+              <section className="mysupply_section_pc">
                 <div>
                   <span>
-                    <FormattedMessage id='mysupply_text2' />
+                    <FormattedMessage id="mysupply_text2" />
                   </span>
                   <span>{item.show_besold}</span>
                   <span>{item.callToken}</span>
@@ -231,17 +231,17 @@ const MySupply = props => {
                 <div>
                   <span>
                     <span>
-                      <FormattedMessage id='mysupply_text3' />
+                      <FormattedMessage id="mysupply_text3" />
                     </span>
                   </span>
                   <span>{item.show_unsold}</span>
                   <span>{item.callToken}</span>
                 </div>
               </section>
-              <section className='mysupply_section_h5'>
+              <section className="mysupply_section_h5">
                 <div>
-                  <span className='mysupply_price_title'>
-                    <FormattedMessage id='mypolicy_text2' />
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mypolicy_text2" />
                   </span>
                   <p>
                     <span>{item.show_strikePrice}</span>
@@ -249,8 +249,8 @@ const MySupply = props => {
                   </p>
                 </div>
                 <div>
-                  <span className='mysupply_price_title'>
-                    <FormattedMessage id='mypolicy_text4' />
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mypolicy_text4" />
                   </span>
                   <p>
                     <span>
@@ -262,10 +262,10 @@ const MySupply = props => {
                   </p>
                 </div>
               </section>
-              <section className='mysupply_section_h5'>
+              <section className="mysupply_section_h5">
                 <div>
-                  <span className='mysupply_price_title'>
-                    <FormattedMessage id='mysupply_text2' />
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mysupply_text2" />
                   </span>
                   <p>
                     <span>{item.show_besold}</span>
@@ -273,8 +273,8 @@ const MySupply = props => {
                   </p>
                 </div>
                 <div>
-                  <span className='mysupply_price_title'>
-                    <FormattedMessage id='mysupply_text3' />
+                  <span className="mysupply_price_title">
+                    <FormattedMessage id="mysupply_text3" />
                   </span>
                   <p>
                     <span>{item.show_unsold}</span>
@@ -284,17 +284,17 @@ const MySupply = props => {
               </section>
               <section>
                 <button onClick={goMining}>
-                  <FormattedMessage id='mysupply_text4' />
+                  <FormattedMessage id="mysupply_text4" />
                 </button>
                 <button onClick={() => handleClickCancelOrder(item)}>
-                  <FormattedMessage id='mysupply_text5' />
+                  <FormattedMessage id="mysupply_text5" />
                 </button>
               </section>
             </div>
           ))}
         </div>
       ) : (
-        <img src={NoData} alt='' className='nodata' />
+        <img src={NoData} alt="" className="nodata" />
       )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
