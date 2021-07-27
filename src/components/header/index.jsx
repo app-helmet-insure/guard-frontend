@@ -17,25 +17,25 @@ import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
 
 export const navList = [
   {
-    name: <FormattedMessage id="header_text1" />,
+    name: <FormattedMessage id='header_text1' />,
     path: '/insurance',
     children: [
       {
-        name: <FormattedMessage id="header_text9" />,
+        name: <FormattedMessage id='mypolicy_text1' />,
         path: '/mypolicy',
       },
       {
-        name: <FormattedMessage id="mysupply_text1" />,
+        name: <FormattedMessage id='mysupply_text1' />,
         path: '/mysupply',
       },
       {
-        name: <FormattedMessage id="mysettle_text1" />,
+        name: <FormattedMessage id='mysettle_text1' />,
         path: '/mysettle',
       },
     ],
   },
   {
-    name: <FormattedMessage id="header_text2" />,
+    name: <FormattedMessage id='header_text2' />,
     path: '/mining',
   },
 ]
