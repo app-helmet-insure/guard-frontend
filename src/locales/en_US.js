@@ -33,7 +33,7 @@ export default {
   header_text4: 'Pending',
   header_text5: 'Connect to your {wallet} Wallet ',
   header_text6: 'CONNECT WALLET',
-  header_text7: 'Flash to {name}',
+  header_text7: 'Switch to {name}',
   header_text8: 'WalletConnect',
   header_text9: 'Insurance',
   install_metamask_dialog_text1:
