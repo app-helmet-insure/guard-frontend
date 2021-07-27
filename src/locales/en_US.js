@@ -78,7 +78,7 @@ export default {
   switch_wallet_dialog_text3:
     '*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.',
   switch_wallet_dialog_text4: 'Switch Wallet',
-  insurance_text1: '已成交保单',
+  insurance_text1: 'Guard Price',
   insurance_text2: 'Policy Creation',
   insurance_text3: 'Guard In Circulation',
   insurance_text4: 'Cover Miss Out',

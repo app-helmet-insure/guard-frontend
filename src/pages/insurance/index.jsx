@@ -8,14 +8,18 @@ import Supply from '@/components/insurance/supply'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import { InsuranceTypeList } from '../../configs/insurance'
-const Insurance = props => (
+const Insurance = (props) => (
   <div>
     <Header {...props} />
-    <div className="page_box">
-      <div className="insurance_container">
+    <div className='page_box'>
+      <div className='insurance_container'>
         <Banner />
         <ShowData />
-        {InsuranceTypeList.map(insurance => (
+        <div className='insurance_container_list_type'>
+          <h2>保险列表</h2>
+          <p>Supply Policy to get SHORT token<span></span></p>
+        </div>
+        {InsuranceTypeList.map((insurance) => (
           <Operation
             InsuranceSymbol={insurance.InsuranceSymbol}
             PairUSDC={insurance.PairUSDC}
