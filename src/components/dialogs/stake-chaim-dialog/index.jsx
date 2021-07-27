@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl'
 import Web3 from 'web3'
 // 处理格式 千位符
 import { formatNumber } from 'accounting'
-import { formatAmount, splitFormat } from '../../../utils/format'
+import {formatAmount, numToWei, splitFormat} from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import { useBalance } from '../../../hooks/index'
@@ -119,7 +119,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
       miningPools.address
     )
     pool_contract.methods
-      .stake(Web3.utils.toWei(`${stakeInput}`, 'ether'))
+      .stake(numToWei(`${stakeInput}`,  miningPools.mlpDecimal))
       .send({
         from: account,
       })
