@@ -22,15 +22,16 @@ function LineData({ title, value }) {
   )
 }
 
-function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool }) {
+function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance }) {
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const [miningPools, setMiningPools] = useState(pool)
   const { library, active, account } = useActiveWeb3React()
-  const balance = useBalance(
-    useBlockHeight(),
-    miningPools && miningPools.MLP,
-    ERC20.abi
-  )
+  // const balance = useBalance(
+  //   useBlockHeight(),
+  //   miningPools && miningPools.MLP,
+  //   ERC20.abi,
+  //   miningPools && miningPools.mlpDecimal
+  // )
   const [activeTabKey, setActiveTabKey] = useState(tab)
   const [stakeInput, setStakeInput] = useState(null)
   const [unStakeClaimInput, setUnStakeClaimInput] = useState(null)

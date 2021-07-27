@@ -30,6 +30,7 @@ export const useBalance = (
         .then(balance_ => {
           const resBalance = formatAmount(balance_, decimals)
           // console.log('balance', balance_, 'format', resBalance)
+          // console.log(address, resBalance)
           setBalance(resBalance)
         }).catch(e=>{})
     }
