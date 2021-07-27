@@ -16,7 +16,7 @@ const PolicyTab = props => {
           }
         >
           <span>
-            <FormattedMessage id='header_text1' />
+            <FormattedMessage id='mypolicy_text1' />
           </span>
         </button>
         <button
