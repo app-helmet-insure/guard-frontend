@@ -16,7 +16,7 @@ export const useBalance = (
   blockHeight,
   address,
   abi = ERC20_ABI.abi,
-  decimals = 18,
+  decimals = 18
 ) => {
   const [balance, setBalance] = useState('0')
   const { account, library, active } = useWeb3ReactCore()
@@ -25,20 +25,21 @@ export const useBalance = (
       // console.log(active, address, account)
       const contract = getContract(library, abi, address)
       contract.methods
-        .balanceOf(address)
+        .balanceOf(account)
         .call()
         .then(balance_ => {
           const resBalance = formatAmount(balance_, decimals)
+          console.log(balance_, resBalance)
           // console.log('balance', balance_, 'format', resBalance)
           // console.log(address, resBalance)
           setBalance(resBalance)
-        }).catch(e=>{})
+        })
+        .catch(e => {})
     }
   }, [account, active, blockHeight, address])
 
   return balance
 }
-
 
 export const useEthBalance = (address = null) => {
   const { account, active, library } = useWeb3ReactCore()
@@ -57,4 +58,3 @@ export const useEthBalance = (address = null) => {
   }, [active, blockHeight])
   return balance
 }
-
