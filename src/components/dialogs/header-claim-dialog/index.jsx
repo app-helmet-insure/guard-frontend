@@ -22,7 +22,7 @@ function LineData({ title, value }) {
 
 function HeaderChaimDialog({ visible, onClose, intl }) {
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
-  const { library, active } = useActiveWeb3React()
+  const { library, active, account } = useActiveWeb3React()
   const [loadFlag, setLoadFlag] = useState(false)
 
   const onConfirm = (e) => {
