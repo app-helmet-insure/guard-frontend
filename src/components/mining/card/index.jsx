@@ -107,7 +107,10 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
+  // 是否开始
   const isStarted = miningPools && miningPools.start_at < now
+  // 是否结束
+  const isEnd = miningPools && miningPools.dueDate < now
   return (
     <>
       <div className="mining_card">
@@ -291,6 +294,7 @@ const MiningCard = props => {
           tab={tabFlag}
           pool={miningPools}
           balance={balance}
+          isEnd={isEnd}
           onClose={() => setVisibleStakePopup(false)}
         />
       )}
