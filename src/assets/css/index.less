@@ -71,10 +71,11 @@ body ::-webkit-scrollbar {
     }
     &.ant-btn-primary:hover,
     &:hover,
-    &.ant-btn:hover {
+    &.ant-btn:not([disabled]):hover {
         background: #3050d0;
         border-color: #3050d0;
     }
+
 }
 .btn_primary_gray {
     &.ant-btn-lg {
@@ -90,7 +91,7 @@ body ::-webkit-scrollbar {
     }
     &.ant-btn-primary:hover,
     &:hover,
-    &.ant-btn:hover {
+    &.ant-btn:not([disabled]):hover {
         background: #38485f;
         border-color: #38485f;
     }

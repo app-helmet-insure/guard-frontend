@@ -40,7 +40,6 @@ export const getMiningInfo = (address, account) => {
     .all(promise_list)
     .then(data => {
       data = processResult(data)
-      console.log('data', pool.name, data)
       const [
         begin,
         totalSupply,
@@ -155,7 +154,7 @@ export const getLTPValue = (
     return multicallProvider.all([poolContract.totalSupply(), collateral.balanceOf(address), short.totalSupply()]).then((data) => {
       data = processResult(data)
       const [poolTotalSupply, shortAmount, tokenTotalSupply] = data
-      console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
+      // console.log('poolTotalSupply, shortAmount, tokenTotalSupply', poolTotalSupply, shortAmount, tokenTotalSupply)
       return new BigNumber(poolTotalSupply).div(new BigNumber(shortAmount)).multipliedBy(tokenTotalSupply)
     })
   }
@@ -296,7 +295,7 @@ export const getAPR = async (
       .multipliedBy(new BigNumber(lptValue))
       .toString()
   } else {
-    console.log('lptTotalValue',miningPools.name, lptValue)
+    // console.log('lptTotalValue',miningPools.name, lptValue)
     lptTotalValue = lptValue
   }
 
@@ -323,7 +322,7 @@ export const getAPR = async (
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
-  console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
+  // console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     const dayRate = new BigNumber(1).div(

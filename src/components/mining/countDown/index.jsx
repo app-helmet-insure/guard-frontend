@@ -11,7 +11,6 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
   } else if (pools && pools.dueDate > now) {
     left_time = (pools.dueDate - now) * 1000
   }
-  console.log(pools && pools.name, aprPercentage)
   return (
     <div className='mining_card_apy'>
       <p className='mining_card_apy_val'>
