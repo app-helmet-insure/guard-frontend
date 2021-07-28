@@ -15,6 +15,7 @@ import CountDown from '@/components/mining/countDown'
 import {VarContext} from '../../../context'
 import {useActiveWeb3React} from '../../../web3'
 import GuardLogoSvg from '../../../assets/images/mining/pool/GUARD.png'
+import {Button} from 'antd'
 
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
@@ -106,6 +107,7 @@ const MiningCard = props => {
     setVisibleStakePopup(true)
   }
 
+  const isStarted = miningPools && miningPools.start_at < now
   return (
     <>
       <div className="mining_card">
@@ -213,9 +215,9 @@ const MiningCard = props => {
             </span>
           </p>
         </div>
-        <a className="mining_card_btn" onClick={() => stakeClaimPopup('Stake')}>
+        <Button className={'mining_card_btn btn_primary'} disabled={!isStarted} onClick={() => stakeClaimPopup('Stake')}>
           <FormattedMessage id="mining_text12"/>
-        </a>
+        </Button>
         <div
           className="mining_card_content mining_card_content_rewards"
           style={{padding: '6px 12px'}}
@@ -257,7 +259,7 @@ const MiningCard = props => {
               </span>
             )}
           </p>
-          {((miningPools && miningPools.earned - 0 > 0) ||
+          {isStarted && ((miningPools && miningPools.earned - 0 > 0) ||
             (miningPools && miningPools.earned2 - 0 > 0)) && (
             <a
               className="mining_card_claim_btn"
