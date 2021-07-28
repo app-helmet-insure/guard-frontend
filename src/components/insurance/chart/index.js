@@ -27,6 +27,7 @@ const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
  * @constructor
  */
 export const Chart = props => {
+  // const [loading, setLoading] = useState(true)
   const client = new ApolloClient({
     uri: API,
     cache: new InMemoryCache()
@@ -315,6 +316,7 @@ export const Chart = props => {
       },
       credits: false
     })
+    // setLoading(false)
   }
 
   useEffect(() => {
@@ -322,6 +324,11 @@ export const Chart = props => {
   }, [lpt_address, over_price, off_price])
   return (
     <div className="chart">
+      {/* {*/}
+      {/*  loading && <div className="chat_loading flex_center">*/}
+      {/*    loading...*/}
+      {/*  </div>*/}
+      {/* }*/}
       <div className="chart_header">
         <div className="chart_header_title">
           Last Pirce:

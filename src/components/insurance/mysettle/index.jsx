@@ -18,9 +18,11 @@ import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
+import {Skeleton} from 'antd'
 
 const MySettle = props => {
   const [SettleList, setSettleList] = useState([])
+  const [loading, setLoading] = useState(true)
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
@@ -163,8 +165,11 @@ const MySettle = props => {
                 Number(newItem.und) > 0
             )
             setSettleList(FixList)
+            setLoading(false)
           }
         })
+      } else {
+        setLoading(false)
       }
     })
   }
@@ -202,97 +207,99 @@ const MySettle = props => {
       <h2 className="insurance_mysettle_title">
         <FormattedMessage id="mysettle_text1" />
       </h2>
-      {SettleList && SettleList.length > 0 ? (
-        <div className="insurance_mysettle_list">
-          {SettleList.map((item, index) => (
-            <div className="insurance_mysettle_item" key={index}>
-              <section>
-                <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
-                  <span className={item.type}>
-                    {item.callToken +
-                      ' ' +
-                      item.type +
-                      ' ' +
-                      item.show_strikePrice +
-                      ' ' +
-                      item.putToken}
-                  </span>
-                </div>
-              </section>
-              <section className="mysettle_section_pc">
-                <div>
-                  <span>
-                    <FormattedMessage id="mysettle_text2" />
-                  </span>
-                  <span>
-                    {item.type === 'Call'
-                      ? Number(item.col) + Number(item.claimBalance)
-                      : item.und}
-                  </span>
-                  <span>
-                    {item.type === 'Call' ? item.collateral_symbol : item.underlying_symbol}
-                  </span>
-                </div>
-              </section>
-              <section className="mysettle_section_pc">
-                <div>
-                  <span>
-                    <FormattedMessage id="mysettle_text3" />
-                  </span>
-                  <span>
-                    {item.type === 'Call'
-                      ? item.und
-                      : Number(item.col) + Number(item.claimBalance)}
-                  </span>
-                  <span>
-                    {item.type === 'Call' ? item.underlying_symbol : item.collateral_symbol}
-                  </span>
-                </div>
-              </section>
-              <section className="mysettle_section_h5">
-                <div>
-                  <span className="mysettle_price_title">
-                    <FormattedMessage id="mysettle_text2" />
-                  </span>
-                  <p>
+      <Skeleton active loading={loading}>
+        {SettleList && SettleList.length > 0 ? (
+          <div className="insurance_mysettle_list">
+            {SettleList.map((item, index) => (
+              <div className="insurance_mysettle_item" key={index}>
+                <section>
+                  <div>
+                    <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                    <span className={item.type}>
+                      {item.callToken +
+                        ' ' +
+                        item.type +
+                        ' ' +
+                        item.show_strikePrice +
+                        ' ' +
+                        item.putToken}
+                    </span>
+                  </div>
+                </section>
+                <section className="mysettle_section_pc">
+                  <div>
+                    <span>
+                      <FormattedMessage id="mysettle_text2" />
+                    </span>
                     <span>
                       {item.type === 'Call'
                         ? Number(item.col) + Number(item.claimBalance)
                         : item.und}
                     </span>
                     <span>
-                      {item.type === 'Call' ? item.callToken : item.putToken}
+                      {item.type === 'Call' ? item.collateral_symbol : item.underlying_symbol}
                     </span>
-                  </p>
-                </div>
-                <div>
-                  <span className="mysettle_price_title">
-                    <FormattedMessage id="mysettle_text3" />
-                  </span>
-                  <p>
+                  </div>
+                </section>
+                <section className="mysettle_section_pc">
+                  <div>
+                    <span>
+                      <FormattedMessage id="mysettle_text3" />
+                    </span>
                     <span>
                       {item.type === 'Call'
                         ? item.und
                         : Number(item.col) + Number(item.claimBalance)}
                     </span>
                     <span>
-                      {item.type === 'Call' ? item.callToken : item.putToken}
+                      {item.type === 'Call' ? item.underlying_symbol : item.collateral_symbol}
                     </span>
-                  </p>
-                </div>
-              </section>
-              <section>
-                <button onClick={() => handleClickClaimOrder(item)}>
-                  <FormattedMessage id="mysettle_text4" />
-                </button>
-              </section>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <img src={NoData} alt="" className="nodata" />
-      )}
+                  </div>
+                </section>
+                <section className="mysettle_section_h5">
+                  <div>
+                    <span className="mysettle_price_title">
+                      <FormattedMessage id="mysettle_text2" />
+                    </span>
+                    <p>
+                      <span>
+                        {item.type === 'Call'
+                          ? Number(item.col) + Number(item.claimBalance)
+                          : item.und}
+                      </span>
+                      <span>
+                        {item.type === 'Call' ? item.callToken : item.putToken}
+                      </span>
+                    </p>
+                  </div>
+                  <div>
+                    <span className="mysettle_price_title">
+                      <FormattedMessage id="mysettle_text3" />
+                    </span>
+                    <p>
+                      <span>
+                        {item.type === 'Call'
+                          ? item.und
+                          : Number(item.col) + Number(item.claimBalance)}
+                      </span>
+                      <span>
+                        {item.type === 'Call' ? item.callToken : item.putToken}
+                      </span>
+                    </p>
+                  </div>
+                </section>
+                <section>
+                  <button onClick={() => handleClickClaimOrder(item)}>
+                    <FormattedMessage id="mysettle_text4" />
+                  </button>
+                </section>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <img src={NoData} alt="" className="nodata" />
+        )}
+      </Skeleton>
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}
