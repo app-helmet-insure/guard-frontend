@@ -169,9 +169,10 @@ const MySupply = props => {
       })
   }
   useEffect(() => {
-    if (account) {
-      getPolicyList()
+    if (!account) {
+      return
     }
+    getPolicyList()
   }, [account])
   return (
     <div className="insurance_mysupply">
@@ -214,7 +215,7 @@ const MySupply = props => {
                   </span>
                   <span>
                     {(
-                      Number(item.show_price) * Number(item.show_volume)
+                      Number(item.show_price)
                     ).toFixed(8)}
                   </span>
                   <span>{item.settleToken_symbol}</span>
@@ -253,11 +254,7 @@ const MySupply = props => {
                     <FormattedMessage id="mypolicy_text4" />
                   </span>
                   <p>
-                    <span>
-                      {(
-                        Number(item.show_price) * Number(item.show_volume)
-                      ).toFixed(8)}
-                    </span>
+                    <span>{Number(item.show_price).toFixed(8)}</span>
                     <span>{item.settleToken_symbol}</span>
                   </p>
                 </div>

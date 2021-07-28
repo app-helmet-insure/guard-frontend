@@ -100,6 +100,12 @@ const MyPolicy = props => {
                 volume: itemAsk.volume,
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
+                premium: new BigNumber(
+                  (
+                    fromWei(itemAsk.price, settleToken_decimals) *
+                    fromWei(itemAsk.volume, collateral_decimals)
+                  ).toFixed(8)
+                ).toString(),
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               AskAssign.push(AllItem)
@@ -164,16 +170,36 @@ const MyPolicy = props => {
     const LongApproveStatus = await getLongApporve(data)
     // eslint-disable-next-line no-use-before-define
     const UnderlyingApproveStatus = await getUnderlyingApprove(data)
-    if (!LongApproveStatus || !UnderlyingApproveStatus) {
+    console.log(LongApproveStatus, UnderlyingApproveStatus)
+    console.log(
+      !LongApproveStatus && !UnderlyingApproveStatus,
+      !LongApproveStatus && UnderlyingApproveStatus,
+      LongApproveStatus && !UnderlyingApproveStatus,
+      LongApproveStatus && UnderlyingApproveStatus
+    )
+    if (!LongApproveStatus && !UnderlyingApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionApproveLong(data)
+      return
+    }
+    if (!LongApproveStatus && UnderlyingApproveStatus) {
+      // eslint-disable-next-line no-use-before-define
+      actionApproveLong(data, true)
+      return
+    }
+    if (!UnderlyingApproveStatus && LongApproveStatus) {
+      // eslint-disable-next-line no-use-before-define
+      actionApproveUnderlying(data)
+      return
     }
     if (LongApproveStatus && UnderlyingApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionWithDraw(data)
+      return
     }
   }
   const actionWithDraw = data => {
+    setOpenSuccess(false)
     const OrderContracts = getContract(library, OrderABI, OrderAddress)
     OrderContracts.methods
       .exercise(data.bidID)
@@ -210,7 +236,7 @@ const MyPolicy = props => {
         setOpenWaiting(false)
       })
   }
-  const actionApproveLong = data => {
+  const actionApproveLong = (data, approveFlag) => {
     const Erc20Contracts = getContract(library, Erc20ABI.abi, data.long)
     const Infinitys =
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
@@ -223,7 +249,11 @@ const MyPolicy = props => {
       .on('receipt', (_, receipt) => {
         setOpenWaiting(false)
         setOpenSuccess(true)
-        actionApproveUnderlying(data)
+        if (approveFlag) {
+          actionWithDraw(data)
+        } else {
+          actionApproveUnderlying(data)
+        }
       })
       .on('error', ereor => {
         setOpenWaiting(false)
@@ -235,6 +265,7 @@ const MyPolicy = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
+        console.log(res)
         if (Number(res) > 0) {
           return true
         }
@@ -245,7 +276,7 @@ const MyPolicy = props => {
     const Erc20ContractsUnderlying = getContract(
       library,
       Erc20ABI.abi,
-      data.long
+      data.underlying
     )
     return Erc20ContractsUnderlying.methods
       .allowance(account, OrderAddress)
@@ -258,9 +289,10 @@ const MyPolicy = props => {
       })
   }
   useEffect(() => {
-    if (account) {
-      getPolicyList()
+    if (!account) {
+      return
     }
+    getPolicyList()
   }, [account])
   return (
     <div className="insurance_mypolicy">
@@ -317,13 +349,7 @@ const MyPolicy = props => {
                   <span>
                     <FormattedMessage id="mypolicy_text5" />
                   </span>
-                  <span>
-                    {Number(
-                      new BigNumber(
-                        Number(item.show_price) * Number(item.show_volume)
-                      ).toString()
-                    ).toFixed(8)}
-                  </span>
+                  <span>{item.premium}</span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
@@ -362,11 +388,7 @@ const MyPolicy = props => {
                     <FormattedMessage id="mypolicy_text5" />
                   </span>
                   <p>
-                    <span>
-                      {new BigNumber(
-                        Number(item.show_price) * Number(item.show_volume)
-                      ).toString()}
-                    </span>
+                    <span>{item.premium}</span>
                     <span>{item.settleToken_symbol}</span>
                   </p>
                 </div>

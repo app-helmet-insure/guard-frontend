@@ -21,13 +21,13 @@ import moment from 'moment'
 // gether: ‘1000000000000000000000000000’
 // tether: ‘1000000000000000000000000000000’
 export const InsuranceTypeList = [
-  {
-    InsuranceSymbol: 'GUARD',
-    PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
-    Logo: GuardLogoSvg,
-    Expiry: moment(new Date(1630080000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-    ShowName: 'Guard',
-  },
+  // {
+  //   InsuranceSymbol: 'GUARD',
+  //   PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
+  //   Logo: GuardLogoSvg,
+  //   Expiry: moment(new Date(1630080000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+  //   ShowName: 'Guard',
+  // },
   {
     InsuranceSymbol: 'MATIC',
     PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
@@ -79,7 +79,7 @@ export const getCurrentInsurance = ({
       underlying_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
-      settleToken_decimals: 'ether',
+      settleToken_decimals: 'tether',
       strikeprice: '0.1500',
       strikeprice_decimals: 'tether',
       lastprice: '0.300',
@@ -124,7 +124,7 @@ export const getCurrentInsurance = ({
       underlying_address: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
-      settleToken_decimals: 'ether',
+      settleToken_decimals: 'tether',
       strikeprice: '0.460273',
       strikeprice_decimals: 'tether',
       lastprice: '0.920547',
@@ -169,7 +169,7 @@ export const getCurrentInsurance = ({
       underlying_address: '0x831753dd7087cac61ab5644b308642cc1c33dc13',
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
-      settleToken_decimals: 'ether',
+      settleToken_decimals: 'tether',
       strikeprice: '163',
       strikeprice_decimals: 'tether',
       lastprice: '326',
@@ -214,7 +214,7 @@ export const getCurrentInsurance = ({
       underlying_address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
-      settleToken_decimals: 'ether',
+      settleToken_decimals: 'tether',
       strikeprice: '1072',
       strikeprice_decimals: 'tether',
       lastprice: '2144',
