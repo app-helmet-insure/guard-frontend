@@ -23,10 +23,21 @@
       height: 24px;
       margin: 0 24px;
       cursor: pointer;
-      overflow: hidden;
+      //overflow: hidden;
       position: relative;
+
       &:hover img{
         filter: drop-shadow(#4364E8 24px 0);
+      }
+      &:before{
+        position: absolute;
+        left: -24px;
+        z-index: 2;
+        content: '';
+        width: 24px;
+        height: 24px;
+        background: #F5F7FB;
+        cursor: default;
       }
     }
     img{
@@ -36,6 +47,7 @@
       left: -24px;
       top: 0;
       filter: drop-shadow(#C9C9C9 24px 0);
+
     }
   }
   .language_select{
