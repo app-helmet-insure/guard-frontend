@@ -60,15 +60,16 @@ export default {
   successful_purchase_dialog_text1: 'Success',
   successful_purchase_dialog_text2: ' my policy',
   successful_purchase_dialog_text3: 'Fail',
-  submit_insurance_dialog_text1: 'Tip',
+  submit_insurance_dialog_text1: 'NOTICE',
   submit_insurance_dialog_text2:
-    'Do you want to buy {num} {doubleInsurance}, The policy fee is {fee}, The expected return is {profit}.',
+    'You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} USDC ; Expected premium gaining: {price}  GUARD ; Expire date: {expiry}.',
   submit_insurance_dialog_text3: 'double insurance',
   submit_insurance_dialog_text4: 'Cash delivery or not',
   submit_insurance_dialog_text5:
     "Choosing a cash delivery contract will trade your 〔corresponding option's pledge currency〕 in pancake into XXX 〔currency required for exercise〕",
   submit_insurance_dialog_text6: 'Submit',
   home_text1: 'Crypto-assets insurance trading platform on MATIC',
+  submit_insurance_dialog_text7: 'Insurance policy trading is subject to both high market risk and volatility. Please, do your own research and full due diligence before even considering to invest your funds in. Helmet.insure will not be held responsible for any investment losses.',
   disconnected_wallet_dialog_text1: 'ACCOUNT',
   disconnected_wallet_dialog_text2: 'Copy Address',
   disconnected_wallet_dialog_text3: 'Switch Wallet',

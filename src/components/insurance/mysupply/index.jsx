@@ -6,6 +6,7 @@ import PutSvg from '../../../assets/images/insurance/put.svg'
 import NoData from '../../../assets/images/insurance/nodata.svg'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
 import {
   getCurrentInsurance,
   getInsuranceList,
