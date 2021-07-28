@@ -11,10 +11,16 @@ import {connect} from 'react-redux'
 import {changeLanguage} from '../../redux/actions'
 import {languageConfig} from '../../locales/intl'
 
-function DrawerMenu ({account, active, chainId, visible, setVisible, connectWalletClick, location, changeLanguage, language}) {
+function DrawerMenu({ account, active, chainId, visible, setVisible, connectWalletClick, location, changeLanguage, language, visibleHeaderClaim, setVisibleHeaderClaim}) {
   const onClose = () => {
     setVisible(false)
   }
+
+  const goClaim =() => {
+    setVisible(false)
+    setVisibleHeaderClaim(true)
+  }
+
   const languageList = []
   for (const i in languageConfig) {
     languageList.push((
@@ -64,6 +70,7 @@ function DrawerMenu ({account, active, chainId, visible, setVisible, connectWall
           <img src={HelmetSvg} alt=""/>
           <FormattedMessage id="header_text7" values={{name: 'Helmet'}}/>
         </a>
+        <a className='btn header_claim flex_center' onClick={goClaim}><FormattedMessage id='stake_chain_dialog_text4' /></a>
       </div>
     </Drawer>
   )

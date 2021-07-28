@@ -52,6 +52,7 @@ export default {
   stake_chain_dialog_text5: '奖励',
   stake_chain_dialog_text6: '赎回 & 领取奖励',
   stake_chain_dialog_text7: '授权',
+  stake_chain_dialog_text8: 'Powered By Helmet Team',
   waiting_confirmation_dialog_text1: '等待确认',
   waiting_confirmation_dialog_text2: '请在钱包中确认进行交易',
   successful_purchase_dialog_text1: '交易成功',

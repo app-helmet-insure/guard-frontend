@@ -11,7 +11,8 @@ import {FormattedMessage} from 'react-intl'
 import ConnectWallDialog from '../dialogs/connect-wallet-dialog'
 import {Link} from 'react-router-dom'
 import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
-
+import HeaderChaimDialog from '../dialogs/header-claim-dialog'
+import { useActiveWeb3React } from '../../web3'
 import {VarContext} from '../../context'
 import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
 
@@ -49,7 +50,21 @@ function Header (props) {
 
   const {account, activate, active, library, chainId} = useWeb3React()
 
+  const [visibleHeaderClaimPopup, setVisibleHeaderClaimPopup] = useState(false)
+
   const {balance} = useContext(VarContext)
+
+  useMemo(() => {
+    if (active && props.location.search.indexOf('claim') > -1) {
+      setVisibleHeaderClaimPopup(true)
+    } else {
+      setVisibleHeaderClaimPopup(false)
+    }
+  }, [active, props.location.search])
+
+  const goClaim = () => {
+    setVisibleHeaderClaimPopup(true)
+  }
 
   const connectWalletClick = async () => {
     if (window.ethereum) {
@@ -109,6 +124,8 @@ function Header (props) {
               </div>
             </a>
 
+            <a className='header_claim flex_center' onClick={goClaim}><FormattedMessage id='stake_chain_dialog_text4' /></a>
+
             {!active ? (
               <div
                 className="not_connect flex_center"
@@ -141,6 +158,8 @@ function Header (props) {
           chainId,
           visible: visibleMenu,
           setVisible: setVisibleMenu,
+          visibleHeaderClaim: visibleHeaderClaimPopup,
+          setVisibleHeaderClaim: setVisibleHeaderClaimPopup,
           connectWalletClick,
           ...props,
         }}
@@ -157,6 +176,11 @@ function Header (props) {
       <InstallMetamaskDialog
         visible={nonExistentMetamask}
         onClose={() => setNonExistentMetamask(false)}
+      />
+      {/* claim */}
+      <HeaderChaimDialog
+        visible={visibleHeaderClaimPopup}
+        onClose={() => setVisibleHeaderClaimPopup(false)}
       />
     </>
   )
