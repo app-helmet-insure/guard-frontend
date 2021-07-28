@@ -107,7 +107,6 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
-  console.log(miningPools)
   const isStarted = miningPools && miningPools.start_at < now
   return (
     <>
