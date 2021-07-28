@@ -7,6 +7,14 @@ export const formatAddress = (address) => {
   return address.slice(0, 6) + '...' + address.slice(-3)
 }
 
+
+export const formatLastZero = (numStr) => {
+  if (numStr == '0') {
+    return numStr
+  }
+  return String(numStr).replace(/[0]*$/, '').replace(/[.]*$/, '')
+}
+
 export const formatAmount = (value, decimals = 18, fixed = 6) => {
   return new BigNumber(
     fromWei(value, decimals).toFixed(fixed === -1 ? null : fixed, 1)

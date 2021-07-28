@@ -6,7 +6,7 @@ import cs from 'classnames'
 import BigNumber from 'bignumber.js'
 // 处理格式 千位符
 import {formatNumber} from 'accounting'
-import {formatAmount, splitFormat} from '../../../utils/format'
+import {formatAmount, formatLastZero, splitFormat} from '../../../utils/format'
 import {useBalance} from '../../../hooks/index'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import {getMiningInfo, getAPR, getMdxARP} from '../../../hooks/mining'
@@ -160,7 +160,7 @@ const MiningCard = props => {
             </span>
             <span>
               {miningPools && miningPools.totalSupply
-                ? formatNumber(
+                ? formatLastZero(formatNumber(
                   formatAmount(
                     miningPools.totalSupply,
                     miningPools.mlpDecimal,
@@ -174,7 +174,7 @@ const MiningCard = props => {
                         ? miningPools.splitDigits
                         : 0,
                   }
-                )
+                ))
                 : '--'}
             </span>
           </p>
@@ -184,14 +184,14 @@ const MiningCard = props => {
             </span>
             <span>
               {miningPools && miningPools.balanceOf
-                ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
+                ? formatLastZero(formatNumber(splitFormat(miningPools.balanceOf, 6), {
                   thousand: ',',
                   decimal: '.',
                   precision:
                     miningPools.balanceOf - 0 > 0
                       ? miningPools.splitDigits
                       : 0,
-                }) +
+                })) +
                 '(' +
                 (balanceProportion - 0 === 0 ? '0.00' : balanceProportion) +
                 '%)'
@@ -204,11 +204,11 @@ const MiningCard = props => {
             </span>
             <span>
               {miningPools && miningPools.balanceOf
-                ? formatNumber(balance, {
+                ? formatLastZero(formatNumber(balance, {
                   thousand: ',',
                   decimal: '.',
                   precision: balance - 0 > 0 ? miningPools.splitDigits : 0,
-                })
+                }))
                 : '--'}
             </span>
           </p>
