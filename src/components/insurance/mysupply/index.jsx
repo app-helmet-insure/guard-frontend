@@ -142,7 +142,9 @@ const MySupply = props => {
             })
           }
         })
-        const FixList = FixListPush
+        const FixList = FixListPush.sort(
+          (a, b) => Number(b.show_unsold) - Number(a.show_unsold)
+        )
         console.log(FixList)
         setSupplyList(FixList)
       }
@@ -213,11 +215,7 @@ const MySupply = props => {
                   <span>
                     <FormattedMessage id="mypolicy_text4" />
                   </span>
-                  <span>
-                    {(
-                      Number(item.show_price)
-                    ).toFixed(8)}
-                  </span>
+                  <span>{Number(item.show_price).toFixed(8)}</span>
                   <span>{item.settleToken_symbol}</span>
                 </div>
               </section>
@@ -280,12 +278,21 @@ const MySupply = props => {
                 </div>
               </section>
               <section>
-                <button onClick={goMining}>
-                  <FormattedMessage id="mysupply_text4" />
-                </button>
-                <button onClick={() => handleClickCancelOrder(item)}>
-                  <FormattedMessage id="mysupply_text5" />
-                </button>
+                {Number(item.show_unsold) === 0 ? (
+                  <button className="finish">已全部成交</button>
+                ) : (
+                  <>
+                    <button onClick={goMining} className="mining">
+                      <FormattedMessage id="mysupply_text4" />
+                    </button>
+                    <button
+                      onClick={() => handleClickCancelOrder(item)}
+                      className="cancel"
+                    >
+                      <FormattedMessage id="mysupply_text5" />
+                    </button>
+                  </>
+                )}
               </section>
             </div>
           ))}
