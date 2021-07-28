@@ -3,9 +3,17 @@ import { Modal, Checkbox, Button } from 'antd'
 import './index.less'
 import { FormattedMessage } from 'react-intl'
 
-function SubmitInsuranceDialog ({ visible, onClose }) {
+function SubmitInsuranceDialog ({ visible, onClose, params, submit }) {
   const [isCashDelivery, setIsCashDelivery] = useState(false)
-
+  const {
+    type,
+    symbol,
+    volume,
+    collateral,
+    strikeprice,
+    price,
+    expiry,
+  } = params
   return (
     <Modal
       visible={visible}
@@ -22,18 +30,20 @@ function SubmitInsuranceDialog ({ visible, onClose }) {
         <FormattedMessage
           id="submit_insurance_dialog_text2"
           values={{
-            num: <span>1000 HT</span>,
-            doubleInsurance: (
-              <span>
-                <FormattedMessage id="submit_insurance_dialog_text3" />
-              </span>
-            ),
-            fee: '10.00 GUARD',
-            profit: '100 BNB',
+            type,
+            symbol,
+            volume,
+            collateral,
+            strikeprice,
+            price,
+            expiry,
           }}
         />
       </p>
-      <Checkbox
+      <p className="desc">
+        <FormattedMessage id="submit_insurance_dialog_text7" />
+      </p>
+      {/* <Checkbox
         onChange={e => setIsCashDelivery(e.target.checked)}
         checked={isCashDelivery}
       >
@@ -43,9 +53,13 @@ function SubmitInsuranceDialog ({ visible, onClose }) {
       </Checkbox>
       <p className="desc">
         <FormattedMessage id="submit_insurance_dialog_text5" />
-      </p>
+      </p> */}
       <div className="submit_view">
-        <Button type="primary" className="btn_primary_gray">
+        <Button
+          type="primary"
+          className="btn_primary_gray"
+          onClick={() => submit(true)}
+        >
           <FormattedMessage id="submit_insurance_dialog_text6" />
         </Button>
       </div>

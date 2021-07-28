@@ -59,12 +59,13 @@ export default {
   successful_purchase_dialog_text3: '交易失败',
   submit_insurance_dialog_text1: '提示',
   submit_insurance_dialog_text2:
-    '是否要买入数量为 {num} {doubleInsurance}，保费为  {fee} ，预期收益为 {profit}',
+    '你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} USDC，预计保费收益 {price} ，到期时间 {expiry}',
   submit_insurance_dialog_text3: '翻倍险',
   submit_insurance_dialog_text4: '是否现金交割',
   submit_insurance_dialog_text5:
     '选择现金交割合约会将你的〔对应期权的质押币种〕在pancake交易成需要行权的xxx 〔行权需要币种〕',
   submit_insurance_dialog_text6: '提交',
+  submit_insurance_dialog_text7: '保险交易存在一定风险，请在资金承受范围内投资并做好研究，Helmet团队将不会对您的投资损失负责。',
   home_text1: '基于MATIC的加密资产保险交易平台',
   disconnected_wallet_dialog_text1: '账户',
   disconnected_wallet_dialog_text2: '复制账户地址',
