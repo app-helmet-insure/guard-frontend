@@ -15,7 +15,8 @@ import CountDown from '@/components/mining/countDown'
 import {VarContext} from '../../../context'
 import {useActiveWeb3React} from '../../../web3'
 import GuardLogoSvg from '../../../assets/images/mining/pool/GUARD.png'
-import {Button} from 'antd'
+import {Button, Skeleton, Space} from 'antd'
+import LoadingSvg from '../../../assets/images/loading2.svg'
 
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
@@ -57,7 +58,7 @@ const MiningCard = props => {
     miningPools &&
     miningPools.dueDate &&
     miningPools.dueDate <= now &&
-    miningPools.openDate < now
+    miningPools.start_at < now
 
   useMemo(() => {
     console.log('apr', apr, mdexApr)
@@ -106,11 +107,28 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
-
+  // 是否开始
   const isStarted = miningPools && miningPools.start_at < now
+  // 是否结束
+  const isEnd = miningPools && miningPools.dueDate < now
   return (
     <>
       <div className="mining_card">
+        {
+          !miningPools && <div className="card_loading">
+            <Space>
+              <div className="flex_center_up_and_down">
+                <Skeleton.Avatar active size={60}/>
+                <div className="skeleton_top_title">
+                  <Skeleton.Input style={{ width: 200, height: 16 }} active size="small"/>
+                  <div style={{height: '10px'}}/>
+                  <Skeleton.Input style={{ width: 200, height: 16 }} active size="small"/>
+                </div>
+              </div>
+            </Space>
+            <Skeleton active paragraph={{ rows: 6 }} />
+          </div>
+        }
         <div className="mining_card_title">
           {miningPools && (
             <img
@@ -276,6 +294,7 @@ const MiningCard = props => {
           tab={tabFlag}
           pool={miningPools}
           balance={balance}
+          isEnd={isEnd}
           onClose={() => setVisibleStakePopup(false)}
         />
       )}

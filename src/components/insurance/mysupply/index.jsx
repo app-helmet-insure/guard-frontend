@@ -18,9 +18,11 @@ import OrderABI from '../../../web3/abi/Order.json'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 import './index.less'
 import moment from 'moment'
+import {Skeleton} from 'antd'
 
 const MySupply = props => {
   const [SupplyList, setSupplyList] = useState([])
+  const [loading, setLoading] = useState(true)
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
@@ -148,6 +150,9 @@ const MySupply = props => {
         )
         console.log(FixList)
         setSupplyList(FixList)
+        setLoading(false)
+      } else {
+        setLoading(false)
       }
     })
   }
@@ -182,125 +187,127 @@ const MySupply = props => {
       <h2 className="insurance_mysupply_title">
         <FormattedMessage id="mysupply_text1" />
       </h2>
-      {SupplyList && SupplyList.length > 0 ? (
-        <div className="insurance_mysupply_list">
-          {SupplyList.map(item => (
-            <div className="insurance_mysupply_item" key={item.askID}>
-              <section>
-                <div>
-                  <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
-                  <span className={item.type}>
-                    {item.callToken +
-                      ' ' +
-                      item.type +
-                      ' ' +
-                      item.show_strikePrice +
-                      ' ' +
-                      item.putToken}
-                  </span>
-                </div>
-                <div>
-                  <span>{item.show_expiry}</span>
-                  <span>ID: {item.askID}</span>
-                </div>
-              </section>
-              <section className="mysupply_section_pc">
-                <div>
-                  <span>
-                    <FormattedMessage id="mypolicy_text2" />
-                  </span>
-                  <span>{item.show_strikePrice}</span>
-                  <span>{item.putToken}</span>
-                </div>
-                <div>
-                  <span>
-                    <FormattedMessage id="mypolicy_text4" />
-                  </span>
-                  <span>{Number(item.show_price).toFixed(8)}</span>
-                  <span>{item.settleToken_symbol}</span>
-                </div>
-              </section>
-              <section className="mysupply_section_pc">
-                <div>
-                  <span>
-                    <FormattedMessage id="mysupply_text2" />
-                  </span>
-                  <span>{item.show_besold}</span>
-                  <span>{item.callToken}</span>
-                </div>
-                <div>
-                  <span>
-                    <span>
-                      <FormattedMessage id="mysupply_text3" />
+      <Skeleton active loading={loading}>
+        {SupplyList && SupplyList.length > 0 ? (
+          <div className="insurance_mysupply_list">
+            {SupplyList.map(item => (
+              <div className="insurance_mysupply_item" key={item.askID}>
+                <section>
+                  <div>
+                    <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
+                    <span className={item.type}>
+                      {item.callToken +
+                        ' ' +
+                        item.type +
+                        ' ' +
+                        item.show_strikePrice +
+                        ' ' +
+                        item.putToken}
                     </span>
-                  </span>
-                  <span>{item.show_unsold}</span>
-                  <span>{item.callToken}</span>
-                </div>
-              </section>
-              <section className="mysupply_section_h5">
-                <div>
-                  <span className="mysupply_price_title">
-                    <FormattedMessage id="mypolicy_text2" />
-                  </span>
-                  <p>
+                  </div>
+                  <div>
+                    <span>{item.show_expiry}</span>
+                    <span>ID: {item.askID}</span>
+                  </div>
+                </section>
+                <section className="mysupply_section_pc">
+                  <div>
+                    <span>
+                      <FormattedMessage id="mypolicy_text2" />
+                    </span>
                     <span>{item.show_strikePrice}</span>
                     <span>{item.putToken}</span>
-                  </p>
-                </div>
-                <div>
-                  <span className="mysupply_price_title">
-                    <FormattedMessage id="mypolicy_text4" />
-                  </span>
-                  <p>
+                  </div>
+                  <div>
+                    <span>
+                      <FormattedMessage id="mypolicy_text4" />
+                    </span>
                     <span>{Number(item.show_price).toFixed(8)}</span>
                     <span>{item.settleToken_symbol}</span>
-                  </p>
-                </div>
-              </section>
-              <section className="mysupply_section_h5">
-                <div>
-                  <span className="mysupply_price_title">
-                    <FormattedMessage id="mysupply_text2" />
-                  </span>
-                  <p>
+                  </div>
+                </section>
+                <section className="mysupply_section_pc">
+                  <div>
+                    <span>
+                      <FormattedMessage id="mysupply_text2" />
+                    </span>
                     <span>{item.show_besold}</span>
                     <span>{item.callToken}</span>
-                  </p>
-                </div>
-                <div>
-                  <span className="mysupply_price_title">
-                    <FormattedMessage id="mysupply_text3" />
-                  </span>
-                  <p>
+                  </div>
+                  <div>
+                    <span>
+                      <span>
+                        <FormattedMessage id="mysupply_text3" />
+                      </span>
+                    </span>
                     <span>{item.show_unsold}</span>
                     <span>{item.callToken}</span>
-                  </p>
-                </div>
-              </section>
-              <section>
-                {Number(item.show_unsold) === 0 ? (
-                  <button className="finish">已全部成交</button>
-                ) : (
-                  <>
-                    <button onClick={goMining} className="mining">
-                      <FormattedMessage id="mysupply_text4" />
-                    </button>
-                    <button
-                      onClick={() => handleClickCancelOrder(item)}
-                      className="cancel"
-                    >
-                      <FormattedMessage id="mysupply_text5" />
-                    </button>
-                  </>
-                )}
-              </section>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <img src={NoData} alt="" className="nodata" />
-      )}
+                  </div>
+                </section>
+                <section className="mysupply_section_h5">
+                  <div>
+                    <span className="mysupply_price_title">
+                      <FormattedMessage id="mypolicy_text2" />
+                    </span>
+                    <p>
+                      <span>{item.show_strikePrice}</span>
+                      <span>{item.putToken}</span>
+                    </p>
+                  </div>
+                  <div>
+                    <span className="mysupply_price_title">
+                      <FormattedMessage id="mypolicy_text4" />
+                    </span>
+                    <p>
+                      <span>{Number(item.show_price).toFixed(8)}</span>
+                      <span>{item.settleToken_symbol}</span>
+                    </p>
+                  </div>
+                </section>
+                <section className="mysupply_section_h5">
+                  <div>
+                    <span className="mysupply_price_title">
+                      <FormattedMessage id="mysupply_text2" />
+                    </span>
+                    <p>
+                      <span>{item.show_besold}</span>
+                      <span>{item.callToken}</span>
+                    </p>
+                  </div>
+                  <div>
+                    <span className="mysupply_price_title">
+                      <FormattedMessage id="mysupply_text3" />
+                    </span>
+                    <p>
+                      <span>{item.show_unsold}</span>
+                      <span>{item.callToken}</span>
+                    </p>
+                  </div>
+                </section>
+                <section>
+                  {Number(item.show_unsold) === 0 ? (
+                    <button className="finish">已全部成交</button>
+                  ) : (
+                    <>
+                      <button onClick={goMining} className="mining">
+                        <FormattedMessage id="mysupply_text4" />
+                      </button>
+                      <button
+                        onClick={() => handleClickCancelOrder(item)}
+                        className="cancel"
+                      >
+                        <FormattedMessage id="mysupply_text5" />
+                      </button>
+                    </>
+                  )}
+                </section>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <img src={NoData} alt="" className="nodata" />
+        )}
+      </Skeleton>
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}

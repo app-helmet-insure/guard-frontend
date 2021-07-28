@@ -71,11 +71,14 @@ body ::-webkit-scrollbar {
     }
     &.ant-btn-primary:hover,
     &:hover,
-    &.ant-btn:not([disabled]):hover {
+    &.ant-btn:not([disabled]) :hover {
         background: #3050d0;
         border-color: #3050d0;
     }
-
+    &.ant-btn[disabled]:hover{
+        background: #F5F5F5;
+        border-color: #d9d9d9;
+    }
 }
 .btn_primary_gray {
     &.ant-btn-lg {
@@ -94,6 +97,10 @@ body ::-webkit-scrollbar {
     &.ant-btn:not([disabled]):hover {
         background: #38485f;
         border-color: #38485f;
+    }
+    &.ant-btn[disabled]:hover{
+        background: #F5F5F5;
+        border-color: #d9d9d9;
     }
 }
 .ant-modal-body,

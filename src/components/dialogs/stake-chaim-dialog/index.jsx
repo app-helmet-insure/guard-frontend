@@ -22,7 +22,7 @@ function LineData({ title, value }) {
   )
 }
 
-function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance }) {
+function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance, isEnd }) {
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const [miningPools, setMiningPools] = useState(pool)
   const { library, active, account } = useActiveWeb3React()
@@ -272,22 +272,24 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
           </div>
           {approve && (
             <Button
-              type='primary'
+              type="primary"
               size='large'
               className='btn_primary'
               onClick={onApprove}
               loading={loadFlag}
+              disabled={isEnd}
             >
               <FormattedMessage id='stake_chain_dialog_text7' />
             </Button>
           )}
           {!approve && (
             <Button
-              type='primary'
+              type="primary"
               size='large'
               className='btn_primary'
               loading={loadFlag}
               onClick={stakeOnConfirm}
+              disabled={isEnd}
             >
               <FormattedMessage id='stake_chain_dialog_text1' />
             </Button>
