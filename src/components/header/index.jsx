@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react'
+import React, { useContext, useMemo, useState} from 'react'
 import './index.less'
 import LOGO from '../../assets/images/logo.svg'
 import GuradSvg from '../../assets/images/gurad-icon.svg'
@@ -13,6 +13,8 @@ import {Link} from 'react-router-dom'
 import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
 import HeaderChaimDialog from '../dialogs/header-claim-dialog'
 import { useActiveWeb3React } from '../../web3'
+import { getClaimInfo } from '../../hooks/claim'
+import claim from '../../configs/claim'
 import {VarContext} from '../../context'
 import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
 
@@ -52,7 +54,9 @@ function Header (props) {
 
   const [visibleHeaderClaimPopup, setVisibleHeaderClaimPopup] = useState(false)
 
-  const {balance} = useContext(VarContext)
+  const [claimPools, setClaimPools] = useState(null)
+
+  const { balance, blockHeight} = useContext(VarContext)
 
   useMemo(() => {
     if (active && props.location.search.indexOf('claim') > -1) {
@@ -65,6 +69,15 @@ function Header (props) {
   const goClaim = () => {
     setVisibleHeaderClaimPopup(true)
   }
+
+  // // 获取池子信息
+  useMemo(() => {
+    if (blockHeight !== 0) {
+      getClaimInfo(claim[0], account).then(claimPools_ => {
+        setClaimPools(claimPools_)
+      })
+    }
+  }, [blockHeight, account])
 
   const connectWalletClick = async () => {
     if (window.ethereum) {
@@ -181,6 +194,7 @@ function Header (props) {
       <HeaderChaimDialog
         visible={visibleHeaderClaimPopup}
         onClose={() => setVisibleHeaderClaimPopup(false)}
+        pool={claimPools}
       />
     </>
   )

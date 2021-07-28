@@ -20,10 +20,16 @@ function LineData({ title, value }) {
   )
 }
 
-function HeaderChaimDialog({ visible, onClose, intl }) {
+function HeaderChaimDialog({ visible, onClose, intl, pool }) {
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const { library, active, account } = useActiveWeb3React()
   const [loadFlag, setLoadFlag] = useState(false)
+  const [claimPools, setClaimPools] = useState(pool)
+
+  useMemo(() => {
+    setClaimPools(pool)
+    console.log(pool, 'pool')
+  }, [pool])
 
   const onConfirm = (e) => {
     if (!active) {
@@ -51,10 +57,49 @@ function HeaderChaimDialog({ visible, onClose, intl }) {
       <img className='guard_insure_logo' src={GuardInsureLogo} alt="" />
       <LineData
         title={
+          claimPools &&
+          claimPools.rewards1 +
+          ' ' +
           formatMessage('stake_chain_dialog_text5')
         }
-        value={'10 Guard'}
+        value={claimPools && claimPools.earned
+          ? formatNumber(
+            formatAmount(claimPools.earned, claimPools.decimal, 6),
+            {
+              thousand: ',',
+              decimal: '.',
+              precision:
+                formatAmount(claimPools.earned) - 0 > 0
+                  ? claimPools.splitDigits
+                  : 0,
+            }
+          ) +
+          ' ' +
+          claimPools.rewards1
+          : '--'}
       />
+      {claimPools && claimPools.rewards2 && (
+        <LineData
+          title={
+            claimPools &&
+            claimPools.rewards2 +
+            ' ' +
+            formatMessage('stake_chain_dialog_text5')
+          }
+          value={
+            claimPools && claimPools.earned2
+              ? formatNumber(
+                formatAmount(claimPools.earned2, claimPools.decimal, 6),
+                formatAmount(claimPools.earned2) - 0 > 0
+                  ? claimPools.splitDigits
+                  : 0
+              ) +
+              ' ' +
+              claimPools.rewards2
+              : '--'
+          }
+        />
+      )}
       <Button
         type='primary'
         size='large'
