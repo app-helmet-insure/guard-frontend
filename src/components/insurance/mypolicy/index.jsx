@@ -37,7 +37,6 @@ const MyPolicy = props => {
 
   // 保单数据
   const getPolicyList = () => {
-    const BidContracts = getContract(library, OrderABI, OrderAddress)
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
