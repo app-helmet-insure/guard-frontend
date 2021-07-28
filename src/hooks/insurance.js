@@ -180,7 +180,6 @@ export const getShortTokenValue = library =>
       return getPrice(library, CurrentInsurance)
     })).then(price_list => {
       CallValue = price_list.reduce((sum, price, index) => sum + price * CallList[index].show_volume, 0)
-      console.log('CallValue , PutValue', CallValue , PutValue)
       return CallValue + PutValue
     })
   })

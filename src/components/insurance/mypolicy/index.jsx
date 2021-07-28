@@ -37,7 +37,6 @@ const MyPolicy = props => {
 
   // 保单数据
   const getPolicyList = () => {
-    const BidContracts = getContract(library, OrderABI, OrderAddress)
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
@@ -101,9 +100,12 @@ const MyPolicy = props => {
                 volume: itemAsk.volume,
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
-                premium:
-                  fromWei(itemAsk.price, settleToken_decimals) *
-                  fromWei(itemAsk.volume, collateral_decimals),
+                premium: new BigNumber(
+                  (
+                    fromWei(itemAsk.price, settleToken_decimals) *
+                    fromWei(itemAsk.volume, collateral_decimals)
+                  ).toFixed(8)
+                ).toString(),
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               AskAssign.push(AllItem)
@@ -169,21 +171,31 @@ const MyPolicy = props => {
     // eslint-disable-next-line no-use-before-define
     const UnderlyingApproveStatus = await getUnderlyingApprove(data)
     console.log(LongApproveStatus, UnderlyingApproveStatus)
+    console.log(
+      !LongApproveStatus && !UnderlyingApproveStatus,
+      !LongApproveStatus && UnderlyingApproveStatus,
+      LongApproveStatus && !UnderlyingApproveStatus,
+      LongApproveStatus && UnderlyingApproveStatus
+    )
     if (!LongApproveStatus && !UnderlyingApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionApproveLong(data)
+      return
     }
     if (!LongApproveStatus && UnderlyingApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionApproveLong(data, true)
+      return
     }
     if (!UnderlyingApproveStatus && LongApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionApproveUnderlying(data)
+      return
     }
     if (LongApproveStatus && UnderlyingApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionWithDraw(data)
+      return
     }
   }
   const actionWithDraw = data => {
@@ -218,14 +230,13 @@ const MyPolicy = props => {
       .on('receipt', (_, receipt) => {
         setOpenWaiting(false)
         setOpenSuccess(true)
-        actionWithDraw()
+        actionWithDraw(data)
       })
       .on('error', ereor => {
         setOpenWaiting(false)
       })
   }
   const actionApproveLong = (data, approveFlag) => {
-    setOpenSuccess(false)
     const Erc20Contracts = getContract(library, Erc20ABI.abi, data.long)
     const Infinitys =
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
@@ -239,7 +250,7 @@ const MyPolicy = props => {
         setOpenWaiting(false)
         setOpenSuccess(true)
         if (approveFlag) {
-          actionWithDraw()
+          actionWithDraw(data)
         } else {
           actionApproveUnderlying(data)
         }
@@ -271,7 +282,6 @@ const MyPolicy = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
-        console.log(res)
         if (Number(res) > 0) {
           return true
         }

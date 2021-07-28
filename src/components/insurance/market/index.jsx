@@ -99,15 +99,13 @@ const Market = props => {
               }
               if (itemAsk.binds.length) {
                 let number = 0
-                if (itemAsk.binds.length > 1) {
+                if (itemAsk.binds.length) {
                   itemAsk.binds.forEach(
                     itembid =>
                       (number += Number(
                         fromWei(itembid.volume, collateral_decimals)
                       ))
                   )
-                } else {
-                  number = Number(fromWei(itemAsk.binds[0].volume))
                 }
                 ResultItem.show_volume =
                   Number(fromWei(itemAsk.volume, collateral_decimals)) - number
