@@ -48,7 +48,7 @@ export const getMiningInfo = (address, account) => {
         currency_allowance = 0,
         earned2 = 0,
       ] = data
-      // console.log('begin', begin)
+      console.log('begin', begin)
       const newPool = Object.assign({}, pool, {
         start_at: begin,
         earned,

@@ -58,7 +58,7 @@ const MiningCard = props => {
     miningPools &&
     miningPools.dueDate &&
     miningPools.dueDate <= now &&
-    miningPools.openDate < now
+    miningPools.start_at < now
 
   useMemo(() => {
     console.log('apr', apr, mdexApr)
@@ -107,7 +107,7 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
-
+  console.log(miningPools)
   const isStarted = miningPools && miningPools.start_at < now
   return (
     <>

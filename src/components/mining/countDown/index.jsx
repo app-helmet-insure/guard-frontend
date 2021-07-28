@@ -6,15 +6,15 @@ import './index.less'
 
 export default function Countdown({ pools, aprPercentage, now, isFinish }) {
   let left_time = 0
-  if (pools && pools.openDate > now) {
-    left_time = (pools && pools.openDate - now) * 1000
+  if (pools && pools.start_at > now) {
+    left_time = (pools && pools.start_at - now) * 1000
   } else if (pools && pools.dueDate > now) {
     left_time = (pools.dueDate - now) * 1000
   }
   return (
     <div className='mining_card_apy'>
       <p className='mining_card_apy_val'>
-        {/* pools.openDate 带有倒计时 */}
+        {/* pools.start_at 带有倒计时 */}
         <span>{pools && pools.earnName}</span>
         <span className='value'>
           {pools && pools.name && !pools.start_at && aprPercentage + '%'}
@@ -23,12 +23,12 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
             (pools.start_at > now ? '-%' : aprPercentage + '%')}
         </span>
       </p>
-      {pools && pools.openDate && (
+      {pools && pools.start_at && (
         <p className='mining_card_apy_val'>
           <span>
             <FormattedMessage id='mining_text5' />
           </span>
-          {pools && pools.openDate > now && !pools.dueDate && (
+          {pools && pools.start_at > now && !pools.dueDate && (
             <Timer
               initialTime={left_time}
               key={left_time}
@@ -79,7 +79,7 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
               </span>
             </Timer>
           )}
-          {pools && pools.openDate > now && pools.dueDate && (
+          {pools && pools.start_at > now && pools.dueDate && (
             <Timer
               initialTime={left_time}
               key={left_time}
@@ -118,7 +118,7 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
               </span>
             </Timer>
           )}
-          {pools && pools.dueDate > now && pools.openDate < now && (
+          {pools && pools.dueDate > now && pools.start_at < now && (
             <Timer
               initialTime={left_time}
               key={left_time}
@@ -161,14 +161,14 @@ export default function Countdown({ pools, aprPercentage, now, isFinish }) {
               <FormattedMessage id='mining_text15' />
             </span>
           )}
-          {pools && !pools.dueDate && pools.openDate <= now && (
+          {pools && !pools.dueDate && pools.start_at <= now && (
             <span className='value'>
               <FormattedMessage id='mining_text6' />
             </span>
           )}
         </p>
       )}
-      {pools && !pools.openDate && left_time <= 0 && (
+      {pools && !pools.start_at && left_time <= 0 && (
         <p className='mining_card_apy_val'>
           <span>
             <FormattedMessage id='mining_text5' />
