@@ -54,7 +54,7 @@ function Header (props) {
 
   const [visibleHeaderClaimPopup, setVisibleHeaderClaimPopup] = useState(false)
 
-  const [claimPools, setClaimPools] = useState(null)
+  const [claimPools, setClaimPools] = useState(getClaimInfo()[0])
 
   const { balance, blockHeight} = useContext(VarContext)
 
@@ -69,16 +69,6 @@ function Header (props) {
   const goClaim = () => {
     setVisibleHeaderClaimPopup(true)
   }
-
-  // // 获取池子信息
-  useMemo(() => {
-    if (blockHeight !== 0) {
-      getClaimInfo(claim[0], account).then(claimPools_ => {
-        setClaimPools(claimPools_)
-      })
-    }
-  }, [blockHeight, account])
-
   const connectWalletClick = async () => {
     if (window.ethereum) {
       if (active) {

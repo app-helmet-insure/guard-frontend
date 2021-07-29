@@ -28,7 +28,6 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
 
   useMemo(() => {
     setClaimPools(pool)
-    console.log(pool, 'pool')
   }, [pool])
 
   const onConfirm = (e) => {
