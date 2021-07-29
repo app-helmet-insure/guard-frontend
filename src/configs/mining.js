@@ -5,6 +5,7 @@ import QuickSwapFactory from '../web3/abi/QuickSwapFactory.json'
 import ETHLogoSvg from '../assets/images/mining/pool/ETH.svg'
 import MaticLogoSvg from '../assets/images/mining/pool/MATIC.svg'
 import QuickLogoSvg from '../assets/images/mining/pool/QUICK.png'
+import GuardLogoSvg from '../assets/images/mining/pool/GUARD.png'
 
 export default [
   {
@@ -208,6 +209,48 @@ export default [
     mdexPid: '', // 奖励2池子id
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '4288',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    poolType: 3
+  },
+  {
+    name: 'Guard',
+    icon: GuardLogoSvg,
+    shortToken: 'ETH',
+    rewards1: 'GUARD',
+    rewards2: 'MATIC',
+    address: '',
+    rewards1Address: '',
+    rewards2Address: '',
+    // apr
+    valueAprToken: '', // lpt*2
+    valueAprPath: [],
+    rewardsAprPath: [],
+    settleToken: '', // usdc
+    MLP: '', // 质押的资产
+    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 0,
+    openDate: 0,
+    time: '',
+    dueDate: 0,
+    earnName: 'APR',
+    status: 0,
+    rewards: 'ETH Short Token',
+    decimal: 18,
+    is_coming: true,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    mdexDaily: 0, // 奖励2的每日产量
+    mdexPid: '', // 奖励2池子id
+    splitDigits: 4,
+    cover: '', // Call看涨 Put看跌 空不展示
     strikeprice: '4288',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',

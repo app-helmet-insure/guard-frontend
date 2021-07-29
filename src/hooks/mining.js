@@ -257,44 +257,43 @@ export const getAPR = async (
   miningPools,
   mode = 1,
 ) => {
-  // 获取奖励1在矿山的总量,矿山授权矿池的额度
-  const allowance = await getAllowance(miningPools)
-  // console.log('apr_allowance', allowance)
+  const dataRPCList = [
+    getAllowance(miningPools), // 获取奖励1在矿山的总量,矿山授权矿池的额度
+    getTotalRewards(miningPools), // 获取奖励1未发放的量
+    getLTPValue(
+      miningPools.MLP,
+      miningPools.valueAprToken,
+      miningPools.address,
+      miningPools.abi,
+      miningPools
+    ), // 矿池总的LPT的价值
+  ]
 
-  // 获取奖励1未发放的量
-  const unClaimReward = await getTotalRewards(miningPools)
-  // console.log('unClaimReward', unClaimReward)
+  if (miningPools.valueAprToken !== miningPools.settleToken) {
+    dataRPCList.push(
+      getMDexPrice(
+        miningPools.valueAprToken,
+        miningPools.settleToken,
+        1,
+        miningPools.valueAprPath,
+        miningPools
+      )
+    )
+  }
+  const data = await Promise.all(dataRPCList)
+  const [allowance, unClaimReward, lptValue, MDexPrice] = data
 
   // 计算奖励的量
   const reward1Vol = new BigNumber(allowance).minus(new BigNumber(unClaimReward)).toString()
-  // console.log('reward1Vol', reward1Vol, unClaimReward)
-  // 矿池总的LPT的价值
-  const lptValue = await getLTPValue(
-    miningPools.MLP,
-    miningPools.valueAprToken,
-    miningPools.address,
-    miningPools.abi,
-    miningPools
-  )
-  // console.log('lptValue', lptValue)
 
-  // 通过转换后的lpt价格
   let lptTotalValue
   if (miningPools.valueAprToken !== miningPools.settleToken) {
-    const [lptTotalPrice] =  await getMDexPrice(
-      miningPools.valueAprToken,
-      miningPools.settleToken,
-      1,
-      miningPools.valueAprPath,
-      miningPools
-    )
+    const [lptTotalPrice] = MDexPrice
     // console.log('lptTotalPrice', miningPools.name, lptTotalPrice, lptValue)
-
     lptTotalValue = new BigNumber(lptTotalPrice)
       .multipliedBy(new BigNumber(lptValue))
       .toString()
   } else {
-    // console.log('lptTotalValue',miningPools.name, lptValue)
     lptTotalValue = lptValue
   }
 

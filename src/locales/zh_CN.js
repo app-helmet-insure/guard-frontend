@@ -23,6 +23,7 @@ export default {
   mining_text21: '领取失败',
   mining_text22: '赎回 & 领取奖励成功',
   mining_text23: '赎回 & 领取奖励失败',
+  mining_text24: '马上就来',
   DayM: '天',
   HourM: '时',
   MinM: '分',
