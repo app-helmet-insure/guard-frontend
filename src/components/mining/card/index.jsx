@@ -237,18 +237,18 @@ const MiningCard = props => {
             </span>
           </p>
         </div>
-        {
-          miningPools.byLinkName && miningPools.byLink && (
-            <div className="buy_link">
+        <div className="buy_link">
+          {
+            miningPools.byLinkName && miningPools.byLink && (
               <a href={miningPools.byLink} target="_blank">
                 <FormattedMessage id="mining_text25" values={{
                   name: 'quickswap',
                   b: miningPools.byLinkName
                 }}/>
               </a>
-            </div>
-          )
-        }
+            )
+          }
+        </div>
         <Button className={'mining_card_btn btn_primary'} disabled={!isStarted || miningPools.is_coming} onClick={() => stakeClaimPopup('Stake')}>
           <FormattedMessage id="mining_text12"/>
         </Button>
