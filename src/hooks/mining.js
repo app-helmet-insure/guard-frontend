@@ -49,7 +49,7 @@ export const getMiningInfo = (address, account) => {
         earned2 = 0,
       ] = data
       const newPool = Object.assign({}, pool, {
-        start_at: begin,
+        start_at: pool.openDate > begin ? pool.openDate : begin,
         earned,
         earned2,
         totalSupply,
