@@ -24,6 +24,7 @@ export default {
   mining_text22: '赎回 & 领取奖励成功',
   mining_text23: '赎回 & 领取奖励失败',
   mining_text24: '马上就来',
+  mining_text25: '从 {name} 获取 {b}',
   DayM: '天',
   HourM: '时',
   MinM: '分',

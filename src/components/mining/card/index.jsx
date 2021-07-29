@@ -158,7 +158,7 @@ const MiningCard = props => {
               )
             }
             <span className="title_text">
-              {miningPools.name}  Short Token Pool
+              {miningPools.title}
             </span>
           </p>
         </div>
@@ -175,7 +175,7 @@ const MiningCard = props => {
             </span>
             <img
               className="mining_card_content_icon"
-              src={GuardLogoSvg}
+              src={miningPools.rewardIcon}
             />
           </p>
           <p className="mining_card_content_val">
@@ -237,6 +237,18 @@ const MiningCard = props => {
             </span>
           </p>
         </div>
+        {
+          miningPools.byLinkName && miningPools.byLink && (
+            <div className="buy_link">
+              <a href={miningPools.byLink} target="_blank">
+                <FormattedMessage id="mining_text25" values={{
+                  name: 'quickswap',
+                  b: miningPools.byLinkName
+                }}/>
+              </a>
+            </div>
+          )
+        }
         <Button className={'mining_card_btn btn_primary'} disabled={!isStarted || miningPools.is_coming} onClick={() => stakeClaimPopup('Stake')}>
           <FormattedMessage id="mining_text12"/>
         </Button>

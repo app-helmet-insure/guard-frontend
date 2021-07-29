@@ -2,15 +2,19 @@ import StakingPool from '../web3/abi/StakingPool.json'
 import QuickSwapRouter from '../web3/abi/QuickSwapRouter.json'
 import QuickSwapFactory from '../web3/abi/QuickSwapFactory.json'
 
-import ETHLogoSvg from '../assets/images/mining/pool/ETH.svg'
-import MaticLogoSvg from '../assets/images/mining/pool/MATIC.svg'
-import QuickLogoSvg from '../assets/images/mining/pool/QUICK.png'
-import GuardLogoSvg from '../assets/images/mining/pool/GUARD.png'
+import ETHPng from '../assets/images/mining/pool/ETH.svg'
+import MaticSvg from '../assets/images/mining/pool/MATIC.svg'
+import QuickPng from '../assets/images/mining/pool/QUICK.png'
+import GuardPng from '../assets/images/mining/pool/GUARD.png'
+import GuardShortSvg from '../assets/images/mining/pool/guard-short.png'
+import GuardQuickRewardSvg from '../assets/images/mining/pool/guard-quick-reward.png'
 
 export default [
   {
-    name: 'Matic',
-    icon: MaticLogoSvg,
+    title: 'Matic Short Token Pool',
+    name: 'Matic', // 用于
+    icon: MaticSvg,
+    rewardIcon: GuardPng,
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
@@ -51,8 +55,10 @@ export default [
     poolType: 3
   },
   {
+    title: 'Matic Short Token Pool',
     name: 'Matic',
-    icon: MaticLogoSvg,
+    icon: MaticSvg,
+    rewardIcon: GuardPng,
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
@@ -93,8 +99,10 @@ export default [
     poolType: 3
   },
   {
+    title: 'Quick Short Token Pool',
     name: 'Quick',
-    icon: QuickLogoSvg,
+    icon: QuickPng,
+    rewardIcon: GuardPng,
     shortToken: 'QUICK',
     rewards1: 'GUARD',
     rewards2: null,
@@ -135,8 +143,10 @@ export default [
     poolType: 3
   },
   {
+    title: 'Quick Short Token Pool',
     name: 'Quick',
-    icon: QuickLogoSvg,
+    icon: QuickPng,
+    rewardIcon: GuardPng,
     shortToken: 'QUICK',
     rewards1: 'GUARD',
     rewards2: null,
@@ -177,8 +187,10 @@ export default [
     poolType: 3
   },
   {
+    title: 'ETH Short Token Pool',
     name: 'ETH',
-    icon: ETHLogoSvg,
+    icon: ETHPng,
+    rewardIcon: GuardPng,
     shortToken: 'ETH',
     rewards1: 'GUARD',
     rewards2: null,
@@ -200,7 +212,7 @@ export default [
     dueDate: 1629993600,
     earnName: 'APR',
     status: 0,
-    rewards: 'ETH Short Token',
+    rewards: 'Guard-USDC LPT',
     decimal: 18,
     is_coming: false,
     mdexReward: false, // 是否有奖励2
@@ -219,11 +231,13 @@ export default [
     poolType: 3
   },
   {
+    title: 'Guard-USDC LPT Pool',
     name: 'Guard',
-    icon: GuardLogoSvg,
+    icon: GuardShortSvg,
+    rewardIcon: GuardQuickRewardSvg,
     shortToken: 'ETH',
     rewards1: 'GUARD',
-    rewards2: 'MATIC',
+    rewards2: 'QUICK',
     address: '',
     rewards1Address: '',
     rewards2Address: '',
@@ -233,7 +247,8 @@ export default [
     rewardsAprPath: [],
     settleToken: '', // usdc
     MLP: '', // 质押的资产
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    byLink: 'https://quickswap.exchange/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+    byLinkName: 'Guard-USDC LPT',
     abi: StakingPool,
     mlpDecimal: 18,
     start_at: 0,
