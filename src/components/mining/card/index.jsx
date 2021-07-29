@@ -19,7 +19,6 @@ import {Button, Skeleton, Space} from 'antd'
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
   const {account} = useActiveWeb3React()
-
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
   const [tabFlag, setTabFlag] = useState('Stake')
