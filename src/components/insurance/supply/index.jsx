@@ -40,7 +40,6 @@ const Supply = props => {
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
   const [OpenSubmit, setOpenSubmit] = useState(false)
-  const [NoticeFlag, setNoticeFlag] = useState(false)
   const [IndexPrice, setIndexPrice] = useState(0)
   const [GuardPrice, setGuardPrice] = useState({ Call: 0, Put: 0 })
   const { library, active, account } = useActiveWeb3React()
@@ -48,6 +47,15 @@ const Supply = props => {
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
   })
+  const Balance =
+    CurrentInsurance.collateral_symbol === 'MATIC'
+      ? useEthBalance()
+      : useBalance(
+        1,
+        CurrentInsurance.collateral_address,
+        Erc20ABI.abi,
+        CurrentInsurance.collateral_decimals_number
+      ) || 0
   const currentIndexPrice = async () => {
     const prices = await useIndexPrice(library, CurrentInsurance)
     setIndexPrice(prices)
@@ -77,15 +85,7 @@ const Supply = props => {
     const putprices = await useIndexPrice(library, putdata)
     setGuardPrice({ Call: callprices, Put: putprices })
   }
-  const Balance =
-    CurrentInsurance.collateral_symbol === 'MATIC'
-      ? useEthBalance()
-      : useBalance(
-        1,
-        CurrentInsurance.collateral_address,
-        Erc20ABI.abi,
-        CurrentInsurance.collateral_decimals_number
-      )
+
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -111,7 +111,6 @@ const Supply = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
-        console.log(res)
         if (Number(res) > 0) {
           return setApproveStatus(true)
         }
@@ -219,7 +218,7 @@ const Supply = props => {
         .on('receipt', (_, receipt) => {
           setOpenWaiting(false)
           setOpenSuccess(true)
-          getApproveStatus()
+          setApproveStatus(true)
         })
         .on('error', ereor => {
           setOpenWaiting(false)

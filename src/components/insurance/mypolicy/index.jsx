@@ -18,7 +18,7 @@ const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
 import BigNumber from 'bignumber.js'
-import {Skeleton} from 'antd'
+import { Skeleton } from 'antd'
 
 const MyPolicy = props => {
   const [PolicyList, setPolicyList] = useState([])
@@ -150,21 +150,23 @@ const MyPolicy = props => {
             })
           }
         })
-        if (FilterList.length === 0 || AskAssign.length === 0 || BidAssign.length === 0) {
+        if (
+          FilterList.length === 0 ||
+          AskAssign.length === 0 ||
+          BidAssign.length === 0
+        ) {
           setLoading(false)
         }
-        BidAssign.forEach((itemBids, index) => {
-          getBindItem(itemBids.bidID).then(data => {
-            itemBids.remain = data.remain
-            FixListPush.push(itemBids)
-            if (index === BidAssign.length - 1) {
-              const list = FixListPush.filter(
-                filter => Number(filter.remain) !== 0
-              )
-              setPolicyList(list)
-              setLoading(false)
-            }
+        Promise.all(
+          BidAssign.map(itemBids => getBindItem(itemBids.bidID))
+        ).then(BidAssignList => {
+          let returnList = BidAssign.map((list, index) => {
+            list.remain = BidAssignList[index].remain
+            return list
           })
+          returnList = returnList.filter(filter => filter.remain !== '0')
+          setPolicyList(returnList)
+          setLoading(false)
         })
       }
     })
@@ -314,14 +316,14 @@ const MyPolicy = props => {
                   <div>
                     <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
                     <span className={item.type}>
-                    {item.callToken +
-                    ' ' +
-                    item.type +
-                    ' ' +
-                    item.show_strikePrice +
-                    ' ' +
-                    item.putToken}
-                  </span>
+                      {item.callToken +
+                        ' ' +
+                        item.type +
+                        ' ' +
+                        item.show_strikePrice +
+                        ' ' +
+                        item.putToken}
+                    </span>
                   </div>
                   <div>
                     <span>{item.show_expiry}</span>
@@ -330,50 +332,50 @@ const MyPolicy = props => {
                 </section>
                 <section className="section_pc">
                   <div>
-                  <span>
-                    <FormattedMessage id="mypolicy_text2" />
-                  </span>
+                    <span>
+                      <FormattedMessage id="mypolicy_text2" />
+                    </span>
                     <span>{item.show_strikePrice}</span>
                     <span>{item.putToken}</span>
                   </div>
                   <div>
-                  <span>
-                    <FormattedMessage id="mypolicy_text3" />
-                  </span>
+                    <span>
+                      <FormattedMessage id="mypolicy_text3" />
+                    </span>
                     <span>{item.show_volume}</span>
                     <span>{item.callToken}</span>
                   </div>
                 </section>
                 <section className="section_pc">
                   <div>
-                  <span>
-                    <FormattedMessage id="mypolicy_text4" />
-                  </span>
+                    <span>
+                      <FormattedMessage id="mypolicy_text4" />
+                    </span>
                     <span>{Number(item.show_price).toFixed(8)}</span>
                     <span>{item.settleToken_symbol}</span>
                   </div>
                   <div>
-                  <span>
-                    <FormattedMessage id="mypolicy_text5" />
-                  </span>
+                    <span>
+                      <FormattedMessage id="mypolicy_text5" />
+                    </span>
                     <span>{item.premium}</span>
                     <span>{item.settleToken_symbol}</span>
                   </div>
                 </section>
                 <section className="section_h5">
                   <div>
-                  <span className="mypolicy_price_title">
-                    <FormattedMessage id="mypolicy_text2" />
-                  </span>
+                    <span className="mypolicy_price_title">
+                      <FormattedMessage id="mypolicy_text2" />
+                    </span>
                     <p>
                       <span>{item.show_strikePrice}</span>
                       <span>{item.putToken}</span>
                     </p>
                   </div>
                   <div>
-                  <span className="mypolicy_price_title">
-                    <FormattedMessage id="mypolicy_text4" />
-                  </span>
+                    <span className="mypolicy_price_title">
+                      <FormattedMessage id="mypolicy_text4" />
+                    </span>
                     <p>
                       <span>{Number(item.show_price).toFixed(8)}</span>
                       <span>{item.settleToken_symbol}</span>
@@ -382,18 +384,18 @@ const MyPolicy = props => {
                 </section>
                 <section className="section_h5">
                   <div>
-                  <span className="mypolicy_price_title">
-                    <FormattedMessage id="mypolicy_text3" />
-                  </span>
+                    <span className="mypolicy_price_title">
+                      <FormattedMessage id="mypolicy_text3" />
+                    </span>
                     <p>
                       <span>{item.show_volume}</span>
                       <span>{item.callToken}</span>
                     </p>
                   </div>
                   <div>
-                  <span className="mypolicy_price_title">
-                    <FormattedMessage id="mypolicy_text5" />
-                  </span>
+                    <span className="mypolicy_price_title">
+                      <FormattedMessage id="mypolicy_text5" />
+                    </span>
                     <p>
                       <span>{item.premium}</span>
                       <span>{item.settleToken_symbol}</span>
