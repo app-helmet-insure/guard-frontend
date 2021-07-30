@@ -1,7 +1,6 @@
 import React, {useState, useMemo, useEffect, useContext} from 'react'
 import {FormattedMessage} from 'react-intl'
 import './index.less'
-import {connect} from 'react-redux'
 import cs from 'classnames'
 import BigNumber from 'bignumber.js'
 // 处理格式 千位符
@@ -16,12 +15,10 @@ import {VarContext} from '../../../context'
 import {useActiveWeb3React} from '../../../web3'
 import GuardLogoSvg from '../../../assets/images/mining/pool/GUARD.png'
 import {Button, Skeleton, Space} from 'antd'
-import LoadingSvg from '../../../assets/images/loading2.svg'
 
 const MiningCard = props => {
   const {blockHeight} = useContext(VarContext)
   const {account} = useActiveWeb3React()
-
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
   const [tabFlag, setTabFlag] = useState('Stake')
@@ -33,6 +30,11 @@ const MiningCard = props => {
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0) {
+      // 静态的 不做任何请求
+      if (props.pools.is_coming) {
+        setMiningPools(props.pools)
+        return
+      }
       getMiningInfo(props.pools.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
         getAPR(
@@ -62,7 +64,7 @@ const MiningCard = props => {
 
   useMemo(() => {
     console.log('apr', apr, mdexApr)
-    if (apr > 0 && miningPools && (!miningPools.mdexReward || mdexApr > 0)) {
+    if (apr > 0 && miningPools && (!miningPools.mdexReward || mdexApr > 0) && !miningPools.is_coming) {
       const percentage_ = (apr * 100 + mdexApr * 100).toFixed(2)
       if (isFinite(percentage_)) {
         setPercentage(percentage_)
@@ -111,48 +113,51 @@ const MiningCard = props => {
   const isStarted = miningPools && miningPools.start_at < now
   // 是否结束
   const isEnd = miningPools && miningPools.dueDate < now
+
+  // loading
+  if (!miningPools) {
+    return (
+      <div className="mining_card">
+        <div className="card_loading">
+          <Space>
+            <div className="flex_center_up_and_down">
+              <Skeleton.Avatar active size={60}/>
+              <div className="skeleton_top_title">
+                <Skeleton.Input style={{ width: 200, height: 16 }} active size="small"/>
+                <div style={{height: '10px'}}/>
+                <Skeleton.Input style={{ width: 200, height: 16 }} active size="small"/>
+              </div>
+            </div>
+          </Space>
+          <Skeleton active paragraph={{ rows: 6 }} />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="mining_card">
-        {
-          !miningPools && <div className="card_loading">
-            <Space>
-              <div className="flex_center_up_and_down">
-                <Skeleton.Avatar active size={60}/>
-                <div className="skeleton_top_title">
-                  <Skeleton.Input style={{ width: 200, height: 16 }} active size="small"/>
-                  <div style={{height: '10px'}}/>
-                  <Skeleton.Input style={{ width: 200, height: 16 }} active size="small"/>
-                </div>
-              </div>
-            </Space>
-            <Skeleton active paragraph={{ rows: 6 }} />
-          </div>
-        }
         <div className="mining_card_title">
-          {miningPools && (
-            <img
-              src={miningPools.icon}
-            />
-          )}
+          <img
+            src={miningPools.icon}
+          />
           <p className="mining_card_title_text">
-            <a className={cs(`${miningPools && miningPools.cover + '_cover'}`)}>
-              <span
-                className={cs(
-                  `${miningPools && miningPools.cover + '_cover_logo'}`
-                )}
-              ></span>
-              {miningPools ? (
-                <>
+            {
+              miningPools.cover && (
+                <a className={cs(`${miningPools.cover + '_cover'}`)}>
+                  <span
+                    className={cs(
+                      `${miningPools.cover + '_cover_logo'}`
+                    )}
+                  ></span>
                   {miningPools.name.toUpperCase()} {miningPools.cover}{' '}
                   {miningPools.strikeprice} USDC
-                </>
-              ) : (
-                '--'
-              )}
-            </a>
+                </a>
+              )
+            }
             <span className="title_text">
-              {miningPools && (miningPools.name + '  Short Token Pool')}
+              {miningPools.title}
             </span>
           </p>
         </div>
@@ -167,19 +172,17 @@ const MiningCard = props => {
             <span>
               <FormattedMessage id="mining_text7"/>
             </span>
-            {miningPools && (
-              <img
-                className="mining_card_content_icon"
-                src={GuardLogoSvg}
-              />
-            )}
+            <img
+              className="mining_card_content_icon"
+              src={miningPools.rewardIcon}
+            />
           </p>
           <p className="mining_card_content_val">
             <span>
               <FormattedMessage id="mining_text9"/>
             </span>
             <span>
-              {miningPools && miningPools.totalSupply
+              {miningPools.totalSupply
                 ? formatLastZero(formatNumber(
                   formatAmount(
                     miningPools.totalSupply,
@@ -203,7 +206,7 @@ const MiningCard = props => {
               <FormattedMessage id="mining_text10"/>
             </span>
             <span>
-              {miningPools && miningPools.balanceOf
+              {miningPools.balanceOf
                 ? formatLastZero(formatNumber(splitFormat(miningPools.balanceOf, 6), {
                   thousand: ',',
                   decimal: '.',
@@ -223,7 +226,7 @@ const MiningCard = props => {
               <FormattedMessage id="mining_text11"/>
             </span>
             <span>
-              {miningPools && miningPools.balanceOf
+              {miningPools.balanceOf
                 ? formatLastZero(formatNumber(balance, {
                   thousand: ',',
                   decimal: '.',
@@ -233,7 +236,19 @@ const MiningCard = props => {
             </span>
           </p>
         </div>
-        <Button className={'mining_card_btn btn_primary'} disabled={!isStarted} onClick={() => stakeClaimPopup('Stake')}>
+        <div className="buy_link">
+          {
+            miningPools.byLinkName && miningPools.byLink && (
+              <a href={miningPools.byLink} target="_blank">
+                <FormattedMessage id="mining_text25" values={{
+                  name: 'quickswap',
+                  b: miningPools.byLinkName
+                }}/>
+              </a>
+            )
+          }
+        </div>
+        <Button className={'mining_card_btn btn_primary'} disabled={!isStarted || miningPools.is_coming} onClick={() => stakeClaimPopup('Stake')}>
           <FormattedMessage id="mining_text12"/>
         </Button>
         <div
@@ -244,9 +259,9 @@ const MiningCard = props => {
             <span>
               <FormattedMessage
                 id="mining_text13"
-                values={{coin: miningPools && miningPools.rewards1}}
+                values={{coin: miningPools.rewards1}}
               />
-              {miningPools && miningPools.earned
+              {miningPools.earned
                 ? formatNumber(
                   formatAmount(miningPools.earned, miningPools.decimal, 6),
                   {
@@ -260,7 +275,7 @@ const MiningCard = props => {
                 )
                 : '--'}
             </span>
-            {miningPools && miningPools.rewards2 && (
+            {miningPools.rewards2 && (
               <span>
                 <FormattedMessage
                   id="mining_text13"
@@ -277,8 +292,8 @@ const MiningCard = props => {
               </span>
             )}
           </p>
-          {isStarted && ((miningPools && miningPools.earned - 0 > 0) ||
-            (miningPools && miningPools.earned2 - 0 > 0)) && (
+          {isStarted && ((miningPools.earned - 0 > 0) ||
+            (miningPools.earned2 - 0 > 0)) && (
             <a
               className="mining_card_claim_btn"
               onClick={() => stakeClaimPopup('Claim')}
@@ -288,16 +303,14 @@ const MiningCard = props => {
           )}
         </div>
       </div>
-      {miningPools && (
-        <StakeChaimDialog
-          visible={visibleStakePopup}
-          tab={tabFlag}
-          pool={miningPools}
-          balance={balance}
-          isEnd={isEnd}
-          onClose={() => setVisibleStakePopup(false)}
-        />
-      )}
+      <StakeChaimDialog
+        visible={visibleStakePopup}
+        tab={tabFlag}
+        pool={miningPools}
+        balance={balance}
+        isEnd={isEnd}
+        onClose={() => setVisibleStakePopup(false)}
+      />
     </>
   )
 }

@@ -10,7 +10,7 @@ export const VarContext = createContext()
 let timer = null
 function Context (props) {
   const {chainId, library} = useWeb3React()
-
+  const [isActive, setIsActive] = useState(true)
   // 块高度
   const [blockHeight, setBlockHeight] = useState(0)
   // 当前账户余额 GUARD
@@ -31,6 +31,19 @@ function Context (props) {
       getBlockHeight(timeoutGetBlockHeight)
     }, 8000)
   }
+  useMemo(() => {
+    document.addEventListener('visibilitychange', ()=> {
+      const isActive_ = document.visibilityState === 'visible'
+      console.log('isActive', isActive_)
+      if (isActive_) {
+        getBlockHeight()
+        timeoutGetBlockHeight()
+      } else {
+        clearTimeout(timer)
+      }
+      setIsActive(isActive_)
+    })
+  }, [])
 
   useMemo(()=>{
     if (props.updateCount === 0) {

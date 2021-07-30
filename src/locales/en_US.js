@@ -23,6 +23,8 @@ export default {
   mining_text21: 'claim error',
   mining_text22: 'Unstake & Claim success',
   mining_text23: 'Unstake & Claim error',
+  mining_text24: 'coming soon',
+  mining_text25: 'From {name} get {b}',
   DayM: 'd',
   HourM: 'h',
   MinM: 'm',
