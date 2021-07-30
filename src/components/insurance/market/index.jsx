@@ -13,6 +13,7 @@ import Erc20ABI from '../../../web3/abi/ERC20.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import BigNumber from 'bignumber.js'
+import { Pagination } from 'antd'
 import { numberFormat } from 'highcharts'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
@@ -24,6 +25,10 @@ const Market = props => {
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
+  const [Page, setPage] = useState(1)
+  const [PageSize, setPageSize] = useState(10)
+  const [MinNumber, setMinNumber] = useState(0)
+  const [MaxNumber, setMaxNumber] = useState(10)
   const { InsuranceSymbol } = props
   const onSuccessClose = () => {
     setOpenSuccess(false)
@@ -31,7 +36,16 @@ const Market = props => {
   const onWaitClose = () => {
     setOpenWaiting(false)
   }
-
+  const onChangePage = value => {
+    setPage(value)
+    if (value <= 1) {
+      setMinNumber(0)
+      setMaxNumber(10)
+    } else {
+      setMinNumber((value - 1) * 10)
+      setMaxNumber((value - 1) * 10 + 10)
+    }
+  }
   // 保单数据
   const getPolicyList = () => {
     const CurrentInsurance = getCurrentInsurance({
@@ -253,7 +267,7 @@ const Market = props => {
           <FormattedMessage id="insurance_text5" />
         </button>
       </div>
-      {PolicyList.length > 0 ? (
+      {PolicyList && PolicyList.length > 0 ? (
         <div className="insurance_market_wrap">
           <table className="insurance_market_table web_table">
             <thead>
@@ -274,7 +288,7 @@ const Market = props => {
               </tr>
             </thead>
             <tbody>
-              {PolicyList.map(item => (
+              {PolicyList.slice(MinNumber, MaxNumber).map(item => (
                 <tr
                   className="insurance_market_table_item"
                   key={'web' + item.askID}
@@ -358,6 +372,13 @@ const Market = props => {
               </div>
             ))}
           </div>
+          <Pagination
+            className="paginaction"
+            current={Page}
+            pageSize={PageSize}
+            total={PolicyList.length}
+            onChange={value => onChangePage(value)}
+          />
         </div>
       ) : (
         <div className="nodata">
