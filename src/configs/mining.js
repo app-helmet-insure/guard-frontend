@@ -212,7 +212,7 @@ export default [
     dueDate: 1629993600,
     earnName: 'APR',
     status: 0,
-    rewards: 'Guard-USDC LPT',
+    rewards: 'ETH Short Token',
     decimal: 18,
     is_coming: false,
     mdexReward: false, // 是否有奖励2
