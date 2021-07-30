@@ -104,6 +104,7 @@ export default {
   insurance_text22: '购买',
   insurance_text24: '保险列表',
   insurance_text25: '发行保险获得 SHORT token',
+  insurance_text26: '购买',
   mypolicy_text1: '我的保单',
   mypolicy_text2: '出险价',
   mypolicy_text3: '持有量',

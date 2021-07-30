@@ -60,7 +60,12 @@ const ShowData = props => {
             <span>
               <FormattedMessage id="insurance_text1" />
             </span>
-            <span>$ {Data1}</span>
+            <span className="flex_center_up_and_down">
+              $ {Data1}
+              <a href="https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8" target="_blank" className="buy_btn">
+                <FormattedMessage id="insurance_text26"/>
+              </a>
+            </span>
           </p>
         </div>
         <div className="insurance_data_icon2 data_item">
