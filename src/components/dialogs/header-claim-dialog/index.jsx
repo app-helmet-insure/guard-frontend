@@ -1,14 +1,16 @@
-import React, { useState, useMemo } from 'react'
+import React, { useContext, useState, useMemo } from 'react'
 import { Modal, Button, message } from 'antd'
 import './index.less'
 import { FormattedMessage } from 'react-intl'
 import { injectIntl } from 'react-intl'
 import Web3 from 'web3'
+import { VarContext } from '../../../context'
+import { getClaimInfo } from '../../../hooks/claim'
 // 处理格式 千位符
 import { formatNumber } from 'accounting'
 import { formatAmount, numToWei, splitFormat } from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
-import ERC20 from '../../../web3/abi/ERC20.json'
+import PolygonscanClaim from '../../../web3/abi/PolygonscanClaim.json'
 import GuardInsureLogo from '../../../assets/images/guard.insure_logo@2x.png'
 
 function LineData({ title, value }) {
@@ -21,27 +23,61 @@ function LineData({ title, value }) {
 }
 
 function HeaderChaimDialog({ visible, onClose, intl, pool }) {
+  const { blockHeight } = useContext(VarContext)
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const { library, active, account } = useActiveWeb3React()
   const [loadFlag, setLoadFlag] = useState(false)
   const [claimPools, setClaimPools] = useState(pool)
 
+  // 获取池子信息
   useMemo(() => {
-    setClaimPools(pool)
-  }, [pool])
+    if (blockHeight !== 0) {
+      // 静态的 不做任何请求
+      getClaimInfo(pool, account).then((miningPools_) => {
+        setClaimPools(miningPools_)
+      })
+    }
+  }, [blockHeight, account])
 
   const onConfirm = (e) => {
     if (!active) {
       return
     }
+    if (!(claimPools && claimPools.earned)) {
+      return false
+    }
+    if (isNaN(parseInt(claimPools && claimPools.earned))) {
+      return false
+    }
     if (loadFlag) return
     setLoadFlag(true)
-    message.success({
-      content: formatMessage('mining_text20'),
-      style: {
-        color: '#2A3749',
-      },
-    })
+    const contract = getContract(library, claimPools.abi, claimPools.address)
+
+    contract.methods
+      .claim()
+      .send({
+        from: account,
+      })
+      .on('transactionHash', (hash) => {})
+      .on('receipt', (_, receipt) => {
+        message.success({
+          content: formatMessage('mining_text20'),
+          style: {
+            color: '#2A3749',
+          },
+        })
+        setLoadFlag(false)
+        onClose()
+      })
+      .on('error', (err, receipt) => {
+        message.error({
+          content: formatMessage('mining_text21'),
+          style: {
+            color: '#2A3749',
+          },
+        })
+        setLoadFlag(false)
+      })
   }
 
   return (
@@ -53,48 +89,48 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
       destroyOnClose
       wrapClassName='header_chain_dialog_wrap stake_chain_dialog_wrap'
     >
-      <img className='guard_insure_logo' src={GuardInsureLogo} alt="" />
+      <img className='guard_insure_logo' src={GuardInsureLogo} alt='' />
       <LineData
         title={
           claimPools &&
-          claimPools.rewards1 +
-          ' ' +
-          formatMessage('stake_chain_dialog_text5')
+          claimPools.rewards1 + ' ' + formatMessage('stake_chain_dialog_text5')
         }
-        value={claimPools && claimPools.earned
-          ? formatNumber(
-            formatAmount(claimPools.earned, claimPools.decimal, 6),
-            {
-              thousand: ',',
-              decimal: '.',
-              precision:
-                formatAmount(claimPools.earned) - 0 > 0
-                  ? claimPools.splitDigits
-                  : 0,
-            }
-          ) +
-          ' ' +
-          claimPools.rewards1
-          : '--'}
+        value={
+          claimPools && claimPools.earned
+            ? formatNumber(
+                formatAmount(claimPools.earned, claimPools.decimal, 6),
+                {
+                  thousand: ',',
+                  decimal: '.',
+                  precision:
+                    formatAmount(claimPools.earned) - 0 > 0
+                      ? claimPools.splitDigits
+                      : 0,
+                }
+              ) +
+              ' ' +
+              claimPools.rewards1
+            : '--'
+        }
       />
       {claimPools && claimPools.rewards2 && (
         <LineData
           title={
             claimPools &&
             claimPools.rewards2 +
-            ' ' +
-            formatMessage('stake_chain_dialog_text5')
+              ' ' +
+              formatMessage('stake_chain_dialog_text5')
           }
           value={
             claimPools && claimPools.earned2
               ? formatNumber(
-                formatAmount(claimPools.earned2, claimPools.decimal, 6),
-                formatAmount(claimPools.earned2) - 0 > 0
-                  ? claimPools.splitDigits
-                  : 0
-              ) +
-              ' ' +
-              claimPools.rewards2
+                  formatAmount(claimPools.earned2, claimPools.decimal, 6),
+                  formatAmount(claimPools.earned2) - 0 > 0
+                    ? claimPools.splitDigits
+                    : 0
+                ) +
+                ' ' +
+                claimPools.rewards2
               : '--'
           }
         />
@@ -108,7 +144,9 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
       >
         <FormattedMessage id='stake_chain_dialog_text4' />
       </Button>
-      <a className='header_chain_dialog_wrap_tips'><FormattedMessage id='stake_chain_dialog_text8' /></a>
+      <a className='header_chain_dialog_wrap_tips'>
+        <FormattedMessage id='stake_chain_dialog_text8' />
+      </a>
     </Modal>
   )
 }

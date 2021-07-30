@@ -54,7 +54,7 @@ function Header (props) {
 
   const [visibleHeaderClaimPopup, setVisibleHeaderClaimPopup] = useState(false)
 
-  const [claimPools, setClaimPools] = useState(getClaimInfo()[0])
+  const [claimPools, setClaimPools] = useState(claim[0])
 
   const { balance, blockHeight} = useContext(VarContext)
 

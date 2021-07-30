@@ -1,17 +1,17 @@
-import StakingPool from '../web3/abi/StakingPool.json'
+import PolygonscanClaim from '../web3/abi/PolygonscanClaim.json'
 
 export default [
   {
     name: 'Matic',
-    address: '0x6a2dfb87F5923a0D6ad8e5127ed001CDe29fE77a',
+    address: '0xb962B860f880Bb461EEB323Fc33dC9eFce157dAC',
     rewards1: 'Guard',
     rewards2: null,
-    abi: StakingPool,
+    abi: PolygonscanClaim,
     start_at: '',
     time: '',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     networkId: 137,
-    splitDigits: 6
-  }
+    splitDigits: 6,
+  },
 ]
