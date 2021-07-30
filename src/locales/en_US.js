@@ -107,6 +107,7 @@ export default {
   insurance_text22: 'Buy',
   insurance_text24: 'Policy TradingView',
   insurance_text25: 'Supply Policy to get SHORT token',
+  insurance_text26: 'BUY',
   mypolicy_text1: 'Policy You Hold',
   mypolicy_text2: 'Activate Price',
   mypolicy_text3: 'Quantity',
