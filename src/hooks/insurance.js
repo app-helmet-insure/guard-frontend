@@ -70,15 +70,15 @@ export const getBalance = (
   ContractAddress,
   address,
   abi = ERC20_ABI.abi,
-  decimals = 18
+  decimals = 18,
+  chainId_ = ChainId.BSC
 ) => {
   const [balance, setBalance] = useState('0')
   const { account, library, active } = useWeb3ReactCore()
   useMemo(() => {
     if (active && address) {
       // console.log(active, address, account)
-      const WEB3 = getHttpWeb3(ChainId.BSC)
-      console.log(ContractAddress, address)
+      const WEB3 = getHttpWeb3(chainId_)
       const contract = new WEB3.eth.Contract(abi, ContractAddress)
       contract.methods
         .balanceOf(address)
