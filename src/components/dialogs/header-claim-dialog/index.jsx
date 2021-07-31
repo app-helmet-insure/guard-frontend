@@ -142,7 +142,7 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
         loading={loadFlag}
         onClick={onConfirm}
       >
-        <FormattedMessage id='stake_chain_dialog_text4' />
+        <FormattedMessage id='header_claim_dialog_text1' />
       </Button>
       <a className='header_chain_dialog_wrap_tips'>
         <FormattedMessage id='stake_chain_dialog_text8' />

@@ -56,6 +56,7 @@ export default {
   stake_chain_dialog_text6: 'Unstake & Claim',
   stake_chain_dialog_text7: 'Approve',
   stake_chain_dialog_text8: 'Powered By Helmet Team',
+  header_claim_dialog_text1: 'Claim Guard',
   waiting_confirmation_dialog_text1: 'Waiting for confirmation',
   waiting_confirmation_dialog_text2:
     'Please confirm the transaction in your wallet',
@@ -71,7 +72,8 @@ export default {
     "Choosing a cash delivery contract will trade your 〔corresponding option's pledge currency〕 in pancake into XXX 〔currency required for exercise〕",
   submit_insurance_dialog_text6: 'Submit',
   home_text1: 'Crypto-assets insurance trading platform on MATIC',
-  submit_insurance_dialog_text7: 'Insurance policy trading is subject to both high market risk and volatility. Please, do your own research and full due diligence before even considering to invest your funds in. Helmet.insure will not be held responsible for any investment losses.',
+  submit_insurance_dialog_text7:
+    'Insurance policy trading is subject to both high market risk and volatility. Please, do your own research and full due diligence before even considering to invest your funds in. Helmet.insure will not be held responsible for any investment losses.',
   disconnected_wallet_dialog_text1: 'ACCOUNT',
   disconnected_wallet_dialog_text2: 'Copy Address',
   disconnected_wallet_dialog_text3: 'Switch Wallet',
