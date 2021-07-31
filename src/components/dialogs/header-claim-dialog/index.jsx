@@ -91,10 +91,7 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
     >
       <img className='guard_insure_logo' src={GuardInsureLogo} alt='' />
       <LineData
-        title={
-          claimPools &&
-          claimPools.rewards1 + ' ' + formatMessage('stake_chain_dialog_text5')
-        }
+        title={claimPools && claimPools.rewards1}
         value={
           claimPools && claimPools.earned
             ? formatNumber(
@@ -107,20 +104,13 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
                       ? claimPools.splitDigits
                       : 0,
                 }
-              ) +
-              ' ' +
-              claimPools.rewards1
+              )
             : '--'
         }
       />
       {claimPools && claimPools.rewards2 && (
         <LineData
-          title={
-            claimPools &&
-            claimPools.rewards2 +
-              ' ' +
-              formatMessage('stake_chain_dialog_text5')
-          }
+          title={claimPools && claimPools.rewards2}
           value={
             claimPools && claimPools.earned2
               ? formatNumber(
@@ -128,9 +118,7 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
                   formatAmount(claimPools.earned2) - 0 > 0
                     ? claimPools.splitDigits
                     : 0
-                ) +
-                ' ' +
-                claimPools.rewards2
+                )
               : '--'
           }
         />
