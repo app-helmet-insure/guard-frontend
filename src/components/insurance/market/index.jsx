@@ -19,7 +19,6 @@ import { numberFormat } from 'highcharts'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
 const Market = props => {
-  console.log(props, 'market')
   const [InsuranceType, setInsuranceType] = useState('Call')
   const [PolicyList, setPolicyList] = useState([])
   const [ApproveStatus, setApproveStatus] = useState(false)
@@ -147,7 +146,6 @@ const Market = props => {
           const FixList = FixListPush.sort(
             (a, b) => Number(b.show_volume) - Number(a.show_volume)
           )
-          console.log(FixListPush)
           setPolicyList(FixList)
           setLoading(false)
         } else {
@@ -179,6 +177,7 @@ const Market = props => {
   }
   // 购买保单
   const handleClickBuyInurance = data => {
+    console.log(data)
     if (ApproveStatus) {
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(library, OrderABI, OrderAddress)
@@ -190,7 +189,7 @@ const Market = props => {
           } else {
             Volume = toWei(
               new BigNumber(
-                (data.buy_volume * data.show_strikePrice).toFixed(6)
+                (data.buy_volume * (1 / data.show_strikePrice)).toFixed(6)
               ).toString(),
               data.collateral_decimals
             )
@@ -202,6 +201,7 @@ const Market = props => {
             Volume = toWei(data.buy_volume, data.collateral_decimals)
           }
         }
+        console.log(Volume)
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: account })
