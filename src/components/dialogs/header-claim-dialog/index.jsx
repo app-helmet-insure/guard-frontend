@@ -108,21 +108,6 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
             : '--'
         }
       />
-      {claimPools && claimPools.rewards2 && (
-        <LineData
-          title={claimPools && claimPools.rewards2}
-          value={
-            claimPools && claimPools.earned2
-              ? formatNumber(
-                  formatAmount(claimPools.earned2, claimPools.decimal, 6),
-                  formatAmount(claimPools.earned2) - 0 > 0
-                    ? claimPools.splitDigits
-                    : 0
-                )
-              : '--'
-          }
-        />
-      )}
       <Button
         type='primary'
         size='large'
