@@ -12,6 +12,8 @@ import { formatNumber } from 'accounting'
 import './index.less'
 import axios from 'axios'
 import {formatAmount} from '../../../utils/format'
+import BigNumber from 'bignumber.js'
+import {ChainId} from '../../../web3/address'
 
 const ShowData = props => {
   const { library, active, account } = useActiveWeb3React()
@@ -38,7 +40,15 @@ const ShowData = props => {
     Erc20ABI.abi,
     18
   )
-  const Data3 = 100000
+  const Data3Balance = getBalance(
+    '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699',
+    Erc20ABI.abi,
+    18,
+    ChainId.MATIC
+  )
+  // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
+  const Data3 = Data3Balance > 0 ? formatNumber(new BigNumber(4000000).minus(new BigNumber(Data3Balance)).plus(100000)) : '-'
   const getData2 = async () => {
     const Datas = await getShortTokenValue(library)
     setData2Price(formatAmount(Datas, 0))
@@ -83,7 +93,7 @@ const ShowData = props => {
             <span>
               <FormattedMessage id="insurance_text3" />
             </span>
-            <span>{formatNumber(Data3)}</span>
+            <span>{Data3}</span>
           </p>
         </div>
         <div className="insurance_data_icon4 data_item">
