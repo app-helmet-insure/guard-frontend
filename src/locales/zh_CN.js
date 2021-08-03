@@ -54,6 +54,8 @@ export default {
   stake_chain_dialog_text5: '奖励',
   stake_chain_dialog_text6: '赎回 & 领取奖励',
   stake_chain_dialog_text7: '授权',
+  stake_chain_dialog_text8: 'Powered By Helmet Team',
+  header_claim_dialog_text1: '领取 Guard',
   waiting_confirmation_dialog_text1: '等待确认',
   waiting_confirmation_dialog_text2: '请在钱包中确认进行交易',
   successful_purchase_dialog_text1: '交易成功',
@@ -67,7 +69,8 @@ export default {
   submit_insurance_dialog_text5:
     '选择现金交割合约会将你的〔对应期权的质押币种〕在pancake交易成需要行权的xxx 〔行权需要币种〕',
   submit_insurance_dialog_text6: '提交',
-  submit_insurance_dialog_text7: '保险交易存在一定风险，请在资金承受范围内投资并做好研究，Helmet团队将不会对您的投资损失负责。',
+  submit_insurance_dialog_text7:
+    '保险交易存在一定风险，请在资金承受范围内投资并做好研究，Helmet团队将不会对您的投资损失负责。',
   home_text1: '基于MATIC的加密资产保险交易平台',
   disconnected_wallet_dialog_text1: '账户',
   disconnected_wallet_dialog_text2: '复制账户地址',
