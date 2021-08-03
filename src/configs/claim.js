@@ -3,7 +3,7 @@ import PolygonscanClaim from '../web3/abi/PolygonscanClaim.json'
 export default [
   {
     name: 'Matic',
-    address: '0xb962B860f880Bb461EEB323Fc33dC9eFce157dAC',
+    address: '0xf8f87399A2fF0064194F61e567A54cb1308d7bE8',
     rewards1: 'Guard',
     rewards2: null,
     abi: PolygonscanClaim,
