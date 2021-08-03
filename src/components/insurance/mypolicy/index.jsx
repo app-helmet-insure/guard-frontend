@@ -15,6 +15,7 @@ import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import { Pagination } from 'antd'
 import moment from 'moment'
+import Loading from '../../loading'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
@@ -321,120 +322,127 @@ const MyPolicy = props => {
       <h2 className="insurance_mypolicy_title">
         <FormattedMessage id="mypolicy_text1" />
       </h2>
-      <Skeleton active loading={loading}>
-        {PolicyList && PolicyList.length > 0 ? (
-          <div className="insurance_mypolicy_list">
-            {PolicyList.slice(MinNumber, MaxNumber).map((item, index) => (
-              <div className="insurance_mypolicy_item" key={item.bidID}>
-                <section>
-                  <div>
-                    <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
-                    <span className={item.type}>
-                      {item.callToken +
-                        ' ' +
-                        item.type +
-                        ' ' +
-                        item.show_strikePrice +
-                        ' ' +
-                        item.putToken}
-                    </span>
-                  </div>
-                  <div>
-                    <span>{item.show_expiry}</span>
-                    <span>ID: {item.bidID}</span>
-                  </div>
-                </section>
-                <section className="section_pc">
-                  <div>
-                    <span>
-                      <FormattedMessage id="mypolicy_text2" />
-                    </span>
-                    <span>{item.show_strikePrice}</span>
-                    <span>{item.putToken}</span>
-                  </div>
-                  <div>
-                    <span>
-                      <FormattedMessage id="mypolicy_text3" />
-                    </span>
-                    <span>{item.show_volume}</span>
-                    <span>{item.callToken}</span>
-                  </div>
-                </section>
-                <section className="section_pc">
-                  <div>
-                    <span>
-                      <FormattedMessage id="mypolicy_text4" />
-                    </span>
-                    <span>{Number(item.show_price).toFixed(8)}</span>
-                    <span>{item.settleToken_symbol}</span>
-                  </div>
-                  <div>
-                    <span>
-                      <FormattedMessage id="mypolicy_text5" />
-                    </span>
-                    <span>{item.premium}</span>
-                    <span>{item.settleToken_symbol}</span>
-                  </div>
-                </section>
-                <section className="section_h5">
-                  <div>
-                    <span className="mypolicy_price_title">
-                      <FormattedMessage id="mypolicy_text2" />
-                    </span>
-                    <p>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {PolicyList && PolicyList.length > 0 ? (
+            <div className="insurance_mypolicy_list">
+              {PolicyList.slice(MinNumber, MaxNumber).map((item, index) => (
+                <div className="insurance_mypolicy_item" key={item.bidID}>
+                  <section>
+                    <div>
+                      <img
+                        src={item.type === 'Call' ? CallSvg : PutSvg}
+                        alt=""
+                      />
+                      <span className={item.type}>
+                        {item.callToken +
+                          ' ' +
+                          item.type +
+                          ' ' +
+                          item.show_strikePrice +
+                          ' ' +
+                          item.putToken}
+                      </span>
+                    </div>
+                    <div>
+                      <span>{item.show_expiry}</span>
+                      <span>ID: {item.bidID}</span>
+                    </div>
+                  </section>
+                  <section className="section_pc">
+                    <div>
+                      <span>
+                        <FormattedMessage id="mypolicy_text2" />
+                      </span>
                       <span>{item.show_strikePrice}</span>
                       <span>{item.putToken}</span>
-                    </p>
-                  </div>
-                  <div>
-                    <span className="mypolicy_price_title">
-                      <FormattedMessage id="mypolicy_text4" />
-                    </span>
-                    <p>
-                      <span>{Number(item.show_price).toFixed(8)}</span>
-                      <span>{item.settleToken_symbol}</span>
-                    </p>
-                  </div>
-                </section>
-                <section className="section_h5">
-                  <div>
-                    <span className="mypolicy_price_title">
-                      <FormattedMessage id="mypolicy_text3" />
-                    </span>
-                    <p>
+                    </div>
+                    <div>
+                      <span>
+                        <FormattedMessage id="mypolicy_text3" />
+                      </span>
                       <span>{item.show_volume}</span>
                       <span>{item.callToken}</span>
-                    </p>
-                  </div>
-                  <div>
-                    <span className="mypolicy_price_title">
-                      <FormattedMessage id="mypolicy_text5" />
-                    </span>
-                    <p>
+                    </div>
+                  </section>
+                  <section className="section_pc">
+                    <div>
+                      <span>
+                        <FormattedMessage id="mypolicy_text4" />
+                      </span>
+                      <span>{Number(item.show_price).toFixed(8)}</span>
+                      <span>{item.settleToken_symbol}</span>
+                    </div>
+                    <div>
+                      <span>
+                        <FormattedMessage id="mypolicy_text5" />
+                      </span>
                       <span>{item.premium}</span>
                       <span>{item.settleToken_symbol}</span>
-                    </p>
-                  </div>
-                </section>
-                <section>
-                  <button onClick={() => handleClickWithDraw(item)}>
-                    <FormattedMessage id="mypolicy_text6" />
-                  </button>
-                </section>
-              </div>
-            ))}
-            <Pagination
-              className="paginaction"
-              current={Page}
-              pageSize={PageSize}
-              total={PolicyList.length}
-              onChange={value => onChangePage(value)}
-            />
-          </div>
-        ) : (
-          <img src={NoData} alt="" className="nodata" />
-        )}
-      </Skeleton>
+                    </div>
+                  </section>
+                  <section className="section_h5">
+                    <div>
+                      <span className="mypolicy_price_title">
+                        <FormattedMessage id="mypolicy_text2" />
+                      </span>
+                      <p>
+                        <span>{item.show_strikePrice}</span>
+                        <span>{item.putToken}</span>
+                      </p>
+                    </div>
+                    <div>
+                      <span className="mypolicy_price_title">
+                        <FormattedMessage id="mypolicy_text4" />
+                      </span>
+                      <p>
+                        <span>{Number(item.show_price).toFixed(8)}</span>
+                        <span>{item.settleToken_symbol}</span>
+                      </p>
+                    </div>
+                  </section>
+                  <section className="section_h5">
+                    <div>
+                      <span className="mypolicy_price_title">
+                        <FormattedMessage id="mypolicy_text3" />
+                      </span>
+                      <p>
+                        <span>{item.show_volume}</span>
+                        <span>{item.callToken}</span>
+                      </p>
+                    </div>
+                    <div>
+                      <span className="mypolicy_price_title">
+                        <FormattedMessage id="mypolicy_text5" />
+                      </span>
+                      <p>
+                        <span>{item.premium}</span>
+                        <span>{item.settleToken_symbol}</span>
+                      </p>
+                    </div>
+                  </section>
+                  <section>
+                    <button onClick={() => handleClickWithDraw(item)}>
+                      <FormattedMessage id="mypolicy_text6" />
+                    </button>
+                  </section>
+                </div>
+              ))}
+              <Pagination
+                className="paginaction"
+                current={Page}
+                pageSize={PageSize}
+                total={PolicyList.length}
+                onChange={value => onChangePage(value)}
+              />
+            </div>
+          ) : (
+            <img src={NoData} alt="" className="nodata" />
+          )}
+        </>
+      )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}

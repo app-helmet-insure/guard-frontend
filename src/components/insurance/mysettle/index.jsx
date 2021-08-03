@@ -19,6 +19,7 @@ import {
   processResult,
   getOnlyMultiCallProvider,
 } from '../../../web3/multicall'
+import Loading from '../../loading'
 import { Contract } from 'ethers-multicall-x'
 import { getRpcUrl } from '../../../web3/address'
 import { Pagination } from 'antd'
@@ -55,12 +56,12 @@ const MySettle = props => {
   }
   // 保单数据
   const getPolicyList = () => {
-    getInsuranceList().then(async res => {
+    getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
         const multicallPorvider = getOnlyMultiCallProvider(137)
-        ReturnList.forEach(async item => {
+        ReturnList.forEach(item => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
@@ -124,70 +125,76 @@ const MySettle = props => {
                 })
               }
               let ShortMinusLong = Number(shortBalance) - Number(longBalance)
+
               if (Number(ShortMinusLong) > 0) {
                 ShortMinusLong = ShortMinusLong.toString()
-                console.log(ShortMinusLong, typeof ShortMinusLong)
-                try {
-                  getContract(library, FactoryABI, FactoryAddress)
-                    .methods.settleable(item.short, toWei(ShortMinusLong + ''))
-                    .call()
-                    .then(SettleInfo => {
-                      console.log(SettleInfo)
-                      FixListPush.push({
-                        type,
-                        expiry: item.expiry,
-                        long: item.long,
-                        short: item.short,
-                        show_strikePrice: fromWei(
-                          item.strikePrice,
-                          strikeprice_decimals
-                        ),
-                        strikePrice: item.strikePrice,
-                        collateral: item.collateral,
-                        collateral_symbol: collateral_symbol,
-                        collateral_decimals: collateral_decimals,
-                        underlying: item.underlying,
-                        underlying_symbol: underlying_symbol,
-                        underlying_decimals: underlying_decimals,
-                        callToken: insurance,
-                        putToken: indextoken,
-                        claimBalance: 0,
-                        col: fromWei(
-                          SettleInfo.col,
-                          CurrentInsurance.collateral_decimals
-                        ),
-                        fee: fromWei(
-                          SettleInfo.fee,
-                          CurrentInsurance.settleToken_decimals
-                        ),
-                        und: fromWei(
-                          SettleInfo.und,
-                          CurrentInsurance.underlying_decimals
-                        ),
-                      })
+                getContract(library, FactoryABI, FactoryAddress)
+                  .methods.settleable(item.short, toWei(ShortMinusLong + ''))
+                  .call()
+                  .then(SettleInfo => {
+                    console.log(
+                      ShortMinusLong,
+                      Number(shortBalance),
+                      Number(longBalance),
+                      SettleInfo,
+                      item
+                    )
+                    FixListPush.push({
+                      type,
+                      expiry: item.expiry,
+                      long: item.long,
+                      short: item.short,
+                      show_strikePrice: fromWei(
+                        item.strikePrice,
+                        strikeprice_decimals
+                      ),
+                      strikePrice: item.strikePrice,
+                      collateral: item.collateral,
+                      collateral_symbol: collateral_symbol,
+                      collateral_decimals: collateral_decimals,
+                      underlying: item.underlying,
+                      underlying_symbol: underlying_symbol,
+                      underlying_decimals: underlying_decimals,
+                      callToken: insurance,
+                      putToken: indextoken,
+                      claimBalance: 0,
+                      col: fromWei(
+                        SettleInfo.col,
+                        CurrentInsurance.collateral_decimals
+                      ),
+                      fee: fromWei(
+                        SettleInfo.fee,
+                        CurrentInsurance.settleToken_decimals
+                      ),
+                      und: fromWei(
+                        SettleInfo.und,
+                        CurrentInsurance.underlying_decimals
+                      ),
                     })
-                } catch (error) {
-                  console.log(error)
-                }
+                    const newobj = {}
+                    const newArr = []
+                    console.log(FixListPush)
+                    FixListPush.forEach(items => {
+                      if (
+                        !newobj[
+                          items.collateral + items.underlying + items.short
+                        ]
+                      ) {
+                        newobj[
+                          items.collateral + items.underlying + items.short
+                        ] = 1
+                        newArr.push(items)
+                      }
+                    })
+                    const FixList = newArr.filter(
+                      newItem =>
+                        Number(newItem.col) + Number(newItem.claimBalance) >
+                          0 || Number(newItem.und) > 0
+                    )
+                    setSettleList(FixList)
+                    setLoading(false)
+                  })
               }
-              const newobj = {}
-              const newArr = []
-
-              FixListPush.forEach(items => {
-                if (
-                  !newobj[items.collateral + items.underlying + items.short]
-                ) {
-                  newobj[items.collateral + items.underlying + items.short] = 1
-                  newArr.push(items)
-                }
-              })
-              const FixList = newArr.filter(
-                newItem =>
-                  Number(newItem.col) + Number(newItem.claimBalance) > 0 ||
-                  Number(newItem.und) > 0
-              )
-              setSettleList(FixList)
-              setLoading(false)
             })
           }
         })
@@ -229,110 +236,121 @@ const MySettle = props => {
       <h2 className="insurance_mysettle_title">
         <FormattedMessage id="mysettle_text1" />
       </h2>
-      <Skeleton active loading={loading}>
-        {SettleList && SettleList.length > 0 ? (
-          <div className="insurance_mysettle_list">
-            {SettleList.map((item, index) => (
-              <div className="insurance_mysettle_item" key={index}>
-                <section>
-                  <div>
-                    <img src={item.type === 'Call' ? CallSvg : PutSvg} alt="" />
-                    <span className={item.type}>
-                      {item.callToken +
-                        ' ' +
-                        item.type +
-                        ' ' +
-                        item.show_strikePrice +
-                        ' ' +
-                        item.putToken}
-                    </span>
-                  </div>
-                </section>
-                <section className="mysettle_section_pc">
-                  <div>
-                    <span>
-                      <FormattedMessage id="mysettle_text2" />
-                    </span>
-                    <span>
-                      {item.type === 'Call'
-                        ? Number(item.col) + Number(item.claimBalance)
-                        : item.und}
-                    </span>
-                    <span>
-                      {item.type === 'Call'
-                        ? item.collateral_symbol
-                        : item.underlying_symbol}
-                    </span>
-                  </div>
-                </section>
-                <section className="mysettle_section_pc">
-                  <div>
-                    <span>
-                      <FormattedMessage id="mysettle_text3" />
-                    </span>
-                    <span>
-                      {item.type === 'Call'
-                        ? item.und
-                        : Number(item.col) + Number(item.claimBalance)}
-                    </span>
-                    <span>
-                      {item.type === 'Call'
-                        ? item.underlying_symbol
-                        : item.collateral_symbol}
-                    </span>
-                  </div>
-                </section>
-                <section className="mysettle_section_h5">
-                  <div>
-                    <span className="mysettle_price_title">
-                      <FormattedMessage id="mysettle_text2" />
-                    </span>
-                    <p>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {SettleList && SettleList.length > 0 ? (
+            <div className="insurance_mysettle_list">
+              {SettleList.map((item, index) => (
+                <div className="insurance_mysettle_item" key={index}>
+                  <section>
+                    <div>
+                      <img
+                        src={item.type === 'Call' ? CallSvg : PutSvg}
+                        alt=""
+                      />
+                      <span className={item.type}>
+                        {item.callToken +
+                          ' ' +
+                          item.type +
+                          ' ' +
+                          item.show_strikePrice +
+                          ' ' +
+                          item.putToken}
+                      </span>
+                    </div>
+                  </section>
+                  <section className="mysettle_section_pc">
+                    <div>
+                      <span>
+                        <FormattedMessage id="mysettle_text2" />
+                      </span>
                       <span>
                         {item.type === 'Call'
                           ? Number(item.col) + Number(item.claimBalance)
                           : item.und}
                       </span>
                       <span>
-                        {item.type === 'Call' ? item.callToken : item.putToken}
+                        {item.type === 'Call'
+                          ? item.collateral_symbol
+                          : item.underlying_symbol}
                       </span>
-                    </p>
-                  </div>
-                  <div>
-                    <span className="mysettle_price_title">
-                      <FormattedMessage id="mysettle_text3" />
-                    </span>
-                    <p>
+                    </div>
+                  </section>
+                  <section className="mysettle_section_pc">
+                    <div>
+                      <span>
+                        <FormattedMessage id="mysettle_text3" />
+                      </span>
                       <span>
                         {item.type === 'Call'
                           ? item.und
                           : Number(item.col) + Number(item.claimBalance)}
                       </span>
                       <span>
-                        {item.type === 'Call' ? item.callToken : item.putToken}
+                        {item.type === 'Call'
+                          ? item.underlying_symbol
+                          : item.collateral_symbol}
                       </span>
-                    </p>
-                  </div>
-                </section>
-                <section>
-                  <button onClick={() => handleClickClaimOrder(item)}>
-                    <FormattedMessage id="mysettle_text4" />
-                  </button>
-                </section>
-              </div>
-            ))}
-            <Pagination
-              className="paginaction"
-              current={Page}
-              pageSize={PageSize}
-              total={SettleList.length}
-              onChange={value => onChangePage(value)}
-            />
-          </div>
-        ) : (
-          <img src={NoData} alt="" className="nodata" />
-        )}
-      </Skeleton>
+                    </div>
+                  </section>
+                  <section className="mysettle_section_h5">
+                    <div>
+                      <span className="mysettle_price_title">
+                        <FormattedMessage id="mysettle_text2" />
+                      </span>
+                      <p>
+                        <span>
+                          {item.type === 'Call'
+                            ? Number(item.col) + Number(item.claimBalance)
+                            : item.und}
+                        </span>
+                        <span>
+                          {item.type === 'Call'
+                            ? item.callToken
+                            : item.putToken}
+                        </span>
+                      </p>
+                    </div>
+                    <div>
+                      <span className="mysettle_price_title">
+                        <FormattedMessage id="mysettle_text3" />
+                      </span>
+                      <p>
+                        <span>
+                          {item.type === 'Call'
+                            ? item.und
+                            : Number(item.col) + Number(item.claimBalance)}
+                        </span>
+                        <span>
+                          {item.type === 'Call'
+                            ? item.callToken
+                            : item.putToken}
+                        </span>
+                      </p>
+                    </div>
+                  </section>
+                  <section>
+                    <button onClick={() => handleClickClaimOrder(item)}>
+                      <FormattedMessage id="mysettle_text4" />
+                    </button>
+                  </section>
+                </div>
+              ))}
+              <Pagination
+                className="paginaction"
+                current={Page}
+                pageSize={PageSize}
+                total={SettleList.length}
+                onChange={value => onChangePage(value)}
+              />
+            </div>
+          ) : (
+            <img src={NoData} alt="" className="nodata" />
+          )}
+        </>
+      )}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}

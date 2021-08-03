@@ -14,6 +14,7 @@ import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import BigNumber from 'bignumber.js'
 import { Pagination } from 'antd'
+import Loading from '../../loading'
 import { numberFormat } from 'highcharts'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 
@@ -29,6 +30,7 @@ const Market = props => {
   const [PageSize, setPageSize] = useState(10)
   const [MinNumber, setMinNumber] = useState(0)
   const [MaxNumber, setMaxNumber] = useState(10)
+  const [loading, setLoading] = useState(true)
   const { InsuranceSymbol } = props
   const onSuccessClose = () => {
     setOpenSuccess(false)
@@ -147,6 +149,9 @@ const Market = props => {
           )
           console.log(FixListPush)
           setPolicyList(FixList)
+          setLoading(false)
+        } else {
+          setLoading(false)
         }
       }
     })
@@ -267,124 +272,131 @@ const Market = props => {
           <FormattedMessage id="insurance_text5" />
         </button>
       </div>
-      {PolicyList && PolicyList.length > 0 ? (
-        <div className="insurance_market_wrap">
-          <table className="insurance_market_table web_table">
-            <thead>
-              <tr>
-                <td>
-                  <FormattedMessage id="insurance_text18" />
-                </td>
-                <td>
-                  <FormattedMessage id="insurance_text19" />
-                  (GUARD)
-                </td>
-                <td>
-                  <FormattedMessage id="insurance_text20" />
-                </td>
-                <td>
-                  <FormattedMessage id="insurance_text21" />
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {PolicyList.slice(MinNumber, MaxNumber).map(item => (
-                <tr
-                  className="insurance_market_table_item"
-                  key={'web' + item.askID}
-                >
-                  <td>{item.show_ID}</td>
-                  <td>{item.premium.toFixed(8)}</td>
-                  <td>{item.show_volume}</td>
-                  <td>
-                    <input
-                      type="text"
-                      value={item.buy_volume}
-                      onChange={e => {
-                        item.buy_volume = e.target.value
-                      }}
-                    />
-                    <button
-                      onClick={() => handleClickBuyInurance(item)}
-                      className={
-                        Number(item.show_volume) === 0 ? 'hiddenButton' : ''
-                      }
-                    >
-                      {ApproveStatus ? (
-                        <FormattedMessage id="insurance_text22" />
-                      ) : (
-                        <FormattedMessage id="stake_chain_dialog_text7" />
-                      )}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="insurance_market_table h5_table">
-            {PolicyList.map(item => (
-              <div
-                className="insurance_market_table_item"
-                key={'h5' + item.askID}
-              >
-                <p>
-                  <span>
-                    <FormattedMessage id="insurance_text18" />:{' '}
-                  </span>
-                  <span>{item.show_ID}</span>
-                </p>
-                <div>
-                  <p>
-                    <span>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          {PolicyList && PolicyList.length > 0 ? (
+            <div className="insurance_market_wrap">
+              <table className="insurance_market_table web_table">
+                <thead>
+                  <tr>
+                    <td>
+                      <FormattedMessage id="insurance_text18" />
+                    </td>
+                    <td>
                       <FormattedMessage id="insurance_text19" />
                       (GUARD)
-                    </span>
-                    <span> {item.premium.toFixed(8)}</span>
-                  </p>
-                  <p>
-                    <span>
+                    </td>
+                    <td>
                       <FormattedMessage id="insurance_text20" />
-                    </span>
-                    <span>{item.show_volume}</span>
-                  </p>
-                </div>
-                <section>
-                  <input
-                    type="text"
-                    value={item.buy_volume}
-                    onChange={e => {
-                      item.buy_volume = e.target.value
-                    }}
-                  />
-                  <button
-                    onClick={() => handleClickBuyInurance(item)}
-                    className={
-                      Number(item.show_volume) === 0 ? 'hiddenButton' : ''
-                    }
+                    </td>
+                    <td>
+                      <FormattedMessage id="insurance_text21" />
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {PolicyList.slice(MinNumber, MaxNumber).map(item => (
+                    <tr
+                      className="insurance_market_table_item"
+                      key={'web' + item.askID}
+                    >
+                      <td>{item.show_ID}</td>
+                      <td>{item.premium.toFixed(8)}</td>
+                      <td>{item.show_volume}</td>
+                      <td>
+                        <input
+                          type="text"
+                          value={item.buy_volume}
+                          onChange={e => {
+                            item.buy_volume = e.target.value
+                          }}
+                        />
+                        <button
+                          onClick={() => handleClickBuyInurance(item)}
+                          className={
+                            Number(item.show_volume) === 0 ? 'hiddenButton' : ''
+                          }
+                        >
+                          {ApproveStatus ? (
+                            <FormattedMessage id="insurance_text22" />
+                          ) : (
+                            <FormattedMessage id="stake_chain_dialog_text7" />
+                          )}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="insurance_market_table h5_table">
+                {PolicyList.map(item => (
+                  <div
+                    className="insurance_market_table_item"
+                    key={'h5' + item.askID}
                   >
-                    {ApproveStatus ? (
-                      <FormattedMessage id="insurance_text22" />
-                    ) : (
-                      <FormattedMessage id="stake_chain_dialog_text7" />
-                    )}
-                  </button>
-                </section>
+                    <p>
+                      <span>
+                        <FormattedMessage id="insurance_text18" />:{' '}
+                      </span>
+                      <span>{item.show_ID}</span>
+                    </p>
+                    <div>
+                      <p>
+                        <span>
+                          <FormattedMessage id="insurance_text19" />
+                          (GUARD)
+                        </span>
+                        <span> {item.premium.toFixed(8)}</span>
+                      </p>
+                      <p>
+                        <span>
+                          <FormattedMessage id="insurance_text20" />
+                        </span>
+                        <span>{item.show_volume}</span>
+                      </p>
+                    </div>
+                    <section>
+                      <input
+                        type="text"
+                        value={item.buy_volume}
+                        onChange={e => {
+                          item.buy_volume = e.target.value
+                        }}
+                      />
+                      <button
+                        onClick={() => handleClickBuyInurance(item)}
+                        className={
+                          Number(item.show_volume) === 0 ? 'hiddenButton' : ''
+                        }
+                      >
+                        {ApproveStatus ? (
+                          <FormattedMessage id="insurance_text22" />
+                        ) : (
+                          <FormattedMessage id="stake_chain_dialog_text7" />
+                        )}
+                      </button>
+                    </section>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          <Pagination
-            className="paginaction"
-            current={Page}
-            pageSize={PageSize}
-            total={PolicyList.length}
-            onChange={value => onChangePage(value)}
-          />
-        </div>
-      ) : (
-        <div className="nodata">
-          <img src={NoData} alt="" />
-        </div>
+              <Pagination
+                className="paginaction"
+                current={Page}
+                pageSize={PageSize}
+                total={PolicyList.length}
+                onChange={value => onChangePage(value)}
+              />
+            </div>
+          ) : (
+            <div className="nodata">
+              <img src={NoData} alt="" />
+            </div>
+          )}
+        </>
       )}
+
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}
