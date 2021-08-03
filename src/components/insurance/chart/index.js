@@ -187,7 +187,7 @@ export const Chart = props => {
         if (hour_data.token0.id === USDC_ADDRESS.toLowerCase()) {
           _price = hour_data.token0Price
         } else if (hour_data.token1.id === USDC_ADDRESS.toLowerCase()) {
-          _price = hour_data.token0Price
+          _price = hour_data.token1Price
         }
       }
       _price = new BigNumber(_price).toFixed(6, 1).toString() * 1
