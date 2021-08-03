@@ -70,7 +70,8 @@ export default {
     "Choosing a cash delivery contract will trade your 〔corresponding option's pledge currency〕 in pancake into XXX 〔currency required for exercise〕",
   submit_insurance_dialog_text6: 'Submit',
   home_text1: 'Crypto-assets insurance trading platform on MATIC',
-  submit_insurance_dialog_text7: 'Insurance policy trading is subject to both high market risk and volatility. Please, do your own research and full due diligence before even considering to invest your funds in. Helmet.insure will not be held responsible for any investment losses.',
+  submit_insurance_dialog_text7:
+    'Insurance policy trading is subject to both high market risk and volatility. Please, do your own research and full due diligence before even considering to invest your funds in. Helmet.insure will not be held responsible for any investment losses.',
   disconnected_wallet_dialog_text1: 'ACCOUNT',
   disconnected_wallet_dialog_text2: 'Copy Address',
   disconnected_wallet_dialog_text3: 'Switch Wallet',
@@ -80,7 +81,7 @@ export default {
     "We've detected that you need to switch your wallet's network from local to mainnet network for this Dapp.",
   switch_wallet_dialog_text3:
     '*Some wallets may not support changing networks. If you can not change networks in your wallet you may consider switching to a different wallet.',
-  switch_wallet_dialog_text4: 'Switch Wallet',
+  switch_wallet_dialog_text4: 'Switch Network',
   insurance_text1: 'Guard Price',
   insurance_text2: 'Policy Creation',
   insurance_text3: 'Guard Circulating Supply',

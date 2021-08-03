@@ -13,6 +13,7 @@ import OrderABI from '../../../web3/abi/Order.json'
 import Erc20ABI from '../../../web3/abi/ERC20.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import { Pagination } from 'antd'
 import moment from 'moment'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
@@ -26,6 +27,10 @@ const MyPolicy = props => {
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
+  const [Page, setPage] = useState(1)
+  const [PageSize, setPageSize] = useState(5)
+  const [MinNumber, setMinNumber] = useState(0)
+  const [MaxNumber, setMaxNumber] = useState(PageSize)
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -36,7 +41,16 @@ const MyPolicy = props => {
     const BidContracts = getContract(library, OrderABI, OrderAddress)
     return await BidContracts.methods.bids(bidID).call()
   }
-
+  const onChangePage = value => {
+    setPage(value)
+    if (value <= 1) {
+      setMinNumber(0)
+      setMaxNumber(PageSize)
+    } else {
+      setMinNumber((value - 1) * PageSize)
+      setMaxNumber((value - 1) * PageSize + PageSize)
+    }
+  }
   // 保单数据
   const getPolicyList = () => {
     getInsuranceList().then(res => {
@@ -310,7 +324,7 @@ const MyPolicy = props => {
       <Skeleton active loading={loading}>
         {PolicyList && PolicyList.length > 0 ? (
           <div className="insurance_mypolicy_list">
-            {PolicyList.map((item, index) => (
+            {PolicyList.slice(MinNumber, MaxNumber).map((item, index) => (
               <div className="insurance_mypolicy_item" key={item.bidID}>
                 <section>
                   <div>
@@ -409,6 +423,13 @@ const MyPolicy = props => {
                 </section>
               </div>
             ))}
+            <Pagination
+              className="paginaction"
+              current={Page}
+              pageSize={PageSize}
+              total={PolicyList.length}
+              onChange={value => onChangePage(value)}
+            />
           </div>
         ) : (
           <img src={NoData} alt="" className="nodata" />

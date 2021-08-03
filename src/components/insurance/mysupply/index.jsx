@@ -15,10 +15,11 @@ import { getTokenName } from '../../../web3/address'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
+import { Pagination } from 'antd'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 import './index.less'
 import moment from 'moment'
-import {Skeleton} from 'antd'
+import { Skeleton } from 'antd'
 
 const MySupply = props => {
   const [SupplyList, setSupplyList] = useState([])
@@ -26,6 +27,10 @@ const MySupply = props => {
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
+  const [Page, setPage] = useState(1)
+  const [PageSize, setPageSize] = useState(5)
+  const [MinNumber, setMinNumber] = useState(0)
+  const [MaxNumber, setMaxNumber] = useState(PageSize)
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -34,6 +39,16 @@ const MySupply = props => {
   }
   const goMining = () => {
     props.history.push('/mining')
+  }
+  const onChangePage = value => {
+    setPage(value)
+    if (value <= 1) {
+      setMinNumber(0)
+      setMaxNumber(PageSize)
+    } else {
+      setMinNumber((value - 1) * PageSize)
+      setMaxNumber((value - 1) * PageSize + PageSize)
+    }
   }
   // 保单数据
   const getPolicyList = () => {
@@ -190,7 +205,7 @@ const MySupply = props => {
       <Skeleton active loading={loading}>
         {SupplyList && SupplyList.length > 0 ? (
           <div className="insurance_mysupply_list">
-            {SupplyList.map(item => (
+            {SupplyList.slice(MinNumber, MaxNumber).map(item => (
               <div className="insurance_mysupply_item" key={item.askID}>
                 <section>
                   <div>
@@ -303,6 +318,13 @@ const MySupply = props => {
                 </section>
               </div>
             ))}
+            <Pagination
+              className="paginaction"
+              current={Page}
+              pageSize={PageSize}
+              total={SupplyList.length}
+              onChange={value => onChangePage(value)}
+            />
           </div>
         ) : (
           <img src={NoData} alt="" className="nodata" />
