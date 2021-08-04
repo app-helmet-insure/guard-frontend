@@ -55,6 +55,8 @@ export default {
   stake_chain_dialog_text5: 'Rewards',
   stake_chain_dialog_text6: 'Unstake & Claim',
   stake_chain_dialog_text7: 'Approve',
+  stake_chain_dialog_text8: 'Powered By Helmet Team',
+  header_claim_dialog_text1: 'Claim Guard',
   waiting_confirmation_dialog_text1: 'Waiting for confirmation',
   waiting_confirmation_dialog_text2:
     'Please confirm the transaction in your wallet',
