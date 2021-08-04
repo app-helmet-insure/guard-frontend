@@ -121,7 +121,6 @@ export const getLTPValue = (
       .all(promise_list)
       .then((data) => {
         data = processResult(data)
-        debugger
         const [
           token0_address,
           token1_address,
@@ -377,6 +376,9 @@ export const getMdxARP = async (miningPools) => {
     miningPools
   )
   // console.log('mdex2warPrice', mdex2warPrice)
+
+
+
 
   let apr = '0'
   if (lptValue > 0 && mdex2warPrice > 0) {
