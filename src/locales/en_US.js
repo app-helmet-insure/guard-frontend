@@ -125,4 +125,7 @@ export default {
   mysettle_text2: 'Denominated Asset',
   mysettle_text3: 'Underlying Asset',
   mysettle_text4: 'Withdraw',
+  insurance_tips:
+    'Your policy will expire at {time}. Please check the price before you activate your policy to avoid unnecessary loss.',
+  insurance_tips1: 'Confirm to get SHORT → GUARD Mining',
 }

@@ -123,4 +123,7 @@ export default {
   mysettle_text2: '计价资产',
   mysettle_text3: '基础资产',
   mysettle_text4: '取回',
+  insurance_tips:
+    '保险仅能在 {time} 前出险，过期后的保险不能出险。出险时要确认行权价格，避免造成其他损失。',
+  insurance_tips1: '发布保险可参与SHORT挖矿',
 }

@@ -84,7 +84,7 @@ const ShowData = props => {
             <span>
               <FormattedMessage id="insurance_text2" />
             </span>
-            <span>$ {Data2}</span>
+            <span>$ {formatNumber(Data2, 2)}</span>
           </p>
         </div>
         <div className="insurance_data_icon3 data_item">
