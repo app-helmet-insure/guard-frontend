@@ -22,7 +22,7 @@ export default [
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
     rewards2Address: '0x831753dd7087cac61ab5644b308642cc1c33dc13',
     // apr
-    valueAprToken: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174', // lpt*2
+    valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174', // usdc
@@ -45,7 +45,7 @@ export default [
     networkId: 137,
     mdexDaily: '300', // 奖励2的每日产量
     mdexPid: '', // 奖励2池子id
-    splitDigits: 4,
+    splitDigits: 8,
     cover: '', // Call看涨 Put看跌 空不展示
     strikeprice: '4288',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
