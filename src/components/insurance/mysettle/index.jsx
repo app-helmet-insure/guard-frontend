@@ -173,7 +173,6 @@ const MySettle = props => {
                     })
                     const newobj = {}
                     const newArr = []
-                    console.log(FixListPush)
                     FixListPush.forEach(items => {
                       if (
                         !newobj[
@@ -194,6 +193,26 @@ const MySettle = props => {
                     setSettleList(FixList)
                     setLoading(false)
                   })
+              } else {
+                const newobj = {}
+                const newArr = []
+                FixListPush.forEach(items => {
+                  if (
+                    !newobj[items.collateral + items.underlying + items.short]
+                  ) {
+                    newobj[
+                      items.collateral + items.underlying + items.short
+                    ] = 1
+                    newArr.push(items)
+                  }
+                })
+                const FixList = newArr.filter(
+                  newItem =>
+                    Number(newItem.col) + Number(newItem.claimBalance) > 0 ||
+                    Number(newItem.und) > 0
+                )
+                setSettleList(FixList)
+                setLoading(false)
               }
             })
           }
