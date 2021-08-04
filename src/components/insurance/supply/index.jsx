@@ -12,7 +12,7 @@ import './index.less'
 import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
-import { toFixed } from 'accounting'
+import { getMDexPrice } from '../../../hooks/mining'
 import BigNumber from 'bignumber.js'
 import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
@@ -56,10 +56,12 @@ const Supply = props => {
         Erc20ABI.abi,
         CurrentInsurance.collateral_decimals_number
       ) || 0
+
   const currentIndexPrice = async () => {
     const prices = await useIndexPrice(library, CurrentInsurance)
     setIndexPrice(prices)
   }
+
   const currentGuardPrice = async () => {
     const calldata = {
       collateral_chainid: 137,
@@ -332,7 +334,12 @@ const Supply = props => {
               setInsuranceVolume(e.target.value)
             }}
           />
-          <span>{CurrentInsurance.collateral_symbol}</span>
+          <p>
+            <span className="max" onClick={() => setInsuranceVolume(Balance)}>
+              Max
+            </span>
+            <span className="symbol">{CurrentInsurance.collateral_symbol}</span>
+          </p>
         </div>
         <p className="left">
           <FormattedMessage id="insurance_text9" />

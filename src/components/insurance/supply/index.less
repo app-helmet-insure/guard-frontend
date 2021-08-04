@@ -95,13 +95,33 @@
           border: 1px solid #4364e8;
         }
       }
-      > span {
+      p {
         position: absolute;
-        right: 10px;
-        font-size: 14px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        color: #919aa6;
-        line-height: 15px;
+        display: flex;
+        align-items: center;
+        margin: 0 10px 0 0;
+        right: 0;
+        .max {
+          min-width: 44px;
+          min-height: 24px;
+          padding: 4px 8px;
+          background: rgba(67, 100, 232, 0.2);
+          border-radius: 5px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #4364e8;
+          margin-right: 10px;
+          cursor: pointer;
+          &:hover {
+            border: 1px solid #4364e8;
+          }
+        }
+        > .symbol {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: #919aa6;
+          line-height: 15px;
+        }
       }
     }
     .left {
@@ -215,7 +235,7 @@
           border: 1px solid #4364e8;
         }
       }
-       > span {
+      > span {
         position: absolute;
         right: 10px;
         font-size: 14px;

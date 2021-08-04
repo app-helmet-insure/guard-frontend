@@ -1,7 +1,13 @@
 import Web3 from 'web3'
 import { useContext, useEffect, useMemo, useState } from 'react'
 import PairABI from '../web3/abi/Pair.json'
-import { Token, Route, Pair, TokenAmount } from '@dinoswap/quickswap-sdk'
+import {
+  Token,
+  Route,
+  Pair,
+  TokenAmount,
+  Fetcher,
+} from '@dinoswap/quickswap-sdk'
 import { getContract, useActiveWeb3React } from '../web3'
 import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { formatAmount } from '../utils/format'
@@ -10,6 +16,8 @@ import { getHttpWeb3 } from '../web3'
 import ERC20_ABI from '../web3/abi/ERC20.json'
 import axios from 'axios'
 import { fromWei, toWei } from 'web3-utils'
+import { getNetwork } from '@ethersproject/networks'
+import { getDefaultProvider } from '@ethersproject/providers'
 import {
   getInsuranceList,
   getCurrentInsurance,
@@ -17,6 +25,7 @@ import {
 } from '../configs/insurance'
 export const pairContract = (library, address) =>
   getContract(library, PairABI.abi, address)
+
 export const useIndexPrice = async (library, data) => {
   const {
     collateral_chainid,
@@ -50,7 +59,6 @@ export const useIndexPrice = async (library, data) => {
     const Contracts = pairContract(library, address)
     // 获取getReserves
     const result = await Contracts.methods.getReserves().call()
-
     const balances = TOKEN1.sortsBefore(TOKEN2)
       ? [result.reserve0, result.reserve1]
       : [result.reserve1, result.reserve0]
@@ -155,7 +163,7 @@ export const getShortTokenValue = library =>
         UnderlyingAddress: item.underlying,
       })
       if (CurrentInsurance) {
-        const {type, insurance, collateral_decimals} = CurrentInsurance
+        const { type, insurance, collateral_decimals } = CurrentInsurance
         item.type = type
         item.insurance = insurance
         item.asks.forEach(itemAsk => {
@@ -172,14 +180,19 @@ export const getShortTokenValue = library =>
     })
     let CallValue = 0
     const CallList = ShortList.filter(item => item.type === 'Call')
-    return Promise.all(CallList.map((item, index) => {
-      const CurrentInsurance = getCurrentInsurance({
-        CollateralAddress: item.collateral,
-        UnderlyingAddress: item.underlying,
+    return Promise.all(
+      CallList.map((item, index) => {
+        const CurrentInsurance = getCurrentInsurance({
+          CollateralAddress: item.collateral,
+          UnderlyingAddress: item.underlying,
+        })
+        return getPrice(library, CurrentInsurance)
       })
-      return getPrice(library, CurrentInsurance)
-    })).then(price_list => {
-      CallValue = price_list.reduce((sum, price, index) => sum + price * CallList[index].show_volume, 0)
+    ).then(price_list => {
+      CallValue = price_list.reduce(
+        (sum, price, index) => sum + price * CallList[index].show_volume,
+        0
+      )
       return CallValue + PutValue
     })
   })
