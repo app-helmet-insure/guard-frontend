@@ -117,12 +117,6 @@ const MyPolicy = props => {
                 volume: itemAsk.volume,
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
-                premium: new BigNumber(
-                  (
-                    fromWei(itemAsk.price, settleToken_decimals) *
-                    fromWei(itemAsk.volume, collateral_decimals)
-                  ).toFixed(8)
-                ).toString(),
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               AskAssign.push(AllItem)
@@ -148,6 +142,12 @@ const MyPolicy = props => {
                   bidID: itemBid.bidID,
                   volume: itemAsks.volume,
                   show_volume: fromWei(itemBid.volume, collateral_decimals),
+                  premium: new BigNumber(
+                    (
+                      itemAsks.show_price *
+                      fromWei(itemBid.volume, collateral_decimals)
+                    ).toFixed(8)
+                  ).toString(),
                 }
                 const ReturnItem = Object.assign(ResultItemBid, itemAsks)
                 if (ReturnItem.type === 'Put') {
@@ -160,6 +160,7 @@ const MyPolicy = props => {
                     ReturnItem.show_volume
                   ).toFixed(8)
                 }
+
                 BidAssign.push(ReturnItem)
               }
             })
