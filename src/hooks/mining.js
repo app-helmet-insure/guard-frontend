@@ -297,7 +297,6 @@ export const getAPR = async (
     lptTotalValue = lptValue
   }
 
-
   // 奖励转换后的价格
   const [rewardsTotalPrice] = await getMDexPrice(
     miningPools.rewards1Address,
@@ -306,8 +305,6 @@ export const getAPR = async (
     miningPools.rewardsAprPath,
     miningPools
   )
-
-  // console.log('rewardsTotalPrice', rewardsTotalPrice)
 
   // 价格*量 = 奖励总价值
   const rewardsTotalValue = new BigNumber(rewardsTotalPrice)
@@ -372,7 +369,7 @@ export const getMdxARP = async (miningPools) => {
 
 
   const [mdex2warPrice] = getMDexPrice(
-    MDEX_ADDRESS,
+    miningPools.rewards2Address,
     miningPools.quickToken,
     miningPools.mdexDaily,
     miningPools.rewardsAprPath,
