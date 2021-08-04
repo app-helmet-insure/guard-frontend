@@ -1,58 +1,58 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import './index.less'
-import { FormattedMessage } from 'react-intl'
+import React, { useState, useEffect, useMemo } from "react";
+import "./index.less";
+import { FormattedMessage } from "react-intl";
 import {
   getCurrentInsurance,
   getInsuranceList,
-} from '../../../configs/insurance'
-import NoData from '../../../assets/images/insurance/nodata.svg'
-import { useActiveWeb3React, getContract } from '../../../web3'
-import { toWei, fromWei } from 'web3-utils'
-import OrderABI from '../../../web3/abi/Order.json'
-import Erc20ABI from '../../../web3/abi/ERC20.json'
-import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
-import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
-import BigNumber from 'bignumber.js'
-import { Pagination } from 'antd'
-import Loading from '../../loading'
-import { numberFormat } from 'highcharts'
-const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
-
-const Market = props => {
-  const [InsuranceType, setInsuranceType] = useState('Call')
-  const [PolicyList, setPolicyList] = useState([])
-  const [ApproveStatus, setApproveStatus] = useState(false)
-  const { library, active, account } = useActiveWeb3React()
-  const [OpenWaiting, setOpenWaiting] = useState(false)
-  const [OpenSuccess, setOpenSuccess] = useState(false)
-  const [Page, setPage] = useState(1)
-  const [PageSize, setPageSize] = useState(10)
-  const [MinNumber, setMinNumber] = useState(0)
-  const [MaxNumber, setMaxNumber] = useState(10)
-  const [loading, setLoading] = useState(true)
-  const { InsuranceSymbol } = props
+} from "../../../configs/insurance";
+import NoData from "../../../assets/images/insurance/nodata.svg";
+import { useActiveWeb3React, getContract } from "../../../web3";
+import { toWei, fromWei } from "web3-utils";
+import OrderABI from "../../../web3/abi/Order.json";
+import Erc20ABI from "../../../web3/abi/ERC20.json";
+import WaitingConfirmationDialog from "../../dialogs/waiting-confirmation-dialog";
+import SuccessfulPurchaseDialog from "../../dialogs/successful-purchase-dialog";
+import BigNumber from "bignumber.js";
+import { Pagination } from "antd";
+import Loading from "../../loading";
+import { numberFormat } from "highcharts";
+const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
+import Tips from "../../../assets/images/insurance/tips.svg";
+const Market = (props) => {
+  const [InsuranceType, setInsuranceType] = useState("Call");
+  const [PolicyList, setPolicyList] = useState([]);
+  const [ApproveStatus, setApproveStatus] = useState(false);
+  const { library, active, account } = useActiveWeb3React();
+  const [OpenWaiting, setOpenWaiting] = useState(false);
+  const [OpenSuccess, setOpenSuccess] = useState(false);
+  const [Page, setPage] = useState(1);
+  const [PageSize, setPageSize] = useState(10);
+  const [MinNumber, setMinNumber] = useState(0);
+  const [MaxNumber, setMaxNumber] = useState(10);
+  const [loading, setLoading] = useState(true);
+  const { InsuranceSymbol } = props;
   const onSuccessClose = () => {
-    setOpenSuccess(false)
-  }
+    setOpenSuccess(false);
+  };
   const onWaitClose = () => {
-    setOpenWaiting(false)
-  }
-  const onChangePage = value => {
-    setPage(value)
+    setOpenWaiting(false);
+  };
+  const onChangePage = (value) => {
+    setPage(value);
     if (value <= 1) {
-      setMinNumber(0)
-      setMaxNumber(10)
+      setMinNumber(0);
+      setMaxNumber(10);
     } else {
-      setMinNumber((value - 1) * 10)
-      setMaxNumber((value - 1) * 10 + 10)
+      setMinNumber((value - 1) * 10);
+      setMaxNumber((value - 1) * 10 + 10);
     }
-  }
+  };
   // 保单数据
   const getPolicyList = () => {
     const CurrentInsurance = getCurrentInsurance({
       Type: InsuranceType,
       Insurance: InsuranceSymbol,
-    })
+    });
     const {
       type,
       insurance,
@@ -65,21 +65,21 @@ const Market = props => {
       settleToken_symbol,
       settleToken_decimals,
       strikeprice_decimals,
-    } = CurrentInsurance
-    getInsuranceList().then(res => {
+    } = CurrentInsurance;
+    getInsuranceList().then((res) => {
       if (res && res.data.data.options) {
-        const ReturnList = res.data.data.options
-        const FixListPush = []
+        const ReturnList = res.data.data.options;
+        const FixListPush = [];
         const FilterList = ReturnList.filter(
-          item =>
+          (item) =>
             CurrentInsurance &&
             item.collateral.toLocaleLowerCase() ===
               collateral_address.toLocaleLowerCase() &&
             item.underlying.toLocaleLowerCase() ===
               underlying_address.toLocaleLowerCase()
-        )
+        );
         if (FilterList) {
-          FilterList.forEach(item => {
+          FilterList.forEach((item) => {
             const ResultItem = {
               type,
               expiry: item.expiry,
@@ -94,15 +94,15 @@ const Market = props => {
               underlying_symbol: underlying_symbol,
               underlying_decimals: underlying_decimals,
               currentInsurance: insurance,
-            }
-            item.asks.filter(itemAsk => {
+            };
+            item.asks.filter((itemAsk) => {
               const ResultItemAsk = {
                 askID: itemAsk.askID,
                 isCancel: itemAsk.isCancel,
                 show_ID:
                   itemAsk.seller.substr(0, 2) +
                   itemAsk.seller.substr(2, 3) +
-                  '...' +
+                  "..." +
                   itemAsk.seller.substr(-4).toUpperCase(),
                 settleToken_symbol,
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
@@ -111,166 +111,172 @@ const Market = props => {
                 premium:
                   fromWei(itemAsk.price, settleToken_decimals) *
                   fromWei(itemAsk.volume, collateral_decimals),
-              }
+              };
               if (itemAsk.binds.length) {
-                let number = 0
+                let number = 0;
                 if (itemAsk.binds.length) {
                   itemAsk.binds.forEach(
-                    itembid =>
+                    (itembid) =>
                       (number += Number(
                         fromWei(itembid.volume, collateral_decimals)
                       ))
-                  )
+                  );
                 }
                 ResultItem.show_volume =
-                  Number(fromWei(itemAsk.volume, collateral_decimals)) - number
+                  Number(fromWei(itemAsk.volume, collateral_decimals)) - number;
               } else {
                 ResultItem.show_volume = Number(
                   fromWei(itemAsk.volume, collateral_decimals)
-                )
+                );
               }
-              const AllItem = Object.assign(ResultItemAsk, ResultItem)
-              if (AllItem.type === 'Put') {
+              const AllItem = Object.assign(ResultItemAsk, ResultItem);
+              if (AllItem.type === "Put") {
                 AllItem.show_volume = Number(
                   AllItem.show_volume / (1 / AllItem.show_strikePrice)
-                ).toFixed(8)
+                ).toFixed(8);
               } else {
-                AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
+                AllItem.show_volume = Number(AllItem.show_volume).toFixed(8);
               }
               if (!AllItem.isCancel && AllItem.premium > 0.000000001) {
-                FixListPush.push(AllItem)
+                FixListPush.push(AllItem);
               }
-            })
-          })
+            });
+          });
 
           const FixList = FixListPush.sort(
             (a, b) => Number(b.show_volume) - Number(a.show_volume)
-          )
-          setPolicyList(FixList)
-          setLoading(false)
+          );
+          setPolicyList(FixList);
+          setLoading(false);
         } else {
-          setLoading(false)
+          setLoading(false);
         }
       }
-    })
-  }
+    });
+  };
   // 获取授权状态
-  const getApproveStatus = data => {
+  const getApproveStatus = (data) => {
     const CurrentInsurance = getCurrentInsurance({
       Type: InsuranceType,
       Insurance: InsuranceSymbol,
-    })
-    const { settleToken_address } = CurrentInsurance
+    });
+    const { settleToken_address } = CurrentInsurance;
     const Erc20Contracts = getContract(
       library,
       Erc20ABI.abi,
       settleToken_address
-    )
+    );
     Erc20Contracts.methods
       .allowance(account, OrderAddress)
       .call()
-      .then(res => {
+      .then((res) => {
         if (Number(res) > 0) {
-          setApproveStatus(true)
+          setApproveStatus(true);
         }
-      })
-  }
+      });
+  };
   // 购买保单
-  const handleClickBuyInurance = data => {
-    console.log(data)
+  const handleClickBuyInurance = (data) => {
+    console.log(data);
     if (ApproveStatus) {
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
-        const BuyContracts = getContract(library, OrderABI, OrderAddress)
-        const AskID = data.askID
-        let Volume
-        if (data.type === 'Put') {
+        const BuyContracts = getContract(library, OrderABI, OrderAddress);
+        const AskID = data.askID;
+        let Volume;
+        if (data.type === "Put") {
           if (data.buy_volume >= data.show_volume) {
-            Volume = data.volume
+            Volume = data.volume;
           } else {
             Volume = toWei(
               new BigNumber(
                 (data.buy_volume * (1 / data.show_strikePrice)).toFixed(6)
               ).toString(),
               data.collateral_decimals
-            )
+            );
           }
         } else {
           if (data.buy_volume >= data.show_volume) {
-            Volume = data.volume
+            Volume = data.volume;
           } else {
-            Volume = toWei(data.buy_volume, data.collateral_decimals)
+            Volume = toWei(data.buy_volume, data.collateral_decimals);
           }
         }
-        console.log(Volume)
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: account })
-          .on('transactionHash', hash => {
-            setOpenWaiting(true)
+          .on("transactionHash", (hash) => {
+            setOpenWaiting(true);
           })
-          .on('receipt', (_, receipt) => {
-            setOpenWaiting(false)
-            setOpenSuccess(true)
-            getPolicyList()
+          .on("receipt", (_, receipt) => {
+            setOpenWaiting(false);
+            setOpenSuccess(true);
+            getPolicyList();
           })
-          .on('error', ereor => {
-            setOpenWaiting(false)
-          })
+          .on("error", (ereor) => {
+            setOpenWaiting(false);
+          });
       }
     } else {
       const CurrentInsurance = getCurrentInsurance({
         Type: InsuranceType,
         Insurance: InsuranceSymbol,
-      })
-      const { settleToken_address } = CurrentInsurance
+      });
+      const { settleToken_address } = CurrentInsurance;
       const Erc20Contracts = getContract(
         library,
         Erc20ABI.abi,
         settleToken_address
-      )
+      );
       const Infinitys =
-        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
       Erc20Contracts.methods
         .approve(OrderAddress, Infinitys)
         .send({ from: account })
-        .on('transactionHash', hash => {
-          setOpenWaiting(true)
+        .on("transactionHash", (hash) => {
+          setOpenWaiting(true);
         })
-        .on('receipt', (_, receipt) => {
-          setOpenWaiting(false)
-          setOpenSuccess(true)
-          getApproveStatus()
+        .on("receipt", (_, receipt) => {
+          setOpenWaiting(false);
+          setOpenSuccess(true);
+          getApproveStatus();
         })
-        .on('error', ereor => {
-          setOpenWaiting(false)
-        })
+        .on("error", (ereor) => {
+          setOpenWaiting(false);
+        });
     }
-  }
+  };
   useEffect(() => {
     if (!active) {
-      return
+      return;
     }
     if (InsuranceType || InsuranceSymbol) {
-      getPolicyList()
-      getApproveStatus()
+      getPolicyList();
+      getApproveStatus();
     }
-  }, [InsuranceType, InsuranceSymbol, active])
+  }, [InsuranceType, InsuranceSymbol, active]);
 
   return (
     <div className="insurance_market">
       <div className="insurance_type">
         <button
-          onClick={() => setInsuranceType('Call')}
-          className={InsuranceType === 'Call' ? 'insurance_active_call' : ''}
+          onClick={() => setInsuranceType("Call")}
+          className={InsuranceType === "Call" ? "insurance_active_call" : ""}
         >
           <FormattedMessage id="insurance_text4" />
         </button>
         <button
-          onClick={() => setInsuranceType('Put')}
-          className={InsuranceType === 'Put' ? 'insurance_active_put' : ''}
+          onClick={() => setInsuranceType("Put")}
+          className={InsuranceType === "Put" ? "insurance_active_put" : ""}
         >
           <FormattedMessage id="insurance_text5" />
         </button>
+      </div>
+      <div className="insurance_tips">
+        <img src={Tips} alt="nodata" />
+        <p>
+          保险仅能在 2020-1-1 24:00
+          前出险，过期后的保险不能出险。出险时要确认行权价格，避免造成其他损失。
+        </p>
       </div>
       {loading ? (
         <Loading />
@@ -297,10 +303,10 @@ const Market = props => {
                   </tr>
                 </thead>
                 <tbody>
-                  {PolicyList.slice(MinNumber, MaxNumber).map(item => (
+                  {PolicyList.slice(MinNumber, MaxNumber).map((item) => (
                     <tr
                       className="insurance_market_table_item"
-                      key={'web' + item.askID}
+                      key={"web" + item.askID}
                     >
                       <td>{item.show_ID}</td>
                       <td>{item.premium.toFixed(8)}</td>
@@ -309,14 +315,14 @@ const Market = props => {
                         <input
                           type="text"
                           value={item.buy_volume}
-                          onChange={e => {
-                            item.buy_volume = e.target.value
+                          onChange={(e) => {
+                            item.buy_volume = e.target.value;
                           }}
                         />
                         <button
                           onClick={() => handleClickBuyInurance(item)}
                           className={
-                            Number(item.show_volume) === 0 ? 'hiddenButton' : ''
+                            Number(item.show_volume) === 0 ? "hiddenButton" : ""
                           }
                         >
                           {ApproveStatus ? (
@@ -331,14 +337,14 @@ const Market = props => {
                 </tbody>
               </table>
               <div className="insurance_market_table h5_table">
-                {PolicyList.map(item => (
+                {PolicyList.map((item) => (
                   <div
                     className="insurance_market_table_item"
-                    key={'h5' + item.askID}
+                    key={"h5" + item.askID}
                   >
                     <p>
                       <span>
-                        <FormattedMessage id="insurance_text18" />:{' '}
+                        <FormattedMessage id="insurance_text18" />:{" "}
                       </span>
                       <span>{item.show_ID}</span>
                     </p>
@@ -361,14 +367,14 @@ const Market = props => {
                       <input
                         type="text"
                         value={item.buy_volume}
-                        onChange={e => {
-                          item.buy_volume = e.target.value
+                        onChange={(e) => {
+                          item.buy_volume = e.target.value;
                         }}
                       />
                       <button
                         onClick={() => handleClickBuyInurance(item)}
                         className={
-                          Number(item.show_volume) === 0 ? 'hiddenButton' : ''
+                          Number(item.show_volume) === 0 ? "hiddenButton" : ""
                         }
                       >
                         {ApproveStatus ? (
@@ -386,7 +392,7 @@ const Market = props => {
                 current={Page}
                 pageSize={PageSize}
                 total={PolicyList.length}
-                onChange={value => onChangePage(value)}
+                onChange={(value) => onChangePage(value)}
               />
             </div>
           ) : (
@@ -403,6 +409,6 @@ const Market = props => {
         onClose={onSuccessClose}
       />
     </div>
-  )
-}
-export default Market
+  );
+};
+export default Market;
