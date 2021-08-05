@@ -70,7 +70,7 @@ function DrawerMenu({ account, active, chainId, visible, setVisible, connectWall
           <img src={HelmetSvg} alt=""/>
           <FormattedMessage id="header_text7" values={{name: 'Helmet'}}/>
         </a>
-        <a className='btn header_claim flex_center' onClick={goClaim}><FormattedMessage id='stake_chain_dialog_text4' /></a>
+        <a className='btn header_claim flex_center' onClick={goClaim}><FormattedMessage id='header_claim_dialog_text1' /></a>
       </div>
     </Drawer>
   )

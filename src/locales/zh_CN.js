@@ -55,6 +55,8 @@ export default {
   stake_chain_dialog_text6: '赎回 & 领取奖励',
   stake_chain_dialog_text7: '授权',
   stake_chain_dialog_text8: 'Powered By Helmet Team',
+  stake_chain_dialog_text9: '每日 22:00 可以领取 Guard',
+  stake_chain_dialog_text10: '如何获得 GUARD',
   header_claim_dialog_text1: '领取 Guard',
   waiting_confirmation_dialog_text1: '等待确认',
   waiting_confirmation_dialog_text2: '请在钱包中确认进行交易',
