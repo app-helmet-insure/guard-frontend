@@ -391,6 +391,8 @@ const Market = props => {
                 pageSize={PageSize}
                 total={PolicyList.length}
                 onChange={value => onChangePage(value)}
+                showSizeChanger={false}
+                hideOnSinglePage
               />
             </div>
           ) : (

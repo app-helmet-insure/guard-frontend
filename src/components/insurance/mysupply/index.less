@@ -1,8 +1,13 @@
+.insurance_mysupply {
+  width: 100%;
+  flex: 1;
+  position: relative;
+}
+.insurance_mysupply_list {
+  width: 100%;
+}
 @media screen and (min-width: 750px) {
   .insurance_mysupply {
-    width: 100%;
-    flex: 1;
-    position: relative;
     > .nodata {
       position: absolute;
       left: 50%;
@@ -11,14 +16,12 @@
     }
   }
   .mysupply_section_h5 {
-      display: none !important;
+    display: none !important;
   }
   .insurance_mysupply_title {
     display: none;
   }
-  .insurance_mysupply_list {
-    width: 100%;
-  }
+
   .insurance_mysupply_item {
     width: 100%;
     display: flex;
@@ -88,7 +91,7 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-        
+
         button {
           min-width: 64px;
           height: 40px;
@@ -99,10 +102,10 @@
           color: #ffffff;
           line-height: 17px;
         }
-        .finish{
-          background: #CFCFD2;
+        .finish {
+          background: #cfcfd2;
         }
-        .mining{
+        .mining {
           background: #4364e8;
           margin-right: 10px;
         }
@@ -114,9 +117,6 @@
 @media screen and (max-width: 749px) {
   .insurance_mysupply {
     padding: 0 16px 34px;
-    width: 100%;
-    flex: 1;
-    position: relative;
     background-color: #fff;
     > .nodata {
       display: block;
@@ -131,18 +131,16 @@
     font-size: 16px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
-    color: #2A3749;
+    color: #2a3749;
     line-height: 60px;
   }
-  .insurance_mysupply_list {
-    width: 100%;
-  }
+
   .insurance_mysupply_item {
     padding: 16px 10px 20px;
     margin-bottom: 10px;
     box-shadow: 10px 10px 40px 0px rgba(237, 237, 240, 0.6);
     border-radius: 5px;
-    border: 1px solid #F5F7FB;
+    border: 1px solid #f5f7fb;
     section {
       &:nth-of-type(1) {
         div {
@@ -190,7 +188,7 @@
             color: #2a3749;
             line-height: 14px;
           }
-           .mysupply_price_title {
+          .mysupply_price_title {
             color: #919aa6 !important;
           }
           p {
