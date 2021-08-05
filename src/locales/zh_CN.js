@@ -85,7 +85,6 @@ export default {
   insurance_text1: 'Guard 价格',
   insurance_text2: 'Short 当前总价值',
   insurance_text3: 'Guard 铸造总量',
-  insurance_text23: 'Helmet 销毁总量',
   insurance_text4: '翻倍险',
   insurance_text5: '腰斩险',
   insurance_text6: '出险价格',
@@ -105,9 +104,11 @@ export default {
   insurance_text20: '保单数量',
   insurance_text21: '操作',
   insurance_text22: '购买',
+  insurance_text23: 'Helmet 销毁总量',
   insurance_text24: '保险列表',
   insurance_text25: '发行保险获得 SHORT token',
   insurance_text26: '购买',
+  insurance_text27: '已全部成交',
   mypolicy_text1: '我的保单',
   mypolicy_text2: '出险价',
   mypolicy_text3: '持有量',
@@ -126,4 +127,5 @@ export default {
   insurance_tips:
     '保险仅能在 {time} 前出险，过期后的保险不能出险。出险时要确认行权价格，避免造成其他损失。',
   insurance_tips1: '发布保险可参与SHORT挖矿',
+  
 }
