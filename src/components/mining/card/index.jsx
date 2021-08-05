@@ -41,12 +41,13 @@ const MiningCard = props => {
       }
       getMiningInfo(props.pools.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
-        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
-          setApr
-        )
+        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(setApr)
         if (miningPools_.mdexReward) {
           // 奖励2的apr
-          getMdxARP(miningPools_).then(setMdexApr)
+          getMdxARP(miningPools_).then((res) =>{
+            console.log('res', res)
+            setMdexApr(res)
+          })
         }
       })
     }
@@ -260,7 +261,7 @@ const MiningCard = props => {
               <FormattedMessage
                 id="mining_text25"
                 values={{
-                  name: 'quickswap',
+                  name: 'Quickswap',
                   b: miningPools.byLinkName,
                 }}
               />
