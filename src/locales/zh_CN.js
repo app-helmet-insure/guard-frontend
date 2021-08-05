@@ -84,7 +84,7 @@ export default {
   switch_wallet_dialog_text4: '切换网络',
   insurance_text1: 'Guard 价格',
   insurance_text2: 'Short 当前总价值',
-  insurance_text3: 'Guard 铸造总量',
+  insurance_text3: 'Guard 流通量',
   insurance_text4: '翻倍险',
   insurance_text5: '腰斩险',
   insurance_text6: '出险价格',
