@@ -430,15 +430,21 @@ export const getMdxARP = async (miningPools) => {
 
   let apr = '0'
   if (lptValue > 0 && mdex2warPrice > 0) {
+    const contract = new Contract(miningPools.MLP, LPT)
     const pool_contract = new Contract(miningPools.address, miningPools.abi)
-    const promiseList = [pool_contract.totalSupply()]
+    const promiseList = [contract.totalSupply(), pool_contract.totalSupply()]
     await multicallProvider.all(promiseList).then((data) => {
       data = processResult(data)
-      const [totalSupply] = data
+      const [tokenTotalSupply, totalSupply] = data
       console.log('totalSupply', totalSupply, volumeTotal.toString())
       // const radio = new BigNumber(totalSupply).div(new BigNumber(volumeTotal))
-      const totalRewardValue = volumeTotal.multipliedBy(new BigNumber(365))
+      const totalRewardValue = volumeTotal
+        .multipliedBy(new BigNumber(365))
+        .multipliedBy(
+          new BigNumber(totalSupply).div(new BigNumber(tokenTotalSupply))
+        )
       apr = totalRewardValue.div(fromWei(lptValue, miningPools.settleTokenDecimal)).toString()
+
       console.log('apr_', apr)
     })
   }

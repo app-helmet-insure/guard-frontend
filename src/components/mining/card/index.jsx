@@ -41,11 +41,14 @@ const MiningCard = props => {
       }
       getMiningInfo(props.pools.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
-        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(setApr)
+        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then((data) => {
+          console.log('_apr', data)
+          setApr(data)
+        })
         if (miningPools_.mdexReward) {
           // 奖励2的apr
           getMdxARP(miningPools_).then((res) =>{
-            console.log('res', res)
+            console.log('_apr2', res)
             setMdexApr(res)
           })
         }
@@ -125,7 +128,7 @@ const MiningCard = props => {
   // 是否开始
   const isStarted = miningPools && miningPools.start_at < now
   // 是否结束
-  const isEnd = miningPools && miningPools.dueDate < now
+  const isEnd = miningPools && miningPools.dueDate < now && miningPools.dueDate
 
   // loading
   if (!miningPools) {
