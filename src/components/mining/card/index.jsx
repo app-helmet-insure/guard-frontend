@@ -41,13 +41,15 @@ const MiningCard = props => {
       }
       getMiningInfo(props.pools.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
-        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then((data) => {
-          console.log('_apr', data)
-          setApr(data)
-        })
+        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
+          data => {
+            console.log('_apr', data)
+            setApr(data)
+          }
+        )
         if (miningPools_.mdexReward) {
           // 奖励2的apr
-          getMdxARP(miningPools_).then((res) =>{
+          getMdxARP(miningPools_).then(res => {
             console.log('_apr2', res)
             setMdexApr(res)
           })
@@ -60,7 +62,7 @@ const MiningCard = props => {
     blockHeight,
     miningPools && miningPools.MLP,
     ERC20.abi,
-    miningPools && miningPools.mlpDecimal,
+    miningPools && miningPools.mlpDecimal
   )
   // console.log(miningPools && miningPools.name + miningPools.cover, balance)
   const isFinish =
@@ -161,7 +163,11 @@ const MiningCard = props => {
 
   return (
     <>
-      <div className="mining_card">
+      <div
+        className={
+          miningPools.ledLight ? 'ledLight mining_card' : 'mining_card'
+        }
+      >
         <div className="mining_card_title">
           <img src={miningPools.icon} />
           <p className="mining_card_title_text">

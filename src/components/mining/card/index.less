@@ -10,23 +10,24 @@
   border-radius: 5px;
   border: 1px solid #f5f7fb;
   vertical-align: top;
+
   &:nth-child(3n-1) {
     margin: 30px 20px 0;
   }
-  .card_loading{
+  .card_loading {
     position: absolute;
     left: 0;
     top: 0;
     z-index: 2;
     width: 100%;
     height: 100%;
-    background: #FFFFFF;
+    background: #ffffff;
     padding: 20px;
-    .skeleton_top_title{
+    .skeleton_top_title {
       flex: 1;
       padding-left: 20px;
     }
-    .skeleton_apr{
+    .skeleton_apr {
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -64,7 +65,7 @@
       width: 24px;
       height: 24px;
       margin-right: 4px;
-      background: url('../../../assets/images/mining/missCall@2x.png') no-repeat;
+      background: url("../../../assets/images/mining/missCall@2x.png") no-repeat;
       background-size: 100% 100%;
       vertical-align: middle;
     }
@@ -84,7 +85,7 @@
       width: 24px;
       height: 24px;
       margin-right: 4px;
-      background: url('../../../assets/images/mining/missPut@2x.png') no-repeat;
+      background: url("../../../assets/images/mining/missPut@2x.png") no-repeat;
       background-size: 100% 100%;
       vertical-align: middle;
     }
@@ -163,7 +164,7 @@
     width: auto;
     height: 22px;
   }
-  .buy_link{
+  .buy_link {
     padding-bottom: 10px;
     color: #4364e8;
     font-size: 14px;
@@ -219,7 +220,7 @@
     padding: 16px 14px;
     margin: 30px auto 0;
     width: 360px;
-    height: 400px;
+    min-height: 400px;
     background: #fff;
     &:nth-child(3n-1) {
       margin: 30px auto 0;
@@ -233,9 +234,71 @@
     padding: 16px 14px;
     margin: 30px auto 0;
     width: 100%;
-    height: 400px;
+    min-height: 400px;
     &:nth-child(3n-1) {
       margin: 30px auto 0;
     }
+  }
+}
+.ledLight {
+  z-index: 1;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    content: "";
+    border-radius: 10px;
+    background: #fff;
+  }
+  &::after {
+    filter: blur(8px);
+    position: absolute;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    content: "";
+    top: -5px;
+    right: -5px;
+    bottom: -5px;
+    left: -5px;
+    z-index: -2;
+    background: linear-gradient(
+      45deg,
+      red,
+      #ffaa2b 10%,
+      #f3ff45 20%,
+      #84ff7f 30%,
+      #7bfdfb 40%,
+      #5ee7fc 50%,
+      #7fbbff 60%,
+      #af88ff 70%,
+      #d973fd 80%,
+      #ff6fec 90%,
+      red
+    );
+    background-position-x: left;
+    background-position-y: top;
+    background-size: 300% 300%;
+    background-attachment: scroll;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+    animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none
+      running;
+    border-radius: 10px;
+    animation: animation_bg 2s linear 0s infinite normal none running;
+  }
+}
+@keyframes animation_bg {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0 50%;
   }
 }
