@@ -335,7 +335,7 @@ const Market = props => {
                 </tbody>
               </table>
               <div className="insurance_market_table h5_table">
-                {PolicyList.map(item => (
+                {PolicyList.slice(MinNumber, MaxNumber).map(item => (
                   <div
                     className="insurance_market_table_item"
                     key={'h5' + item.askID}
