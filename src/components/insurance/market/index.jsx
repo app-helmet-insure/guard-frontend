@@ -16,8 +16,9 @@ import BigNumber from 'bignumber.js'
 import { Pagination } from 'antd'
 import Loading from '../../loading'
 import { numberFormat } from 'highcharts'
+import Tips from '../../../assets/images/insurance/tips.svg'
+import moment from 'moment'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
-
 const Market = props => {
   const [InsuranceType, setInsuranceType] = useState('Call')
   const [PolicyList, setPolicyList] = useState([])
@@ -31,6 +32,10 @@ const Market = props => {
   const [MaxNumber, setMaxNumber] = useState(10)
   const [loading, setLoading] = useState(true)
   const { InsuranceSymbol } = props
+  const CurrentInsurance = getCurrentInsurance({
+    Type: InsuranceType,
+    Insurance: InsuranceSymbol,
+  })
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -49,10 +54,6 @@ const Market = props => {
   }
   // 保单数据
   const getPolicyList = () => {
-    const CurrentInsurance = getCurrentInsurance({
-      Type: InsuranceType,
-      Insurance: InsuranceSymbol,
-    })
     const {
       type,
       insurance,
@@ -156,10 +157,6 @@ const Market = props => {
   }
   // 获取授权状态
   const getApproveStatus = data => {
-    const CurrentInsurance = getCurrentInsurance({
-      Type: InsuranceType,
-      Insurance: InsuranceSymbol,
-    })
     const { settleToken_address } = CurrentInsurance
     const Erc20Contracts = getContract(
       library,
@@ -177,7 +174,6 @@ const Market = props => {
   }
   // 购买保单
   const handleClickBuyInurance = data => {
-    console.log(data)
     if (ApproveStatus) {
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(library, OrderABI, OrderAddress)
@@ -201,7 +197,6 @@ const Market = props => {
             Volume = toWei(data.buy_volume, data.collateral_decimals)
           }
         }
-        console.log(Volume)
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: account })
@@ -218,10 +213,6 @@ const Market = props => {
           })
       }
     } else {
-      const CurrentInsurance = getCurrentInsurance({
-        Type: InsuranceType,
-        Insurance: InsuranceSymbol,
-      })
       const { settleToken_address } = CurrentInsurance
       const Erc20Contracts = getContract(
         library,
@@ -271,6 +262,19 @@ const Market = props => {
         >
           <FormattedMessage id="insurance_text5" />
         </button>
+      </div>
+      <div className="insurance_tips">
+        <img src={Tips} alt="nodata" />
+        <p>
+          <FormattedMessage
+            id="insurance_tips"
+            values={{
+              time: moment(new Date(CurrentInsurance.expiry * 1000)).format(
+                'YYYY/MM/DD HH:mm:ss'
+              ),
+            }}
+          />
+        </p>
       </div>
       {loading ? (
         <Loading />
@@ -331,7 +335,7 @@ const Market = props => {
                 </tbody>
               </table>
               <div className="insurance_market_table h5_table">
-                {PolicyList.map(item => (
+                {PolicyList.slice(MinNumber, MaxNumber).map(item => (
                   <div
                     className="insurance_market_table_item"
                     key={'h5' + item.askID}
@@ -387,6 +391,8 @@ const Market = props => {
                 pageSize={PageSize}
                 total={PolicyList.length}
                 onChange={value => onChangePage(value)}
+                showSizeChanger={false}
+                hideOnSinglePage
               />
             </div>
           ) : (

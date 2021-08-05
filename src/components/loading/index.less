@@ -51,4 +51,54 @@
   }
 }
 @media screen and (max-width: 750px) {
+  .loading {
+    min-height: 352px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .loading_pic {
+    width: 48px;
+    height: 48px;
+    background: url("../../assets/images/insurance/guard_logo.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    animation: mymove 3s infinite;
+    -webkit-animation: mymove 3s infinite; /*Safari and Chrome*/
+    animation-direction: alternate; /*轮流反向播放动画。*/
+    animation-timing-function: ease-in-out; /*动画的速度曲线*/
+    /* Safari 和 Chrome */
+    -webkit-animation: mymove 3s infinite;
+    -webkit-animation-direction: alternate; /*轮流反向播放动画。*/
+    -webkit-animation-timing-function: ease-in-out; /*动画的速度曲线*/
+  }
+  @keyframes mymove {
+    0% {
+      transform: scale(1); /*开始为原始大小*/
+    }
+    25% {
+      transform: scale(1.1); /*放大1.1倍*/
+    }
+    50% {
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+  }
+
+  @-webkit-keyframes mymove /*Safari and Chrome*/ {
+    0% {
+      transform: scale(1); /*开始为原始大小*/
+    }
+    25% {
+      transform: scale(1.1); /*放大1.1倍*/
+    }
+    50% {
+      transform: scale(1);
+    }
+    75% {
+      transform: scale(1.1);
+    }
+  }
 }

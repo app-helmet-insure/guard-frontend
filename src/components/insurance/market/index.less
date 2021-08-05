@@ -1,25 +1,18 @@
-@media screen and(min-width:750px) {
-  .h5_table {
-    display: none !important;
-  }
-  .insurance_market {
-    width: 100%;
-    margin-top: 20px;
-    position: relative;
+.insurance_market {
+  width: 100%;
+  margin-top: 20px;
+  min-height: 300px;
+  &_wrap {
     min-height: 300px;
-    padding-bottom: 50px;
-    &_wrap {
-      min-height: 300px;
-    }
-    .nodata {
-      width: 100%;
-      min-height: 300px;
-      img {
-        position: absolute;
-        left: 50%;
-        top: 60%;
-        transform: translate(-50%, -50%);
-      }
+  }
+  .nodata {
+    width: 100%;
+    min-height: 300px;
+    img {
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate(-50%, -50%);
     }
   }
   .insurance_type {
@@ -57,6 +50,36 @@
       ) !important;
       color: #ffffff;
     }
+  }
+  .insurance_tips {
+    width: 100%;
+    background: rgba(255, 184, 1, 0.1);
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffb801;
+    line-height: 20px;
+    p {
+      margin: 0 0 0 4px;
+    }
+  }
+}
+@media screen and(min-width:750px) {
+  .h5_table {
+    display: none !important;
+  }
+  .insurance_market {
+    position: relative;
+    padding-bottom: 50px;
+  }
+
+  .insurance_tips {
+    height: 32px;
+    display: flex;
+    align-items: center;
   }
   .insurance_market_table {
     width: 100%;
@@ -139,7 +162,7 @@
       }
     }
   }
-  .paginaction{
+  .paginaction {
     display: flex;
     align-items: flex-end;
     float: right;
@@ -150,61 +173,15 @@
   .web_table {
     display: none !important;
   }
-  .insurance_market {
-    width: 100%;
-    margin-top: 20px;
-    min-height: 300px;
-    &_wrap {
-      min-height: 300px;
-    }
-    .nodata {
-      width: 100%;
-      min-height: 300px;
-      img {
-        position: absolute;
-        left: 50%;
-        top: 60%;
-        transform: translate(-50%, -50%);
-      }
-    }
-  }
-  .insurance_type {
+  .insurance_tips {
     display: flex;
-    button {
+    align-items: flex-start;
+    img {
+      margin-top: 2px;
+    }
+    p {
       flex: 1;
-      height: 48px;
-      width: 510px;
-      border-radius: 0px 5px 5px 0px;
-      border: none;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 48px;
-      color: #2a3749;
-      &:nth-of-type(1) {
-        background: linear-gradient(-70deg, transparent 20px, #ededf0 0);
-      }
-      &:nth-of-type(2) {
-        background: linear-gradient(-250deg, transparent 20px, #ededf0 0);
-      }
     }
-    .insurance_active_call {
-      background: linear-gradient(
-        -70deg,
-        transparent 20px,
-        #4364e8 0
-      ) !important;
-      color: #ffffff;
-    }
-    .insurance_active_put {
-      background: linear-gradient(
-        -250deg,
-        transparent 20px,
-        #4364e8 0
-      ) !important;
-      color: #ffffff;
-    }
-  }
-  .insurance_market_table {
   }
   .insurance_market_table_item {
     border-top: 1px solid #ededf0;

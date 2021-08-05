@@ -37,7 +37,6 @@ export const useBalance = (
         }).catch(e=>{})
     }
   }, [account, active, blockHeight, address])
-
   return balance
 }
 

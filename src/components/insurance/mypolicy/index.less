@@ -1,8 +1,13 @@
+.insurance_mypolicy{
+  width: 100%;
+  flex: 1;
+  position: relative;
+}
+.insurance_mypolicy_list {
+  width: 100%;
+}
 @media screen and (min-width: 750px) {
   .insurance_mypolicy {
-    width: 100%;
-    flex: 1;
-    position: relative;
     > .nodata {
       position: absolute;
       left: 50%;
@@ -13,9 +18,7 @@
   .insurance_mypolicy_title {
     display: none;
   }
-  .insurance_mypolicy_list {
-    width: 100%;
-  }
+  
   .insurance_mypolicy_item {
     width: 100%;
     display: flex;
@@ -103,9 +106,6 @@
 @media screen and (max-width: 749px) {
   .insurance_mypolicy {
     padding: 0 16px 34px;
-    width: 100%;
-    flex: 1;
-    position: relative;
     background-color: #fff;
     > .nodata {
       display: block;
@@ -122,9 +122,6 @@
     font-weight: 600;
     color: #2a3749;
     line-height: 60px;
-  }
-  .insurance_mypolicy_list {
-    width: 100%;
   }
   .insurance_mypolicy_item {
     padding: 16px 10px 20px;

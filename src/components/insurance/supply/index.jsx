@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react'
+import { withRouter } from 'react-router'
 import { VarContext } from '../../../context'
-import Web3 from 'web3'
+import PolicySvg from '../../../assets/images/insurance/policy.svg'
 import { Select } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { toWei, fromWei } from 'web3-utils'
@@ -12,10 +13,13 @@ import './index.less'
 import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
-import { toFixed } from 'accounting'
+import PoolList from '../../../configs/mining'
+import { getMiningInfo, getAPR, getMdxARP } from '../../../hooks/mining'
 import BigNumber from 'bignumber.js'
 import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
+import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
+import ERC20 from '../../../web3/abi/ERC20.json'
 import moment from 'moment'
 
 const { Option } = Select
@@ -27,6 +31,7 @@ const DPRlist = [
   { number: 0.0028, show: '0.28%' },
 ]
 const Supply = props => {
+  const { blockHeight } = useContext(VarContext)
   const [InsuranceType, setInsuranceType] = useState('Call')
   const [InsuranceDPR, setInsuranceDPR] = useState({
     number: 0.0007,
@@ -43,10 +48,41 @@ const Supply = props => {
   const [IndexPrice, setIndexPrice] = useState(0)
   const [GuardPrice, setGuardPrice] = useState({ Call: 0, Put: 0 })
   const { library, active, account } = useActiveWeb3React()
+  const [aprPercentage, setPercentage] = useState('-')
+  const [miningPools, setMiningPools] = useState(null)
+  const [Apr, setApr] = useState('0')
+  const [MdexApr, setMdexApr] = useState('0')
   const CurrentInsurance = getCurrentInsurance({
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
   })
+  const CurrentPool =
+    PoolList.filter(
+      pool =>
+        pool.cover === CurrentInsurance.type &&
+        pool.name.toUpperCase() === CurrentInsurance.insurance
+    )[0] || ''
+  // 获取池子信息
+  useMemo(() => {
+    if (blockHeight !== 0 && CurrentPool) {
+      // 静态的 不做任何请求
+      if (CurrentPool.is_coming) {
+        setMiningPools(CurrentPool)
+        return
+      }
+      getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
+        setMiningPools(miningPools_)
+        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
+          setApr
+        )
+        if (miningPools_.mdexReward) {
+          // 奖励2的apr
+          getMdxARP(miningPools_).then(setMdexApr)
+        }
+      })
+    }
+  }, [blockHeight, account, InsuranceType, InsuranceSymbol])
+
   const Balance =
     CurrentInsurance.collateral_symbol === 'MATIC'
       ? useEthBalance()
@@ -56,10 +92,30 @@ const Supply = props => {
         Erc20ABI.abi,
         CurrentInsurance.collateral_decimals_number
       ) || 0
+  const LpBalance = useBalance(
+    blockHeight,
+    CurrentPool && CurrentPool.MLP,
+    ERC20.abi,
+    CurrentPool && CurrentPool.mlpDecimal
+  )
+  useMemo(() => {
+    if (
+      Apr > 0 &&
+      miningPools &&
+      (!miningPools.mdexReward || MdexApr > 0) &&
+      !miningPools.is_coming
+    ) {
+      const percentage_ = (Apr * 100 + MdexApr * 100).toFixed(2)
+      if (isFinite(percentage_)) {
+        setPercentage(percentage_)
+      }
+    }
+  }, [Apr, MdexApr])
   const currentIndexPrice = async () => {
     const prices = await useIndexPrice(library, CurrentInsurance)
     setIndexPrice(prices)
   }
+
   const currentGuardPrice = async () => {
     const calldata = {
       collateral_chainid: 137,
@@ -228,6 +284,9 @@ const Supply = props => {
   const handleClickDpr = data => {
     setInsuranceDPR({ number: data.key, show: data.value })
   }
+  const handleClickStake = () => {
+    props.history.push('/mining')
+  }
   useEffect(() => {
     if (!active) {
       return
@@ -270,6 +329,7 @@ const Supply = props => {
       getApproveStatus()
       currentIndexPrice()
       currentGuardPrice()
+      setPercentage('-')
     }
   }, [
     InsuranceDPR,
@@ -332,7 +392,12 @@ const Supply = props => {
               setInsuranceVolume(e.target.value)
             }}
           />
-          <span>{CurrentInsurance.collateral_symbol}</span>
+          <p>
+            <span className="max" onClick={() => setInsuranceVolume(Balance)}>
+              Max
+            </span>
+            <span className="symbol">{CurrentInsurance.collateral_symbol}</span>
+          </p>
         </div>
         <p className="left">
           <FormattedMessage id="insurance_text9" />
@@ -349,6 +414,22 @@ const Supply = props => {
             <FormattedMessage id="insurance_text12" />
           )}
         </button>
+        {CurrentPool ? (
+          <div className="short_mining">
+            <img src={PolicySvg} alt="" />
+            <div>
+              <p>
+                <FormattedMessage id="insurance_tips1"></FormattedMessage>
+              </p>
+              <div className="stake">
+                <span className="apr">APR: {aprPercentage}%</span>
+                <button onClick={handleClickStake}>STAKE</button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <SubmitInsuranceDialog
         visible={OpenSubmit}
@@ -366,6 +447,13 @@ const Supply = props => {
           ),
         }}
       />
+      {/* <StakeChaimDialog
+        visible
+        tab={'Stake'}
+        pool={CurrentPool}
+        balance={LpBalance}
+        isEnd={false}
+      /> */}
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}
@@ -375,4 +463,4 @@ const Supply = props => {
   )
 }
 
-export default Supply
+export default withRouter(Supply)

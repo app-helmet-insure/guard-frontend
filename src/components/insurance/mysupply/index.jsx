@@ -308,7 +308,9 @@ const MySupply = props => {
                   </section>
                   <section>
                     {Number(item.show_unsold) === 0 ? (
-                      <button className="finish">已全部成交</button>
+                      <button className="finish">
+                        <FormattedMessage id="insurance_text27" />
+                      </button>
                     ) : (
                       <>
                         <button onClick={goMining} className="mining">
