@@ -57,6 +57,8 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 2,
     ledLight: true,
+    multiple: '6X',
+    core: true,
   },
 
   {
@@ -104,6 +106,8 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '5X',
+    core: true,
   },
   {
     title: 'Guard Short Token Pool',
@@ -150,6 +154,8 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '2X',
+    core: true,
   },
 
   {
@@ -197,6 +203,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '2X',
   },
   {
     title: 'Matic Short Token Pool',
@@ -243,6 +250,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '1X',
   },
   {
     title: 'Quick Short Token Pool',
@@ -289,6 +297,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '2X',
   },
   {
     title: 'Quick Short Token Pool',
@@ -335,6 +344,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '1X',
   },
   {
     title: 'ETH Short Token Pool',
@@ -381,5 +391,6 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
+    multiple: '1X',
   },
 ]

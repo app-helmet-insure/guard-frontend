@@ -25,6 +25,7 @@ export default {
   mining_text23: 'Unstake & Claim error',
   mining_text24: 'coming soon',
   mining_text25: 'From {name} get {b}',
+  mining_text26: 'Core',
   DayM: 'd',
   HourM: 'h',
   MinM: 'm',
