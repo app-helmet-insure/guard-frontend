@@ -33,7 +33,7 @@ const MiningCard = props => {
   const [mdexApr, setMdexApr] = useState('0')
   // 获取池子信息
   useMemo(() => {
-    if (blockHeight !== 0) {
+    if (blockHeight !== 0 && account) {
       // 静态的 不做任何请求
       if (props.pools.is_coming) {
         setMiningPools(props.pools)
@@ -43,14 +43,12 @@ const MiningCard = props => {
         setMiningPools(miningPools_)
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
           data => {
-            console.log('_apr', data)
             setApr(data)
           }
         )
         if (miningPools_.mdexReward) {
           // 奖励2的apr
           getMdxARP(miningPools_).then(res => {
-            console.log('_apr2', res)
             setMdexApr(res)
           })
         }
