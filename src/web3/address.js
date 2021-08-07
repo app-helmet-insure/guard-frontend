@@ -67,12 +67,24 @@ export function MINE_MOUNTAIN_ADDRESS(chainId) {
       return '0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd'
   }
 }
-
+let rpcCount = 0
 export const getRpcUrl = chainId => {
+  const randomMatic = () => {
+    const urls = [
+      // 'https://rpc-mainnet.matic.network',
+      'https://matic-mainnet.chainstacklabs.com',
+      'https://rpc-mainnet.maticvigil.com',
+      'https://rpc-mainnet.matic.quiknode.pro',
+      'https://matic-mainnet-full-rpc.bwarelabs.com',
+      'https://matic-mainnet-archive-rpc.bwarelabs.com'
+    ]
+    rpcCount++
+    return urls[rpcCount % urls.length]
+  }
   const RPC_URLS = {
     [ChainId.HECO]: 'https://http-mainnet-node.huobichain.com',
     [ChainId.BSC]: 'https://bsc-dataseed.binance.org/',
-    [ChainId.MATIC]: 'https://rpc-mainnet.maticvigil.com'
+    [ChainId.MATIC]: randomMatic()
   }
   return RPC_URLS[chainId]
 }

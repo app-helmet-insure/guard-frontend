@@ -9,8 +9,7 @@ export const getMultiCallProvider = (provider, chainId) => {
   return new Provider(provider, chainId)
 }
 
-const PROVIDER_CACHE = {}
-export const getOnlyMultiCallProvider = chainId => PROVIDER_CACHE[chainId] || (PROVIDER_CACHE[chainId] = getMultiCallProvider(new JsonRpcProvider(getRpcUrl(chainId), chainId), chainId))
+export const getOnlyMultiCallProvider = chainId => getMultiCallProvider(new JsonRpcProvider(getRpcUrl(chainId), chainId), chainId)
 
 /**
  * MultiCallProvider解析器

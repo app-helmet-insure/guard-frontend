@@ -25,6 +25,7 @@ export default {
   mining_text23: 'Unstake & Claim error',
   mining_text24: 'coming soon',
   mining_text25: 'From {name} get {b}',
+  mining_text26: 'Core',
   DayM: 'd',
   HourM: 'h',
   MinM: 'm',
@@ -56,6 +57,8 @@ export default {
   stake_chain_dialog_text6: 'Unstake & Claim',
   stake_chain_dialog_text7: 'Approve',
   stake_chain_dialog_text8: 'Powered By Helmet Team',
+  stake_chain_dialog_text9: 'Claim your GUARD after 22:00 UTC+8 daily',
+  stake_chain_dialog_text10: 'How to get GUARD',
   header_claim_dialog_text1: 'Claim Guard',
   waiting_confirmation_dialog_text1: 'Waiting for confirmation',
   waiting_confirmation_dialog_text2:

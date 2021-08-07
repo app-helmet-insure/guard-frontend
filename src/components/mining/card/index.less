@@ -36,7 +36,7 @@
   }
   &_title {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     img {
       display: inline-block;
@@ -49,15 +49,16 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
+    text-align: right;
     .Call_cover {
       display: inline-block;
-      padding-right: 12px;
+      // padding-right: 12px;
       font-size: 14px;
       font-family: IBMPlexSans-Bold, IBMPlexSans;
       font-weight: bold;
       color: #72a065;
       line-height: 24px;
-      background: #f7f7fa;
+      // background: #f7f7fa;
       border-radius: 5px;
     }
     .Call_cover_logo {
@@ -71,13 +72,13 @@
     }
     .Put_cover {
       display: inline-block;
-      padding-right: 12px;
+      // padding-right: 12px;
       font-size: 14px;
       font-family: IBMPlexSans-Bold, IBMPlexSans;
       font-weight: bold;
       color: #ef6e45;
       line-height: 24px;
-      background: #f7f7fa;
+      // background: #f7f7fa;
       border-radius: 5px;
     }
     .Put_cover_logo {
@@ -90,12 +91,46 @@
       vertical-align: middle;
     }
     .title_text {
-      margin-top: 4px;
+      margin-bottom: 8px;
       font-size: 20px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
       color: #2a3749;
       line-height: 20px;
+    }
+    .multiple {
+      display: inline-block;
+      padding: 0 8px;
+      height: 24px;
+      font-size: 14px;
+      color: #fff;
+      line-height: 24px;
+      text-align: center;
+      background-color: #4364E8;
+      border-radius: 12px;
+    }
+    .multiple_box {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      text-align: right;
+      margin-top: 8px;
+    }
+    .core {
+      display: inline-block;
+      margin-right: 4px;
+      padding: 0 8px;
+      height: 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: HelveticaNeue-Medium, HelveticaNeue;
+      font-weight: 500;
+      color: #4364E8;
+      border: 1px solid #4364E8;
+      svg {
+        fill: #4364E8;
+        vertical-align: text-bottom;
+      }
     }
   }
   &_apy {

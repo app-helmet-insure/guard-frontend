@@ -25,6 +25,7 @@ export default {
   mining_text23: '赎回 & 领取奖励失败',
   mining_text24: '马上就来',
   mining_text25: '从 {name} 获取 {b}',
+  mining_text26: 'Core',
   DayM: '天',
   HourM: '时',
   MinM: '分',
@@ -55,6 +56,8 @@ export default {
   stake_chain_dialog_text6: '赎回 & 领取奖励',
   stake_chain_dialog_text7: '授权',
   stake_chain_dialog_text8: 'Powered By Helmet Team',
+  stake_chain_dialog_text9: '每日 22:00 后开放领取 Guard',
+  stake_chain_dialog_text10: '如何获得 GUARD',
   header_claim_dialog_text1: '领取 Guard',
   waiting_confirmation_dialog_text1: '等待确认',
   waiting_confirmation_dialog_text2: '请在钱包中确认进行交易',
@@ -127,5 +130,4 @@ export default {
   insurance_tips:
     '保险仅能在 {time} 前出险，过期后的保险不能出险。出险时要确认行权价格，避免造成其他损失。',
   insurance_tips1: '发布保险可参与SHORT挖矿',
-  
 }
