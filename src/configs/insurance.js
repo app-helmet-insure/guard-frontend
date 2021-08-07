@@ -84,6 +84,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'tether',
       lastprice: '2.57168',
       expiry: 1630080000,
+      status: false,
     },
     {
       type: 'Call',
@@ -106,6 +107,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'mwei',
       lastprice: '2.57168',
       expiry: 1630080000,
+      status: true,
     },
     // MATIC
     {
@@ -129,6 +131,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'tether',
       lastprice: '0.920547',
       expiry: 1630080000,
+      status: true,
     },
     {
       type: 'Call',
@@ -151,6 +154,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'mwei',
       lastprice: '0.920547',
       expiry: 1630080000,
+      status: true,
     },
     // QUICK
     {
@@ -174,6 +178,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'tether',
       lastprice: '326',
       expiry: 1630080000,
+      status: true,
     },
     {
       type: 'Call',
@@ -196,6 +201,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'mwei',
       lastprice: '326',
       expiry: 1630080000,
+      status: true,
     },
     // ETH
     {
@@ -219,6 +225,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'tether',
       lastprice: '2144',
       expiry: 1630080000,
+      status: true,
     },
     {
       type: 'Call',
@@ -241,6 +248,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'mwei',
       lastprice: '2144',
       expiry: 1630080000,
+      status: true,
     },
   ]
   return config.filter(

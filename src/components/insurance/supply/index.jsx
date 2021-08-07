@@ -403,7 +403,10 @@ const Supply = props => {
           <FormattedMessage id="insurance_text9" />
           {Balance} {CurrentInsurance.collateral_symbol}
         </p>
-        <button className="confirm" onClick={() => handleClickSupply()}>
+        <button
+          className={`confirm ${!CurrentInsurance.status ? 'diasable' : ''}`}
+          onClick={() => handleClickSupply()}
+        >
           {ApproveStatus ? (
             InsuranceType === 'Call' ? (
               <FormattedMessage id="insurance_text10" />
