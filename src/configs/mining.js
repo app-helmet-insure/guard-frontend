@@ -57,7 +57,7 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 2,
     ledLight: true,
-    multiple: '6X',
+    multiple: '8.5X',
     core: true,
   },
 
@@ -106,7 +106,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
-    multiple: '5X',
+    multiple: '3X',
     core: true,
   },
   {
@@ -154,7 +154,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
-    multiple: '2X',
+    multiple: '3X',
     core: true,
   },
 
