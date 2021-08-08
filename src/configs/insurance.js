@@ -84,7 +84,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'tether',
       lastprice: '2.57168',
       expiry: 1630080000,
-      status: false,
+      status: true,
     },
     {
       type: 'Call',
@@ -276,7 +276,7 @@ export const getInsuranceList = function () {
                   expiry
                   long
                   short
-                  asks {
+                  asks(first: 1000) {
                     askID
                     seller
                     volume

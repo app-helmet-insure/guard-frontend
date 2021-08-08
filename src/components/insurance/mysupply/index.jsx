@@ -318,7 +318,9 @@ const MySupply = props => {
                         </button>
                         <button
                           onClick={() => handleClickCancelOrder(item)}
-                          className="cancel"
+                          className={`cancel ${
+                            Number(item.show_besold) > 0 ? 'disable' : ''
+                          }`}
                         >
                           <FormattedMessage id="mysupply_text5" />
                         </button>

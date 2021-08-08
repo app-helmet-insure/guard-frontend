@@ -111,10 +111,6 @@ const Supply = props => {
       }
     }
   }, [Apr, MdexApr])
-  const currentIndexPrice = async () => {
-    const prices = await useIndexPrice(library, CurrentInsurance)
-    setIndexPrice(prices)
-  }
 
   const currentGuardPrice = async () => {
     const calldata = {
@@ -141,7 +137,15 @@ const Supply = props => {
     const putprices = await useIndexPrice(library, putdata)
     setGuardPrice({ Call: callprices, Put: putprices })
   }
-
+  const currentIndexPrice = async () => {
+    const data = getCurrentInsurance({
+      Type: 'Call',
+      Insurance: InsuranceSymbol,
+    })
+    const prices = await useIndexPrice(library, data)
+    console.log(prices)
+    setIndexPrice(prices)
+  }
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
@@ -293,42 +297,50 @@ const Supply = props => {
     }
     const DaysRemain = Math.ceil((CurrentInsurance.expiry - NowTime) / 86400)
     const { strikeprice } = CurrentInsurance
-    if (InsuranceDPR || InsuranceVolume) {
-      console.log(InsuranceDPR)
+    if (InsuranceDPR || InsuranceVolume || InsuranceType || InsuranceSymbol) {
       if (InsuranceType === 'Call') {
         // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
-        // 2. Premium = Number - Math.min((行权价-执行价),0)
-        // 3. Earned = -(Math.max((当前价-执行价),0)-Premium)
-        const Numbers =
+        // 2. Premium = Number - Math.min((行权价-当前价),0)
+        // 3. Earned = -(Math.max((当前价-行权价),0)-Premium)
+        const NumberDPR =
           InsuranceDPR.number *
           (InsuranceSymbol === 'GUARD'
             ? Number(InsuranceVolume)
-            : Number(InsuranceVolume * (IndexPrice / GuardPrice.Call))) *
+            : Number((IndexPrice * InsuranceVolume) / GuardPrice.Call)) *
           DaysRemain
-        const Premium = Numbers - Math.min(strikeprice - IndexPrice, 0)
-        const Earned = -(Math.max(IndexPrice - strikeprice, 0) - Premium)
-        const Expect = Earned > 0 ? Earned.toFixed(8) : 0
-        setEarning(Expect)
+        const NumberMIN =
+          (Math.min(Number(strikeprice) - Number(IndexPrice), 0) *
+            InsuranceVolume) /
+          GuardPrice.Call
+        const Premium = NumberDPR - NumberMIN
+        console.log(Premium, NumberDPR, NumberMIN)
+        const Expecting = Number(Premium) > 0 ? Premium.toFixed(8) : 0
+        setEarning(Expecting)
       } else {
         // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
-        // 2. Premium = Number - Math.min((当前价-执行价),0)
-        // 3. Earned = -(Math.max((执行价-当前价),0)-Premium)
-        const Numbers =
+        // 2. Premium = Number - Math.min((当前价-行权价),0)
+        // 3. Earned = -(Math.max((行权价-当前价),0)-Premium)
+        const NumberDPR =
           InsuranceDPR.number *
           Number(InsuranceVolume) *
           GuardPrice.Put *
           DaysRemain
-        const Premium = Numbers - Math.min(IndexPrice - strikeprice, 0)
-        const Earned = -(Math.max(strikeprice - IndexPrice, 0) - Premium)
-        const Expect = Earned > 0 ? Earned.toFixed(8) : 0
-
-        setEarning(Expect)
+        const NumberMIN =
+          (Math.min(Number(IndexPrice) - Number(strikeprice), 0) *
+            InsuranceVolume) /
+          GuardPrice.Call
+        const Premium = NumberDPR - NumberMIN
+        const Expecting = Number(Premium) > 0 ? Premium.toFixed(8) : 0
+        setEarning(Expecting)
       }
+      // console.log(Math.min(Number(IndexPrice) - Number(strikeprice), 0), 'Min')
+      // console.log(Number(strikeprice), 'Strike')
+      // console.log(Number(IndexPrice), 'Index')
     }
-    if (InsuranceType) {
-      getApproveStatus()
-      currentIndexPrice()
+    if (InsuranceType || InsuranceSymbol) {
       currentGuardPrice()
+      currentIndexPrice()
+      getApproveStatus()
       setPercentage('-')
     }
   }, [
@@ -339,7 +351,6 @@ const Supply = props => {
     DprStatus,
     active,
   ])
-
   return (
     <div className="insurance_supply">
       <div className="insurance_type">

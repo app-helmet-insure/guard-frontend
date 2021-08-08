@@ -194,13 +194,6 @@ const MyPolicy = props => {
     const LongApproveStatus = await getLongApporve(data)
     // eslint-disable-next-line no-use-before-define
     const UnderlyingApproveStatus = await getUnderlyingApprove(data)
-    console.log(LongApproveStatus, UnderlyingApproveStatus)
-    console.log(
-      !LongApproveStatus && !UnderlyingApproveStatus,
-      !LongApproveStatus && UnderlyingApproveStatus,
-      LongApproveStatus && !UnderlyingApproveStatus,
-      LongApproveStatus && UnderlyingApproveStatus
-    )
     if (!LongApproveStatus && !UnderlyingApproveStatus) {
       // eslint-disable-next-line no-use-before-define
       actionApproveLong(data)
@@ -306,6 +299,7 @@ const MyPolicy = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
+        console.log(res)
         if (Number(res) > 0) {
           return true
         }
