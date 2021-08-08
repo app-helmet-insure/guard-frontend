@@ -276,7 +276,7 @@ export const getInsuranceList = function () {
                   expiry
                   long
                   short
-                  asks {
+                  asks(first: 1000) {
                     askID
                     seller
                     volume

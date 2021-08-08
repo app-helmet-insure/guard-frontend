@@ -54,6 +54,8 @@ const Market = props => {
   }
   // 保单数据
   const getPolicyList = () => {
+    setPage(1)
+    setPageSize(10)
     const {
       type,
       insurance,
@@ -68,6 +70,7 @@ const Market = props => {
       strikeprice_decimals,
     } = CurrentInsurance
     getInsuranceList().then(res => {
+      console.log(res)
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
@@ -148,6 +151,7 @@ const Market = props => {
             (a, b) => Number(b.show_volume) - Number(a.show_volume)
           )
           setPolicyList(FixList)
+          console.log(FixList)
           setLoading(false)
         } else {
           setLoading(false)
@@ -243,6 +247,7 @@ const Market = props => {
     }
     if (InsuranceType || InsuranceSymbol) {
       setLoading(true)
+
       setPolicyList([])
       getPolicyList()
       getApproveStatus()

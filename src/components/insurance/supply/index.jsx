@@ -330,14 +330,6 @@ const Supply = props => {
             InsuranceVolume) /
           GuardPrice.Call
         const Premium = NumberDPR - NumberMIN
-        console.log(
-          InsuranceDPR.number,
-          InsuranceVolume,
-          GuardPrice.Put,
-          DaysRemain,
-          IndexPrice,
-          strikeprice
-        )
         const Expecting = Number(Premium) > 0 ? Premium.toFixed(8) : 0
         setEarning(Expecting)
       }
