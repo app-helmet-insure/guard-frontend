@@ -242,6 +242,8 @@ const Market = props => {
       return
     }
     if (InsuranceType || InsuranceSymbol) {
+      setLoading(true)
+      setPolicyList([])
       getPolicyList()
       getApproveStatus()
     }

@@ -91,7 +91,6 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
-
         button {
           min-width: 64px;
           height: 40px;
@@ -104,10 +103,15 @@
         }
         .finish {
           background: #cfcfd2;
+          pointer-events: none;
         }
         .mining {
           background: #4364e8;
           margin-right: 10px;
+        }
+        .disable {
+          background: #cfcfd2;
+          pointer-events: none;
         }
       }
     }
@@ -214,10 +218,19 @@
           font-weight: bold;
           color: #ffffff;
           line-height: 17px;
-          &:nth-of-type(1) {
-            margin-right: 10px;
-            background: #4364e8;
-          }
+        }
+        .finish {
+          width: 100%;
+          background: #cfcfd2;
+          pointer-events: none;
+        }
+        .mining {
+          background: #4364e8;
+          margin-right: 10px;
+        }
+        .disable {
+          background: #cfcfd2;
+          pointer-events: none;
         }
       }
     }
