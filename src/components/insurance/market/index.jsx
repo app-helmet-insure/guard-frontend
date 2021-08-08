@@ -54,8 +54,6 @@ const Market = props => {
   }
   // 保单数据
   const getPolicyList = () => {
-    setPage(1)
-    setPageSize(10)
     const {
       type,
       insurance,
@@ -246,9 +244,10 @@ const Market = props => {
       return
     }
     if (InsuranceType || InsuranceSymbol) {
-      setLoading(true)
-
       setPolicyList([])
+      setPage(1)
+      onChangePage(1)
+      setLoading(true)
       getPolicyList()
       getApproveStatus()
     }
