@@ -97,6 +97,7 @@ const MySettle = props => {
                 shortBalance + '',
                 CurrentInsurance.collateral_decimals
               )
+              console.log(longBalance, shortBalance)
               if (Number(longBalance) > 0 && Number(shortBalance) > 0) {
                 FixListPush.push({
                   type,
@@ -130,7 +131,8 @@ const MySettle = props => {
               if (Number(ShortMinusLong) > 0) {
                 ShortMinusLong = ShortMinusLong.toString()
                 getContract(library, FactoryABI, FactoryAddress)
-                  .methods.settleable(item.short, toWei(ShortMinusLong + ''))
+                  .methods.settleable(account, item.short)
+                  // .methods.settleable(item.short, toWei(ShortMinusLong + ''))
                   .call()
                   .then(SettleInfo => {
                     FixListPush.push({
@@ -219,6 +221,7 @@ const MySettle = props => {
   }
   // 撤销订单
   const handleClickClaimOrder = data => {
+    console.log(data)
     const OrderContracts = getContract(library, FactoryABI, FactoryAddress)
     if (Number(data.claimBalance) !== 0) {
       OrderContracts.methods
