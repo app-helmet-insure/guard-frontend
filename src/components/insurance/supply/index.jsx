@@ -204,6 +204,16 @@ const Supply = props => {
       CurrentInsurance.settleToken_decimals
     )
     const volume = toWei(InsuranceVolume, CurrentInsurance.collateral_decimals)
+    console.log(
+      _private,
+      _collateral,
+      _underlying,
+      _strikePrice,
+      _expiry,
+      volume,
+      settleToken,
+      price
+    )
     if (CurrentInsurance.collateral_symbol !== 'MATIC') {
       SellContracts.methods
         .sell(

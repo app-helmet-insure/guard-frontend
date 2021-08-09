@@ -132,19 +132,21 @@ const MySettle = props => {
                 ShortMinusLong = ShortMinusLong.toString()
                 getContract(library, FactoryABI, FactoryAddress)
                   // .methods.settleable(account, item.short)
-                  .methods.settleable(item.short, toWei(ShortMinusLong + ''))
+                  .methods.settleable(
+                    item.short,
+                    toWei(ShortMinusLong, CurrentInsurance.collateral_decimals)
+                  )
                   .call()
                   .then(SettleInfo => {
-                    console.log(SettleInfo)
                     FixListPush.push({
                       type,
                       expiry: item.expiry,
                       long: item.long,
                       short: item.short,
-                      show_strikePrice: fromWei(
-                        item.strikePrice,
-                        strikeprice_decimals
-                      ),
+                      show_strikePrice:
+                        type === 'Call'
+                          ? fromWei(item.strikePrice, strikeprice_decimals)
+                          : 1 / fromWei(item.strikePrice, strikeprice_decimals),
                       strikePrice: item.strikePrice,
                       collateral: item.collateral,
                       collateral_symbol: collateral_symbol,
@@ -285,8 +287,10 @@ const MySettle = props => {
                       </span>
                       <span>
                         {item.type === 'Call'
-                          ? Number(item.col) + Number(item.claimBalance)
-                          : item.und}
+                          ? (
+                            Number(item.col) + Number(item.claimBalance)
+                          ).toFixed(8)
+                          : Number(item.und).toFixed(8)}
                       </span>
                       <span>
                         {item.type === 'Call'
@@ -302,8 +306,10 @@ const MySettle = props => {
                       </span>
                       <span>
                         {item.type === 'Call'
-                          ? item.und
-                          : Number(item.col) + Number(item.claimBalance)}
+                          ? Number(item.und).toFixed(8)
+                          : (
+                            Number(item.col) + Number(item.claimBalance)
+                          ).toFixed(8)}
                       </span>
                       <span>
                         {item.type === 'Call'
