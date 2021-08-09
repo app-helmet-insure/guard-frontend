@@ -26,6 +26,7 @@ export default {
   mining_text24: 'coming soon',
   mining_text25: 'From {name} get {b}',
   mining_text26: 'Core',
+  mining_text27: 'Total Stake Value',
   DayM: 'd',
   HourM: 'h',
   MinM: 'm',
