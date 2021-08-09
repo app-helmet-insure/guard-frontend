@@ -153,7 +153,6 @@ const MySupply = props => {
                 AllItem.show_unsold = Number(AllItem.show_unsold).toFixed(8)
               }
               if (
-                !AllItem.isCancel &&
                 itemAsk.seller.toUpperCase() === account.toUpperCase()
               ) {
                 FixListPush.push(AllItem)
