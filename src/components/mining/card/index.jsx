@@ -31,6 +31,8 @@ const MiningCard = props => {
   const [miningPools, setMiningPools] = useState(null)
   const [apr, setApr] = useState('0')
   const [mdexApr, setMdexApr] = useState('0')
+
+  const [lptValue, setLptValue] = useState('-')
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0 && account) {
@@ -49,7 +51,10 @@ const MiningCard = props => {
         if (miningPools_.mdexReward) {
           // 奖励2的apr
           getMdxARP(miningPools_).then(res => {
-            setMdexApr(res)
+            setMdexApr(res.apr)
+            const lptV = formatAmount(res.lptValue, 6, 4)
+            console.log('lptV', lptV)
+            setLptValue(lptV)
           })
         }
       })
@@ -231,6 +236,18 @@ const MiningCard = props => {
               src={miningPools.rewardIcon}
             />
           </p>
+
+
+          {
+            miningPools.showLptValue && (
+              <p className='mining_card_content_val'>
+                <span>
+                  <FormattedMessage id='mining_text27' />
+                </span>
+                <span>${lptValue}</span>
+              </p>
+            )
+          }
           <p className='mining_card_content_val'>
             <span>
               <FormattedMessage id='mining_text9' />

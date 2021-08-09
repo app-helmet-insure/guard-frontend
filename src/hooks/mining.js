@@ -412,6 +412,7 @@ export const getMdxARP = async (miningPools) => {
     miningPools.abi,
     miningPools
   )
+  console.log('lptValue', lptValue)
 
   // console.log('lptValue__', lptValue)
   const [mdex2warPrice] = await getMDexPrice(
@@ -449,6 +450,9 @@ export const getMdxARP = async (miningPools) => {
     })
   }
   console.log('apr', apr)
-  return apr
+  return {
+    apr,
+    lptValue
+  }
 }
 
