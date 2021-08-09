@@ -437,7 +437,6 @@ export const getMdxARP = async (miningPools) => {
     await multicallProvider.all(promiseList).then((data) => {
       data = processResult(data)
       const [tokenTotalSupply, totalSupply] = data
-      console.log('totalSupply', totalSupply, volumeTotal.toString())
       // const radio = new BigNumber(totalSupply).div(new BigNumber(volumeTotal))
       const totalRewardValue = volumeTotal
         .multipliedBy(new BigNumber(365))
@@ -445,11 +444,8 @@ export const getMdxARP = async (miningPools) => {
           new BigNumber(totalSupply).div(new BigNumber(tokenTotalSupply))
         )
       apr = totalRewardValue.div(fromWei(lptValue, miningPools.settleTokenDecimal)).toString()
-
-      console.log('apr_', apr)
     })
   }
-  console.log('apr', apr)
   return {
     apr,
     lptValue

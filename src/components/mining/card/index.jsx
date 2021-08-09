@@ -52,8 +52,7 @@ const MiningCard = props => {
           // 奖励2的apr
           getMdxARP(miningPools_).then(res => {
             setMdexApr(res.apr)
-            const lptV = formatAmount(res.lptValue, 6, 4)
-            console.log('lptV', lptV)
+            const lptV = formatAmount(res.lptValue, miningPools ? miningPools.settleTokenDecimal : 6, 4)
             setLptValue(lptV)
           })
         }
