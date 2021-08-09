@@ -131,10 +131,11 @@ const MySettle = props => {
               if (Number(ShortMinusLong) > 0) {
                 ShortMinusLong = ShortMinusLong.toString()
                 getContract(library, FactoryABI, FactoryAddress)
-                  .methods.settleable(account, item.short)
-                  // .methods.settleable(item.short, toWei(ShortMinusLong + ''))
+                  // .methods.settleable(account, item.short)
+                  .methods.settleable(item.short, toWei(ShortMinusLong + ''))
                   .call()
                   .then(SettleInfo => {
+                    console.log(SettleInfo)
                     FixListPush.push({
                       type,
                       expiry: item.expiry,
@@ -219,9 +220,8 @@ const MySettle = props => {
       }
     })
   }
-  // 撤销订单
+  // 结算订单
   const handleClickClaimOrder = data => {
-    console.log(data)
     const OrderContracts = getContract(library, FactoryABI, FactoryAddress)
     if (Number(data.claimBalance) !== 0) {
       OrderContracts.methods
