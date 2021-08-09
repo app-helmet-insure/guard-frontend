@@ -59,6 +59,7 @@ const MySettle = props => {
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
+        console.log(ReturnList)
         const FixListPush = []
         const multicallPorvider = getOnlyMultiCallProvider(137)
         ReturnList.forEach(item => {
@@ -132,13 +133,6 @@ const MySettle = props => {
                   .methods.settleable(item.short, toWei(ShortMinusLong + ''))
                   .call()
                   .then(SettleInfo => {
-                    console.log(
-                      ShortMinusLong,
-                      Number(shortBalance),
-                      Number(longBalance),
-                      SettleInfo,
-                      item
-                    )
                     FixListPush.push({
                       type,
                       expiry: item.expiry,
@@ -214,6 +208,7 @@ const MySettle = props => {
                 setSettleList(FixList)
                 setLoading(false)
               }
+              console.log(FixListPush)
             })
           }
         })

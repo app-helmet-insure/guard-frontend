@@ -84,7 +84,7 @@ export const getCurrentInsurance = ({
       strikeprice_decimals: 'tether',
       lastprice: '2.57168',
       expiry: 1630080000,
-      status: true,
+      status: false,
     },
     {
       type: 'Call',
