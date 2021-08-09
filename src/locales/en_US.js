@@ -126,6 +126,7 @@ export default {
   mysupply_text3: 'Unsold',
   mysupply_text4: 'Mining',
   mysupply_text5: 'Cancel',
+  mysupply_text6: 'Canceled',
   mysettle_text1: 'Policy Settlement',
   mysettle_text2: 'Denominated Asset',
   mysettle_text3: 'Underlying Asset',

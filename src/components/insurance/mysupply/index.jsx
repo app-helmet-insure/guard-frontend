@@ -152,7 +152,22 @@ const MySupply = props => {
                 AllItem.show_besold = Number(AllItem.show_besold).toFixed(8)
                 AllItem.show_unsold = Number(AllItem.show_unsold).toFixed(8)
               }
+              AllItem.Status = 'Nomal'
+              AllItem.Sort = 1
+              if (AllItem.isCancel && Number(AllItem.show_besold) === 0) {
+                AllItem.Status = 'Hidden'
+                AllItem.Sort = 4
+              }
+              if (AllItem.isCancel && Number(AllItem.show_besold) > 0) {
+                AllItem.Status = 'Cancel'
+                AllItem.Sort = 2
+              }
+              if (!AllItem.isCancel && Number(AllItem.show_unsold) === 0) {
+                AllItem.Status = 'Sold'
+                AllItem.Sort = 3
+              }
               if (
+                AllItem.Status !== 'Hidden' &&
                 itemAsk.seller.toUpperCase() === account.toUpperCase()
               ) {
                 FixListPush.push(AllItem)
@@ -160,9 +175,7 @@ const MySupply = props => {
             })
           }
         })
-        const FixList = FixListPush.sort(
-          (a, b) => Number(b.show_unsold) - Number(a.show_unsold)
-        )
+        const FixList = FixListPush.sort((a, b) => a.Sort - b.Sort)
         console.log(FixList)
         setSupplyList(FixList)
         setLoading(false)
@@ -306,11 +319,7 @@ const MySupply = props => {
                     </div>
                   </section>
                   <section>
-                    {Number(item.show_unsold) === 0 ? (
-                      <button className="finish">
-                        <FormattedMessage id="insurance_text27" />
-                      </button>
-                    ) : (
+                    {item.Status === 'Nomal' ? (
                       <>
                         <button onClick={goMining} className="mining">
                           <FormattedMessage id="mysupply_text4" />
@@ -322,6 +331,27 @@ const MySupply = props => {
                           <FormattedMessage id="mysupply_text5" />
                         </button>
                       </>
+                    ) : (
+                      ''
+                    )}
+                    {item.Status === 'Cancel' ? (
+                      <>
+                        <button onClick={goMining} className="mining">
+                          <FormattedMessage id="mysupply_text4" />
+                        </button>
+                        <button className="disable cancel">
+                          <FormattedMessage id="mysupply_text6" />
+                        </button>
+                      </>
+                    ) : (
+                      ''
+                    )}
+                    {item.Status === 'Sold' ? (
+                      <button className="finish">
+                        <FormattedMessage id="insurance_text27" />
+                      </button>
+                    ) : (
+                      ''
                     )}
                   </section>
                 </div>
