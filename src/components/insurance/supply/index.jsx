@@ -77,7 +77,9 @@ const Supply = props => {
         )
         if (miningPools_.mdexReward) {
           // 奖励2的apr
-          getMdxARP(miningPools_).then(setMdexApr)
+          getMdxARP(miningPools_).then(res => {
+            setMdexApr(res.apr)
+          })
         }
       })
     }

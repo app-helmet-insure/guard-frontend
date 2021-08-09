@@ -26,6 +26,8 @@ export default {
   mining_text24: '马上就来',
   mining_text25: '从 {name} 获取 {b}',
   mining_text26: 'Core',
+  mining_text27: '总抵押价值',
+
   DayM: '天',
   HourM: '时',
   MinM: '分',

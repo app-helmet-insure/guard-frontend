@@ -59,6 +59,7 @@ export default [
     ledLight: true,
     multiple: '8.5X',
     core: true,
+    showLptValue: true // 展示奖励2总价值
   },
 
   {
@@ -108,6 +109,7 @@ export default [
     poolType: 3,
     multiple: '1X',
     core: true,
+    showLptValue: false // 展示奖励2总价值
   },
   {
     title: 'Guard Short Token Pool',
@@ -156,6 +158,7 @@ export default [
     poolType: 3,
     multiple: '0.5X',
     core: true,
+    showLptValue: false // 展示奖励2总价值
   },
 
   {
@@ -204,6 +207,7 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
     multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
   },
   {
     title: 'Matic Short Token Pool',
@@ -251,6 +255,7 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
     multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
   },
   {
     title: 'Quick Short Token Pool',
@@ -298,6 +303,8 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
     multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+
   },
   {
     title: 'Quick Short Token Pool',
@@ -345,6 +352,7 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
     multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
   },
   {
     title: 'ETH Short Token Pool',
@@ -392,5 +400,6 @@ export default [
     quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
     poolType: 3,
     multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
   },
 ]
