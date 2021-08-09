@@ -139,7 +139,7 @@ const Market = props => {
               } else {
                 AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
               }
-              if (AllItem.premium > 0.000000001) {
+              if (!AllItem.isCancel && AllItem.premium > 0.000000001) {
                 FixListPush.push(AllItem)
               }
             })

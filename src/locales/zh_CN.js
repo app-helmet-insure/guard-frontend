@@ -123,6 +123,7 @@ export default {
   mysupply_text3: '未出售',
   mysupply_text4: '挖矿',
   mysupply_text5: '撤销',
+  mysupply_text6: '已撤销',
   mysettle_text1: '我的结算',
   mysettle_text2: '计价资产',
   mysettle_text3: '基础资产',
