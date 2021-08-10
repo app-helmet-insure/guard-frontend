@@ -313,7 +313,7 @@ const Market = props => {
                       key={'web' + item.askID}
                     >
                       <td>{item.show_ID}</td>
-                      <td>{item.premium.toFixed(8)}</td>
+                      <td>{(item.show_price * item.show_volume).toFixed(8)}</td>
                       <td>{item.show_volume}</td>
                       <td>
                         <input
