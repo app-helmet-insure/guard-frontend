@@ -114,6 +114,7 @@ export default {
   insurance_text25: '发行保险获得 SHORT token',
   insurance_text26: '购买',
   insurance_text27: '已全部成交',
+  insurance_text28: '提供保单的预期日化收益，DPR=每日收益/抵押价值',
   mypolicy_text1: '我的保单',
   mypolicy_text2: '出险价',
   mypolicy_text3: '持有量',

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useMemo } from 'react'
 import { withRouter } from 'react-router'
 import { VarContext } from '../../../context'
 import PolicySvg from '../../../assets/images/insurance/policy.svg'
-import { Select } from 'antd'
+import { Select, Tooltip } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { toWei, fromWei } from 'web3-utils'
 import { useActiveWeb3React, getContract } from '../../../web3'
@@ -18,6 +18,7 @@ import { getMiningInfo, getAPR, getMdxARP } from '../../../hooks/mining'
 import BigNumber from 'bignumber.js'
 import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
+import InfoSvg from '../../../assets/images/insurance/info.svg'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import moment from 'moment'
@@ -45,6 +46,7 @@ const Supply = props => {
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
   const [OpenSubmit, setOpenSubmit] = useState(false)
+  const [OpenStake, setOpenStake] = useState(false)
   const [IndexPrice, setIndexPrice] = useState(0)
   const [GuardPrice, setGuardPrice] = useState({ Call: 0, Put: 0 })
   const { library, active, account } = useActiveWeb3React()
@@ -301,7 +303,8 @@ const Supply = props => {
     setInsuranceDPR({ number: data.key, show: data.value })
   }
   const handleClickStake = () => {
-    props.history.push('/mining')
+    // props.history.push('/mining')
+    setOpenStake(true)
   }
   useEffect(() => {
     if (!active) {
@@ -363,6 +366,7 @@ const Supply = props => {
     DprStatus,
     active,
   ])
+  const ToolTipText = <FormattedMessage id={'insurance_text28'} />
   return (
     <div className="insurance_supply">
       <div className="insurance_type">
@@ -388,20 +392,25 @@ const Supply = props => {
             {CurrentInsurance.insurance} {CurrentInsurance.strikeprice} USDC
           </span>
         </p>
-        <Select
-          defaultValue={InsuranceDPR.show}
-          onChange={(value, option) => handleClickDpr(option)}
-        >
-          {DPRlist.map(dpr => (
-            <Option
-              value={dpr.show}
-              key={dpr.number}
-              disabled={dpr.show === InsuranceDPR.show}
-            >
-              {dpr.show}
-            </Option>
-          ))}
-        </Select>
+        <div className="select">
+          <Tooltip placement="top" title={ToolTipText}>
+            <img src={InfoSvg} alt="" />
+          </Tooltip>
+          <Select
+            defaultValue={InsuranceDPR.show}
+            onChange={(value, option) => handleClickDpr(option)}
+          >
+            {DPRlist.map(dpr => (
+              <Option
+                value={dpr.show}
+                key={dpr.number}
+                disabled={dpr.show === InsuranceDPR.show}
+              >
+                {dpr.show}
+              </Option>
+            ))}
+          </Select>
+        </div>
         <p className="left">
           <FormattedMessage id="insurance_text8" />
           {Earning} GUARD
@@ -449,7 +458,7 @@ const Supply = props => {
               </p>
               <div className="stake">
                 <span className="apr">APR: {aprPercentage}%</span>
-                <button onClick={handleClickStake}>STAKE</button>
+                <button onClick={()=>handleClickStake}>STAKE</button>
               </div>
             </div>
           </div>
@@ -473,13 +482,14 @@ const Supply = props => {
           ),
         }}
       />
-      {/* <StakeChaimDialog
-        visible
+      <StakeChaimDialog
+        visible={OpenStake}
         tab={'Stake'}
         pool={CurrentPool}
         balance={LpBalance}
+        activeKey={'Stake'}
         isEnd={false}
-      /> */}
+      />
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}
