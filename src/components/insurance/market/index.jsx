@@ -66,7 +66,13 @@ const Market = props => {
       settleToken_symbol,
       settleToken_decimals,
       strikeprice_decimals,
+      expiry,
+      strikeprice,
     } = CurrentInsurance
+    const StrkcePrice =
+      type === 'Call'
+        ? toWei(strikeprice + '', strikeprice_decimals)
+        : toWei(Number(1 / strikeprice) + '', strikeprice_decimals)
     getInsuranceList().then(res => {
       console.log(res)
       if (res && res.data.data.options) {
@@ -78,7 +84,9 @@ const Market = props => {
             item.collateral.toLocaleLowerCase() ===
               collateral_address.toLocaleLowerCase() &&
             item.underlying.toLocaleLowerCase() ===
-              underlying_address.toLocaleLowerCase()
+              underlying_address.toLocaleLowerCase() &&
+            item.expiry === expiry + '' &&
+            item.strikePrice === StrkcePrice
         )
         if (FilterList) {
           FilterList.forEach(item => {
