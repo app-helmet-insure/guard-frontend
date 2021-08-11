@@ -47,12 +47,17 @@ const ShowData = props => {
     18,
     ChainId.MATIC
   )
+
   // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
-  const Data3 = Data3Balance > 0 ? formatNumber(new BigNumber(4000000).minus(new BigNumber(Data3Balance)).plus(100000)) : '-'
+  const Data3 =
+    Data3Balance > 0
+      ? formatNumber(
+        new BigNumber(4000000).minus(new BigNumber(Data3Balance)).plus(100000)
+      )
+      : '-'
   const getData2 = async () => {
     const Datas = await getShortTokenValue(library)
     setData2Price(formatAmount(Datas, 0))
-    console.log(Datas)
   }
   useEffect(() => {
     if (account) {
@@ -72,8 +77,12 @@ const ShowData = props => {
             </span>
             <span className="flex_center_up_and_down">
               $ {Data1}
-              <a href="https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8" target="_blank" className="buy_btn">
-                <FormattedMessage id="insurance_text26"/>
+              <a
+                href="https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"
+                target="_blank"
+                className="buy_btn"
+              >
+                <FormattedMessage id="insurance_text26" />
               </a>
             </span>
           </p>
