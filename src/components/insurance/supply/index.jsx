@@ -13,13 +13,13 @@ import './index.less'
 import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import StakeChaimDialog from '../../dialogs/stake-chaim-dialog'
 import PoolList from '../../../configs/mining'
 import { getMiningInfo, getAPR, getMdxARP } from '../../../hooks/mining'
 import BigNumber from 'bignumber.js'
 import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
 import InfoSvg from '../../../assets/images/insurance/info.svg'
-import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import moment from 'moment'
 
@@ -72,7 +72,9 @@ const Supply = props => {
         setMiningPools(CurrentPool)
         return
       }
+      console.log(CurrentPool)
       getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
+        console.log(miningPools_)
         setMiningPools(miningPools_)
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
           setApr
@@ -86,7 +88,6 @@ const Supply = props => {
       })
     }
   }, [blockHeight, account, InsuranceType, InsuranceSymbol])
-
   const Balance =
     CurrentInsurance.collateral_symbol === 'MATIC'
       ? useEthBalance()
@@ -96,7 +97,7 @@ const Supply = props => {
         Erc20ABI.abi,
         CurrentInsurance.collateral_decimals_number
       ) || 0
-  const LpBalance = useBalance(
+  const ShortBalance = useBalance(
     blockHeight,
     CurrentPool && CurrentPool.MLP,
     ERC20.abi,
@@ -482,9 +483,9 @@ const Supply = props => {
       <StakeChaimDialog
         visible={OpenStake}
         tab={'Stake'}
-        pool={CurrentPool}
+        pool={miningPools}
         onClose={onStakeClose}
-        balance={LpBalance}
+        balance={ShortBalance}
         isEnd={false}
         showTabs={'Stake'}
       />

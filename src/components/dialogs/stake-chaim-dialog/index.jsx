@@ -6,23 +6,32 @@ import { injectIntl } from 'react-intl'
 import Web3 from 'web3'
 // 处理格式 千位符
 import { formatNumber } from 'accounting'
-import {formatAmount, numToWei, splitFormat} from '../../../utils/format'
+import { formatAmount, numToWei, splitFormat } from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import { useBalance } from '../../../hooks/index'
 import { useBlockHeight } from '../../../web3/index'
 const { TabPane } = Tabs
 
-function LineData({ title, value }) {
+function LineData ({ title, value }) {
   return (
-    <div className='line_data'>
-      <div className='title'>{title}</div>
-      <div className='value'>{value}</div>
+    <div className="line_data">
+      <div className="title">{title}</div>
+      <div className="value">{value}</div>
     </div>
   )
 }
 
-function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance, isEnd, showTabs = ['Stake', 'Claim', 'Unstake&Claim'] }) {
+function StakeChaimDialog ({
+  visible,
+  onClose,
+  tab = 'Stake',
+  intl,
+  pool,
+  balance,
+  isEnd,
+  showTabs = ['Stake', 'Claim', 'Unstake&Claim'],
+}) {
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const [miningPools, setMiningPools] = useState(pool)
   const { library, active, account } = useActiveWeb3React()
@@ -32,9 +41,9 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
   //   ERC20.abi,
   //   miningPools && miningPools.mlpDecimal
   // )
-  const [activeTabKey, setActiveTabKey] = useState(() => {
-    return showTabs.includes(tab) ? tab : showTabs[0]
-  })
+  const [activeTabKey, setActiveTabKey] = useState(() =>
+    showTabs.includes(tab) ? tab : showTabs[0]
+  )
   const [stakeInput, setStakeInput] = useState(null)
   const [unStakeClaimInput, setUnStakeClaimInput] = useState(null)
   const [approve, setApprove] = useState(true)
@@ -47,6 +56,8 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
   useMemo(() => {
     if (miningPools && miningPools.allowance > 0) {
       setApprove(false)
+    } else {
+      setApprove(true)
     }
   }, [miningPools, miningPools && miningPools.allowance])
 
@@ -54,7 +65,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
     setStakeInput(balance)
   }
 
-  const onChange = (e) => {
+  const onChange = e => {
     const { value } = e.target
     const re = /^[0-9]+([.|,][0-9]+)?$/g
     if (
@@ -66,7 +77,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
     }
   }
 
-  const onApprove = (e) => {
+  const onApprove = e => {
     if (!active) {
       return
     }
@@ -121,7 +132,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
       miningPools.address
     )
     pool_contract.methods
-      .stake(numToWei(`${stakeInput}`,  miningPools.mlpDecimal))
+      .stake(numToWei(`${stakeInput}`, miningPools.mlpDecimal))
       .send({
         from: account,
       })
@@ -147,7 +158,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
       })
   }
 
-  const onConfirm = (e) => {
+  const onConfirm = e => {
     if (!active) {
       return
     }
@@ -165,9 +176,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
       .send({
         from: account,
       })
-      .on('transactionHash', (hash) => {
-
-      })
+      .on('transactionHash', hash => {})
       .on('receipt', (_, receipt) => {
         message.success({
           content: formatMessage('mining_text20'),
@@ -208,7 +217,7 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
       .send({
         from: account,
       })
-      .on('transactionHash', (hash) => {})
+      .on('transactionHash', hash => {})
       .on('receipt', (_, receipt) => {
         message.success({
           content: formatMessage('mining_text22'),
@@ -238,224 +247,227 @@ function StakeChaimDialog({ visible, onClose, tab = 'Stake', intl, pool, balance
       onCancel={onClose}
       centered
       destroyOnClose
-      wrapClassName='stake_chain_dialog_wrap'
+      wrapClassName="stake_chain_dialog_wrap"
     >
       <Tabs activeKey={activeTabKey} onChange={setActiveTabKey} animated>
-        {
-          showTabs.includes('Stake') && (
-            <TabPane
-              tab={<FormattedMessage id='stake_chain_dialog_text1' />}
-              key='Stake'
-            >
-              <LineData
-                title={<FormattedMessage id='stake_chain_dialog_text2' />}
-                value={
-                  miningPools
-                    ? formatNumber(balance, {
-                      thousand: ',',
-                      decimal: '.',
-                      precision: balance - 0 > 0 ? miningPools.splitDigits : 0,
-                    }) +
+        {showTabs.includes('Stake') && (
+          <TabPane
+            tab={<FormattedMessage id="stake_chain_dialog_text1" />}
+            key="Stake"
+          >
+            <LineData
+              title={<FormattedMessage id="stake_chain_dialog_text2" />}
+              value={
+                miningPools
+                  ? formatNumber(balance, {
+                    thousand: ',',
+                    decimal: '.',
+                    precision: balance - 0 > 0 ? miningPools.splitDigits : 0,
+                  }) +
                     ' ' +
                     miningPools.rewards
-                    : '--'
-                }
+                  : '--'
+              }
+            />
+            <div>
+              <Input
+                value={stakeInput}
+                onChange={onChange}
+                placeholder={formatMessage('stake_chain_dialog_text3')}
+                size="large"
+                suffix={(
+                  <div className="max_btn" onClick={onMax}>
+                    Max
+                  </div>
+                )}
               />
-              <div>
-                <Input
-                  value={stakeInput}
-                  onChange={onChange}
-                  placeholder={formatMessage('stake_chain_dialog_text3')}
-                  size='large'
-                  suffix={
-                    <div className='max_btn' onClick={onMax}>
-                      Max
-                    </div>
-                  }
-                />
-              </div>
-              {approve && (
-                <Button
-                  type="primary"
-                  size='large'
-                  className='btn_primary'
-                  onClick={onApprove}
-                  loading={loadFlag}
-                  disabled={isEnd}
-                >
-                  <FormattedMessage id='stake_chain_dialog_text7' />
-                </Button>
-              )}
-              {!approve && (
-                <Button
-                  type="primary"
-                  size='large'
-                  className='btn_primary'
-                  loading={loadFlag}
-                  onClick={stakeOnConfirm}
-                  disabled={isEnd}
-                >
-                  <FormattedMessage id='stake_chain_dialog_text1' />
-                </Button>
-              )}
-            </TabPane>)
-        }
-        {
-          showTabs.includes('Claim') && (
-            <TabPane
-              tab={<FormattedMessage id='stake_chain_dialog_text4' />}
-              key='Claim'
-            >
-              <LineData
-                title={
-                  miningPools &&
-                  miningPools.rewards1 +
+            </div>
+            {approve && (
+              <Button
+                type="primary"
+                size="large"
+                className="btn_primary"
+                onClick={onApprove}
+                loading={loadFlag}
+                disabled={isEnd}
+              >
+                <FormattedMessage id="stake_chain_dialog_text7" />
+              </Button>
+            )}
+            {!approve && (
+              <Button
+                type="primary"
+                size="large"
+                className="btn_primary"
+                loading={loadFlag}
+                onClick={stakeOnConfirm}
+                disabled={isEnd}
+              >
+                <FormattedMessage id="stake_chain_dialog_text1" />
+              </Button>
+            )}
+          </TabPane>
+        )}
+        {showTabs.includes('Claim') && (
+          <TabPane
+            tab={<FormattedMessage id="stake_chain_dialog_text4" />}
+            key="Claim"
+          >
+            <LineData
+              title={
+                miningPools &&
+                miningPools.rewards1 +
                   ' ' +
                   formatMessage('stake_chain_dialog_text5')
-                }
-                value={
-                  miningPools && miningPools.earned
-                    ? formatNumber(
+              }
+              value={
+                miningPools && miningPools.earned
+                  ? formatNumber(
                     formatAmount(miningPools.earned, miningPools.decimal, 6),
                     {
                       thousand: ',',
                       decimal: '.',
                       precision:
-                        formatAmount(miningPools.earned) - 0 > 0
-                          ? miningPools.splitDigits
-                          : 0,
+                          formatAmount(miningPools.earned) - 0 > 0
+                            ? miningPools.splitDigits
+                            : 0,
                     }
-                    ) +
+                  ) +
                     ' ' +
                     miningPools.rewards1
-                    : '--'
-                }
-              />
-              {miningPools.rewards2 && (
-                <LineData
-                  title={
-                    miningPools &&
-                    miningPools.rewards2 +
+                  : '--'
+              }
+            />
+            {miningPools.rewards2 && (
+              <LineData
+                title={
+                  miningPools &&
+                  miningPools.rewards2 +
                     ' ' +
                     formatMessage('stake_chain_dialog_text5')
-                  }
-                  value={
-                    miningPools && miningPools.earned2
-                      ? formatNumber(
-                      formatAmount(miningPools.earned2, miningPools.decimal, 6),
+                }
+                value={
+                  miningPools && miningPools.earned2
+                    ? formatNumber(
+                      formatAmount(
+                        miningPools.earned2,
+                        miningPools.decimal,
+                        6
+                      ),
                       formatAmount(miningPools.earned2) - 0 > 0
                         ? miningPools.splitDigits
                         : 0
-                      ) +
+                    ) +
                       ' ' +
                       miningPools.rewards2
-                      : '--'
-                  }
-                />
-              )}
-              <Button
-                type='primary'
-                size='large'
-                className='btn_primary_gray'
-                loading={loadFlag}
-                onClick={onConfirm}
-              >
-                <FormattedMessage id='stake_chain_dialog_text4' />
-              </Button>
-            </TabPane>
-          )
-        }
-        {
-          showTabs.includes('Unstake&Claim') && (
-            <TabPane
-              tab={<FormattedMessage id='stake_chain_dialog_text6' />}
-              key='Unstake&Claim'
+                    : '--'
+                }
+              />
+            )}
+            <Button
+              type="primary"
+              size="large"
+              className="btn_primary_gray"
+              loading={loadFlag}
+              onClick={onConfirm}
             >
-              <LineData
-                title={<FormattedMessage id='mining_text10' />}
-                value={
-                  miningPools && miningPools.balanceOf
-                    ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
-                      thousand: ',',
-                      decimal: '.',
-                      precision:
+              <FormattedMessage id="stake_chain_dialog_text4" />
+            </Button>
+          </TabPane>
+        )}
+        {showTabs.includes('Unstake&Claim') && (
+          <TabPane
+            tab={<FormattedMessage id="stake_chain_dialog_text6" />}
+            key="Unstake&Claim"
+          >
+            <LineData
+              title={<FormattedMessage id="mining_text10" />}
+              value={
+                miningPools && miningPools.balanceOf
+                  ? formatNumber(splitFormat(miningPools.balanceOf, 6), {
+                    thousand: ',',
+                    decimal: '.',
+                    precision:
                         miningPools.balanceOf - 0 > 0
                           ? miningPools.splitDigits
                           : 0,
-                    }) +
+                  }) +
                     ' ' +
                     miningPools.rewards
-                    : '--'
-                }
+                  : '--'
+              }
+            />
+            <div>
+              <Input
+                value={miningPools.balanceOf || ''}
+                placeholder={formatMessage('stake_chain_dialog_text3')}
+                size="large"
+                type="number"
+                disabled
               />
-              <div>
-                <Input
-                  value={miningPools.balanceOf || ''}
-                  placeholder={formatMessage('stake_chain_dialog_text3')}
-                  size='large'
-                  type='number'
-                  disabled
-                />
-              </div>
-              <Button
-                type='primary'
-                size='large'
-                className='btn_primary un_stake_claim'
-                loading={loadFlag}
-                onClick={onConfirmAll}
-              >
-                <FormattedMessage id='stake_chain_dialog_text6' />
-              </Button>
-              <LineData
-                title={
-                  miningPools &&
-                  miningPools.rewards1 +
+            </div>
+            <Button
+              type="primary"
+              size="large"
+              className="btn_primary un_stake_claim"
+              loading={loadFlag}
+              onClick={onConfirmAll}
+            >
+              <FormattedMessage id="stake_chain_dialog_text6" />
+            </Button>
+            <LineData
+              title={
+                miningPools &&
+                miningPools.rewards1 +
                   ' ' +
                   formatMessage('stake_chain_dialog_text5')
-                }
-                value={
-                  miningPools && miningPools.earned
-                    ? formatNumber(
+              }
+              value={
+                miningPools && miningPools.earned
+                  ? formatNumber(
                     formatAmount(miningPools.earned, miningPools.decimal, 6),
                     {
                       thousand: ',',
                       decimal: '.',
                       precision:
-                        formatAmount(miningPools.earned) - 0 > 0
-                          ? miningPools.splitDigits
-                          : 0,
+                          formatAmount(miningPools.earned) - 0 > 0
+                            ? miningPools.splitDigits
+                            : 0,
                     }
-                    ) +
+                  ) +
                     ' ' +
                     miningPools.rewards1
-                    : '--'
-                }
-              />
-              {miningPools && miningPools.rewards2 && (
-                <LineData
-                  title={
-                    miningPools &&
-                    miningPools.rewards2 +
+                  : '--'
+              }
+            />
+            {miningPools && miningPools.rewards2 && (
+              <LineData
+                title={
+                  miningPools &&
+                  miningPools.rewards2 +
                     ' ' +
                     formatMessage('stake_chain_dialog_text5')
-                  }
-                  value={
-                    miningPools && miningPools.earned2
-                      ? formatNumber(
-                      formatAmount(miningPools.earned2, miningPools.decimal, 6),
+                }
+                value={
+                  miningPools && miningPools.earned2
+                    ? formatNumber(
+                      formatAmount(
+                        miningPools.earned2,
+                        miningPools.decimal,
+                        6
+                      ),
                       formatAmount(miningPools.earned2) - 0 > 0
                         ? miningPools.splitDigits
                         : 0
-                      ) +
+                    ) +
                       ' ' +
                       miningPools.rewards2
-                      : '--'
-                  }
-                />
-              )}
-            </TabPane>
-          )
-        }
+                    : '--'
+                }
+              />
+            )}
+          </TabPane>
+        )}
       </Tabs>
     </Modal>
   )

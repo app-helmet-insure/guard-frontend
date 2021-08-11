@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext, useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { VarContext } from '../../../context'
 import { withRouter } from 'react-router'
 import CallSvg from '../../../assets/images/insurance/call.svg'
 import PutSvg from '../../../assets/images/insurance/put.svg'
@@ -7,6 +8,8 @@ import NoData from '../../../assets/images/insurance/nodata.svg'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import SubmitInsuranceDialog from '../../dialogs/submit-insurance-dialog'
+import StakeChaimDialog from '../../dialogs/stake-chaim-dialog'
+import { getMiningInfo } from '../../../hooks/mining'
 import Loading from '../../loading'
 import {
   getCurrentInsurance,
@@ -17,29 +20,66 @@ import { useActiveWeb3React, getContract } from '../../../web3'
 import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
 import { Pagination } from 'antd'
+import PoolList from '../../../configs/mining'
+import { useBalance } from '../../../hooks'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
+import ERC20 from '../../../web3/abi/ERC20.json'
+import { getAllowance } from '../../../hooks/wallet'
 import './index.less'
 import moment from 'moment'
-import { Skeleton } from 'antd'
 
 const MySupply = props => {
+  const { blockHeight } = useContext(VarContext)
   const [SupplyList, setSupplyList] = useState([])
   const [loading, setLoading] = useState(true)
   const { library, active, account } = useActiveWeb3React()
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
+  const [OpenStake, setOpenStake] = useState(false)
   const [Page, setPage] = useState(1)
   const [PageSize, setPageSize] = useState(5)
   const [MinNumber, setMinNumber] = useState(0)
   const [MaxNumber, setMaxNumber] = useState(PageSize)
+  const [CurrentPolicy, setCurrentPolicy] = useState('')
+  const [miningPools, setMiningPools] = useState(null)
   const onSuccessClose = () => {
     setOpenSuccess(false)
   }
   const onWaitClose = () => {
     setOpenWaiting(false)
   }
-  const goMining = () => {
-    props.history.push('/mining')
+  const onStakeClose = () => {
+    setOpenStake(false)
+  }
+  const CurrentPool =
+    PoolList.filter(
+      pool =>
+        pool.cover === CurrentPolicy.type &&
+        pool.name.toUpperCase() === CurrentPolicy.callToken
+    )[0] || ''
+  useMemo(() => {
+    console.log(CurrentPool)
+    if (blockHeight !== 0 && CurrentPool) {
+      // 静态的 不做任何请求
+      // if (CurrentPool.is_coming) {
+      //   setMiningPools(CurrentPool)
+      //   return
+      // }
+      getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
+        console.log(miningPools_)
+        setMiningPools(miningPools_)
+      })
+    }
+  }, [blockHeight, account, CurrentPolicy])
+  const ShortBalance = useBalance(
+    blockHeight,
+    CurrentPool && CurrentPool.MLP,
+    ERC20.abi,
+    CurrentPool && CurrentPool.mlpDecimal
+  )
+  const goMining = data => {
+    setCurrentPolicy(data)
+    setOpenStake(true)
   }
   const onChangePage = value => {
     setPage(value)
@@ -51,6 +91,7 @@ const MySupply = props => {
       setMaxNumber((value - 1) * PageSize + PageSize)
     }
   }
+
   // 保单数据
   const getPolicyList = () => {
     getInsuranceList().then(res => {
@@ -207,7 +248,7 @@ const MySupply = props => {
       return
     }
     getPolicyList()
-  }, [account])
+  }, [account, CurrentPolicy])
   return (
     <div className="insurance_mysupply">
       <h2 className="insurance_mysupply_title">
@@ -319,7 +360,10 @@ const MySupply = props => {
                   <section>
                     {item.Status === 'Nomal' ? (
                       <>
-                        <button onClick={goMining} className="mining">
+                        <button
+                          onClick={() => goMining(item)}
+                          className="mining"
+                        >
                           <FormattedMessage id="mysupply_text4" />
                         </button>
                         <button
@@ -334,7 +378,10 @@ const MySupply = props => {
                     )}
                     {item.Status === 'Cancel' ? (
                       <>
-                        <button onClick={goMining} className="mining">
+                        <button
+                          onClick={() => goMining(item)}
+                          className="mining"
+                        >
                           <FormattedMessage id="mysupply_text4" />
                         </button>
                         <button className="disable cancel">
@@ -367,6 +414,15 @@ const MySupply = props => {
           )}
         </>
       )}
+      <StakeChaimDialog
+        visible={OpenStake}
+        tab={'Stake'}
+        pool={miningPools}
+        onClose={onStakeClose}
+        balance={ShortBalance}
+        isEnd={false}
+        showTabs={'Stake'}
+      />
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog
         visible={OpenSuccess}
