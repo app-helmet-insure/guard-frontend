@@ -85,7 +85,6 @@ export const getBalance = (
   const { account, library, active } = useWeb3ReactCore()
   useMemo(() => {
     if (active && address) {
-      // console.log(active, address, account)
       const WEB3 = getHttpWeb3(chainId_)
       const contract = new WEB3.eth.Contract(abi, ContractAddress)
       contract.methods
@@ -93,7 +92,6 @@ export const getBalance = (
         .call()
         .then(balance_ => {
           const resBalance = formatAmount(balance_, decimals)
-          // console.log('balance', balance_, 'format', resBalance)
           setBalance(resBalance)
         })
         .catch(e => {})

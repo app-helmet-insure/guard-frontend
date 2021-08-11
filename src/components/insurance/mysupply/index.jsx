@@ -176,7 +176,6 @@ const MySupply = props => {
           }
         })
         const FixList = FixListPush.sort((a, b) => a.Sort - b.Sort)
-        console.log(FixList)
         setSupplyList(FixList)
         setLoading(false)
       } else {
@@ -186,7 +185,6 @@ const MySupply = props => {
   }
   // 撤销订单
   const handleClickCancelOrder = data => {
-    console.log(data)
     const AskID = data.askID
     const OrderContracts = getContract(library, OrderABI, OrderAddress)
     OrderContracts.methods

@@ -74,7 +74,6 @@ const Market = props => {
         ? toWei(strikeprice + '', strikeprice_decimals)
         : toWei(Number(1 / strikeprice) + '', strikeprice_decimals)
     getInsuranceList().then(res => {
-      console.log(res)
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
@@ -161,7 +160,6 @@ const Market = props => {
             (a, b) => Number(b.show_volume) - Number(a.show_volume)
           )
           setPolicyList(FixList)
-          console.log(FixList)
           setLoading(false)
         } else {
           setLoading(false)

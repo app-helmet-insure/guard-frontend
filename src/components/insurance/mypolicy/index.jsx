@@ -282,7 +282,6 @@ const MyPolicy = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
-        console.log(res)
         if (Number(res) > 0) {
           return true
         }
@@ -299,7 +298,6 @@ const MyPolicy = props => {
       .allowance(account, OrderAddress)
       .call()
       .then(res => {
-        console.log(res)
         if (Number(res) > 0) {
           return true
         }

@@ -59,7 +59,6 @@ const MySettle = props => {
     getInsuranceList().then(res => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
-        console.log(ReturnList)
         const FixListPush = []
         const multicallPorvider = getOnlyMultiCallProvider(137)
         ReturnList.forEach(item => {
@@ -97,7 +96,6 @@ const MySettle = props => {
                 shortBalance + '',
                 CurrentInsurance.collateral_decimals
               )
-              console.log(longBalance, shortBalance)
               if (Number(longBalance) > 0 && Number(shortBalance) > 0) {
                 FixListPush.push({
                   type,
@@ -213,7 +211,6 @@ const MySettle = props => {
                 setSettleList(FixList)
                 setLoading(false)
               }
-              console.log(FixListPush)
             })
           }
         })

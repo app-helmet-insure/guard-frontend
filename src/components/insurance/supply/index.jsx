@@ -147,7 +147,6 @@ const Supply = props => {
       Insurance: InsuranceSymbol,
     })
     const prices = await useIndexPrice(library, data)
-    console.log(prices)
     setIndexPrice(prices)
   }
   const onSuccessClose = () => {
@@ -158,6 +157,9 @@ const Supply = props => {
   }
   const onSubmitClose = () => {
     setOpenSubmit(false)
+  }
+  const onStakeClose = () => {
+    setOpenStake(false)
   }
   // 获取授权状态
   const getApproveStatus = data => {
@@ -303,7 +305,6 @@ const Supply = props => {
     setInsuranceDPR({ number: data.key, show: data.value })
   }
   const handleClickStake = () => {
-    // props.history.push('/mining')
     setOpenStake(true)
   }
   useEffect(() => {
@@ -328,7 +329,6 @@ const Supply = props => {
             InsuranceVolume) /
           GuardPrice.Call
         const Premium = NumberDPR - NumberMIN
-        console.log(Premium, NumberDPR, NumberMIN)
         const Expecting = Number(Premium) > 0 ? Premium.toFixed(8) : 0
         setEarning(Expecting)
       } else {
@@ -348,9 +348,6 @@ const Supply = props => {
         const Expecting = Number(Premium) > 0 ? Premium.toFixed(8) : 0
         setEarning(Expecting)
       }
-      // console.log(Math.min(Number(IndexPrice) - Number(strikeprice), 0), 'Min')
-      // console.log(Number(strikeprice), 'Strike')
-      // console.log(Number(IndexPrice), 'Index')
     }
     if (InsuranceType || InsuranceSymbol) {
       currentGuardPrice()
@@ -458,7 +455,7 @@ const Supply = props => {
               </p>
               <div className="stake">
                 <span className="apr">APR: {aprPercentage}%</span>
-                <button onClick={()=>handleClickStake}>STAKE</button>
+                <button onClick={() => handleClickStake()}>STAKE</button>
               </div>
             </div>
           </div>
@@ -486,9 +483,10 @@ const Supply = props => {
         visible={OpenStake}
         tab={'Stake'}
         pool={CurrentPool}
+        onClose={onStakeClose}
         balance={LpBalance}
-        activeKey={'Stake'}
         isEnd={false}
+        showTabs={'Stake'}
       />
       <WaitingConfirmationDialog visible={OpenWaiting} onClose={onWaitClose} />
       <SuccessfulPurchaseDialog

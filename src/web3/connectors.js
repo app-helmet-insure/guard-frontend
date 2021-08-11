@@ -115,7 +115,6 @@ export const useConnectWallet = () => {
       store.getState().index.showSwitchWallet && store.dispatch(changeShowSwitchWallet({showSwitchWallet: false}))
       if (window.ethereum && window.ethereum.on) {
         // 监听钱包事件
-        console.log('注册事件')
         // const { ethereum } = window
         window.ethereum.on('accountsChanged', accounts => {
           if (accounts.length === 0) {
@@ -144,14 +143,11 @@ export const useConnectWallet = () => {
     .catch(error => {
       switch (true) {
         case error instanceof UnsupportedChainIdError:
-          console.log('链错了')
           store.dispatch(changeShowSwitchWallet({showSwitchWallet: true}))
           break
         case error instanceof NoEthereumProviderError:
-          console.log('不是钱包环境')
           break
         case error instanceof UserRejectedRequestError:
-          console.log('用户拒绝连接钱包')
           break
         default:
           console.log(error)

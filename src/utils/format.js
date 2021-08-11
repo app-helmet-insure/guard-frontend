@@ -38,7 +38,6 @@ const toWei = (value, decimals) => {
 }
 
 export const weiPlus = (value1, value2) => {
-  console.log('weiPlus', value1, value2)
   return new BigNumber(
     new BigNumber(value1 ? value1 : 0)
       .plus(new BigNumber(value2 ? value2 : 0))
