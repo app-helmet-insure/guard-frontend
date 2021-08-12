@@ -134,4 +134,5 @@ export default {
   insurance_tips:
     '保险仅能在 {time} 前出险，过期后的保险不能出险。出险时要确认行权价格，避免造成其他损失。',
   insurance_tips1: '发布保险可参与SHORT挖矿',
+  insurance_tips2: '现在发行保险有立即被行权的风险，请谨慎发行保险。',
 }

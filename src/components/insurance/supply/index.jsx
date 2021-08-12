@@ -21,6 +21,7 @@ import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
 import InfoSvg from '../../../assets/images/insurance/info.svg'
 import ERC20 from '../../../web3/abi/ERC20.json'
+import Tips from '../../../assets/images/insurance/tips.svg'
 import moment from 'moment'
 
 const { Option } = Select
@@ -362,6 +363,25 @@ const Supply = props => {
           <FormattedMessage id="insurance_text5" />
         </button>
       </div>
+      {(InsuranceType === 'Call' &&
+        IndexPrice > Number(CurrentInsurance.strikeprice)) ||
+      (InsuranceType === 'Put' &&
+        IndexPrice < Number(CurrentInsurance.strikeprice)) ? (
+          <div className="insurance_tips">
+            <img src={Tips} alt="nodata" />
+            <p>
+              <FormattedMessage
+                id="insurance_tips2"
+                values={{
+                  name: InsuranceSymbol,
+                }}
+              />
+            </p>
+          </div>
+        ) : (
+          ''
+        )}
+
       <div className="insurance_form">
         <p className="between">
           <span>

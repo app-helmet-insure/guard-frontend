@@ -1,4 +1,27 @@
+.insurance_tips {
+  width: 100%;
+  background: rgba(255, 184, 1, 0.1);
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffb801;
+  line-height: 20px;
+  p {
+    margin: 0 0 0 4px;
+  }
+}
+.hidden {
+  visibility: hidden;
+}
 @media screen and (min-width: 750px) {
+  .insurance_tips {
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
   .insurance_form {
     margin-top: 30px;
     display: flex;
@@ -146,6 +169,16 @@
   }
 }
 @media screen and(max-width:750px) {
+  .insurance_tips {
+    display: flex;
+    align-items: flex-start;
+    img {
+      margin-top: 2px;
+    }
+    p {
+      flex: 1;
+    }
+  }
   .insurance_form {
     margin-top: 30px;
     display: flex;
