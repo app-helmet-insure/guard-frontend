@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useContext } from 'react'
 import { withRouter } from 'react-router'
 import { VarContext } from '../../../context'
 import PolicySvg from '../../../assets/images/insurance/policy.svg'
@@ -41,7 +41,6 @@ const Supply = props => {
   const [InsuranceVolume, setInsuranceVolume] = useState('')
   const { InsuranceSymbol } = props
   const [ApproveStatus, setApproveStatus] = useState(false)
-  const [DprStatus, setDprStatus] = useState(false)
   const [Earning, setEarning] = useState(0)
   const [OpenWaiting, setOpenWaiting] = useState(false)
   const [OpenSuccess, setOpenSuccess] = useState(false)
@@ -68,13 +67,11 @@ const Supply = props => {
   useMemo(() => {
     if (blockHeight !== 0 && CurrentPool) {
       // 静态的 不做任何请求
-      if (CurrentPool.is_coming) {
-        setMiningPools(CurrentPool)
-        return
-      }
-      console.log(CurrentPool)
+      // if (CurrentPool.is_coming) {
+      //   setMiningPools(CurrentPool)
+      //   return
+      // }
       getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
-        console.log(miningPools_)
         setMiningPools(miningPools_)
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
           setApr
@@ -209,16 +206,6 @@ const Supply = props => {
       CurrentInsurance.settleToken_decimals
     )
     const volume = toWei(InsuranceVolume, CurrentInsurance.collateral_decimals)
-    console.log(
-      _private,
-      _collateral,
-      _underlying,
-      _strikePrice,
-      _expiry,
-      volume,
-      settleToken,
-      price
-    )
     if (CurrentInsurance.collateral_symbol !== 'MATIC') {
       SellContracts.methods
         .sell(
@@ -316,9 +303,9 @@ const Supply = props => {
     const { strikeprice } = CurrentInsurance
     if (InsuranceDPR || InsuranceVolume || InsuranceType || InsuranceSymbol) {
       if (InsuranceType === 'Call') {
-        // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
-        // 2. Premium = Number - Math.min((行权价-当前价),0)
-        // 3. Earned = -(Math.max((当前价-行权价),0)-Premium)
+        // 1. NumberDPR =  DPR*抵押物USDC价格*抵押物数量*Guard的USDC价格*保险剩余天数
+        // 2. NumberMIN =  ([Math.min((当前价-执行价),0) * 抵押物数量] / Guard 的 USDC 价格)
+        // 3. Premium = NumberDPR- NumberMIN
         const NumberDPR =
           InsuranceDPR.number *
           (InsuranceSymbol === 'GUARD'
@@ -333,9 +320,9 @@ const Supply = props => {
         const Expecting = Number(Premium) > 0 ? Premium.toFixed(8) : 0
         setEarning(Expecting)
       } else {
-        // 1. Number =  DPR*花费的GUARD数量*保险剩余天数
-        // 2. Premium = Number - Math.min((当前价-行权价),0)
-        // 3. Earned = -(Math.max((行权价-当前价),0)-Premium)
+        // 1. NumberDPR =  DPR* [抵押物 USDC 价格 * 抵押物数量 / Guard 的 USDC 价格] *保险剩余天数
+        // 2. NumberMIN = ([Math.min((行权价-当前价),0)* 抵押物数量] / Guard 的 USDC 价格)
+        // 3. Premium = NumberDPR- NumberMIN
         const NumberDPR =
           InsuranceDPR.number *
           Number(InsuranceVolume) *
@@ -355,15 +342,9 @@ const Supply = props => {
       currentIndexPrice()
       getApproveStatus()
       setPercentage('-')
+      setMiningPools(null)
     }
-  }, [
-    InsuranceDPR,
-    InsuranceVolume,
-    InsuranceSymbol,
-    InsuranceType,
-    DprStatus,
-    active,
-  ])
+  }, [InsuranceDPR, InsuranceVolume, InsuranceSymbol, InsuranceType, active])
   const ToolTipText = <FormattedMessage id={'insurance_text28'} />
   return (
     <div className="insurance_supply">
