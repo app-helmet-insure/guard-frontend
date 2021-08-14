@@ -136,4 +136,5 @@ export default {
     'Your policy will expire at {time}. Please check the price before you activate your policy to avoid unnecessary loss.',
   insurance_tips1: 'Confirm to get SHORT → GUARD Mining',
   insurance_tips2: 'You will lose your token if you supply the policy since {name} has hit the activate price.',
+  insurance_tips3: 'There will be 10% FEE for activating the policy since the token hit its activate price.',
 }

@@ -8,11 +8,13 @@ import {
   getInsuranceList,
 } from '../../../configs/insurance'
 import { useActiveWeb3React, getContract } from '../../../web3'
+import { Tooltip } from 'antd'
 import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
 import Erc20ABI from '../../../web3/abi/ERC20.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
+import InfoSvg from '../../../assets/images/insurance/info.svg'
 import { Pagination } from 'antd'
 import moment from 'moment'
 import Loading from '../../loading'
@@ -310,6 +312,7 @@ const MyPolicy = props => {
     }
     getPolicyList()
   }, [account])
+  const ToolTipText = <FormattedMessage id={'insurance_tips3'} />
   return (
     <div className="insurance_mypolicy">
       <h2 className="insurance_mypolicy_title">
@@ -419,6 +422,24 @@ const MyPolicy = props => {
                   <section>
                     <button onClick={() => handleClickWithDraw(item)}>
                       <FormattedMessage id="mypolicy_text6" />
+                      <Tooltip placement="top" title={ToolTipText}>
+                        <svg
+                          t="1628664522470"
+                          className="icon"
+                          viewBox="0 0 1024 1024"
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          p-id="3921"
+                          width="200"
+                          height="200"
+                          fill="#fff"
+                        >
+                          <path
+                            d="M512 43.885714c258.121143 0 468.114286 209.993143 468.114286 468.114286 0 258.121143-209.993143 468.114286-468.114286 468.114286A468.626286 468.626286 0 0 1 43.885714 512C43.885714 253.878857 253.878857 43.885714 512 43.885714z m0 643.657143a58.514286 58.514286 0 1 0-0.073143 116.955429A58.514286 58.514286 0 0 0 512 687.542857zM512 219.428571c-96.768 0-175.542857 71.460571-175.542857 159.305143 0 25.161143 22.454857 45.494857 50.176 45.494857 27.721143 0 50.102857-20.333714 50.102857-45.494857 0-37.668571 33.792-68.315429 75.264-68.315428s75.264 30.72 75.264 68.315428c0 34.962286-29.110857 63.853714-66.56 67.803429L512 446.902857c-27.794286 0-50.176 20.333714-50.176 45.494857v91.062857c0 25.161143 22.454857 45.494857 50.176 45.494858 27.794286 0 50.176-20.333714 50.176-45.494858v-52.955428C634.368 510.829714 687.542857 450.633143 687.542857 378.733714 687.542857 290.889143 608.768 219.428571 512 219.428571z"
+                            p-id="3922"
+                          ></path>
+                        </svg>
+                      </Tooltip>
                     </button>
                   </section>
                 </div>

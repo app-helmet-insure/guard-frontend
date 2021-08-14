@@ -1,4 +1,4 @@
-.insurance_mypolicy{
+.insurance_mypolicy {
   width: 100%;
   flex: 1;
   position: relative;
@@ -18,7 +18,7 @@
   .insurance_mypolicy_title {
     display: none;
   }
-  
+
   .insurance_mypolicy_item {
     width: 100%;
     display: flex;
@@ -85,6 +85,9 @@
       &:last-of-type {
         flex: 1;
         button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           align-self: flex-end;
           min-width: 80px;
           height: 40px;
@@ -94,6 +97,12 @@
           font-weight: bold;
           color: #ffffff;
           line-height: 17px;
+        }
+        svg {
+          width: 14px;
+          height: 14px;
+          cursor: pointer;
+          margin-left: 4px;
         }
       }
     }
