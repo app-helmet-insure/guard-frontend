@@ -343,8 +343,11 @@ export const getAPR = async (miningPools, mode = 1) => {
   // console.log('lptTotalValue',miningPools.name, lptTotalValue, rewardsTotalValue, span, mode)
   let apr = '0'
   if (lptTotalValue && rewardsTotalValue && span > 0) {
+    // span - (当前时间-开始时间) = 剩余时间
+    const startAt = miningPools.start_at
+    const now = parseInt(new Date().getTime() / 1000)
     const dayRate = new BigNumber(1).div(
-      new BigNumber(span).div(new BigNumber(86400))
+      new BigNumber(span).div(new BigNumber(86400)) - (now - startAt) / 86400
     )
     // 普通模式
     if (mode === 1) {
