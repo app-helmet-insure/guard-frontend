@@ -225,7 +225,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x37cd121e89cfc85a800720f05810d6fc66266a13', // 质押的资产
     mlpDecimal: 6,
     byLink:
@@ -323,7 +323,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x4d37D091dfD455fa25CA645453cC85BC9A3f02cB', // 质押的资产
     mlpDecimal: 6,
     byLink:
@@ -371,7 +371,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x75A0669062C2a0BbC76719f542880C1185279549', // 质押的资产
     byLink:
       'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
