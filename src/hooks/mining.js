@@ -167,6 +167,7 @@ export const getLTPValue = (
           assets = processResult(assets)
           const [underlyingAmount, collateralAmount] = assets
           let shortAmount = new BigNumber(0)
+          console.log('aaaaa,miningPools', miningPools, collateral, underlying)
           if (miningPools.settleToken === collateral) {
             shortAmount = new BigNumber(collateralAmount).plus(shortAmount)
           } else {
@@ -191,7 +192,7 @@ export const getLTPValue = (
           const ltpValue = new BigNumber(poolTotalSupply)
             .div(new BigNumber(tokenTotalSupply))
             .multipliedBy(shortAmount)
-          // console.log('aaaaaaaaa', miningPools.name, underlyingAmount, collateralAmount, shortAmount.toString(), ltpValue.toString())
+          console.log('aaaaaaaaa', miningPools.name, underlyingAmount, collateralAmount, shortAmount.toString(), ltpValue.toString())
           reslove(ltpValue)
         })
       })
@@ -237,6 +238,7 @@ export const getMDexPrice = (
           const [token0, token1, getReserves] = promiseListData
           const { _reserve0, _reserve1 } = getReserves
           // console.log('request___5')
+          console.log('token0', token0, token1, address2)
           if (token0.toLowerCase() == address2.toLowerCase()) {
             const mdexRouterList1 = [
               mdex_router_contract.getAmountOut(
@@ -249,6 +251,7 @@ export const getMDexPrice = (
               .all(mdexRouterList1)
               .then(amountOutData => {
                 const [amountOut] = processResult(amountOutData)
+                console.log('amountOut', amountOut)
                 return fromWei(
                   amountOut,
                   miningPools.settleTokenDecimal
@@ -288,6 +291,7 @@ export const getMDexPrice = (
       const from_address = _path[i - 1]
       const to_address = _path[i]
       _price = await getPairPrice(from_address, to_address, _price)
+      console.log('_price', _price)
       // console.log('_price', _price)
       // _fee = _fee + _fee_amount * FEE_RADIO
       // _fee_amount = _fee_amount - _fee_amount * FEE_RADIO
@@ -300,6 +304,7 @@ export const getMDexPrice = (
         )
         .toString()
     }
+
     return [_price, _fee]
   }
 
@@ -340,8 +345,9 @@ export const getAPR = async (miningPools, mode = 1) => {
   console.log('reward1Vol', miningPools.name, reward1Vol)
 
   let lptTotalValue
-  if (miningPools.valueAprToken !== miningPools.settleToken) {
+  if (miningPools.valueAprToken !== miningPools.settleToken && miningPools.poolType !== 3) {
     const [lptTotalPrice] = MDexPrice
+    console.log('lptTotalPrice', lptTotalPrice)
     // console.log('lptTotalPrice', miningPools.name, lptTotalPrice, lptValue)
     lptTotalValue = new BigNumber(lptTotalPrice)
       .multipliedBy(new BigNumber(lptValue))
@@ -395,6 +401,7 @@ export const getAPR = async (miningPools, mode = 1) => {
         .multipliedBy(new BigNumber(365))
         .toFixed(0, 1)
       // setYearReward(yearReward)
+      console.log('yearReward', yearReward)
       if (yearReward > 0) {
         const _arp = new BigNumber(yearReward)
           .div(new BigNumber(lptTotalValue))
@@ -513,6 +520,7 @@ export const getMdxARP = async miningPools => {
         .multipliedBy(
           new BigNumber(totalSupply).div(new BigNumber(tokenTotalSupply))
         )
+      console.log('totalRewardValue', totalRewardValue)
       apr = totalRewardValue
         .div(fromWei(lptValue, miningPools.settleTokenDecimal))
         .toString()
