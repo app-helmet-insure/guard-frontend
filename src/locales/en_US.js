@@ -115,7 +115,8 @@ export default {
   insurance_text25: 'Supply Policy to get SHORT token',
   insurance_text26: 'BUY',
   insurance_text27: 'Sold',
-  insurance_text28: 'Daily percentage of yield, DPR = daily yield / staking volume',
+  insurance_text28:
+    'Daily percentage of yield, DPR = daily yield / staking volume',
   mypolicy_text1: 'Policy You Hold',
   mypolicy_text2: 'Activate Price',
   mypolicy_text3: 'Quantity',
@@ -135,6 +136,10 @@ export default {
   insurance_tips:
     'Your policy will expire at {time}. Please check the price before you activate your policy to avoid unnecessary loss.',
   insurance_tips1: 'Confirm to get SHORT → GUARD Mining',
-  insurance_tips2: 'You will lose your token if you supply the policy since {name} has hit the activate price.',
-  insurance_tips3: 'There will be 10% FEE for activating the policy since the token hit its activate price.',
+  insurance_tips2:
+    'You will lose your token if you supply the policy since {name} has hit the activate price.',
+  insurance_tips3:
+    'There will be 5% FEE for activating the policy since the token hit its activate price. Policy fee will be used in buying-back GUARD',
+  insurance_tips4:
+    'There will be 5% FEE for settlement the policy.  Policy fee will be used in buying-back GUARD',
 }
