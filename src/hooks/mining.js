@@ -392,7 +392,7 @@ export const getAPR = async (miningPools, mode = 1) => {
       new BigNumber((Number(startAt) + Number(span) - now))
         .div(new BigNumber(86400))
     )
-    console.log('dayRate', dayRate.toString())
+    console.log('dayRate', dayRate.toString(), Number(startAt), Number(span), now)
     // 普通模式
     if (mode === 1) {
       // 年奖励率
