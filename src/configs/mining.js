@@ -78,7 +78,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc质押的
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0xa2338656Ae2135CE743092b9049cbab1026ec601', // 质押的资产 stakingToken
     mlpDecimal: 18,
     byLink:
@@ -87,7 +87,7 @@ export default [
     start_at: 1628092800,
     openDate: 1628092800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'Guard Short Token',
@@ -123,11 +123,11 @@ export default [
     rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
     rewards2Address: null,
     // apr
-    valueAprToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // lpt*2 usdc
+    valueAprToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 如果是LP，则按照哪个来 算价值，因为后面需要 * price
     valueAprPath: [],
     rewardsAprPath: [],
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // guard
-    settleTokenDecimal: 18,
+    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 用哪个来计算，一般都是usdc
+    settleTokenDecimal: 6,
     MLP: '0xeb33baeaC3B7921AfaaA491c6F9Ee8fd684a6B87', // 质押的资产
     mlpDecimal: 6,
     byLink:
@@ -136,7 +136,7 @@ export default [
     start_at: 1628092800,
     openDate: 1628092800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'Guard Short Token',
@@ -177,7 +177,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0xdBac5ccD625cCC9f373F1EC0163DF8f55f24F35C', // 质押的资产 stakingToken
     mlpDecimal: 18,
     byLink:
@@ -186,7 +186,7 @@ export default [
     start_at: 1627480800,
     openDate: 1627480800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'Matic Short Token',
@@ -225,7 +225,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x37cd121e89cfc85a800720f05810d6fc66266a13', // 质押的资产
     mlpDecimal: 6,
     byLink:
@@ -234,7 +234,7 @@ export default [
     start_at: 1627480800,
     openDate: 1627480800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'Matic Short Token',
@@ -257,6 +257,7 @@ export default [
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
   },
+
   {
     title: 'Quick Short Token Pool',
     name: 'Quick',
@@ -273,7 +274,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x62e4210cA2B844EeeD5e906dE6a7C5EF9A69C372', // 质押的资产
     byLink:
       'https://quickswap.exchange/#/swap?outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
@@ -282,7 +283,7 @@ export default [
     start_at: 1627480800,
     openDate: 1627480800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'Quick Short Token',
@@ -322,7 +323,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x4d37D091dfD455fa25CA645453cC85BC9A3f02cB', // 质押的资产
     mlpDecimal: 6,
     byLink:
@@ -331,7 +332,7 @@ export default [
     start_at: 1627480800,
     openDate: 1627480800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'Quick Short Token',
@@ -370,7 +371,7 @@ export default [
     valueAprPath: [],
     rewardsAprPath: [],
     settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
-    settleTokenDecimal: 18,
+    settleTokenDecimal: 6,
     MLP: '0x75A0669062C2a0BbC76719f542880C1185279549', // 质押的资产
     byLink:
       'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
@@ -379,7 +380,7 @@ export default [
     start_at: 1627480800,
     openDate: 1627480800,
     time: '',
-    dueDate: 1629993600,
+    dueDate: 1630080000,
     earnName: 'APR',
     status: 0,
     rewards: 'ETH Short Token',
