@@ -2,15 +2,30 @@
   width: 100%;
   &_content {
     margin: 0 auto 20px;
-    width: 1180px;
+    width: 960px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
   }
 }
+@media (min-width: 1360px) {
+  .mining_index {
+    padding-bottom: 30px;
+    &_content {
+      margin: 0 auto;
+      width: 1360px;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+}
+
 @media (min-width: 359px) and (max-width: 747px) {
   .mining_index {
     padding-bottom: 30px;
     &_content {
       margin: 0 auto;
       width: 100%;
+      grid-template-columns: 1fr;
     }
   }
 }
@@ -20,6 +35,7 @@
     &_content {
       margin: 0 auto;
       width: 100%;
+      grid-template-columns: 1fr;
     }
   }
 }
