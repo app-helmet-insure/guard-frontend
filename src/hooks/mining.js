@@ -172,7 +172,7 @@ export const getLTPValue = (
           if (miningPools.settleToken === collateral) {
             shortAmount = new BigNumber(fromWei(collateralAmount, miningPools.mlpDecimal)).plus(shortAmount)
           } else {
-            if(collateralAmount > 0){
+            if (collateralAmount > 0) {
               // eslint-disable-next-line no-use-before-define
               const [price] = await getMDexPrice(collateral, miningPools.settleToken, 1, [], miningPools)
               shortAmount += new BigNumber(price).multipliedBy(new BigNumber(fromWei(collateralAmount, miningPools.mlpDecimal))).plus(shortAmount)
@@ -182,7 +182,7 @@ export const getLTPValue = (
           if (miningPools.settleToken === underlying) {
             shortAmount = new BigNumber(fromWei(underlyingAmount, miningPools.decimal)).plus(shortAmount)
           } else {
-            if(underlyingAmount > 0) {
+            if (underlyingAmount > 0) {
               // eslint-disable-next-line no-use-before-define
               const [price]  = await getMDexPrice(underlying, miningPools.settleToken, 1, [], miningPools)
               shortAmount = new BigNumber(price).multipliedBy(new BigNumber(fromWei(underlyingAmount, miningPools.decimal))).plus(shortAmount)
@@ -339,12 +339,13 @@ export const getAPR = async (miningPools, mode = 1) => {
   }
   const data = await Promise.all(dataRPCList)
   const [allowance, unClaimReward, lptValue, MDexPrice] = data
+  console.log('allowance', allowance.toString())
   // console.log('lptValue', miningPools.name, lptValue.toString())
   // 计算奖励的量
   const reward1Vol = new BigNumber(allowance)
     .minus(new BigNumber(unClaimReward))
     .toString()
-  // console.log('reward1Vol', miningPools.name, reward1Vol)
+  console.log('reward1Vol', miningPools.name, reward1Vol)
 
   let lptTotalValue
   if (miningPools.valueAprToken !== miningPools.settleToken && miningPools.poolType !== 3) {
