@@ -136,7 +136,7 @@ export default {
   insurance_tips1: '发布保险可参与SHORT挖矿',
   insurance_tips2: '现在发行保险有立即被行权的风险，请谨慎发行保险。',
   insurance_tips3:
-    '出险时，Guard 将收取 5% 手续费。该手续费将全部用于回购 Guard。',
+    '出险时，Guard 将收取 1% 手续费。该手续费将全部用于回购 Guard。',
   insurance_tips4:
-    '结算时，Guard 将收取 5% 手续费。该手续费将全部用于回购 Guard。',
+    '结算时，Guard 将收取 1% 手续费。该手续费将全部用于回购 Guard。',
 }

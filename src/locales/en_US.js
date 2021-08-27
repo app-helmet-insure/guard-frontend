@@ -139,7 +139,7 @@ export default {
   insurance_tips2:
     'You will lose your token if you supply the policy since {name} has hit the activate price.',
   insurance_tips3:
-    'There will be 5% FEE for activating the policy since the token hit its activate price. Policy fee will be used in buying-back GUARD',
+    'There will be 1% FEE for activating the policy since the token hit its activate price. Policy fee will be used in buying-back GUARD',
   insurance_tips4:
-    'There will be 5% FEE for settlement the policy.  Policy fee will be used in buying-back GUARD',
+    'There will be 1% FEE for settlement the policy.  Policy fee will be used in buying-back GUARD',
 }
