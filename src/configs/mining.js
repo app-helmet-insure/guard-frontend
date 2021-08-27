@@ -404,9 +404,10 @@ export default [
     showLptValue: false // 展示奖励2总价值
   },
 
+  // test
 
   {
-    title: 'test',
+    title: 'TEST',
     name: 'ETH',
     icon: ETHPng,
     rewardIcon: GuardPng,
@@ -435,7 +436,56 @@ export default [
     status: 0,
     rewards: 'ETH Short Token',
     decimal: 18,
-    is_coming: false,
+    is_coming: true,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    mdexDaily: 0, // 奖励2的每日产量
+    mdexPid: '', // 奖励2池子id
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '4288',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+
+  {
+    title: 'TEST',
+    name: 'ETH',
+    icon: ETHPng,
+    rewardIcon: GuardPng,
+    shortToken: 'ETH',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x05f7bd01433bfab7b8511788e678de5fa92e276a',
+    rewards1Address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // GUARD
+    rewards2Address: null,
+    // apr
+    valueAprToken: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', // lpt*2
+    valueAprPath: [],
+    rewardsAprPath: [],
+    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x75A0669062C2a0BbC76719f542880C1185279549', // 质押的资产
+    byLink:
+      'https://quickswap.exchange/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 1627480800,
+    openDate: 1627480800,
+    time: '',
+    dueDate: 1630080000,
+    earnName: 'APR',
+    status: 0,
+    rewards: 'ETH Short Token',
+    decimal: 18,
+    is_coming: true,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     mdexDaily: 0, // 奖励2的每日产量
@@ -454,7 +504,7 @@ export default [
     showLptValue: false // 展示奖励2总价值
   },
   {
-    title: 'test',
+    title: 'TEST',
     name: 'ETH',
     icon: ETHPng,
     rewardIcon: GuardPng,
@@ -483,7 +533,7 @@ export default [
     status: 0,
     rewards: 'ETH Short Token',
     decimal: 18,
-    is_coming: false,
+    is_coming: true,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     mdexDaily: 0, // 奖励2的每日产量
@@ -501,4 +551,5 @@ export default [
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
   },
+
 ]

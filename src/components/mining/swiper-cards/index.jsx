@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useState} from 'react'
 import MiningCard from '../card'
 import './index.less'
 import cx from 'classname'
@@ -6,7 +6,7 @@ import Arrow2 from '../../../assets/images/mining/arrow-2.png'
 import Arrow2D from '../../../assets/images/mining/arrow-2-d.png'
 
 export default function SwiperCards ({poolsArr}) {
-  const [active, setActive] = useState(1)
+  const [active, setActive] = useState(0)
   const onTab = type => {
     if (type === 'next' && active >= 1) {
       setActive(active - 1 )

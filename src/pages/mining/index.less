@@ -6,19 +6,22 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
+    gap: 0 40px
   }
 }
-@media (min-width: 1360px) {
+@media (min-width: 1460px) {
   .mining_index {
     padding-bottom: 30px;
     &_content {
       margin: 0 auto;
-      width: 1360px;
+      width: 1460px;
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
 }
-
+@media (min-width: 747px) and (max-width: 1460px) {
+  width: 100%;
+}
 @media (min-width: 359px) and (max-width: 747px) {
   .mining_index {
     padding-bottom: 30px;
