@@ -75,7 +75,9 @@ const Supply = props => {
       getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
-          setApr
+          res =>{
+            setApr(res.apr)
+          }
         )
         if (miningPools_.mdexReward) {
           // 奖励2的apr
