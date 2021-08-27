@@ -26,7 +26,8 @@ const Mining = props => {
     const components = []
     for (const i in miningMap) {
       if (miningMap[i].length > 1) {
-        components.push(<SwiperCards poolsArr={miningMap[i]} key={i} />)
+        const poolsArr = miningMap[i].sort((a, b) => b.start_at - a.start_at)
+        components.push(<SwiperCards poolsArr={poolsArr} key={i} />)
       } else {
         components.push(<MiningCard pools={miningMap[i][0]} key={i} />)
       }

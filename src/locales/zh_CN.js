@@ -23,7 +23,7 @@ export default {
   mining_text21: '领取失败',
   mining_text22: '赎回 & 领取奖励成功',
   mining_text23: '赎回 & 领取奖励失败',
-  mining_text24: '马上就来',
+  mining_text24: '即将开始',
   mining_text25: '从 {name} 获取 {b}',
   mining_text26: 'Core',
   mining_text27: '总抵押价值',
