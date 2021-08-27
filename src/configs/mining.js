@@ -8,6 +8,7 @@ import QuickPng from '../assets/images/mining/pool/QUICK.png'
 import GuardPng from '../assets/images/mining/pool/GUARD.png'
 import GuardShortSvg from '../assets/images/mining/pool/guard-short.png'
 import GuardQuickRewardSvg from '../assets/images/mining/pool/guard-quick-reward.png'
+import GuardMaticSvg from '../assets/images/mining/pool/guard-matic.png'
 import {ChainId} from '../web3/address'
 
 const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
@@ -409,11 +410,12 @@ export default [
   },
 
   // new
+
   {
     title: 'Guard Short Token Pool',
     name: 'Guard', // 用于
     icon: GuardPng,
-    rewardIcon: GuardPng,
+    rewardIcon: GuardMaticSvg,
     shortToken: 'GUARD',
     rewards1: 'GUARD',
     rewards2: 'MATIC',
@@ -618,7 +620,7 @@ export default [
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
     icon: MaticSvg,
-    rewardIcon: GuardPng,
+    rewardIcon: GuardMaticSvg,
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: 'MATIC',
@@ -662,6 +664,15 @@ export default [
     multiple: '1X',
     showLptValue: false, // 展示奖励2总价值
     ledLight: true,
+    childPools: [ // 用来计算奖励，总奖励相加
+      {
+        // matic奖励
+        address: '0x4e18bb070806d7000979Cf4055aC0E608231d7C1',
+        decimal: 18,
+        rewards1Address: MATIC_ADDRESS,
+        valueAprToken: MATIC_ADDRESS
+      }
+    ]
   },
   {
     title: 'Matic Short Token Pool',
