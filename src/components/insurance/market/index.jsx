@@ -15,7 +15,6 @@ import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import BigNumber from 'bignumber.js'
 import { Pagination } from 'antd'
 import Loading from '../../loading'
-import { numberFormat } from 'highcharts'
 import Tips from '../../../assets/images/insurance/tips.svg'
 import moment from 'moment'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
@@ -117,9 +116,6 @@ const Market = props => {
                 show_price: fromWei(itemAsk.price, settleToken_decimals),
                 price: itemAsk.price,
                 volume: itemAsk.volume,
-                premium:
-                  fromWei(itemAsk.price, settleToken_decimals) *
-                  fromWei(itemAsk.volume, collateral_decimals),
               }
               if (itemAsk.binds.length) {
                 let number = 0
@@ -131,24 +127,24 @@ const Market = props => {
                       ))
                   )
                 }
-                ResultItem.show_volume =
+                ResultItem.remain =
                   Number(fromWei(itemAsk.volume, collateral_decimals)) - number
               } else {
-                ResultItem.show_volume = Number(
+                ResultItem.remain = Number(
                   fromWei(itemAsk.volume, collateral_decimals)
                 )
               }
               const AllItem = Object.assign(ResultItemAsk, ResultItem)
               if (AllItem.type === 'Put') {
                 AllItem.show_volume = Number(
-                  AllItem.show_volume / (1 / AllItem.show_strikePrice)
+                  AllItem.remain / (1 / AllItem.show_strikePrice)
                 ).toFixed(8)
               } else {
-                AllItem.show_volume = Number(AllItem.show_volume).toFixed(8)
+                AllItem.show_volume = Number(AllItem.remain).toFixed(8)
               }
+              AllItem.premium = AllItem.remain * AllItem.show_price
               if (
                 !AllItem.isCancel &&
-                AllItem.premium > 0.000000001 &&
                 AllItem.price.length <= 40
               ) {
                 FixListPush.push(AllItem)
@@ -159,6 +155,7 @@ const Market = props => {
           const FixList = FixListPush.sort(
             (a, b) => Number(b.show_volume) - Number(a.show_volume)
           )
+          console.log(FixList)
           setPolicyList(FixList)
           setLoading(false)
         } else {
@@ -323,7 +320,7 @@ const Market = props => {
                       key={'web' + item.askID}
                     >
                       <td>{item.show_ID}</td>
-                      <td>{(item.show_price * item.show_volume).toFixed(8)}</td>
+                      <td>{item.premium.toFixed(8)}</td>
                       <td>{item.show_volume}</td>
                       <td>
                         <input
