@@ -387,6 +387,7 @@ export const getAPR = async (miningPools, mode = 1) => {
   // console.log('lptTotalValue--', miningPools.name, lptTotalValue.toString(), rewardsTotalValue, span, mode, miningPools, rewardsTotalValue)
   let apr = '0'
   let yearReward = new BigNumber(0)
+  console.log('xxxx', lptTotalValue.toString(), rewardsTotalValue.toString(), span)
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     // span - (当前时间-开始时间) = 剩余时间
     const startAt = miningPools.start_at
@@ -406,6 +407,7 @@ export const getAPR = async (miningPools, mode = 1) => {
         .toFixed(0, 1)
       // sort转出来的是已经转过单位的总价值
       if (miningPools.poolType === 3) {
+        console.log('111111111', miningPools.address, yearReward.toString())
         yearReward = fromWei(yearReward, miningPools.decimal)
       }
       console.log('yearReward', miningPools.address, yearReward.toString())
@@ -523,8 +525,8 @@ export const getMdxARP = async miningPools => {
     // 日产量+手续费
     const volumeTotal = await getVolume(miningPools, mdex2warPrice)
     yearVolumeTotal = volumeTotal.multipliedBy(new BigNumber(365))
+    console.log('volumeTotal', volumeTotal)
   }
-  console.log('miningPools.rewardsTotalValue_', miningPools.yearReward_.toString())
   console.log('yearVolumeTotal', yearVolumeTotal.toString())
 
   let apr = '0'

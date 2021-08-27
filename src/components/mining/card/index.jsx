@@ -58,7 +58,7 @@ const MiningCard = props => {
         )
         if (miningPools_.mdexReward) {
           // sort多重奖励，奖励相加
-          let yearReward = new BigNumber(0)
+          let yearReward = null
           if (miningPools.childPools) {
             const aprPromise = []
             for (let i = 0; i < miningPools.childPools.length; i++) {
@@ -71,7 +71,7 @@ const MiningCard = props => {
             }
             const resV = await Promise.all(aprPromise)
             yearReward = resV.reduce((total, item, index) => {
-              total = total.plus(new BigNumber(fromWei(item.yearReward, miningPools.childPools[index].decimal)))
+              total = total.plus(new BigNumber(item.yearReward))
               return total
             }, new BigNumber(0))
             console.log('resV', resV, yearReward.toString(), miningPools_)
