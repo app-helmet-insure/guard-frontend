@@ -306,6 +306,7 @@ const MyPolicy = props => {
         return false
       })
   }
+
   useEffect(() => {
     if (!account) {
       return
