@@ -17,6 +17,7 @@ import { getHttpWeb3 } from '../../../web3'
 import { ChainId } from '../../../web3/address'
 
 const API = 'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06'
+const STATUS = 'https://api.thegraph.com/index-node/graphql'
 const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 /**
  * @param props
@@ -26,18 +27,56 @@ const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
  * @returns {JSX.Element}
  * @constructor
  */
-export const Chart = props => {
-  // const [loading, setLoading] = useState(true)
+
+const getLastBlock = async () => {
   const client = new ApolloClient({
-    uri: API,
+    uri: STATUS,
     cache: new InMemoryCache(),
   })
+
+  const query = gql`
+      {
+          indexingStatusForCurrentVersion(subgraphName: "sameepsi/quickswap06") {
+              synced
+              health
+              fatalError {
+                  message
+                  block {
+                      number
+                      hash
+                  }
+                  handler
+              }
+              chains {
+                  chainHeadBlock {
+                      number
+                  }
+                  latestBlock {
+                      number
+                  }
+              }
+          }
+      }
+  `
+  const ret = await client.query({
+    query,
+  })
+  return ret.data.indexingStatusForCurrentVersion.chains[0].latestBlock.number
+}
+
+export const Chart = props => {
+  // const [loading, setLoading] = useState(true)
 
   const { lpt_address, over_price, off_price } = props
 
   const [price, setPrice] = useState('-')
 
   const loadData = async () => {
+    const client = new ApolloClient({
+      uri: API,
+      cache: new InMemoryCache(),
+    })
+
     const query = gql`
       {
         pairs(
@@ -137,8 +176,16 @@ export const Chart = props => {
   }
 
   const loadDataByBlock = async () => {
+
+
+    const client = new ApolloClient({
+      uri: API,
+      cache: new InMemoryCache(),
+    })
     const web3 = getHttpWeb3(ChainId.MATIC)
-    const current_height = await web3.eth.getBlockNumber()
+    // const current_height = await web3.eth.getBlockNumber()
+    const current_height = await getLastBlock()
+
     const current_block = await web3.eth.getBlock(current_height)
     // 当前块高度 - 出块时间
     const last_block = await web3.eth.getBlock(current_height - 50000)

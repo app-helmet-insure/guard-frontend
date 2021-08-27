@@ -132,10 +132,11 @@ const MiningCard = props => {
   // 是否结束
   const isEnd = miningPools && miningPools.dueDate < now && miningPools.dueDate
 
+  const cStyle = props.cStyle || {}
   // loading
   if (!miningPools) {
     return (
-      <div className="mining_card">
+      <div className="mining_card" style={cStyle}>
         <div className="card_loading">
           <Space>
             <div className="flex_center_up_and_down">
@@ -160,10 +161,10 @@ const MiningCard = props => {
       </div>
     )
   }
-
   return (
     <>
       <div
+        style={cStyle}
         className={
           miningPools.ledLight ? 'ledLight mining_card' : 'mining_card'
         }
