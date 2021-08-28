@@ -11,7 +11,7 @@ export const MDEX_POOL_ADDRESS = '0xFB03e11D93632D97a8981158A632Dd5986F5E909'
 export const MDEX_ADDRESS = '0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c'
 export const MDEX_ROUTER_ADDRESS = '0xED7d5F38C79115ca12fe6C0041abb22F0A06C300'
 
-export function WAR_ADDRESS(chainId) {
+export function WAR_ADDRESS (chainId) {
   switch (chainId) {
     case ChainId.BSC:
       return '0x910651F81a605a6Ef35d05527d24A72fecef8bF0'
@@ -24,7 +24,7 @@ export function WAR_ADDRESS(chainId) {
   }
 }
 
-export function USDT_ADDRESS(chainId) {
+export function USDT_ADDRESS (chainId) {
   switch (chainId) {
     case ChainId.BSC:
       return '0xa71edc38d189767582c38a3145b5873052c3e47a'
@@ -57,7 +57,7 @@ export const MULTICALL_NETWORKS = {
   [ChainId.BSC]: '0x1Ee38d535d541c55C9dae27B12edf090C608E6Fb',
 }
 
-export function MINE_MOUNTAIN_ADDRESS(chainId) {
+export function MINE_MOUNTAIN_ADDRESS (chainId) {
   switch (chainId) {
     case ChainId.BSC:
       return '0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd'
@@ -74,9 +74,9 @@ export const getRpcUrl = chainId => {
       // 'https://rpc-mainnet.matic.network',
       'https://matic-mainnet.chainstacklabs.com',
       'https://rpc-mainnet.maticvigil.com',
-      'https://rpc-mainnet.matic.quiknode.pro',
-      'https://matic-mainnet-full-rpc.bwarelabs.com',
-      'https://matic-mainnet-archive-rpc.bwarelabs.com'
+      // 'https://rpc-mainnet.matic.quiknode.pro',
+      // 'https://matic-mainnet-full-rpc.bwarelabs.com',
+      // 'https://matic-mainnet-archive-rpc.bwarelabs.com'
     ]
     rpcCount++
     return urls[rpcCount % urls.length]
@@ -84,7 +84,7 @@ export const getRpcUrl = chainId => {
   const RPC_URLS = {
     [ChainId.HECO]: 'https://http-mainnet-node.huobichain.com',
     [ChainId.BSC]: 'https://bsc-dataseed.binance.org/',
-    [ChainId.MATIC]: 'https://matic-mainnet.chainstacklabs.com'
+    [ChainId.MATIC]: randomMatic()
   }
   return RPC_URLS[chainId]
 }

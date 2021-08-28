@@ -8,6 +8,7 @@ import QuickPng from '../assets/images/mining/pool/QUICK.png'
 import GuardPng from '../assets/images/mining/pool/GUARD.png'
 import GuardShortSvg from '../assets/images/mining/pool/guard-short.png'
 import GuardQuickRewardSvg from '../assets/images/mining/pool/guard-quick-reward.png'
+import {ChainId} from '../web3/address'
 
 const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
 const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
@@ -80,7 +81,7 @@ export default [
     valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc质押的
+    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 质押的sort地址
     settleTokenDecimal: 6,
     MLP: '0xa2338656Ae2135CE743092b9049cbab1026ec601', // 质押的资产 stakingToken
     mlpDecimal: 18,
@@ -422,7 +423,7 @@ export default [
     valueAprToken: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', // lpt*2
     valueAprPath: [],
     rewardsAprPath: [],
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc质押的
+    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
     settleTokenDecimal: 6,
     MLP: '0x2aeF01c1744fdAEaecEcdda941976251fb735257', // 质押的资产 stakingToken
     mlpDecimal: 18,
@@ -439,8 +440,8 @@ export default [
     decimal: 18,
     is_coming: false,
     mdexReward: true, // 是否有奖励2
-    networkId: 137,
-    mdexDaily: 0, // 奖励2的每日产量
+    networkId: ChainId.MATIC,
+    mdexDaily: '100', // 奖励2的每日产量
     mdexPid: '', // 奖励2池子id
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
@@ -457,6 +458,7 @@ export default [
     showLptValue: false, // 展示奖励2总价值
     ledLight: true,
   },
+
   {
     title: 'Guard Short Token Pool',
     name: 'Guard',
@@ -636,7 +638,7 @@ export default [
     is_coming: false,
     mdexReward: true, // 是否有奖励2
     networkId: 137,
-    mdexDaily: 50, // 奖励2的每日产量
+    mdexDaily: '100', // 奖励2的每日产量
     mdexPid: '', // 奖励2池子id
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
