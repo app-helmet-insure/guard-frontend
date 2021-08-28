@@ -31,8 +31,11 @@ const MiningCard = props => {
   const [miningPools, setMiningPools] = useState(null)
   const [apr, setApr] = useState('0')
   const [mdexApr, setMdexApr] = useState('0')
-  console.log('apr ', miningPools && miningPools.name, apr, mdexApr)
   const [lptValue, setLptValue] = useState('-')
+  // 是否开始
+  const isStarted = miningPools && miningPools.start_at < now
+  // 是否结束
+  const isEnd = miningPools && miningPools.dueDate < now && miningPools.dueDate
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0 && account) {
@@ -44,6 +47,9 @@ const MiningCard = props => {
       getMiningInfo(props.pools.address, account).then(miningPools_ => {
         console.log('miningPools_', miningPools_)
         setMiningPools(miningPools_)
+        if (isEnd || !isStarted) {
+          return
+        }
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
           data => {
             setApr(data)
@@ -128,10 +134,6 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
-  // 是否开始
-  const isStarted = miningPools && miningPools.start_at < now
-  // 是否结束
-  const isEnd = miningPools && miningPools.dueDate < now && miningPools.dueDate
 
   const cStyle = props.cStyle || {}
   // loading
@@ -327,7 +329,7 @@ const MiningCard = props => {
         </div>
         <Button
           className={'mining_card_btn btn_primary'}
-          disabled={!isStarted || miningPools.is_coming}
+          disabled={!isStarted || miningPools.is_coming || isEnd}
           onClick={() => stakeClaimPopup('Stake')}
         >
           <FormattedMessage id="mining_text12" />

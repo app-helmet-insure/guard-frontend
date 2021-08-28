@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, {useState, useMemo, useEffect} from 'react'
 import { Modal, Tabs, Input, Button, message } from 'antd'
 import './index.less'
 import { FormattedMessage } from 'react-intl'
@@ -44,6 +44,9 @@ function StakeChaimDialog ({
   const [activeTabKey, setActiveTabKey] = useState(() =>
     showTabs.includes(tab) ? tab : showTabs[0]
   )
+  useEffect(() => {
+    setActiveTabKey(showTabs.includes(tab) ? tab : showTabs[0])
+  }, [tab])
   const [stakeInput, setStakeInput] = useState(null)
   const [unStakeClaimInput, setUnStakeClaimInput] = useState(null)
   const [approve, setApprove] = useState(true)
