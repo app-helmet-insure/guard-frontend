@@ -31,7 +31,7 @@ const MiningCard = props => {
   const [miningPools, setMiningPools] = useState(null)
   const [apr, setApr] = useState('0')
   const [mdexApr, setMdexApr] = useState('0')
-
+  console.log('apr ', miningPools && miningPools.name, apr, mdexApr)
   const [lptValue, setLptValue] = useState('-')
   // 获取池子信息
   useMemo(() => {
@@ -42,6 +42,7 @@ const MiningCard = props => {
         return
       }
       getMiningInfo(props.pools.address, account).then(miningPools_ => {
+        console.log('miningPools_', miningPools_)
         setMiningPools(miningPools_)
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
           data => {

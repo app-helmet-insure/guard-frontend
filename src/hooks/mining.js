@@ -158,6 +158,9 @@ export const getLTPValue = (
       .then(data => {
         data = processResult(data)
         const [poolTotalSupply, tokenTotalSupply, underlying, collateral] = data
+
+        console.log('poolTotalSupply', poolTotalSupply.toString(), tokenTotalSupply.toString(), underlying.toString(), collateral.toString())
+
         const underlyingContract = new Contract(underlying, ERC20.abi) // quick的合约
         const collateralContract = new Contract(collateral, ERC20.abi) // quick的合约
         return multicallProvider.all([
@@ -339,7 +342,7 @@ export const getAPR = async (miningPools, mode = 1) => {
   }
   const data = await Promise.all(dataRPCList)
   const [allowance, unClaimReward, lptValue, MDexPrice] = data
-  console.log('allowance', allowance.toString())
+  console.log('allowance', allowance.toString(), unClaimReward.toString(), lptValue.toString(), MDexPrice)
   // console.log('lptValue', miningPools.name, lptValue.toString())
   // 计算奖励的量
   const reward1Vol = new BigNumber(allowance)
