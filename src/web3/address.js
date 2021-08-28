@@ -84,7 +84,7 @@ export const getRpcUrl = chainId => {
   const RPC_URLS = {
     [ChainId.HECO]: 'https://http-mainnet-node.huobichain.com',
     [ChainId.BSC]: 'https://bsc-dataseed.binance.org/',
-    [ChainId.MATIC]: randomMatic()
+    [ChainId.MATIC]: 'https://rpc-mainnet.maticvigil.com'
   }
   return RPC_URLS[chainId]
 }
