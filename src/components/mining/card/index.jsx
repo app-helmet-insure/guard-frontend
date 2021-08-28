@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js'
 import { formatNumber } from 'accounting'
 import {
   formatAmount,
-  formatLastZero,
+  formatLastZero, fromWei,
   splitFormat,
 } from '../../../utils/format'
 import { useBalance } from '../../../hooks/index'
@@ -31,8 +31,12 @@ const MiningCard = props => {
   const [miningPools, setMiningPools] = useState(null)
   const [apr, setApr] = useState('0')
   const [mdexApr, setMdexApr] = useState('0')
-
   const [lptValue, setLptValue] = useState('-')
+  console.log('apr', apr, mdexApr)
+  // 是否开始
+  const isStarted = miningPools && miningPools.start_at < now
+  // 是否结束
+  const isEnd = miningPools && miningPools.dueDate < now && miningPools.dueDate
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0 && account) {
@@ -41,14 +45,38 @@ const MiningCard = props => {
         setMiningPools(props.pools)
         return
       }
-      getMiningInfo(props.pools.address, account).then(miningPools_ => {
+      getMiningInfo(props.pools.address, account).then(async miningPools_ => {
+        console.log('miningPools_', miningPools_)
         setMiningPools(miningPools_)
+        if (isEnd || !isStarted) {
+          return
+        }
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
           data => {
-            setApr(data)
+            setApr(data.apr)
           }
         )
         if (miningPools_.mdexReward) {
+          // sort多重奖励，奖励相加
+          let yearReward = null
+          if (miningPools.childPools) {
+            const aprPromise = []
+            for (let i = 0; i < miningPools.childPools.length; i++) {
+              aprPromise.push(
+                getAPR({
+                  ...miningPools_,
+                  ...miningPools.childPools[i]
+                })
+              )
+            }
+            const resV = await Promise.all(aprPromise)
+            yearReward = resV.reduce((total, item, index) => {
+              total = total.plus(new BigNumber(item.yearReward))
+              return total
+            }, new BigNumber(0))
+            console.log('resV', resV, yearReward.toString(), miningPools_)
+          }
+          miningPools_.yearReward_ = yearReward
           // 奖励2的apr
           getMdxARP(miningPools_).then(res => {
             setMdexApr(res.apr)
@@ -127,15 +155,12 @@ const MiningCard = props => {
     setTabFlag(val)
     setVisibleStakePopup(true)
   }
-  // 是否开始
-  const isStarted = miningPools && miningPools.start_at < now
-  // 是否结束
-  const isEnd = miningPools && miningPools.dueDate < now && miningPools.dueDate
 
+  const cStyle = props.cStyle || {}
   // loading
   if (!miningPools) {
     return (
-      <div className="mining_card">
+      <div className="mining_card" style={cStyle}>
         <div className="card_loading">
           <Space>
             <div className="flex_center_up_and_down">
@@ -160,10 +185,10 @@ const MiningCard = props => {
       </div>
     )
   }
-
   return (
     <>
       <div
+        style={cStyle}
         className={
           miningPools.ledLight ? 'ledLight mining_card' : 'mining_card'
         }
@@ -325,7 +350,7 @@ const MiningCard = props => {
         </div>
         <Button
           className={'mining_card_btn btn_primary'}
-          disabled={!isStarted || miningPools.is_coming}
+          disabled={!isStarted || miningPools.is_coming || isEnd}
           onClick={() => stakeClaimPopup('Stake')}
         >
           <FormattedMessage id="mining_text12" />

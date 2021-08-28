@@ -158,6 +158,7 @@ export const getLTPValue = (
       .then(data => {
         data = processResult(data)
         const [poolTotalSupply, tokenTotalSupply, underlying, collateral] = data
+
         const underlyingContract = new Contract(underlying, ERC20.abi) // quick的合约
         const collateralContract = new Contract(collateral, ERC20.abi) // quick的合约
         return multicallProvider.all([
@@ -172,7 +173,7 @@ export const getLTPValue = (
           if (miningPools.settleToken === collateral) {
             shortAmount = new BigNumber(fromWei(collateralAmount, miningPools.mlpDecimal)).plus(shortAmount)
           } else {
-            if(collateralAmount > 0){
+            if (collateralAmount > 0) {
               // eslint-disable-next-line no-use-before-define
               const [price] = await getMDexPrice(collateral, miningPools.settleToken, 1, [], miningPools)
               shortAmount += new BigNumber(price).multipliedBy(new BigNumber(fromWei(collateralAmount, miningPools.mlpDecimal))).plus(shortAmount)
@@ -182,7 +183,7 @@ export const getLTPValue = (
           if (miningPools.settleToken === underlying) {
             shortAmount = new BigNumber(fromWei(underlyingAmount, miningPools.decimal)).plus(shortAmount)
           } else {
-            if(underlyingAmount > 0) {
+            if (underlyingAmount > 0) {
               // eslint-disable-next-line no-use-before-define
               const [price]  = await getMDexPrice(underlying, miningPools.settleToken, 1, [], miningPools)
               shortAmount = new BigNumber(price).multipliedBy(new BigNumber(fromWei(underlyingAmount, miningPools.decimal))).plus(shortAmount)
@@ -194,7 +195,6 @@ export const getLTPValue = (
           const ltpValue = new BigNumber(poolTotalSupply)
             .div(new BigNumber(tokenTotalSupply))
             .multipliedBy(shortAmount)
-          // console.log('aaaaaaaaa', miningPools.name, underlyingAmount, collateralAmount, shortAmount.toString(), ltpValue.toString())
           reslove(ltpValue)
         })
       })
@@ -344,7 +344,7 @@ export const getAPR = async (miningPools, mode = 1) => {
   const reward1Vol = new BigNumber(allowance)
     .minus(new BigNumber(unClaimReward))
     .toString()
-  // console.log('reward1Vol', miningPools.name, reward1Vol)
+  console.log('reward1Vol', miningPools.name, reward1Vol)
 
   let lptTotalValue
   if (miningPools.valueAprToken !== miningPools.settleToken && miningPools.poolType !== 3) {
@@ -357,7 +357,7 @@ export const getAPR = async (miningPools, mode = 1) => {
   } else {
     lptTotalValue = lptValue
   }
-
+  console.log('lptTotalValue', lptTotalValue.toString())
   // 奖励转换后的价格
   const [rewardsTotalPrice] = await getMDexPrice(
     miningPools.rewards1Address,
@@ -372,20 +372,22 @@ export const getAPR = async (miningPools, mode = 1) => {
   const rewardsTotalValue = new BigNumber(rewardsTotalPrice)
     .multipliedBy(new BigNumber(reward1Vol))
     .toString()
-  // console.log('rewardsTotalValue', rewardsTotalValue)
-
+  console.log('rewardsTotalValue', rewardsTotalValue.toString(), reward1Vol.toString())
   const span = await getSpan(
     miningPools.address,
     miningPools.abi,
     miningPools.networkId
   )
 
+  console.log('allowance', miningPools.address, allowance.toString(), unClaimReward.toString(), lptValue.toString(), MDexPrice, span)
   // console.log('span', span)
   // 奖励1的价值
   // const reward1 = useRewardsValue(reward1_address, WAR_ADDRESS(chainId), yearReward)
 
   // console.log('lptTotalValue--', miningPools.name, lptTotalValue.toString(), rewardsTotalValue, span, mode, miningPools, rewardsTotalValue)
   let apr = '0'
+  let yearReward = new BigNumber(0)
+  console.log('xxxx', lptTotalValue.toString(), rewardsTotalValue.toString(), span)
   if (lptTotalValue && rewardsTotalValue && span > 0) {
     // span - (当前时间-开始时间) = 剩余时间
     const startAt = miningPools.start_at
@@ -394,26 +396,29 @@ export const getAPR = async (miningPools, mode = 1) => {
       new BigNumber((Number(startAt) + Number(span) - now))
         .div(new BigNumber(86400))
     )
+    console.log('dayRate', dayRate.toString())
     // console.log('dayRate', dayRate.toString(), Number(startAt), Number(span), now)
     // 普通模式
     if (mode === 1) {
       // 年奖励率
-      let yearReward = dayRate
+      yearReward = dayRate
         .multipliedBy(new BigNumber(rewardsTotalValue))
         .multipliedBy(new BigNumber(365))
         .toFixed(0, 1)
       // sort转出来的是已经转过单位的总价值
       if (miningPools.poolType === 3) {
+        console.log('111111111', miningPools.address, yearReward.toString())
         yearReward = fromWei(yearReward, miningPools.decimal)
       }
-      // setYearReward(yearReward)
-      // console.log('yearReward', yearReward)
+      console.log('yearReward', miningPools.address, yearReward.toString())
+
       if (yearReward > 0) {
         const _arp = new BigNumber(yearReward)
           .div(new BigNumber(lptTotalValue))
           .toString()
 
         // console.log('apr', miningPools.name, rewardsTotalValue, yearReward, lptTotalValue.toString(), _arp)
+        console.log('_arp', _arp)
         apr = _arp
         // console.log('apr', apr)
       }
@@ -431,7 +436,11 @@ export const getAPR = async (miningPools, mode = 1) => {
       }
     }
   }
-  return apr
+  return {
+    apr,
+    rewardsTotalValue,
+    yearReward
+  }
 }
 const client = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap03',
@@ -507,10 +516,18 @@ export const getMdxARP = async miningPools => {
   )
   // console.log('mdex2warPrice', mdex2warPrice)
 
-  // 日产量+手续费
-  const volumeTotal = await getVolume(miningPools, mdex2warPrice)
+  let yearVolumeTotal = new BigNumber(0)
 
-  // console.log('volumeTotal', volumeTotal.toString())
+  // 有子池子，取子池子的总奖励
+  if (miningPools.yearReward_) {
+    yearVolumeTotal = new BigNumber(miningPools.yearReward_)
+  } else {
+    // 日产量+手续费
+    const volumeTotal = await getVolume(miningPools, mdex2warPrice)
+    yearVolumeTotal = volumeTotal.multipliedBy(new BigNumber(365))
+    console.log('volumeTotal', volumeTotal)
+  }
+  console.log('yearVolumeTotal', yearVolumeTotal.toString())
 
   let apr = '0'
   if (lptValue > 0 && mdex2warPrice > 0) {
@@ -520,17 +537,22 @@ export const getMdxARP = async miningPools => {
     await multicallProvider.all(promiseList).then(data => {
       data = processResult(data)
       const [tokenTotalSupply, totalSupply] = data
+      // console.log('tokenTotalSupply, totalSupply', tokenTotalSupply.toString(), totalSupply.toString())
       // const radio = new BigNumber(totalSupply).div(new BigNumber(volumeTotal))
-      const totalRewardValue = volumeTotal
-        .multipliedBy(new BigNumber(365))
+      const totalRewardValue = yearVolumeTotal
         .multipliedBy(
           new BigNumber(totalSupply).div(new BigNumber(tokenTotalSupply))
         )
-      console.log('totalRewardValue', totalRewardValue)
+
+
+      // console.log('totalRewardValue', totalRewardValue.toString())
+      // console.log('lptValue', lptValue.toString())
+      const lptValue_ = lptValue// fromWei(lptValue, miningPools.settleTokenDecimal)
       apr = totalRewardValue
-        .div(fromWei(lptValue, miningPools.settleTokenDecimal))
+        .div(lptValue_)
         .toString()
     })
+    // console.log('aprapr', apr)
   }
   return {
     apr,

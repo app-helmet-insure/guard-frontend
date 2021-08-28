@@ -61,6 +61,7 @@
     "antd": "^4.15.4",
     "axios": "^0.21.1",
     "bignumber.js": "^9.0.1",
+    "classname": "0.0.0",
     "dayjs": "^1.10.4",
     "eslint-plugin-import": "^2.23.4",
     "ethers-multicall-x": "^0.2.2",

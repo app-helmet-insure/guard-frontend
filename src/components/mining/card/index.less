@@ -2,8 +2,10 @@
   position: relative;
   display: inline-block;
   padding: 20px;
-  margin-top: 30px;
+  margin-top: 40px;
   width: 380px;
+  //min-width: 380px;
+  max-width: 90vw;
   height: 465px;
   background: #fff;
   box-shadow: 10px 10px 40px 0px rgba(237, 237, 240, 0.6);
@@ -11,9 +13,6 @@
   border: 1px solid #f5f7fb;
   vertical-align: top;
 
-  &:nth-child(3n-1) {
-    margin: 30px 20px 0;
-  }
   .card_loading {
     position: absolute;
     left: 0;
@@ -254,12 +253,10 @@
     display: block;
     padding: 16px 14px;
     margin: 30px auto 0;
-    width: 360px;
+    width: 90vw;
+    max-width: 360px;
     min-height: 400px;
     background: #fff;
-    &:nth-child(3n-1) {
-      margin: 30px auto 0;
-    }
   }
 }
 
@@ -268,11 +265,10 @@
     display: block;
     padding: 16px 14px;
     margin: 30px auto 0;
-    width: 100%;
-    min-height: 400px;
-    &:nth-child(3n-1) {
-      margin: 30px auto 0;
-    }
+    width: 90vw;
+    max-width: 340px;
+    height: 484px;
+    min-height: 484px;
   }
 }
 .ledLight {
