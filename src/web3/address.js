@@ -71,6 +71,7 @@ let rpcCount = 0
 export const getRpcUrl = chainId => {
   const randomMatic = () => {
     const urls = [
+      // 'https://polygon-rpc.com/',
       // 'https://rpc-mainnet.matic.network',
       'https://matic-mainnet.chainstacklabs.com',
       'https://rpc-mainnet.maticvigil.com',
@@ -84,7 +85,7 @@ export const getRpcUrl = chainId => {
   const RPC_URLS = {
     [ChainId.HECO]: 'https://http-mainnet-node.huobichain.com',
     [ChainId.BSC]: 'https://bsc-dataseed.binance.org/',
-    [ChainId.MATIC]: 'https://rpc-mainnet.maticvigil.com'
+    [ChainId.MATIC]: 'https://polygon-rpc.com/'
   }
   return RPC_URLS[chainId]
 }
