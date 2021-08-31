@@ -62,8 +62,10 @@ const Supply = props => {
     PoolList.filter(
       pool =>
         pool.cover === CurrentInsurance.type &&
-        pool.name.toUpperCase() === CurrentInsurance.insurance
+        pool.name.toUpperCase() === CurrentInsurance.insurance &&
+        Number(pool.strikeprice) === Number(CurrentInsurance.strikeprice)
     )[0] || ''
+  console.log(CurrentPool)
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0 && CurrentPool) {
@@ -75,7 +77,7 @@ const Supply = props => {
       getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
         setMiningPools(miningPools_)
         getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
-          res =>{
+          res => {
             setApr(res.apr)
           }
         )
