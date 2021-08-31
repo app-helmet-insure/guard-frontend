@@ -2,16 +2,21 @@
   width: 100%;
   &_content {
     margin: 0 auto 20px;
-    width: 960px;
+    width: 1650px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     gap: 0 40px
   }
 }
 
-@media (min-width: 747px) and (max-width: 1460px) {
-  width: 100%;
+@media (min-width: 747px) and (max-width: 1650px) {
+  .mining_index {
+    &_content {
+      width: 1080px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 }
 @media (min-width: 359px) and (max-width: 747px) {
   .mining_index {
