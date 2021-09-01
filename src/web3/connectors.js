@@ -155,14 +155,9 @@ export const useConnectWallet = () => {
           .catch(error => {
             switch (true) {
               case error instanceof UnsupportedChainIdError:
-                const chainId = window.ethereum && window.ethereum.chainId * 1
-                if (chainId === 56) {
-                  window.location.href = 'https://www.helmet.insure/insurance/'
-                } else {
-                  store.dispatch(
-                    changeShowSwitchWallet({ showSwitchWallet: true })
-                  )
-                }
+                store.dispatch(
+                  changeShowSwitchWallet({ showSwitchWallet: true })
+                )
                 break
               case error instanceof NoEthereumProviderError:
                 break
