@@ -14,6 +14,8 @@ import {ChainId} from '../web3/address'
 const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
 const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
+const QUICK_ADDRESS = '0x831753DD7087CaC61aB5644b308642cc1c33Dc13'
+const WETH_ADDRESS = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
 export default [
   {
     title: 'Guard-USDC LPT Pool',
@@ -25,13 +27,12 @@ export default [
     rewards2: 'QUICK',
     address: '0x51d0b183454c4d621dc789bd15Fe42Ca4B3D9871',
     rewards1Address: GUARD_ADDRESS,
-    rewards2Address: '0x831753dd7087cac61ab5644b308642cc1c33dc13',
+    rewards2Address: QUICK_ADDRESS,
     reserve0: USDC_ADDRESS, // lpt的其中一个
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0xD2EeeEdfcAF1457F7BC9cbA28d5316F73BB83b49', // 质押的资产
-    byLink: `https://quickswap.exchange/#/add/${GUARD_ADDRESS}/0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174`,
+    byLink: `https://quickswap.exchange/#/add/${GUARD_ADDRESS}/${USDC_ADDRESS}`,
     byLinkName: 'Guard-USDC LPT',
     abi: StakingPool,
     mlpDecimal: 18,
@@ -53,14 +54,13 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 2,
     ledLight: true, // 呼吸灯
     multiple: '8.5X', // 倍数
     core: true, // 星标
     showLptValue: true // 展示奖励2总价值
   },
-
   {
     title: 'Guard Short Token Pool',
     name: 'Guard', // 用于
@@ -72,17 +72,15 @@ export default [
     address: '0x5a331c3FEc3bcE6E168199a6f649811Fc02C9b54',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 质押的sort地址
+    settleToken: USDC_ADDRESS,
     settleTokenDecimal: 6,
     MLP: '0xa2338656Ae2135CE743092b9049cbab1026ec601', // 质押的资产 stakingToken
     sort: {
       collateral: GUARD_ADDRESS, //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      underlying: USDC_ADDRESS, // 标的物
     },
     mlpDecimal: 18,
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
     abi: StakingPool,
     start_at: 1628092800,
     openDate: 1628092800,
@@ -102,7 +100,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '1X',
     core: true,
@@ -120,12 +118,10 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', //  抵押物
+      collateral: USDC_ADDRESS, //  抵押物
       underlying: GUARD_ADDRESS, // 标的物
     },
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 用哪个来计算，一般都是usdc
+    settleToken: USDC_ADDRESS, // 用哪个来计算，一般都是usdc
     settleTokenDecimal: 6,
     MLP: '0xeb33baeaC3B7921AfaaA491c6F9Ee8fd684a6B87', // 质押的资产
     mlpDecimal: 6,
@@ -149,13 +145,12 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     core: true,
     showLptValue: false // 展示奖励2总价值
   },
-
   {
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
@@ -168,16 +163,14 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      collateral: MATIC_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
     },
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
+    settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0xdBac5ccD625cCC9f373F1EC0163DF8f55f24F35C', // 质押的资产 stakingToken
     mlpDecimal: 18,
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
     abi: StakingPool,
     start_at: 1627480800,
     openDate: 1627480800,
@@ -197,7 +190,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
@@ -214,12 +207,10 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', //  抵押物
-      underlying: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // 标的物
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: MATIC_ADDRESS, // 标的物
     },
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
+    settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x37cd121e89cfc85a800720f05810d6fc66266a13', // 质押的资产
     mlpDecimal: 6,
@@ -243,13 +234,11 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
   },
-
-
   {
     title: 'Quick Short Token Pool',
     name: 'Quick',
@@ -262,15 +251,13 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13', //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      collateral: QUICK_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
     },
-    
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x62e4210cA2B844EeeD5e906dE6a7C5EF9A69C372', // 质押的资产
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${QUICK_ADDRESS}`,
     abi: StakingPool,
     mlpDecimal: 18,
     start_at: 1627480800,
@@ -291,11 +278,10 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
-
   },
 
   {
@@ -310,16 +296,14 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', //  抵押物
-      underlying: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13', // 标的物
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: QUICK_ADDRESS, // 标的物
     },
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
+    settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x4d37D091dfD455fa25CA645453cC85BC9A3f02cB', // 质押的资产
     mlpDecimal: 6,
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${USDC_ADDRESS}`,
     abi: StakingPool,
     start_at: 1627480800,
     openDate: 1627480800,
@@ -339,12 +323,11 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
   },
-
   {
     title: 'ETH Short Token Pool',
     name: 'ETH',
@@ -357,12 +340,10 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      collateral: WETH_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
     },
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // usdc
+    settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x75A0669062C2a0BbC76719f542880C1185279549', // 质押的资产
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
@@ -386,7 +367,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
@@ -407,15 +388,13 @@ export default [
     rewards2Address: MATIC_ADDRESS, // MATIC 100个/d
     sort: {
       collateral: GUARD_ADDRESS, //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      underlying: USDC_ADDRESS, // 标的物
     },
-    
-    
-    settleToken: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+    settleToken: USDC_ADDRESS,
     settleTokenDecimal: 6,
     MLP: '0x2aeF01c1744fdAEaecEcdda941976251fb735257', // 质押的资产 stakingToken
     mlpDecimal: 18,
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
     abi: StakingPool,
     start_at: 1630080000,
     openDate: 1630080000,
@@ -435,7 +414,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '1.5X',
     core: true,
@@ -460,11 +439,9 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', //  抵押物
+      collateral: USDC_ADDRESS, //  抵押物
       underlying: GUARD_ADDRESS, // 标的物
     },
-    
-    
     settleToken: USDC_ADDRESS, // 用哪个来计算，一般都是usdc
     settleTokenDecimal: 6,
     MLP: '0x46D065e627B0fABb9179ffa9F8a75104B4dfE397', // 质押的资产
@@ -489,7 +466,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     core: true,
@@ -507,15 +484,13 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13', //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      collateral: QUICK_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
     },
-    
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0xd5dc9Acb1CAA449C54C6cf8E449E0a08CaBadDCC', // 质押的资产
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${QUICK_ADDRESS}`,
     abi: StakingPool,
     mlpDecimal: 18,
     start_at: 1630080000,
@@ -536,11 +511,10 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
-
   },
   {
     title: 'Quick Short Token Pool',
@@ -554,18 +528,15 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', //  抵押物
-      underlying: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13', // 标的物
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: QUICK_ADDRESS, // 标的物
     },
-    
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x622a12113f7699D9385E5FAE3c35A502910c8890', // 质押的资产
     mlpDecimal: 6,
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${USDC_ADDRESS}`,
     abi: StakingPool,
-
     start_at: 1630080000,
     openDate: 1630080000,
     time: '',
@@ -584,7 +555,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
@@ -600,17 +571,15 @@ export default [
     address: '0x7580543F9C2C2B5b7aB5ecD2ed5a9F900e83e8f7',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: MATIC_ADDRESS,
-    
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x76C06A374ad8Ce05B57AC043DE7643316772d6A5', // 质押的资产 stakingToken
     sort: {
-      collateral: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      collateral: MATIC_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
     },
     mlpDecimal: 18,
-    byLink: 'https://quickswap.exchange/#/swap?outputCurrency=0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
     abi: StakingPool,
     start_at: 1630080000,
     openDate: 1630080000,
@@ -630,7 +599,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '1X',
     showLptValue: false, // 展示奖励2总价值
@@ -654,11 +623,9 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', //  抵押物
-      underlying: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // 标的物
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: MATIC_ADDRESS, // 标的物
     },
-    
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0xc74947c65d99aADA1881Ade918FE19a61041c44d', // 质押的资产
@@ -683,7 +650,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
@@ -700,11 +667,9 @@ export default [
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
-      collateral: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619', //  抵押物
-      underlying: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174', // 标的物
+      collateral: WETH_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
     },
-    
-    
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
     MLP: '0x5458F3aeD04F6cDc2E57d374d20F226F84540569', // 质押的资产
@@ -729,7 +694,7 @@ export default [
     routerAbi: QuickSwapRouter,
     factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
     factoryAbi: QuickSwapFactory,
-    quickToken: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    quickToken: QUICK_ADDRESS,
     poolType: 3,
     multiple: '0.5X',
     showLptValue: false // 展示奖励2总价值
