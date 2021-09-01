@@ -7,6 +7,7 @@ import Arrow2D from '../../../assets/images/mining/arrow-2-d.png'
 
 export default function SwiperCards ({poolsArr}) {
   const [active, setActive] = useState(0)
+  const [miningDataMap, setMiningDataMap] = useState({})
   const onTab = type => {
     if (type === 'next' && active >= 1) {
       setActive(active - 1 )
@@ -14,6 +15,9 @@ export default function SwiperCards ({poolsArr}) {
     if (type === 'pre' && active < poolsArr.length - 1) {
       setActive(active + 1 )
     }
+  }
+  const getMiningData = async () => {
+
   }
   return (
     <div className="swiper-cards">

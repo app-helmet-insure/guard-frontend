@@ -65,7 +65,7 @@ const MySupply = props => {
       //   setMiningPools(CurrentPool)
       //   return
       // }
-      getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
+      getMiningInfo(CurrentPool, account).then(miningPools_ => {
         console.log(miningPools_)
         setMiningPools(miningPools_)
       })
@@ -392,9 +392,17 @@ const MySupply = props => {
                       ''
                     )}
                     {item.Status === 'Sold' ? (
-                      <button className="finish">
-                        <FormattedMessage id="insurance_text27" />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => goMining(item)}
+                          className="mining"
+                        >
+                          <FormattedMessage id="mysupply_text4" />
+                        </button>
+                        <button className="finish">
+                          <FormattedMessage id="insurance_text27" />
+                        </button>
+                      </>
                     ) : (
                       ''
                     )}
