@@ -15,7 +15,7 @@ import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import StakeChaimDialog from '../../dialogs/stake-chaim-dialog'
 import PoolList from '../../../configs/mining'
-import { getMiningInfo, getAPR, getMdxARP } from '../../../hooks/mining'
+import { getMiningInfo } from '../../../hooks/mining'
 import BigNumber from 'bignumber.js'
 import { useBalance, useEthBalance } from '../../../hooks'
 import { useIndexPrice } from '../../../hooks/insurance'
@@ -52,8 +52,6 @@ const Supply = props => {
   const { library, active, account } = useActiveWeb3React()
   const [aprPercentage, setPercentage] = useState('-')
   const [miningPools, setMiningPools] = useState(null)
-  const [Apr, setApr] = useState('0')
-  const [MdexApr, setMdexApr] = useState('0')
   const CurrentInsurance = getCurrentInsurance({
     Type: InsuranceType,
     Insurance: InsuranceSymbol,
@@ -74,19 +72,9 @@ const Supply = props => {
       //   setMiningPools(CurrentPool)
       //   return
       // }
-      getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
+      getMiningInfo(CurrentPool, account).then(miningPools_ => {
         setMiningPools(miningPools_)
-        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
-          res => {
-            setApr(res.apr)
-          }
-        )
-        if (miningPools_.mdexReward) {
-          // 奖励2的apr
-          getMdxARP(miningPools_).then(res => {
-            setMdexApr(res.apr)
-          })
-        }
+        setPercentage(miningPools_.APR)
       })
     }
   }, [blockHeight, account, InsuranceType, InsuranceSymbol])
@@ -105,19 +93,6 @@ const Supply = props => {
     ERC20.abi,
     CurrentPool && CurrentPool.mlpDecimal
   )
-  useMemo(() => {
-    if (
-      Apr > 0 &&
-      miningPools &&
-      (!miningPools.mdexReward || MdexApr > 0) &&
-      !miningPools.is_coming
-    ) {
-      const percentage_ = (Apr * 100 + MdexApr * 100).toFixed(2)
-      if (isFinite(percentage_)) {
-        setPercentage(percentage_)
-      }
-    }
-  }, [Apr, MdexApr])
 
   const currentGuardPrice = async () => {
     const calldata = {

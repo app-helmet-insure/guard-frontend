@@ -12,7 +12,7 @@ import {
 } from '../../../utils/format'
 import { useBalance } from '../../../hooks/index'
 import ERC20 from '../../../web3/abi/ERC20.json'
-import { getMiningInfo, getAPR, getMdxARP } from '../../../hooks/mining'
+import { getMiningInfo } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 import { VarContext } from '../../../context'
@@ -26,13 +26,9 @@ const MiningCard = props => {
   const [visibleStakePopup, setVisibleStakePopup] = useState(false)
   const [balanceProportion, setBalanceProportion] = useState(0)
   const [tabFlag, setTabFlag] = useState('Stake')
-  const [aprPercentage, setPercentage] = useState('-')
   const [now, setNow] = useState(parseInt(Date.now() / 1000))
   const [miningPools, setMiningPools] = useState(null)
-  const [apr, setApr] = useState('0')
-  const [mdexApr, setMdexApr] = useState('0')
   const [lptValue, setLptValue] = useState('-')
-  console.log('apr', apr, mdexApr)
   // 是否开始
   const isStarted = miningPools && miningPools.start_at < now
   // 是否结束
@@ -45,45 +41,9 @@ const MiningCard = props => {
         setMiningPools(props.pools)
         return
       }
-      getMiningInfo(props.pools.address, account).then(async miningPools_ => {
+      getMiningInfo(props.pools, account).then(async miningPools_ => {
         console.log('miningPools_', miningPools_)
         setMiningPools(miningPools_)
-        if (isEnd || !isStarted) {
-          return
-        }
-        getAPR(miningPools_, miningPools_.earnName === 'APY' ? 2 : 1).then(
-          data => {
-            setApr(data.apr)
-          }
-        )
-        if (miningPools_.mdexReward) {
-          // sort多重奖励，奖励相加
-          let yearReward = null
-          if (miningPools.childPools) {
-            const aprPromise = []
-            for (let i = 0; i < miningPools.childPools.length; i++) {
-              aprPromise.push(
-                getAPR({
-                  ...miningPools_,
-                  ...miningPools.childPools[i]
-                })
-              )
-            }
-            const resV = await Promise.all(aprPromise)
-            yearReward = resV.reduce((total, item, index) => {
-              total = total.plus(new BigNumber(item.yearReward))
-              return total
-            }, new BigNumber(0))
-            console.log('resV', resV, yearReward.toString(), miningPools_)
-          }
-          miningPools_.yearReward_ = yearReward
-          // 奖励2的apr
-          getMdxARP(miningPools_).then(res => {
-            setMdexApr(res.apr)
-            const lptV = formatAmount(res.lptValue, miningPools ? miningPools.settleTokenDecimal : 6, 4)
-            setLptValue(lptV)
-          })
-        }
       })
     }
   }, [blockHeight, account])
@@ -100,19 +60,6 @@ const MiningCard = props => {
     miningPools.dueDate <= now &&
     miningPools.start_at < now
 
-  useMemo(() => {
-    if (
-      apr > 0 &&
-      miningPools &&
-      (!miningPools.mdexReward || mdexApr > 0) &&
-      !miningPools.is_coming
-    ) {
-      const percentage_ = (apr * 100 + mdexApr * 100).toFixed(2)
-      if (isFinite(percentage_)) {
-        setPercentage(percentage_)
-      }
-    }
-  }, [apr, mdexApr])
 
   useEffect(() => {
     let timerId = null
@@ -244,7 +191,7 @@ const MiningCard = props => {
         </div>
         <CountDown
           pools={miningPools}
-          aprPercentage={aprPercentage}
+          aprPercentage={miningPools.APR || '-'}
           now={now}
           isFinish={isFinish}
         />
@@ -266,7 +213,7 @@ const MiningCard = props => {
                 <span>
                   <FormattedMessage id="mining_text27" />
                 </span>
-                <span>${lptValue}</span>
+                <span>${miningPools.LPTStakeValue}</span>
               </p>
             )
           }

@@ -65,7 +65,7 @@ const MySupply = props => {
       //   setMiningPools(CurrentPool)
       //   return
       // }
-      getMiningInfo(CurrentPool.address, account).then(miningPools_ => {
+      getMiningInfo(CurrentPool, account).then(miningPools_ => {
         console.log(miningPools_)
         setMiningPools(miningPools_)
       })
