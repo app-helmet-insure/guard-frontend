@@ -9,7 +9,7 @@ import CalcAbi from '../web3/abi/Calc.json'
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
 import {toWei} from 'web3-utils'
 // 计算apr的合约
-const CALC_ADDRESS = '0x16784f7c44c3d578e3fbe1273a277db56c0d0bd5'
+const CALC_ADDRESS = '0xd9020a0e9aca29bec5a36e8fc4feff37255606e4'
 const sameAddress = (address1, address2) => {
   if (address1.toLowerCase() === address2.toLowerCase()) {
     return [address1]
