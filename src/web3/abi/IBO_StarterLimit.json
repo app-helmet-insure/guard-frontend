@@ -347,6 +347,19 @@
   },
   {
     "inputs": [],
+    "name": "offerBegin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "price",
     "outputs": [
       {
@@ -501,6 +514,11 @@
       {
         "internalType": "uint256",
         "name": "maxUser_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "offerBegin_",
         "type": "uint256"
       }
     ],

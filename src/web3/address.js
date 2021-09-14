@@ -2,10 +2,12 @@ import WarUsdtLpt from './abi/WarUsdtLpt.json'
 export const ChainId = {
   BSC: 56,
   HECO: 128,
-  MATIC: 137
+  MATIC: 137,
+  LOCALHOST: 31337
 }
 
 export const ADDRESS_0 = '0x0000000000000000000000000000000000000000'
+export const ADDRESS_INFINITY = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
 
 export const MDEX_POOL_ADDRESS = '0xFB03e11D93632D97a8981158A632Dd5986F5E909'
 export const MDEX_ADDRESS = '0x25D2e80cB6B86881Fd7e07dd263Fb79f4AbE033c'
@@ -85,7 +87,8 @@ export const getRpcUrl = chainId => {
   const RPC_URLS = {
     [ChainId.HECO]: 'https://http-mainnet-node.huobichain.com',
     [ChainId.BSC]: 'https://bsc-dataseed.binance.org/',
-    [ChainId.MATIC]: 'https://polygon-rpc.com/'
+    [ChainId.MATIC]: 'https://polygon-rpc.com/',
+    [ChainId.LOCALHOST]: 'http://localhost:8545'
   }
   return RPC_URLS[chainId]
 }

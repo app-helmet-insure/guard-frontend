@@ -1,59 +1,52 @@
-// import starterLimitAbi from '../web3/abi/IBO_StarterLimit.json'
-// import AirAllowListAbi from '~/web3/abis/AirAllowList.json'
-// import PolyIcon from '../assets/images/ido/poly.png'
-import {ChainId} from '@dinoswap/quickswap-sdk'
+import starterLimitAbi from '../web3/abi/IBO_StarterLimit.json'
+import AirAllowListAbi from '../web3/abi/AirAllowList.json'
+import PolyIcon from '../assets/images/ido/poly.png'
+import {ChainId} from '../web3/address'
 
 const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const idoPools = [
   {
-    name: 'MONI',
-    address: '0x603366462A39CdbFCE7a7B274f5DA77cb51eA9b0',
-    abi: null,
-    startTime: '1631790000',
-    endTime: '1631815380',
-    claimTime: '1631815380',
+    name: 'PRED',
+    address: '0x014e21ee729Bfb9b9D60f424Efcc4A72B9Ef9290',
+    abi: starterLimitAbi,
+    startTime: '1631617200', // sol->offerBegin
+    endTime: '1631802600', // sol->time
+    claimTime: '1631802600', // sol->timeSettle
     is_coming: false,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
       symbol: 'HELMET',
     },
-    icon: null,
+    icon: PolyIcon,
     underlying: {
-      address: '0x9573c88aE3e37508f87649f87c4dd5373C9F31e0',
+      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
       decimal: 18,
-      symbol: 'MONI',
-      name: 'MONI',
+      symbol: 'PRED',
+      name: 'PRED',
     },
-    amount: '200000',
+    amount: '1600000',
     pool_info: {
-      min_allocation: 400,
-      max_allocation: 1000,
-      min_swap_level: '400 Helmet',
-      maxAccount: 600,
+      min_allocation: 200,
+      max_allocation: 500,
+      min_swap_level: '200 Helmet',
+      maxAccount: 200,
     },
     progress: 0,
-    ratio: '1 HELMET = 1.35 MONI',
+    ratio: '1 HELMET = 30 PRED',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '259259259259259259175000',
+    totalPurchasedAmount: '53333333333333332800000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
+
     duration: '',
     winningRate: '-',
     committed: '',
     total: '',
     poolType: 0,
-    networkId: ChainId.MATIC,
-    claimTimeTipI18n: 'IBO.IBO_text46',
-    light: true,
-    airdrop: {
-      begin: '1634407500',
-      address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',
-      abi: null,
-      amount: '175000',
-      withdrawList: true,
-      allowList: 0
-    }
+    networkId: ChainId.LOCALHOST,
+    claimTimeTipI18n: 'IBO_text43',
+    light: true
   },
 ]

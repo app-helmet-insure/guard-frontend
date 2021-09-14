@@ -62,11 +62,23 @@
 }
 
 .ibo_item_btn {
-  background: #17173a;
-
-  &.disabled {
-    cursor: default;
+  background: #2A3749;
+  color: #ffffff;
+  &.burn {
+    background: #2A3749;
+    border-color: #2a3749;
+    &:focus,&:active{
+      color: #ffffff;
+    }
+    &:hover{
+      color: #ffffff;
+      background: #2A3749;
+      border-color: #2a3749;
+    }
+  }
+  &.disabled{
     background: #cccccc !important;
+    border-color: #cccccc;
   }
 }
 
@@ -126,6 +138,19 @@
   box-shadow: 0px 2px 0px 0px #4364e8;
   border-radius: 10px;
   border: 1px solid #4364e8;
+}
+.ido-modal.ant-modal{
+  width: 800px!important;
+  .ant-modal-content{
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .ant-modal-footer{
+    .ant-btn-primary{
+      background: #2a3749;
+      border-color: #2a3749;
+    }
+  }
 }
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
@@ -302,7 +327,6 @@
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
       color: #fff;
-      line-height: 40px;
       text-align: center;
       background: #17173a;
       border-radius: 5px;
@@ -566,24 +590,9 @@
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
       color: #fff;
-      line-height: 40px;
       text-align: center;
       background: #2a3749;
       border-radius: 5px;
-
-      &.disabled {
-        cursor: default;
-        background: #e1e1e1;
-        color: #fff;
-        &:hover {
-          background: #e1e1e1;
-          color: #fff;
-        }
-      }
-
-      &:hover {
-        background: #121212;
-      }
     }
 
     &_claim {

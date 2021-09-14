@@ -3,21 +3,17 @@ import {formatAmount, fromWei, numToWei} from '../utils/format'
 import {Contract} from 'ethers-multicall-x'
 import ERC20 from '../web3/abi/ERC20.json'
 import {getOnlyMultiCallProvider, processResult} from '../web3/multicall'
+import {getContract} from '../web3'
+import Erc20ABI from '../web3/abi/ERC20.json'
+import {getGasPrice} from '../utils'
+import {ADDRESS_INFINITY} from '../web3/address'
 
 export const getPoolInfo = (pool, account) => {
   const poolContract = new Contract(pool.address, pool.abi)
-  if (!account) {
-    return Promise.all([]).then(() => pool)
-  }
-  // const currencyContract = new Contract(pool.currency.address, ERC20.abi)
-  const currencyToken = pool.currency.is_ht
-    ? null
-    : new Contract(pool.currency.address, ERC20.abi)
   const promiseList = [
     poolContract.price(),
     poolContract.totalPurchasedCurrency(),
     poolContract.purchasedCurrencyOf(account),
-    // poolContract.totalSettleable(),
     poolContract.settleable(account),
     poolContract.totalSettledUnderlying(),
     poolContract.maxUser(),
@@ -34,14 +30,14 @@ export const getPoolInfo = (pool, account) => {
     promiseList.push(airdropContract.withdrawList(account))
     promiseList.push(airdropContract.begin())
   }
-  if (currencyToken) {
-    promiseList.push(currencyToken.allowance(account, pool.address))
-    promiseList.push(currencyToken.balanceOf(account))
+  if (pool.currency.is_ht) {
+    const currencyContract = new Contract(pool.currency.address, ERC20.abi)
+    promiseList.push(currencyContract.allowance(account, pool.address))
+    promiseList.push(currencyContract.balanceOf(account))
   }
-  const multicallProvider = getOnlyMultiCallProvider()
+  const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
   return multicallProvider
     .all(promiseList).then(res => {
-      const now = parseInt(Date.now() / 1000, 10)
       const resData = processResult(res)
       const [
         price,
@@ -68,8 +64,8 @@ export const getPoolInfo = (pool, account) => {
         allowList = resData[12]
         withdrawList = resData[13]
         airdropBegin = resData[14]
-        currency_allowance = resData[15]
-        balanceOf = resData[16]
+        currency_allowance = resData[15] || 0
+        balanceOf = resData[16] || 0
         pool.airdrop = Object.assign(pool.airdrop, {
           begin: airdropBegin,
           allowList: fromWei(allowList, 18).toFixed(6) * 1,
@@ -79,8 +75,8 @@ export const getPoolInfo = (pool, account) => {
           }[String(withdrawList)]
         })
       } else {
-        currency_allowance = resData[12]
-        balanceOf = resData[13]
+        currency_allowance = resData[12] || 0
+        balanceOf = resData[13] || 0
       }
 
       const [completed_, amount, volume, rate] = settleable
@@ -108,12 +104,12 @@ export const getPoolInfo = (pool, account) => {
         }`,
         progress:
           new BigNumber(totalPurchasedCurrency)
-            .dividedBy(totalPurchasedAmount)
-            .toFixed(2, 1)
+            .div(totalPurchasedAmount)
+            .toFixed(4)
             .toString(),
         is_join: purchasedCurrencyOf > 0,
         totalPurchasedCurrency,
-        totalPurchasedAmount: totalPurchasedAmount,
+        totalPurchasedAmount: totalPurchasedAmount.toString(),
         totalPurchasedUnderlying,
         balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6),
         purchasedCurrencyOf,
@@ -135,5 +131,74 @@ export const getPoolInfo = (pool, account) => {
           max_allocation: fromWei(amtHigh, pool.currency.decimal) * 1,
         }
       })
+    })
+}
+
+export const onApprove_ = async (library, account, contractAddress, poolAddress, callback = () => {
+}) => {
+  const Erc20Contracts = getContract(
+    library,
+    Erc20ABI.abi,
+    contractAddress
+  )
+  const gasPrice = await getGasPrice()
+  Erc20Contracts.methods
+    .approve(
+      poolAddress,
+      ADDRESS_INFINITY
+    )
+    .send({from: account, gasPrice})
+    .on('receipt', () => {
+      callback(true)
+    })
+    .on('error', () => {
+      callback(false)
+    })
+}
+export const onBurn_ = async (library, account, _amount, iboData, callback) => {
+  const gasPrice = await getGasPrice()
+  const myContract = getContract(
+    library,
+    iboData.abi,
+    iboData.address
+  )
+  myContract.methods
+    .purchase(numToWei(String(_amount), iboData.currency.decimal))
+    .send({from: account, gasPrice})
+    .on('receipt', () => callback(true))
+    .on('error', () => callback(false))
+}
+export const onClaim_ = async (library, account, iboData, callback) => {
+  const gasPrice = await getGasPrice()
+  const myContract = getContract(
+    library,
+    iboData.abi,
+    iboData.address
+  )
+  myContract.methods
+    .settle()
+    .send({from: account, gasPrice})
+    .on('receipt', () => {
+      callback(true)
+    })
+    .on('error', () => {
+      callback(false)
+    })
+}
+export const onAirdrop_ = async (library, account, iboData, callback) => {
+  const gasPrice = await getGasPrice()
+  const myContract = getContract(
+    library,
+    iboData.abi,
+    iboData.address
+  )
+  myContract.methods
+    .withdraw()
+    .send({from: account, gasPrice})
+    .on('receipt', () => {
+      callback(true)
+    })
+    .on('error', () => {
+      callback(false)
     })
 }
