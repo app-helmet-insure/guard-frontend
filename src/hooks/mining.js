@@ -9,7 +9,7 @@ import CalcAbi from '../web3/abi/Calc.json'
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
 import {toWei} from 'web3-utils'
 // 计算apr的合约
-const CALC_ADDRESS = '0x16784f7c44c3d578e3fbe1273a277db56c0d0bd5'
+const CALC_ADDRESS = '0xd9020a0e9aca29bec5a36e8fc4feff37255606e4'
 const sameAddress = (address1, address2) => {
   if (address1.toLowerCase() === address2.toLowerCase()) {
     return [address1]
@@ -133,10 +133,10 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
   multicallProvider.all(promise_list).then(async data => {
     data = processResult(data)
     const begin = data[0],
-      totalSupply = data[1],
-      APR = data[2]
+      totalSupply = data[1]
 
-    let APR2 = 0,
+    let APR = 0,
+      APR2 = 0,
       earned = 0,
       balanceOf = 0,
       allowance = 0,
@@ -146,12 +146,14 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
     if (hasApr && pool.poolType === 3) {
       if (pool.mdexReward) {
         // sort有奖励2的情况，取值顺序有变
+        APR = data[2]
         APR2 = data[3]
         earned  = data[4]
         balanceOf = data[5]
         allowance = data[6]
         earned2 = data[7]
       } else {
+        APR = data[2]
         earned  = data[3]
         balanceOf = data[4]
         allowance = data[5]
@@ -159,6 +161,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       }
     } else if (hasApr && pool.poolType === 2) {
       // lpt
+      APR = data[2]
       const reserve0Price = fromWei(data[3][0], data[3][1]).toString()
       LPTStakeValue = formatAmount(data[4], pool.settleTokenDecimal, 2)
       earned  = data[5]
@@ -170,10 +173,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       const volumeTotal = await getVolume(pool, reserve0Price)
       // 年奖励
       const totalRewardValue = volumeTotal.multipliedBy(new BigNumber(365))
-      console.log('totalRewardValue', totalRewardValue.toString())
       APR2 = toWei(String(totalRewardValue / LPTStakeValue))
-      console.log('APR2', APR2, APR)
-
     } else {
       earned  = data[2]
       balanceOf = data[3]

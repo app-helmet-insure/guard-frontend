@@ -261,13 +261,47 @@ export const getCurrentInsurance = ({
   )[0]
 }
 
-export const getInsuranceList = function () {
+export const getInsuranceStatus = () =>
+  axios({
+    method: 'post',
+    url: 'https://api.thegraph.com/index-node/graphql',
+    data: {
+      query: `{
+        indexingStatusForCurrentVersion(subgraphName: "app-helmet-insure/helmet-insure") {
+            synced
+            health
+            fatalError {
+                message
+                block {
+                    number
+                    hash
+                }
+                handler
+            }
+            chains {
+                chainHeadBlock {
+                    number
+                }
+                latestBlock {
+                    number
+                }
+            }
+        }
+    }`,
+    },
+  }).then(res => {
+    const Status = res.data.data.indexingStatusForCurrentVersion.health
+    console.log(res)
+    return Status
+  })
+
+const getGraphList1 = async function () {
   return axios({
     method: 'post',
     url: 'https://api.thegraph.com/subgraphs/name/app-helmet-insure/guard',
     data: {
       query: `{
-                options(first: 1000) {
+                options(first:1000) {
                   id
                   creator
                   collateral 
@@ -276,7 +310,7 @@ export const getInsuranceList = function () {
                   expiry
                   long
                   short
-                  asks(first: 1000) {
+                  asks(first:1000) {
                     askID
                     seller
                     volume
@@ -296,4 +330,49 @@ export const getInsuranceList = function () {
               `,
     },
   })
+}
+const getGraphList2 = async function () {
+  return axios({
+    method: 'post',
+    url: 'https://graph.guard.insure/matic/subgraphs/name/guard/insure',
+    data: {
+      query: `{
+                options(first:1000) {
+                  id
+                  creator
+                  collateral 
+                  underlying
+                  strikePrice
+                  expiry
+                  long
+                  short
+                  asks(first:1000) {
+                    askID
+                    seller
+                    volume
+                    settleToken
+                    price
+                    isCancel
+                    binds {
+                      bidID
+                      askID
+                      buyer
+                      volume
+                      amount
+                    }
+                  }
+                }
+              }
+              `,
+    },
+  })
+}
+// get Insurance
+export const getInsuranceList = async function () {
+  const Status = await getInsuranceStatus()
+  console.log('The Graph is ' + Status)
+  if (Status === 'healthy') {
+    return getGraphList1()
+  }
+  return getGraphList2()
 }
