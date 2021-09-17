@@ -48,11 +48,24 @@ const ShowData = props => {
     ChainId.MATIC
   )
 
-  // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
+  // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W) 每天递减
+  const diminish_start = 1631894400
+  const thisTime = (new Date().getTime() / 1000).toFixed(0) * 1
+  let constant = 100000
+  if (thisTime >= diminish_start) {
+    const diminishD = parseInt(String((thisTime - diminish_start) / 86400), 10) + 1
+    if (diminishD >= 30) {
+      constant = 0
+    } else {
+      const diminishAmount = constant * diminishD / 30
+      constant = constant - diminishAmount
+    }
+  }
+  console.log('constant', constant)
   const Data3 =
     Data3Balance > 0
       ? formatNumber(
-        new BigNumber(4000000).minus(new BigNumber(Data3Balance)).plus(100000)
+        new BigNumber(4000000).minus(new BigNumber(Data3Balance)).plus(constant)
       )
       : '-'
   const getData2 = async () => {
