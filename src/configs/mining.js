@@ -750,7 +750,7 @@ export default [
     childPools: [ // 用来计算奖励，总奖励相加
       {
         // matic奖励
-        address: '0x6AAafef56D17E6896B05F1C082dF5059ac52f159', // 子池地址
+        address: '0x3692cdb6b664e5be46c04d9e82cec34ed1be4b81', // 子池地址
       }
     ]
   },
@@ -934,7 +934,7 @@ export default [
     childPools: [ // 用来计算奖励，总奖励相加
       {
         // matic奖励
-        address: '0x4e18bb070806d7000979Cf4055aC0E608231d7C1',
+        address: '0xa9579F94A285DD51EBA60aC48Fb61ca50E803217',
       }
     ]
   },
