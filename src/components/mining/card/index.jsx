@@ -137,7 +137,7 @@ const MiningCard = props => {
       <div
         style={cStyle}
         className={
-          miningPools.ledLight ? 'ledLight mining_card' : 'mining_card'
+          miningPools.ledLight && !isEnd && isStarted ? 'ledLight mining_card' : 'mining_card'
         }
       >
         <div className="mining_card_title">
