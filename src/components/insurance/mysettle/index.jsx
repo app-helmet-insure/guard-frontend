@@ -28,6 +28,7 @@ const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
 import { Skeleton } from 'antd'
+import {getGasPrice} from '../../../utils'
 
 const MySettle = props => {
   const [SettleList, setSettleList] = useState([])
@@ -221,12 +222,13 @@ const MySettle = props => {
     })
   }
   // 结算订单
-  const handleClickClaimOrder = data => {
+  const handleClickClaimOrder = async data => {
     const OrderContracts = getContract(library, FactoryABI, FactoryAddress)
+    const gasPrice = await getGasPrice()
     if (Number(data.claimBalance) !== 0) {
       OrderContracts.methods
         .burn(data.short, toWei(data.claimBalance, data.collateral_decimals))
-        .send({ from: account })
+        .send({ from: account, gasPrice })
         .on('transactionHash', hash => {
           setOpenWaiting(true)
         })
@@ -239,7 +241,7 @@ const MySettle = props => {
           setOpenWaiting(false)
         })
     } else {
-      OrderContracts.methods.settle(data.short).send({ from: account })
+      OrderContracts.methods.settle(data.short).send({ from: account, gasPrice })
     }
   }
   useEffect(() => {

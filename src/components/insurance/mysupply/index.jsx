@@ -27,6 +27,7 @@ import ERC20 from '../../../web3/abi/ERC20.json'
 import { getAllowance } from '../../../hooks/wallet'
 import './index.less'
 import moment from 'moment'
+import {getGasPrice} from '../../../utils'
 
 const MySupply = props => {
   const { blockHeight } = useContext(VarContext)
@@ -225,12 +226,13 @@ const MySupply = props => {
     })
   }
   // 撤销订单
-  const handleClickCancelOrder = data => {
+  const handleClickCancelOrder = async data => {
+    const gasPrice = await getGasPrice()
     const AskID = data.askID
     const OrderContracts = getContract(library, OrderABI, OrderAddress)
     OrderContracts.methods
       .cancel(AskID)
-      .send({ from: account })
+      .send({ from: account, gasPrice })
       .on('transactionHash', hash => {
         setOpenWaiting(true)
       })

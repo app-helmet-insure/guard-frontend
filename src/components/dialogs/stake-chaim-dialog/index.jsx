@@ -11,6 +11,7 @@ import { useActiveWeb3React, getContract } from '../../../web3'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import { useBalance } from '../../../hooks/index'
 import { useBlockHeight } from '../../../web3/index'
+import {getGasPrice} from '../../../utils'
 const { TabPane } = Tabs
 
 function LineData ({ title, value }) {
@@ -80,13 +81,14 @@ function StakeChaimDialog ({
     }
   }
 
-  const onApprove = e => {
+  const onApprove = async e => {
     if (!active) {
       return
     }
     if (loadFlag) return
     setLoadFlag(true)
     const contract = getContract(library, ERC20.abi, miningPools.MLP)
+    const gasPrice = await getGasPrice()
     contract.methods
       .approve(
         miningPools.address,
@@ -94,6 +96,7 @@ function StakeChaimDialog ({
       )
       .send({
         from: account,
+        gasPrice
       })
       .on('receipt', (_, receipt) => {
         message.success({
@@ -117,7 +120,7 @@ function StakeChaimDialog ({
       })
   }
 
-  const stakeOnConfirm = () => {
+  const stakeOnConfirm = async () => {
     if (!active) {
       return false
     }
@@ -135,10 +138,12 @@ function StakeChaimDialog ({
       miningPools.address
     )
     console.log('xxxxxx', numToWei(`${stakeInput}`, miningPools.mlpDecimal), stakeInput.toString())
+    const gasPrice = await getGasPrice()
     pool_contract.methods
       .stake(numToWei(`${stakeInput}`, miningPools.mlpDecimal))
       .send({
         from: account,
+        gasPrice
       })
       .on('receipt', (_, receipt) => {
         message.success({
@@ -162,7 +167,7 @@ function StakeChaimDialog ({
       })
   }
 
-  const onConfirm = e => {
+  const onConfirm = async e => {
     if (!active) {
       return
     }
@@ -176,9 +181,11 @@ function StakeChaimDialog ({
     setLoadFlag(true)
     const contract = getContract(library, miningPools.abi, miningPools.address)
     const method = miningPools.rewards2 ? 'getDoubleReward' : 'getReward'
+    const gasPrice = await getGasPrice()
     contract.methods[method]()
       .send({
         from: account,
+        gasPrice
       })
       .on('transactionHash', hash => {})
       .on('receipt', (_, receipt) => {
@@ -203,7 +210,7 @@ function StakeChaimDialog ({
       })
   }
 
-  const onConfirmAll = () => {
+  const onConfirmAll = async () => {
     if (!active) {
       return false
     }
@@ -216,10 +223,12 @@ function StakeChaimDialog ({
     if (loadFlag) return
     setLoadFlag(true)
     const contract = getContract(library, miningPools.abi, miningPools.address)
+    const gasPrice = await getGasPrice()
     contract.methods
       .exit()
       .send({
         from: account,
+        gasPrice
       })
       .on('transactionHash', hash => {})
       .on('receipt', (_, receipt) => {
