@@ -134,6 +134,7 @@ function StakeChaimDialog ({
       miningPools.abi,
       miningPools.address
     )
+    console.log('xxxxxx', numToWei(`${stakeInput}`, miningPools.mlpDecimal), stakeInput.toString())
     pool_contract.methods
       .stake(numToWei(`${stakeInput}`, miningPools.mlpDecimal))
       .send({
