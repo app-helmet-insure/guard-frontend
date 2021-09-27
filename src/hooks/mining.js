@@ -9,7 +9,7 @@ import CalcAbi from '../web3/abi/Calc.json'
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
 import {toWei} from 'web3-utils'
 // 计算apr的合约
-const CALC_ADDRESS = '0x8CB41Dc90259F4Efa16ec16AfB1f0ADCa6b7f590'
+const CALC_ADDRESS = '0xf67427fD40881591ECB3523AA1d44980B628f888'
 const sameAddress = (address1, address2) => {
   if (address1.toLowerCase() === address2.toLowerCase()) {
     return [address1]
@@ -82,7 +82,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
     pool_contract.totalSupply(), // 总抵押
   ]
   const now = new Date().getTime() / 1000
-  const hasApr =  pool.dueDate > now || !pool.dueDate
+  const hasApr = pool.dueDate > now || !pool.dueDate
   // 还没结束，算apr
   if (hasApr) {
     if (pool.poolType === 3) {
@@ -94,12 +94,6 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
           sameAddress(pool.sort.underlying, pool.settleToken),
           sameAddress(pool.rewards1Address, pool.settleToken),
           pool.mineMountainAddress))
-      console.log('xxxxxx', pool.address,
-        sameAddress(pool.sort.collateral, pool.settleToken),
-        sameAddress(pool.sort.underlying, pool.settleToken),
-        sameAddress(pool.rewards1Address, pool.settleToken),
-        pool.mineMountainAddress)
-
 
       // 有奖励2,取子池子的总量,【目前只有一个子池】
       if (pool.mdexReward && pool.childPools) {

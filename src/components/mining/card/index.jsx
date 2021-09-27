@@ -297,10 +297,12 @@ const MiningCard = props => {
         </div>
         <Button
           className={'mining_card_btn btn_primary'}
-          disabled={!isStarted || miningPools.is_coming || isEnd}
-          onClick={() => stakeClaimPopup('Stake')}
+          disabled={!isStarted || miningPools.is_coming}
+          onClick={() => stakeClaimPopup(isEnd ? 'Claim' : 'Stake')}
         >
-          <FormattedMessage id="mining_text12" />
+          {
+            isEnd ? <FormattedMessage id="mining_text14" /> : <FormattedMessage id="mining_text12" />
+          }
         </Button>
         <div
           className="mining_card_content mining_card_content_rewards"

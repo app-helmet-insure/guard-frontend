@@ -1,13 +1,13 @@
-import React, {useState} from 'react'
+import React, {useMemo, useState} from 'react'
 import MiningCard from '../card'
 import './index.less'
 import cx from 'classname'
 import Arrow2 from '../../../assets/images/mining/arrow-2.png'
 import Arrow2D from '../../../assets/images/mining/arrow-2-d.png'
 
-export default function SwiperCards ({poolsArr}) {
+export default function SwiperCards (props) {
+  const {poolsArr} = props
   const [active, setActive] = useState(0)
-  const [miningDataMap, setMiningDataMap] = useState({})
   const onTab = type => {
     if (type === 'next' && active >= 1) {
       setActive(active - 1 )
@@ -16,9 +16,13 @@ export default function SwiperCards ({poolsArr}) {
       setActive(active + 1 )
     }
   }
-  const getMiningData = async () => {
+  useMemo(() => {
+    const now = new Date().getTime() / 1000
+    if (poolsArr[active].start_at > now) {
+      setActive(1)
+    }
+  }, [])
 
-  }
   return (
     <div className="swiper-cards">
       {
