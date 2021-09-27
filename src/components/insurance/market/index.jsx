@@ -17,6 +17,7 @@ import { Pagination } from 'antd'
 import Loading from '../../loading'
 import Tips from '../../../assets/images/insurance/tips.svg'
 import moment from 'moment'
+import {getGasPrice} from '../../../utils'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const Market = props => {
   const [InsuranceType, setInsuranceType] = useState('Call')
@@ -182,7 +183,8 @@ const Market = props => {
       })
   }
   // 购买保单
-  const handleClickBuyInurance = data => {
+  const handleClickBuyInurance = async data => {
+    const gasPrice = await getGasPrice()
     if (ApproveStatus) {
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(library, OrderABI, OrderAddress)
@@ -208,7 +210,7 @@ const Market = props => {
         }
         BuyContracts.methods
           .buy(AskID, Volume)
-          .send({ from: account })
+          .send({ from: account, gasPrice })
           .on('transactionHash', hash => {
             setOpenWaiting(true)
           })
@@ -232,7 +234,7 @@ const Market = props => {
         '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
       Erc20Contracts.methods
         .approve(OrderAddress, Infinitys)
-        .send({ from: account })
+        .send({ from: account, gasPrice })
         .on('transactionHash', hash => {
           setOpenWaiting(true)
         })

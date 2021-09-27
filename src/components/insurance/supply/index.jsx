@@ -23,6 +23,7 @@ import InfoSvg from '../../../assets/images/insurance/info.svg'
 import ERC20 from '../../../web3/abi/ERC20.json'
 import Tips from '../../../assets/images/insurance/tips.svg'
 import moment from 'moment'
+import {getGasPrice} from '../../../utils'
 
 const { Option } = Select
 const NowTime = parseInt(Date.now() / 1000, 10)
@@ -162,7 +163,7 @@ const Supply = props => {
       })
   }
   // 发布保险
-  const supplyInsurance = () => {
+  const supplyInsurance = async () => {
     const SellContracts = getContract(library, OrderABI, OrderAddress)
     const _private = false
     const _collateral = CurrentInsurance.collateral_address
@@ -186,6 +187,7 @@ const Supply = props => {
       CurrentInsurance.settleToken_decimals
     )
     const volume = toWei(InsuranceVolume, CurrentInsurance.collateral_decimals)
+    const gasPrice = await getGasPrice()
     if (CurrentInsurance.collateral_symbol !== 'MATIC') {
       SellContracts.methods
         .sell(
@@ -198,7 +200,7 @@ const Supply = props => {
           settleToken,
           price
         )
-        .send({ from: account })
+        .send({ from: account, gasPrice })
         .on('transactionHash', hash => {
           setOpenWaiting(true)
         })
@@ -222,6 +224,7 @@ const Supply = props => {
         .send({
           from: account,
           value: volume,
+          gasPrice
         })
         .on('transactionHash', hash => {
           setOpenWaiting(true)
@@ -241,7 +244,7 @@ const Supply = props => {
       supplyInsurance()
     }
   }
-  const handleClickSupply = () => {
+  const handleClickSupply = async () => {
     if (ApproveStatus) {
       setOpenSubmit(true)
     } else {
@@ -251,11 +254,12 @@ const Supply = props => {
         Erc20ABI.abi,
         collateral_address
       )
+      const gasPrice = await getGasPrice()
       const Infinitys =
         '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
       Erc20Contracts.methods
         .approve(OrderAddress, Infinitys)
-        .send({ from: account })
+        .send({ from: account, gasPrice })
         .on('transactionHash', hash => {
           setOpenWaiting(true)
         })

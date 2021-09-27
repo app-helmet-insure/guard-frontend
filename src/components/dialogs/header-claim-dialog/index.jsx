@@ -12,17 +12,18 @@ import { formatAmount, numToWei, splitFormat } from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import PolygonscanClaim from '../../../web3/abi/PolygonscanClaim.json'
 import GuardInsureLogo from '../../../assets/images/guard.insure_logo@2x.png'
+import {getGasPrice} from '../../../utils'
 
-function LineData({ title, value }) {
+function LineData ({ title, value }) {
   return (
-    <div className='rewards_data'>
-      <div className='title'>{title}</div>
-      <div className='value'>{value}</div>
+    <div className="rewards_data">
+      <div className="title">{title}</div>
+      <div className="value">{value}</div>
     </div>
   )
 }
 
-function HeaderChaimDialog({ visible, onClose, intl, pool }) {
+function HeaderChaimDialog ({ visible, onClose, intl, pool }) {
   const { blockHeight } = useContext(VarContext)
   const formatMessage = (id, values = {}) => intl.formatMessage({ id, values })
   const { library, active, account } = useActiveWeb3React()
@@ -33,13 +34,13 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
   useMemo(() => {
     if (blockHeight !== 0) {
       // 静态的 不做任何请求
-      getClaimInfo(pool, account).then((miningPools_) => {
+      getClaimInfo(pool, account).then(miningPools_ => {
         setClaimPools(miningPools_)
       })
     }
   }, [blockHeight, account])
 
-  const onConfirm = (e) => {
+  const onConfirm = async e => {
     if (!active) {
       return
     }
@@ -52,13 +53,14 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
     if (loadFlag) return
     setLoadFlag(true)
     const contract = getContract(library, claimPools.abi, claimPools.address)
-
+    const gasPrice = await getGasPrice()
     contract.methods
       .claim()
       .send({
         from: account,
+        gasPrice
       })
-      .on('transactionHash', (hash) => {})
+      .on('transactionHash', hash => {})
       .on('receipt', (_, receipt) => {
         message.success({
           content: formatMessage('mining_text20'),
@@ -87,47 +89,47 @@ function HeaderChaimDialog({ visible, onClose, intl, pool }) {
       onCancel={onClose}
       centered
       destroyOnClose
-      wrapClassName='header_chain_dialog_wrap stake_chain_dialog_wrap'
+      wrapClassName="header_chain_dialog_wrap stake_chain_dialog_wrap"
     >
-      <img className='guard_insure_logo' src={GuardInsureLogo} alt='' />
+      <img className="guard_insure_logo" src={GuardInsureLogo} alt="" />
       <LineData
         title={claimPools && claimPools.rewards1}
         value={
           claimPools && claimPools.earned
             ? formatNumber(
-                formatAmount(claimPools.earned, claimPools.decimal, 6),
-                {
-                  thousand: ',',
-                  decimal: '.',
-                  precision:
+              formatAmount(claimPools.earned, claimPools.decimal, 6),
+              {
+                thousand: ',',
+                decimal: '.',
+                precision:
                     formatAmount(claimPools.earned) - 0 > 0
                       ? claimPools.splitDigits
                       : 0,
-                }
-              )
+              }
+            )
             : '--'
         }
       />
       <Button
-        type='primary'
-        size='large'
-        className='btn_primary_gray'
+        type="primary"
+        size="large"
+        className="btn_primary_gray"
         loading={loadFlag}
         onClick={onConfirm}
       >
-        <FormattedMessage id='header_claim_dialog_text1' />
+        <FormattedMessage id="header_claim_dialog_text1" />
       </Button>
-      <a className='header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1'>
-        <FormattedMessage id='stake_chain_dialog_text9' />
+      <a className="header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1">
+        <FormattedMessage id="stake_chain_dialog_text9" />
       </a>
-      <a className='header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1 link_tip' 
-          href='https://helmetinsure.medium.com/burning-helmet-%EF%B8%8F-guard-8725e3afacd7' 
-          target='_blank'
-        >
-        <FormattedMessage id='stake_chain_dialog_text10' />
+      <a className="header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1 link_tip"
+        href="https://helmetinsure.medium.com/burning-helmet-%EF%B8%8F-guard-8725e3afacd7"
+        target="_blank"
+      >
+        <FormattedMessage id="stake_chain_dialog_text10" />
       </a>
-      <a className='header_chain_dialog_wrap_tips'>
-        <FormattedMessage id='stake_chain_dialog_text8' />
+      <a className="header_chain_dialog_wrap_tips">
+        <FormattedMessage id="stake_chain_dialog_text8" />
       </a>
     </Modal>
   )
