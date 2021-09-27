@@ -735,7 +735,7 @@ export default [
     networkId: ChainId.MATIC,
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
-    strikeprice: '1.1',
+    strikeprice: '0.38',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
@@ -787,7 +787,7 @@ export default [
     networkId: 137,
     splitDigits: 4,
     cover: 'Put', // Call看涨 Put看跌
-    strikeprice: '0.275',
+    strikeprice: '0.095',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
@@ -832,7 +832,7 @@ export default [
     networkId: 137,
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
-    strikeprice: '1200',
+    strikeprice: '688.3',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
@@ -876,7 +876,7 @@ export default [
     networkId: 137,
     splitDigits: 4,
     cover: 'Put', // Call看涨 Put看跌
-    strikeprice: '300',
+    strikeprice: '172.075',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
@@ -920,7 +920,7 @@ export default [
     networkId: 137,
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
-    strikeprice: '2.8',
+    strikeprice: '2.18',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
@@ -971,7 +971,7 @@ export default [
     networkId: 137,
     splitDigits: 4,
     cover: 'Put', // Call看涨 Put看跌
-    strikeprice: '0.7',
+    strikeprice: '0.545',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
@@ -1015,7 +1015,7 @@ export default [
     networkId: 137,
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
-    strikeprice: '6248',
+    strikeprice: '5724',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
