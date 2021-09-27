@@ -719,7 +719,7 @@ export default [
     },
     settleToken: USDC_ADDRESS,
     settleTokenDecimal: 6,
-    MLP: '0x2aeF01c1744fdAEaecEcdda941976251fb735257', // 质押的资产 stakingToken
+    MLP: '0x9d0474eAD10A8a2E993109561D863e35Bf7B5095', // 质押的资产 stakingToken
     mlpDecimal: 18,
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
     abi: StakingPool,
@@ -771,7 +771,7 @@ export default [
     },
     settleToken: USDC_ADDRESS, // 用哪个来计算，一般都是usdc
     settleTokenDecimal: 6,
-    MLP: '0x46D065e627B0fABb9179ffa9F8a75104B4dfE397', // 质押的资产
+    MLP: '0x78f20EE868AfD86eA77637d12f4CAC030C70A97f', // 质押的资产
     mlpDecimal: 6,
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
     abi: StakingPool,
@@ -816,7 +816,7 @@ export default [
     },
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
-    MLP: '0xd5dc9Acb1CAA449C54C6cf8E449E0a08CaBadDCC', // 质押的资产
+    MLP: '0x5Cfcc3D43727fd56ef0eef7A0d9B9D2a24a86190', // 质押的资产
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${QUICK_ADDRESS}`,
     abi: StakingPool,
     mlpDecimal: 18,
@@ -860,7 +860,7 @@ export default [
     },
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
-    MLP: '0x622a12113f7699D9385E5FAE3c35A502910c8890', // 质押的资产
+    MLP: '0x8a87981F5D90BdDe119c0F394993cf3A08736484', // 质押的资产
     mlpDecimal: 6,
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${USDC_ADDRESS}`,
     abi: StakingPool,
@@ -900,7 +900,7 @@ export default [
     rewards2Address: MATIC_ADDRESS,
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
-    MLP: '0x76C06A374ad8Ce05B57AC043DE7643316772d6A5', // 质押的资产 stakingToken
+    MLP: '0xaCBed2650021f3818304531fA6217B26fcFebAC5', // 质押的资产 stakingToken
     sort: {
       collateral: MATIC_ADDRESS, //  抵押物
       underlying: USDC_ADDRESS, // 标的物
@@ -955,7 +955,7 @@ export default [
     },
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
-    MLP: '0xc74947c65d99aADA1881Ade918FE19a61041c44d', // 质押的资产
+    MLP: '0x127a8d364730f61F070C6a35B689f6e5c1D3EeA6', // 质押的资产
     mlpDecimal: 6,
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
     abi: StakingPool,
@@ -999,7 +999,7 @@ export default [
     },
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
-    MLP: '0x5458F3aeD04F6cDc2E57d374d20F226F84540569', // 质押的资产
+    MLP: '0x47d81F02434Ce113AEd0796ae3bfF03129ebc689', // 质押的资产
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
     abi: StakingPool,
     mlpDecimal: 18,
