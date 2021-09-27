@@ -928,7 +928,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: QUICK_ADDRESS,
     poolType: 3,
-    multiple: '1X',
+    multiple: '0.5X',
     showLptValue: false, // 展示奖励2总价值
     ledLight: true,
     childPools: [ // 用来计算奖励，总奖励相加
@@ -1027,3 +1027,4 @@ export default [
     showLptValue: false // 展示奖励2总价值
   },
 ]
+// 更新 address MLP start_at openDate dueDate strikeprice multiple childPools

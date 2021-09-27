@@ -54,6 +54,7 @@ const MiningCard = props => {
     ERC20.abi,
     miningPools && miningPools.mlpDecimal
   )
+  console.log(miningPools && miningPools.name, miningPools && miningPools.cover, 111, balance)
   const isFinish =
     miningPools &&
     miningPools.dueDate &&

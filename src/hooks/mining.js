@@ -104,6 +104,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
             sameAddress(pool.sort.underlying, pool.settleToken),
             sameAddress(pool.rewards2Address, pool.settleToken),
             pool.mineMountainAddress))
+        console.log(pool.name, pool.cover, 1111111111)
       }
     } else if (pool.poolType === 2) {
       // LP  奖励1 apr
@@ -145,6 +146,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       LPTStakeValue = 0
 
     if (hasApr && pool.poolType === 3) {
+      console.log(pool.name, pool.cover, data)
       if (pool.mdexReward) {
         // sort有奖励2的情况，取值顺序有变
         APR = data[2]
@@ -159,6 +161,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
         balanceOf = data[4]
         allowance = data[5]
         earned2 = data[6]
+        console.log(pool.name, pool.cover, 'balanceOf', balanceOf)
       }
     } else if (hasApr && pool.poolType === 2) {
       // lpt
