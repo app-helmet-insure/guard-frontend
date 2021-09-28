@@ -6,6 +6,7 @@ import Mining from '../pages/mining'
 import MyPolicylicy from '../pages/mypolicy'
 import MySupply from '../pages/mysupply'
 import MySettle from '../pages/mysettle'
+import Ido from '../pages/ido'
 
 export default [
   {
@@ -36,6 +37,11 @@ export default [
   {
     path: '/mysettle',
     component: MySettle,
+    exact: true,
+  },
+  {
+    path: '/ido',
+    component: Ido,
     exact: true,
   },
 ]
