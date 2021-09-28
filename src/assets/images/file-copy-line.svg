@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>file-copy-line</title>
+    <g id="file-copy-line" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <polygon id="路径" points="0 0 12 0 12 12 0 12"></polygon>
+            <path d="M3.5,3 L3.5,1.5 C3.5,1.22385763 3.72385763,1 4,1 L10,1 C10.2761424,1 10.5,1.22385763 10.5,1.5 L10.5,8.5 C10.5,8.77614237 10.2761424,9 10,9 L8.5,9 L8.5,10.5 C8.5,10.776 8.275,11 7.9965,11 L2.0035,11 C1.87032673,11.0007983 1.7423266,10.9484885 1.64782931,10.8546481 C1.55333203,10.7608077 1.50013065,10.6331756 1.5,10.5 L1.5015,3.5 C1.5015,3.224 1.7265,3 2.005,3 L3.5,3 Z M2.5015,4 L2.5,10 L7.5,10 L7.5,4 L2.5015,4 Z M4.5,3 L8.5,3 L8.5,8 L9.5,8 L9.5,2 L4.5,2 L4.5,3 Z" id="形状" fill="#4364E8" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

@@ -2,18 +2,23 @@
   width: 100%;
   &_content {
     margin: 0 auto 20px;
+    padding: 0 50px;
     width: 1650px;
-    display: grid;
+    // display: grid;
+    display: flex;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
-    gap: 0 40px
+    gap: 0 32px;
+    flex-wrap: wrap;
+    align-items: flex-start
   }
 }
 
 @media (min-width: 747px) and (max-width: 1650px) {
   .ido_index {
     &_content {
-      width: 1080px;
+      padding: 0;
+      width: 1180px;
       grid-template-columns: 1fr 1fr;
     }
   }
@@ -22,7 +27,9 @@
   .ido_index {
     padding-bottom: 30px;
     &_content {
+      padding: 0;
       margin: 0 auto;
+      display: block;
       width: 100%;
       grid-template-columns: 1fr;
     }
@@ -32,6 +39,8 @@
   .ido_index {
     padding-bottom: 30px;
     &_content {
+      padding: 0;
+      display: block;
       margin: 0 auto;
       width: 100%;
       grid-template-columns: 1fr;
