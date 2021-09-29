@@ -119,15 +119,15 @@ function HeaderChaimDialog ({ visible, onClose, intl, pool }) {
       >
         <FormattedMessage id="header_claim_dialog_text1" />
       </Button>
-      <a className="header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1">
+      {/* <a className="header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1">
         <FormattedMessage id="stake_chain_dialog_text9" />
-      </a>
-      <a className="header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1 link_tip"
+      </a> */}
+      {/* <a className="header_chain_dialog_wrap_tips header_chain_dialog_wrap_tips1 link_tip"
         href="https://helmetinsure.medium.com/burning-helmet-%EF%B8%8F-guard-8725e3afacd7"
         target="_blank"
       >
         <FormattedMessage id="stake_chain_dialog_text10" />
-      </a>
+      </a> */}
       <a className="header_chain_dialog_wrap_tips">
         <FormattedMessage id="stake_chain_dialog_text8" />
       </a>

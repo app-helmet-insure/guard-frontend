@@ -4,17 +4,21 @@ import './index.less'
 import IdoBanner from '../../components/ido/banner'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import IdoTip from '@/components/ido/tip'
 import IdoCard from '@/components/ido/card'
 
 
-const Ido = props => (
+const Ido = (props) => (
   <div>
     <Header {...props} />
-    <div className="page_box">
-      <div className="ido_index">
+    <div className='page_box'>
+      <div className='ido_index'>
         <IdoBanner />
-        <div className="ido_index_content">
-          {idoPools.map((item, index) => <IdoCard pools={item} key={index} />)}
+        <IdoTip tipContent='IBO_text53' />
+        <div className='ido_index_content'>
+          {idoPools.map((item, index) => (
+            <IdoCard pools={item} key={index} />
+          ))}
         </div>
       </div>
     </div>
