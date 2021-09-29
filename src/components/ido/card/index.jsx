@@ -28,11 +28,7 @@ const IdoCard = props => {
 
   let status = 0 // 0 waiting, 1 ing, 2 end
   let isClaimTime = false
-  let countdown = {
-    h: '-',
-    m: '-',
-    statusTxt: 'IBO_text3',
-  }
+
   let t = 0
   if (now < idoData.startTime) {
     status = 0
@@ -50,16 +46,14 @@ const IdoCard = props => {
       }
     }
   }
-  if (t !== 0) {
-    countdown = {
-      h: Math.floor(t / 3600),
-      m: Math.floor((t % 3600) / 60),
-      statusTxt: {
-        0: 'IBO_text3',
-        1: 'IBO_text4',
-        2: 'IBO_text7'
-      }[status],
-    }
+  const countdown = {
+    h: t !== 0 ? Math.floor(t / 3600) : '-',
+    m: t !== 0 ? Math.floor((t % 3600) / 60) : '-',
+    statusTxt: {
+      0: 'IBO_text3',
+      1: 'IBO_text4',
+      2: 'IBO_text7'
+    }[status],
   }
   useMemo(() => {
     const timer_ = setInterval(() => {
@@ -164,7 +158,7 @@ const IdoCard = props => {
                 <img src={idoData.icon} />
                 <span>{idoData.name}</span>
                 <span
-                  style={{marginLeft: '5px', cursor: 'pointer'}}
+                  style={{ marginLeft: '5px', cursor: 'pointer' }}
                   onClick={() => setIsModalVisible(true)}
                 >
                   <svg
@@ -188,11 +182,11 @@ const IdoCard = props => {
               <p className="ibo_item_title_right">
                 <span className="ibo_item_countdown">
                   {countdown.h}
-                  <FormattedMessage id="IBO_text2"/>/{countdown.m}
-                  <FormattedMessage id="IBO_text1"/>
+                  <FormattedMessage id="IBO_text2" />/{countdown.m}
+                  <FormattedMessage id="IBO_text1" />
                 </span>
                 <span className="ibo_item_status ibo_item_status_ongoing">
-                  <FormattedMessage id={countdown.statusTxt}/>
+                  <FormattedMessage id={countdown.statusTxt} />
                 </span>
               </p>
             </div>
@@ -200,31 +194,31 @@ const IdoCard = props => {
               <div className="finished_style">
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text20"/>
+                    <FormattedMessage id="IBO_text20" />
                   </span>
                   <span className="value">1.0s</span>
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text21"/>
+                    <FormattedMessage id="IBO_text21" />
                   </span>
                   <span className="value">999%</span>
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text22"/>
+                    <FormattedMessage id="IBO_text22" />
                   </span>
                   <span className="value">$999</span>
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text23"/>
+                    <FormattedMessage id="IBO_text23" />
                   </span>
                   <span className="value">999 {idoData.underlying.symbol}</span>
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text24"/>
+                    <FormattedMessage id="IBO_text24" />
                   </span>
                   <span className="value">
                     10,000 {idoData.underlying.symbol}
@@ -236,7 +230,7 @@ const IdoCard = props => {
                 <p className="ibo_item_radio">{idoData.ratio}</p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text8"/>
+                    <FormattedMessage id="IBO_text8" />
                   </span>
                   <span className="value">
                     {new BigNumber(idoData.amount).toFormat()}{' '}
@@ -245,13 +239,13 @@ const IdoCard = props => {
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text9"/>
+                    <FormattedMessage id="IBO_text9" />
                   </span>
                   <span className="value">{idoData.pool_info.maxAccount}</span>
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text10"/>
+                    <FormattedMessage id="IBO_text10" />
                   </span>
                   <span className="value">
                     {(idoData.progress * 100).toFixed(0)}%
@@ -262,17 +256,20 @@ const IdoCard = props => {
                     className="ibo_item_progress_bar"
                     style={{
                       width:
-              idoData.progress > 1
-                ? '100%'
-                : idoData.progress * 100 + '%',
+                        idoData.progress > 1
+                          ? '100%'
+                          : idoData.progress * 100 + '%',
                       display: idoData.progress == 0 && 'none',
                     }}
                   ></i>
                 </a>
-                <div className="block" style={{position: 'relative'}}>
+                <div
+                  className="block"
+                  style={{ position: 'relative', marginTop: '8px' }}
+                >
                   {idoData.purchasedCurrencyOf <= 0 && (
                     <span className="slider-max" onClick={onMax}>
-                      <FormattedMessage id="IBO_text50"/>
+                      <FormattedMessage id="IBO_text50" />
                     </span>
                   )}
 
@@ -294,61 +291,91 @@ const IdoCard = props => {
 
                   <p className="ibo_item_value slider_content">
                     <span className="ibo_item_value_title">
-                      <FormattedMessage id="IBO_text11"/>
+                      <FormattedMessage id="IBO_text11" />
                     </span>
                     <span className="value">
                       {getAvailable()} {idoData.currency.symbol}
                     </span>
                   </p>
-                  <Row style={{position: 'relative'}}>
-                    <Col style={{margin: '0 auto', width: '160px'}}>
+                  <Row>
+                    <Col
+                      style={{ margin: '0 auto', width: '174px', zIndex: 6 }}
+                    >
                       <Slider
-                        min={idoData.pool_info.min_allocation}
-                        max={idoData.pool_info.max_allocation}
+                        min={
+                          idoData.pool_info && idoData.pool_info.min_allocation
+                        }
+                        max={
+                          idoData.pool_info && idoData.pool_info.max_allocation
+                        }
                         onChange={onChange}
                         value={amount}
+                        step={0.1}
                       />
                     </Col>
                     <p className="min_max_value">
                       <span>
-                        <FormattedMessage id="IBO_text12"/>
+                        <FormattedMessage id="IBO_text12" />
                         {idoData.pool_info.min_allocation}
                       </span>
 
                       <span>
-                        <FormattedMessage id="IBO_text13"/>
+                        <FormattedMessage id="IBO_text13" />
                         {idoData.pool_info.max_allocation}
                       </span>
                     </p>
                   </Row>
-
                 </div>
                 {idoData.currency.allowance > 0 ? (
                   <Button
-                    className={status !== 1 || arriveMaxUser || idoData.purchasedCurrencyOf > 0 || loadLoading ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
+                    className={
+                      status !== 1 ||
+                      arriveMaxUser ||
+                      idoData.purchasedCurrencyOf > 0 ||
+                      loadLoading
+                        ? 'ibo_item_btn burn disabled'
+                        : 'ibo_item_btn burn'
+                    }
                     onClick={onBurnBtnClick}
-                    disabled={status !== 1 || arriveMaxUser || idoData.purchasedCurrencyOf > 0 || loadLoading}
+                    disabled={
+                      status !== 1 ||
+                      arriveMaxUser ||
+                      idoData.purchasedCurrencyOf > 0 ||
+                      loadLoading
+                    }
                     loading={burnLoading}
                   >
-                    {arriveMaxUser ? <FormattedMessage id="IBO_text34"/> : <FormattedMessage id="IBO_text51"/>}
+                    {arriveMaxUser ? (
+                      <FormattedMessage id="IBO_text34" />
+                    ) : (
+                      <FormattedMessage id="IBO_text51" />
+                    )}
                   </Button>
                 ) : (
                   <Button
-                    className={status !== 1 || arriveMaxUser || loadLoading ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
+                    className={
+                      status !== 1 || arriveMaxUser || loadLoading
+                        ? 'ibo_item_btn burn disabled'
+                        : 'ibo_item_btn burn'
+                    }
                     disabled={status !== 1 || arriveMaxUser || loadLoading}
                     onClick={onApprove}
                     loading={approvalLoading}
                   >
-                    {arriveMaxUser ? <FormattedMessage id="IBO_text34"/> : <FormattedMessage id="Approve"/>}
+                    {arriveMaxUser ? (
+                      <FormattedMessage id="IBO_text34" />
+                    ) : (
+                      <FormattedMessage id="Approve" />
+                    )}
                   </Button>
-                ) }
+                )}
               </div>
             )}
             <p className="ibo_item_value">
               <span className="ibo_item_value_title">
                 <FormattedMessage
                   id="IBO_text14"
-                  values={{icon: idoData.currency.symbol}}
+                  values={{ icon: idoData.currency.symbol }}
                 />
               </span>
               <span className="value">
@@ -357,7 +384,7 @@ const IdoCard = props => {
             </p>
             <p className="ibo_item_value">
               <span className="ibo_item_value_title">
-                <FormattedMessage id="IBO_text15"/>
+                <FormattedMessage id="IBO_text15" />
               </span>
               <span className="value">
                 {!idoData.settleable || status === 0
@@ -371,7 +398,7 @@ const IdoCard = props => {
             </p>
             <p className="ibo_item_value">
               <span className="ibo_item_value_title">
-                <FormattedMessage id="IBO_text16"/>
+                <FormattedMessage id="IBO_text16" />
               </span>
               <span className="value">
                 {!idoData.settleable
@@ -385,7 +412,7 @@ const IdoCard = props => {
             <p className="claim_detail_btn" onClick={showClaim}>
               <span></span>
               <a>
-                <FormattedMessage id="IBO_text17"/>
+                <FormattedMessage id="IBO_text17" />
               </a>
               <span></span>
             </p>
@@ -395,7 +422,7 @@ const IdoCard = props => {
                   <span className="ibo_item_value_title">
                     <FormattedMessage
                       id="IBO_text18"
-                      values={{icon: idoData.currency.symbol}}
+                      values={{ icon: idoData.currency.symbol }}
                     />
                   </span>
                   <span className="value">
@@ -410,29 +437,37 @@ const IdoCard = props => {
                 </p>
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
-                    <FormattedMessage id="IBO_text19"/>
+                    <FormattedMessage id="IBO_text19" />
                   </span>
                   <span className="value">
                     {idoData.settleable &&
-                    formatAmount(
-                      idoData.settleable.volume,
-                      idoData.underlying.decimal
-                    )}
+                      formatAmount(
+                        idoData.settleable.volume,
+                        idoData.underlying.decimal
+                      )}
                   </span>
                 </p>
                 <Button
-                  className={!(status === 2 && idoData.settleable.volume > 0) || !isClaimTime ? 'ibo_item_btn claim disabled' : 'ibo_item_btn claim'}
-                  disabled={!(status === 2 && idoData.settleable.volume > 0) || !isClaimTime}
+                  className={
+                    !(status === 2 && idoData.settleable.volume > 0) ||
+                    !isClaimTime
+                      ? 'ibo_item_btn claim disabled'
+                      : 'ibo_item_btn claim'
+                  }
+                  disabled={
+                    !(status === 2 && idoData.settleable.volume > 0) ||
+                    !isClaimTime
+                  }
                   onClick={() => onClaim()}
                   loading={claimLoading}
                 >
-                  <FormattedMessage id="IBO_text52"/>
+                  <FormattedMessage id="IBO_text52" />
                 </Button>
                 {idoData.claimTimeTipI18n && (
                   <p className="ibo_item_value">
                     <span className="ibo_item_value_title">
-                      <FormattedMessage id="IBO_text36"/>
-                      <FormattedMessage id={idoData.claimTimeTipI18n}/>
+                      <FormattedMessage id="IBO_text36" />
+                      <FormattedMessage id={idoData.claimTimeTipI18n} />
                     </span>
                   </p>
                 )}
@@ -440,23 +475,29 @@ const IdoCard = props => {
                   <template>
                     <p className="ibo_item_value">
                       <span className="ibo_item_value_title">
-                        <FormattedMessage id="IBO_text48"/>
+                        <FormattedMessage id="IBO_text48" />
                       </span>
                       <span className="value">{idoData.airdrop.allowList}</span>
                     </p>
                     <Button
                       className="ibo_item_btn ibo_item_claim"
-                      disabled={!(now > idoData.airdrop.begin && !idoData.airdrop.withdrawList && idoData.airdrop.allowList > 0)}
+                      disabled={
+                        !(
+                          now > idoData.airdrop.begin &&
+                          !idoData.airdrop.withdrawList &&
+                          idoData.airdrop.allowList > 0
+                        )
+                      }
                       onClick={onAirdrop}
                       loading={airdropLoading}
                     >
-                      <FormattedMessage id="IBO_text52"/>
+                      <FormattedMessage id="IBO_text52" />
                     </Button>
                     <p className="ibo_item_value">
                       <span className="ibo_item_value_title">
                         <FormattedMessage
                           id="IBO_text49"
-                          values={{token: idoData.name}}
+                          values={{ token: idoData.name }}
                         />
                       </span>
                     </p>
@@ -467,39 +508,58 @@ const IdoCard = props => {
           </div>
         </div>
       )}
-      <Modal title="Tip" className="ido-modal" visible={isModalVisible} onOk={() => setIsModalVisible(false)} onCancel={ () => setIsModalVisible(false)}>
-        {
-          idoData.name === 'PRED' && (
-            <div className="tip_box">
-              <p><FormattedMessage id="IBO_text28"/>: <FormattedMessage id="IBO_august"/></p>
-              <p><FormattedMessage id="IBO_text29"/>: Pancakeswap.finance</p>
-              <p>
-                SC: 0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb
-                <i
-                  className="copy"
-                  id="copy_default"
-                  onClick={() => message.success('0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb')}
-                ></i>
-              </p>
-              <p>
-                TG:
-                <a href="T.me/game1networkchat" target="_blank"
-                >T.me/game1networkchat</a
-                >
-              </p>
-              <p>
-                <FormattedMessage id="IBO_text30"/>:
-                <a href="https://game1network.com" target="_blank"
-                >https://game1network.com</a
-                >
-              </p>
-            </div>
-          )
-        }
+      <Modal
+        title="Tip"
+        className="ido-modal"
+        visible={isModalVisible}
+        onOk={() => setIsModalVisible(false)}
+        onCancel={() => setIsModalVisible(false)}
+      >
+        {idoData.name === 'PRED' && (
+          <div className="tip_box">
+            <p>
+              <FormattedMessage id="IBO_text28" />:{' '}
+              <FormattedMessage id="IBO_august" />
+            </p>
+            <p>
+              <FormattedMessage id="IBO_text29" />: Pancakeswap.finance
+            </p>
+            <p>
+              SC: 0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb
+              <i
+                className="copy"
+                id="copy_default"
+                onClick={() =>
+                  message.success('0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb')
+                }
+              ></i>
+            </p>
+            <p>
+              TG:
+              <a href="T.me/game1networkchat" target="_blank">
+                T.me/game1networkchat
+              </a>
+            </p>
+            <p>
+              <FormattedMessage id="IBO_text30" />:
+              <a href="https://game1network.com" target="_blank">
+                https://game1network.com
+              </a>
+            </p>
+          </div>
+        )}
       </Modal>
 
-      <Modal title={<FormattedMessage id="IBO_text33"/>} cancelText={<FormattedMessage id="IBO_text32"/>} okText={<FormattedMessage id="IBO_text31"/>} className="ido-modal" visible={tipModalVisible} onOk={() => onBurn()} onCancel={ () => setTipModalVisible(false)}>
-        <FormattedMessage id="IBO_text27"/>
+      <Modal
+        title={<FormattedMessage id="IBO_text33" />}
+        cancelText={<FormattedMessage id="IBO_text32" />}
+        okText={<FormattedMessage id="IBO_text31" />}
+        className="ido-modal"
+        visible={tipModalVisible}
+        onOk={() => onBurn()}
+        onCancel={() => setTipModalVisible(false)}
+      >
+        <FormattedMessage id="IBO_text27" />
       </Modal>
     </>
   )
