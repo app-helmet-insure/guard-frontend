@@ -5,6 +5,7 @@ import {ChainId} from '../web3/address'
 
 const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 const testNetwork = sessionStorage.getItem('guard_test_chain') && ChainId.LOCALHOST
+
 if (testNetwork) {
   console.log('testNetwork', testNetwork)
 }
