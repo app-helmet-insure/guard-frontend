@@ -3,38 +3,37 @@ import AirAllowListAbi from '../web3/abi/AirAllowList.json'
 import PolyIcon from '../assets/images/ido/poly.png'
 import {ChainId} from '../web3/address'
 
-const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
+const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const idoPools = [
   {
-    name: 'PRED',
-    address: '0x014e21ee729Bfb9b9D60f424Efcc4A72B9Ef9290',
+    name: 'CTT',
+    address: '0xc734Dd822ED6D8e76568f13e0b5f5347bA65801E',
     abi: starterLimitAbi,
-    startTime: '1631617200', // sol->offerBegin
-    endTime: '1631802600', // sol->time
-    claimTime: '1631802600', // sol->timeSettle
+    startTime: '1632891600', // sol->offerBegin
+    endTime: '1632902400', // sol->time
+    claimTime: '1632906000', // sol->timeSettle
     is_coming: false,
     currency: {
-      address: HELMET_ADDRESS,
+      address: GUARD_ADDRESS,
       decimal: 18,
-      symbol: 'HELMET',
+      symbol: 'GUARD',
     },
     icon: PolyIcon,
     underlying: {
-      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
+      address: '0x49F7e4bA2eC8E5844652fBC041cE1183c0B38CFF',
       decimal: 18,
-      symbol: 'PRED',
-      name: 'PRED',
+      symbol: 'CTT',
+      name: 'CTT',
     },
     amount: '1600000',
     pool_info: {
-      min_allocation: 200,
-      max_allocation: 500,
-      min_swap_level: '200 Helmet',
-      maxAccount: 200,
+      min_allocation: 0.1,
+      max_allocation: 0.2,
+      maxAccount: 5,
     },
     progress: 0,
-    ratio: '1 HELMET = 30 PRED',
+    ratio: '1 GUARD = 30 PRED',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '53333333333333332800000',
     totalPurchasedUnderlying: '0',

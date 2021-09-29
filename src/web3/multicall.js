@@ -7,7 +7,7 @@ export const getMultiCallProvider = (provider, chainId) => {
   setMulticallAddress(ChainId.HECO, '0xc9a9F768ebD123A00B52e7A0E590df2e9E998707')
   setMulticallAddress(ChainId.MATIC, '0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507')
   setMulticallAddress(ChainId.BSC, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')
-  setMulticallAddress(ChainId.LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')
+  setMulticallAddress(ChainId.LOCALHOST, '0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507')
   return new Provider(provider, chainId)
 }
 

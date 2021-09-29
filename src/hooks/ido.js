@@ -31,9 +31,12 @@ export const getPoolInfo = (pool, account) => {
     promiseList.push(airdropContract.begin())
   }
   if (pool.currency.is_ht) {
+    // get chain underlying asset
+  } else {
     const currencyContract = new Contract(pool.currency.address, ERC20.abi)
     promiseList.push(currencyContract.allowance(account, pool.address))
     promiseList.push(currencyContract.balanceOf(account))
+
   }
   const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
   return multicallProvider
@@ -152,6 +155,7 @@ export const onApprove_ = async (library, account, contractAddress, poolAddress,
       callback(true)
     })
     .on('error', () => {
+      console.log(1111111111)
       callback(false)
     })
 }

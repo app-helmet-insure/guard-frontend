@@ -74,18 +74,29 @@
       color: #ffffff;
       background: #2A3749;
       border-color: #2a3749;
+      &.disabled{
+        background: #F5F5F5 !important;
+        border-color: #cccccc;
+        color: #cccccc!important;
+      }
     }
   }
   &.disabled{
-    background: #cccccc !important;
+    background: #F5F5F5 !important;
     border-color: #cccccc;
+    color: #cccccc;
   }
 }
 
 .ibo_item_claim {
   &.disabled {
     cursor: default;
-    background: #cccccc !important;
+    border-color: #cccccc;
+    background: #F5F5F5 !important;
+    color: #cccccc;
+    &:hover{
+      border-color: #cccccc!important;
+    }
   }
 }
 
@@ -335,7 +346,7 @@
         cursor: default;
 
         background: #e1e1e1;
-        color: #fff;
+        color: #cccccc;
 
         &:hover {
           background: #e1e1e1;
@@ -354,7 +365,7 @@
       &.disabled {
         cursor: default;
         background: #e1e1e1;
-        color: #fff;
+        color: #cccccc;
 
         &:hover {
           background: #e1e1e1;
@@ -601,7 +612,7 @@
       &.disabled {
         cursor: default;
         background: #e1e1e1;
-        color: #fff;
+        color: #cccccc;
 
         &:hover {
           background: #e1e1e1;

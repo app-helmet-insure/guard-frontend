@@ -89,7 +89,7 @@ const IdoCard = props => {
     setAirdropLoading(true)
     onAirdrop_(library, account, idoData, success => {
       success && message.success('success')
-      this.getData()
+      getData()
       setAirdropLoading(false)
     })
   }
@@ -115,7 +115,7 @@ const IdoCard = props => {
     setApprovalLoading(true)
     onApprove_(library, account, idoData.currency.address, idoData.address,  success => {
       success && message.success('approve success')
-      this.getData()
+      getData()
       setApprovalLoading(false)
     })
   }
@@ -124,7 +124,7 @@ const IdoCard = props => {
     setClaimLoading(true)
     onClaim_(library, account, idoData, success => {
       success && message.success('claim success')
-      this.getData()
+      getData()
       setClaimLoading(false)
     })
   }
@@ -144,7 +144,7 @@ const IdoCard = props => {
     setBurnLoading(true)
     onBurn_(library, account, amount, idoData, success => {
       success && message.success('burn success')
-      this.getData()
+      getData()
       Modal.destroyAll()
       setBurnLoading(false)
     })
@@ -320,18 +320,7 @@ const IdoCard = props => {
                   </Row>
 
                 </div>
-                {idoData.currency.allowance === '0' && (
-                  <Button
-                    className="ibo_item_btn"
-                    disabled={status !== 1 || arriveMaxUser}
-                    onClick={onApprove}
-                    loading={approvalLoading}
-                  >
-                    {arriveMaxUser ? <FormattedMessage id="IBO_text34"/> : <FormattedMessage id="Approve"/>}
-                  </Button>
-                )}
-
-                {idoData.currency.allowance !== '0' && (
+                {idoData.currency.allowance > 0 ? (
                   <Button
                     className={status !== 1 || arriveMaxUser ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
                     onClick={onBurnBtnClick}
@@ -340,7 +329,16 @@ const IdoCard = props => {
                   >
                     {arriveMaxUser ? <FormattedMessage id="IBO_text34"/> : <FormattedMessage id="IBO_text51"/>}
                   </Button>
-                )}
+                ) : (
+                  <Button
+                    className={status !== 1 || arriveMaxUser ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
+                    disabled={status !== 1 || arriveMaxUser}
+                    onClick={onApprove}
+                    loading={approvalLoading}
+                  >
+                    {arriveMaxUser ? <FormattedMessage id="IBO_text34"/> : <FormattedMessage id="Approve"/>}
+                  </Button>
+                ) }
               </div>
             )}
             <p className="ibo_item_value">
@@ -402,7 +400,7 @@ const IdoCard = props => {
                       ? idoData.settleable.amount == '0'
                         ? 0
                         : new BigNumber(
-                          fromWei(this.idoData.settleable.amount)
+                          fromWei(idoData.settleable.amount)
                         ).toFormat(6)
                       : 0}
                   </span>
