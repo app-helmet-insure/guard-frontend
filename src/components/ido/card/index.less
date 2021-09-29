@@ -64,7 +64,7 @@
 .ibo_item_btn {
   background: #2A3749;
   color: #ffffff;
-  &.burn {
+  &.burn, &.claim {
     background: #2A3749;
     border-color: #2a3749;
     &:focus,&:active{
@@ -81,22 +81,19 @@
       }
     }
   }
+  &.claim{
+    background: #4364E8;
+    border-color: #4364E8;
+    &:hover{
+      color: #ffffff;
+      background: #4364E8;
+      border-color: #4364E8;
+    }
+  }
   &.disabled{
     background: #F5F5F5 !important;
     border-color: #cccccc;
     color: #cccccc;
-  }
-}
-
-.ibo_item_claim {
-  &.disabled {
-    cursor: default;
-    border-color: #cccccc;
-    background: #F5F5F5 !important;
-    color: #cccccc;
-    &:hover{
-      border-color: #cccccc!important;
-    }
   }
 }
 

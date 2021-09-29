@@ -26,7 +26,7 @@ export const idoPools = [
       symbol: 'CTT',
       name: 'CTT',
     },
-    amount: '1600000',
+    amount: '1',
     pool_info: {
       min_allocation: 0.1,
       max_allocation: 0.2,
@@ -44,7 +44,7 @@ export const idoPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: ChainId.LOCALHOST,
+    networkId: ChainId.MATIC,
     claimTimeTipI18n: 'IBO_text43',
     light: true
   },

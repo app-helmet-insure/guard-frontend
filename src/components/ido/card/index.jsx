@@ -11,9 +11,6 @@ import './index.less'
 import {getPoolInfo, onAirdrop_, onApprove_, onBurn_, onClaim_} from '../../../hooks/ido'
 import {useWeb3React} from '@web3-react/core'
 
-const { confirm: modalConfirm } = Modal
-
-
 const IdoCard = props => {
   const [idoData, setIdoData] = useState(props.pools)
   const [amount, setAmount] = useState(props.pools.pool_info.min_allocation)
@@ -22,10 +19,12 @@ const IdoCard = props => {
   const [claimLoading, setClaimLoading] = useState(false)
   const [burnLoading, setBurnLoading] = useState(false)
   const [airdropLoading, setAirdropLoading] = useState(false)
+  const [loadLoading, setLoadLoading] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const {account, library} = useWeb3React()
   const [now, setNow] = useState(parseInt(Date.now() / 1000, 10))
   const [tipModalVisible, setTipModalVisible] = useState(false)
+
 
   let status = 0 // 0 waiting, 1 ing, 2 end
   let isClaimTime = false
@@ -74,10 +73,12 @@ const IdoCard = props => {
       getPoolInfo(props.pools, account).then(pool_ => {
         console.log('pool_', pool_)
         setIdoData(pool_)
+        setLoadLoading(false)
       })
     }
   }
   useMemo(() => {
+    setLoadLoading(true)
     getData()
   }, [account])
 
@@ -130,7 +131,9 @@ const IdoCard = props => {
   }
 
   const showClaim = () => {
-    setClaimFlag(!claimFlag)
+    if (!loadLoading) {
+      setClaimFlag(!claimFlag)
+    }
   }
   const onBurnBtnClick = () => {
     if (Number(amount) > 0) {
@@ -193,7 +196,7 @@ const IdoCard = props => {
                 </span>
               </p>
             </div>
-            {status === 2 ? (
+            {status === 2 && false ? (
               <div className="finished_style">
                 <p className="ibo_item_value">
                   <span className="ibo_item_value_title">
@@ -322,17 +325,17 @@ const IdoCard = props => {
                 </div>
                 {idoData.currency.allowance > 0 ? (
                   <Button
-                    className={status !== 1 || arriveMaxUser ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
+                    className={status !== 1 || arriveMaxUser || idoData.purchasedCurrencyOf > 0 || loadLoading ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
                     onClick={onBurnBtnClick}
-                    disabled={status !== 1 || arriveMaxUser}
+                    disabled={status !== 1 || arriveMaxUser || idoData.purchasedCurrencyOf > 0 || loadLoading}
                     loading={burnLoading}
                   >
                     {arriveMaxUser ? <FormattedMessage id="IBO_text34"/> : <FormattedMessage id="IBO_text51"/>}
                   </Button>
                 ) : (
                   <Button
-                    className={status !== 1 || arriveMaxUser ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
-                    disabled={status !== 1 || arriveMaxUser}
+                    className={status !== 1 || arriveMaxUser || loadLoading ? 'ibo_item_btn burn disabled' : 'ibo_item_btn burn'}
+                    disabled={status !== 1 || arriveMaxUser || loadLoading}
                     onClick={onApprove}
                     loading={approvalLoading}
                   >
@@ -418,7 +421,7 @@ const IdoCard = props => {
                   </span>
                 </p>
                 <Button
-                  className="ibo_item_btn ibo_item_claim"
+                  className={!(status === 2 && idoData.settleable.volume > 0) || !isClaimTime ? 'ibo_item_btn claim disabled' : 'ibo_item_btn claim'}
                   disabled={!(status === 2 && idoData.settleable.volume > 0) || !isClaimTime}
                   onClick={() => onClaim()}
                   loading={claimLoading}
@@ -495,7 +498,7 @@ const IdoCard = props => {
         }
       </Modal>
 
-      <Modal title={<FormattedMessage id="IBO_text33"/>} className="ido-modal" visible={tipModalVisible} onOk={() => onBurn()} onCancel={ () => setTipModalVisible(false)}>
+      <Modal title={<FormattedMessage id="IBO_text33"/>} cancelText={<FormattedMessage id="IBO_text32"/>} okText={<FormattedMessage id="IBO_text31"/>} className="ido-modal" visible={tipModalVisible} onOk={() => onBurn()} onCancel={ () => setTipModalVisible(false)}>
         <FormattedMessage id="IBO_text27"/>
       </Modal>
     </>

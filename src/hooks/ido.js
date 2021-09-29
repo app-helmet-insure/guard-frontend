@@ -89,7 +89,7 @@ export const getPoolInfo = (pool, account) => {
       )
         .multipliedBy(new BigNumber(price))
         .div(new BigNumber(fromWei('1', pool.underlying.decimal)))
-
+      console.log('totalPurchasedAmount ', totalPurchasedAmount.toString(), pool.amount, price.toString())
       const totalPurchasedUnderlying = numToWei(
         new BigNumber(totalPurchasedCurrency)
           .dividedBy(new BigNumber(price))
