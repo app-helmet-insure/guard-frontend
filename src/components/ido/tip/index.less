@@ -1,0 +1,55 @@
+.ido_tip {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  min-width: 1180px;
+  margin-top: 14px;
+  padding: 6px 20px;
+  width: 100%;
+  background: rgba(255,184,1,.1);
+  &_box {
+    margin: 0 auto;
+    width: 1180px;
+  }
+  &_content {
+    margin-bottom: 0; 
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffb801;
+  }
+}
+@media (min-width: 1650px) {
+  .ido_tip {
+    .ido_tip_box{
+      width: 1650px;
+      margin: auto;
+      padding: 0 50px;
+    }
+  }
+}
+
+@media (min-width: 359px) and (max-width: 747px) {
+  .ido_tip {
+    padding: 8px 16px 8px 32px;
+    width: 100%;
+    min-width: 100%;
+    &_box {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 359px) {
+  .ido_tip {
+    padding: 8px 16px 8px 26px;
+    width: 100%;
+    min-width: 100%;
+    &_box {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}
