@@ -28,11 +28,7 @@ const IdoCard = props => {
 
   let status = 0 // 0 waiting, 1 ing, 2 end
   let isClaimTime = false
-  let countdown = {
-    h: '-',
-    m: '-',
-    statusTxt: 'IBO_text3',
-  }
+
   let t = 0
   if (now < idoData.startTime) {
     status = 0
@@ -43,6 +39,7 @@ const IdoCard = props => {
       t = idoData.endTime - now
     } else {
       status = 2
+      console.log(11111)
       if (now < idoData.claimTime) {
         t = idoData.claimTime - now
       } else {
@@ -50,17 +47,16 @@ const IdoCard = props => {
       }
     }
   }
-  if (t !== 0) {
-    countdown = {
-      h: Math.floor(t / 3600),
-      m: Math.floor((t % 3600) / 60),
-      statusTxt: {
-        0: 'IBO_text3',
-        1: 'IBO_text4',
-        2: 'IBO_text7'
-      }[status],
-    }
+  const countdown = {
+    h: t !== 0 ? Math.floor(t / 3600) : '-',
+    m: t !== 0 ? Math.floor((t % 3600) / 60) : '-',
+    statusTxt: {
+      0: 'IBO_text3',
+      1: 'IBO_text4',
+      2: 'IBO_text7'
+    }[status],
   }
+  console.log('status', status, t)
   useMemo(() => {
     const timer_ = setInterval(() => {
       setNow(parseInt(Date.now() / 1000, 10))
