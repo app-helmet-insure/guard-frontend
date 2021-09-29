@@ -53,7 +53,7 @@ const networkConf = {
 }
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [ChainId.MATIC],
+  supportedChainIds: [ChainId.MATIC, ChainId.LOCALHOST],
 })
 
 export const changeNetwork = chainId =>

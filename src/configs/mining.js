@@ -928,7 +928,7 @@ export default [
     factoryAbi: QuickSwapFactory,
     quickToken: QUICK_ADDRESS,
     poolType: 3,
-    multiple: '0.5X',
+    multiple: '1X',
     showLptValue: false, // 展示奖励2总价值
     ledLight: true,
     childPools: [ // 用来计算奖励，总奖励相加
