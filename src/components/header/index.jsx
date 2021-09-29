@@ -41,8 +41,8 @@ export const navList = [
     path: '/mining',
   },
   {
-    name: 'IDO',
-    path: '/ido',
+    name: 'IBO',
+    path: '/ibo',
   },
 ]
 

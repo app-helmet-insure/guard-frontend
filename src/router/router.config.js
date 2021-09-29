@@ -40,7 +40,7 @@ export default [
     exact: true,
   },
   {
-    path: '/ido',
+    path: '/ibo',
     component: Ido,
     exact: true,
   },
