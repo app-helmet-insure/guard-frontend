@@ -1,11 +1,9 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
-import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
-import { WAR_USDT_LPT } from '../web3/address'
+import { useContext, useMemo, useState } from 'react'
 import ERC20_ABI from '../web3/abi/ERC20.json'
 import Web3 from 'web3'
 import { formatAmount } from '../utils/format'
 import { VarContext } from '../context'
-import { getWeb3 } from '../web3'
+import {getWeb3, useActiveWeb3React} from '../web3'
 
 export const getContract = (library, abi, address) => {
   const web3 = new Web3(library.provider)
@@ -20,7 +18,7 @@ export const useBalance = (
   owner = null,
 ) => {
   const [balance, setBalance] = useState('0')
-  const { account, library, active } = useWeb3ReactCore()
+  const { account, library, active } = useActiveWeb3React()
   useMemo(() => {
     if (active && address && blockHeight !== 0) {
       owner = !owner ? account : owner
@@ -39,7 +37,7 @@ export const useBalance = (
 
 
 export const useEthBalance = (address = null) => {
-  const { account, active, library } = useWeb3ReactCore()
+  const { account, active, library } = useActiveWeb3React()
   address = !address ? account : address
   const [balance, setBalance] = useState('0')
   const { blockHeight } = useContext(VarContext)

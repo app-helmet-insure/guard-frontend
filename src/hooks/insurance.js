@@ -9,7 +9,6 @@ import {
   Fetcher,
 } from '@dinoswap/quickswap-sdk'
 import { getContract, useActiveWeb3React } from '../web3'
-import { useWeb3React as useWeb3ReactCore } from '@web3-react/core'
 import { formatAmount } from '../utils/format'
 import { ChainId } from '../web3/address'
 import { getHttpWeb3 } from '../web3'
@@ -82,7 +81,7 @@ export const getBalance = (
   chainId_ = ChainId.BSC
 ) => {
   const [balance, setBalance] = useState('0')
-  const { account, library, active } = useWeb3ReactCore()
+  const { account, library, active } = useActiveWeb3React()
   useMemo(() => {
     if (active && address) {
       const WEB3 = getHttpWeb3(chainId_)
