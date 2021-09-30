@@ -14,8 +14,8 @@ const Ido = (props) => (
     <div className='page_box'>
       <div className='ido_index'>
         <IdoBanner />
-        <IdoTip tipContent='IBO_text53' />
         <div className='ido_index_content'>
+          <IdoTip tipContent='IBO_text53' />
           {idoPools.map((item, index) => (
             <IdoCard pools={item} key={index} />
           ))}

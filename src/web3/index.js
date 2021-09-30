@@ -38,15 +38,35 @@ export const getHttpWeb3 = chainId => new Web3(new Web3.providers.HttpProvider(g
 
 export const useActiveWeb3React = () => {
   const context = useWeb3ReactCore()
-  const contextNetwork = useWeb3ReactCore()
-  return context.active ? context : contextNetwork
+  const mockAccount = sessionStorage.getItem('mock_account')
+  if (Web3.utils.isAddress(mockAccount)) {
+    Object.assign(context, {
+      account: mockAccount
+    })
+  }
+  return context
 }
 
-export function useBlockHeight() {
+
+export const useActiveWeb3React_ = () => {
+  const context = useActiveWeb3React()
+  const mockAccount = sessionStorage.getItem('mock_account')
+  console.log('mockAccount', mockAccount)
+  if (Web3.utils.isAddress(mockAccount)) {
+    Object.assign(context, {
+      account: mockAccount
+    })
+    console.log('mock_account', mockAccount)
+  }
+  return context
+}
+
+
+export function useBlockHeight () {
   const { library } = useActiveWeb3React()
   const [blockNumber, setBlockNumber] = useState(0)
 
-  const updateBlockNumber = (blockNumber) => {
+  const updateBlockNumber = blockNumber => {
     setBlockNumber(blockNumber)
   }
 

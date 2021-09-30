@@ -310,7 +310,6 @@ const IdoCard = props => {
                         }
                         onChange={onChange}
                         value={amount}
-                        step={0.1}
                       />
                     </Col>
                     <p className="min_max_value">

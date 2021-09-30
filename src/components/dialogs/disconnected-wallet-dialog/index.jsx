@@ -2,17 +2,15 @@ import React, {useState} from 'react'
 import './index.less'
 import {FormattedMessage} from 'react-intl'
 import {Button, Modal, message} from 'antd'
-import {
-  useWeb3React as useWeb3ReactCore,
-} from '@web3-react/core'
 import {formatAddress} from '../../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import CopyPng from '../../../assets/images/copy.png'
 import SwitchPng from '../../../assets/images/switch.png'
 import ConnectWallDialog from '../connect-wallet-dialog'
+import {useActiveWeb3React} from '../../../web3'
 
 function DisconnectedWalletDialog ({visible, onClose}) {
-  const {account, deactivate} = useWeb3ReactCore()
+  const {account, deactivate} = useActiveWeb3React()
   const [visibleConnectWall, setVisibleConnectWall] = useState(false)
   const onSwitchWallet = () => {
     // onClose()
