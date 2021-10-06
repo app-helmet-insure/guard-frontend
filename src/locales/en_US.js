@@ -205,4 +205,7 @@ export default {
     'Disclaimer — All projects are subject to both high market risk and volatility. Projects from IBO part might witness high risk and Please, do your own research and full due diligence before even considering to invest your funds in any project and please, make your investments very cautiously. GUARD will not be held responsible for any investment losses.',
   IBO_text54: 'IBO: Mini IDO with GUARD burnt.',
   IBO_text55: 'You need to prepare GUARD to get the IBO share.',
+  IBO_text56: 'Oct 07 UTC+8 01:00',
+  IBO_text57: 'Oct 07 UTC+8 13:00',
+  IBO_text58: 'Oct 07 UTC+8 13:25'
 }

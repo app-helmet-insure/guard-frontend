@@ -202,4 +202,7 @@ export default {
     '本板块属于高风险投资区，请谨慎操作，GUAED 团队将不会对您的投资损失负责。',
   IBO_text54: 'IBO: 首次代币销毁发行',
   IBO_text55: '您需准备 GUARD 注入IBO 池子以获得新代币份额。',
+  IBO_text56: '10.07 01:00 UTC+8',
+  IBO_text57: '10.07 13:00 UTC+8',
+  IBO_text58: '10.07 13:25 UTC+8'
 }
