@@ -92,7 +92,7 @@ export const getPoolInfo = (pool, account) => {
         new BigNumber(totalPurchasedCurrency)
           .dividedBy(new BigNumber(price))
           .toFixed(0, 1),
-        pool.currency.decimal
+        pool.underlying.decimal
       )
 
       Object.assign(pool.currency, {
@@ -108,9 +108,9 @@ export const getPoolInfo = (pool, account) => {
           pool.underlying.symbol
         }`,
         progress:
-          new BigNumber(totalPurchasedCurrency)
+          new BigNumber(totalPurchasedUnderlying)
             .div(totalPurchasedAmount)
-            .toFixed(4)
+            .toFixed(6)
             .toString(),
         is_join: purchasedCurrencyOf > 0,
         totalPurchasedCurrency,

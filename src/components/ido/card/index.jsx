@@ -249,7 +249,7 @@ const IdoCard = props => {
                     <FormattedMessage id="IBO_text10"/>
                   </span>
                   <span className="value">
-                    {(idoData.progress * 100).toFixed(0)}%
+                    {(idoData.progress * 100).toFixed(2) * 1}%
                   </span>
                 </p>
                 <a className="ibo_item_progress">

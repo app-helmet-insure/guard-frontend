@@ -10,13 +10,14 @@ import HelmetSvg from '../../assets/images/helmet.svg'
 import {connect} from 'react-redux'
 import {changeLanguage} from '../../redux/actions'
 import {languageConfig} from '../../locales/intl'
+import NewIcon from '../../assets/images/new.svg'
 
-function DrawerMenu({ account, active, chainId, visible, setVisible, connectWalletClick, location, changeLanguage, language, visibleHeaderClaim, setVisibleHeaderClaim}) {
+function DrawerMenu ({ account, active, chainId, visible, setVisible, connectWalletClick, location, changeLanguage, language, visibleHeaderClaim, setVisibleHeaderClaim}) {
   const onClose = () => {
     setVisible(false)
   }
 
-  const goClaim =() => {
+  const goClaim = () => {
     setVisible(false)
     setVisibleHeaderClaim(true)
   }
@@ -42,7 +43,14 @@ function DrawerMenu({ account, active, chainId, visible, setVisible, connectWall
         {
           navList.map(item => (
             <React.Fragment key={item.path}>
-              <Link to={item.path}><h1 className={location.pathname === item.path ? 'active' : ''}>{item.name}</h1></Link>
+              <Link to={item.path}><h1 className={location.pathname === item.path ? 'active' : ''}>
+                <span>{item.name}
+                  {
+                    item.isNew && <img className="is_new_icon" src={NewIcon} alt=""/>
+                  }
+                </span>
+
+              </h1></Link>
               {item.children && item.children.map(cItem => <Link to={cItem.path} key={cItem.path}><p className={location.pathname === cItem.path ? 'active' : ''}>{cItem.name}</p></Link>)}
             </React.Fragment>
           ))
@@ -70,7 +78,7 @@ function DrawerMenu({ account, active, chainId, visible, setVisible, connectWall
           <img src={HelmetSvg} alt=""/>
           <FormattedMessage id="header_text7" values={{name: 'Helmet'}}/>
         </a>
-        <a className='btn header_claim flex_center' onClick={goClaim}><FormattedMessage id='header_claim_dialog_text1' /></a>
+        <a className="btn header_claim flex_center" onClick={goClaim}><FormattedMessage id="header_claim_dialog_text1" /></a>
       </div>
     </Drawer>
   )
