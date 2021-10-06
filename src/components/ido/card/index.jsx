@@ -466,7 +466,7 @@ const IdoCard = props => {
                 {idoData.claimTimeTipI18n && (
                   <p className="ibo_item_value">
                     <span className="ibo_item_value_title">
-                      <FormattedMessage id="IBO_text36"/>
+                      <FormattedMessage id="IBO_text36"/>&nbsp;
                       <FormattedMessage id={idoData.claimTimeTipI18n}/>
                     </span>
                   </p>
