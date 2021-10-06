@@ -100,7 +100,10 @@ export const getPoolInfo = (pool, account) => {
       Object.assign(pool.currency, {
         allowance: currency_allowance,
       })
-      const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
+      const num = new BigNumber(1).div(
+        new BigNumber(price).div(new BigNumber(10).pow(pool.underlying.decimal))
+      ).toFixed(6) * 1
+      console.log('num', num, new BigNumber(price).div(new BigNumber(10).pow(pool.currency.decimal)).toString())
       return Object.assign({}, pool, {
         ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
           pool.underlying.symbol
@@ -130,8 +133,8 @@ export const getPoolInfo = (pool, account) => {
           ...pool.pool_info,
           maxAccount: maxUser,
           curUserCount,
-          min_allocation: fromWei(amtLow, pool.currency.decimal) * 1,
-          max_allocation: fromWei(amtHigh, pool.currency.decimal) * 1,
+          min_allocation: fromWei(amtLow, 18) * 1,
+          max_allocation: fromWei(amtHigh, 18) * 1,
         }
       })
     })
