@@ -35,7 +35,7 @@ export const idoPools = [
     pool_info: {
       min_allocation: 0,
       max_allocation: 5000,
-      maxAccount: 100000,
+      maxAccount: 1000000,
     },
     progress: 0,
     ratio: '1 GUARD = 1.6 pNAUT',
@@ -83,7 +83,7 @@ export const idoPools = [
     pool_info: {
       min_allocation: 0,
       max_allocation: 2000,
-      maxAccount: 100000,
+      maxAccount: 1000000,
     },
     progress: 0,
     ratio: '1 USDC = 8 pNAUT',

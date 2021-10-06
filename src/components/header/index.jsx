@@ -16,6 +16,8 @@ import HeaderChaimDialog from '../dialogs/header-claim-dialog'
 import claim from '../../configs/claim'
 import { VarContext } from '../../context'
 import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
+import cx from 'classname'
+import NewIcon from '../../assets/images/new.svg'
 
 export const navList = [
   {
@@ -43,6 +45,7 @@ export const navList = [
   {
     name: 'IBO',
     path: '/ibo',
+    isNew: true
   },
 ]
 
@@ -112,13 +115,17 @@ function Header (props) {
               <Link to={item.path} className="nav_list_item" key={item.path}>
                 <span
                   className={
-                    props.location.pathname &&
-                    props.location.pathname.indexOf(item.path) === 0
-                      ? 'active'
-                      : ''
+                    cx({
+                      active: props.location.pathname &&
+                        props.location.pathname.indexOf(item.path) === 0,
+                      is_new: item.isNew
+                    })
                   }
                 >
                   {item.name}
+                  {
+                    item.isNew && <img src={NewIcon} className="is_new_icon" alt=""/>
+                  }
                 </span>
               </Link>
             ))}
