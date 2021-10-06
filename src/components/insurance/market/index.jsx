@@ -84,8 +84,7 @@ const Market = props => {
               collateral_address.toLocaleLowerCase() &&
             item.underlying.toLocaleLowerCase() ===
               underlying_address.toLocaleLowerCase() &&
-            item.expiry === expiry + '' &&
-            item.strikePrice === StrkcePrice
+            item.expiry === expiry + ''
         )
         if (FilterList) {
           FilterList.forEach(item => {
@@ -144,10 +143,7 @@ const Market = props => {
                 AllItem.show_volume = Number(AllItem.remain).toFixed(8)
               }
               AllItem.premium = AllItem.remain * AllItem.show_price
-              if (
-                !AllItem.isCancel &&
-                AllItem.price.length <= 40
-              ) {
+              if (!AllItem.isCancel && AllItem.price.length <= 40) {
                 FixListPush.push(AllItem)
               }
             })
