@@ -101,7 +101,7 @@ export const getPoolInfo = (pool, account) => {
           pool.underlying.symbol
         }`,
         progress:
-          new BigNumber(fromWei(totalPurchasedCurrency, pool.underlying.decimal))
+          new BigNumber(fromWei(totalPurchasedCurrency, pool.currency.decimal))
             .div(new BigNumber(pool.amount).div(new BigNumber(num)))
             .toFixed(6)
             .toString(),
