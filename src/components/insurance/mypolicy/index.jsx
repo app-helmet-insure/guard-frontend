@@ -23,6 +23,7 @@ const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
 import './index.less'
 import BigNumber from 'bignumber.js'
 import { Skeleton } from 'antd'
+import {getGasPrice} from '../../../utils'
 
 const MyPolicy = props => {
   const [PolicyList, setPolicyList] = useState([])
@@ -217,12 +218,13 @@ const MyPolicy = props => {
       return
     }
   }
-  const actionWithDraw = data => {
+  const actionWithDraw = async data => {
     setOpenSuccess(false)
+    const gasPrice = await getGasPrice()
     const OrderContracts = getContract(library, OrderABI, OrderAddress)
     OrderContracts.methods
       .exercise(data.bidID)
-      .send({ from: account })
+      .send({ from: account, gasPrice })
       .on('transactionHash', hash => {
         setOpenWaiting(true)
       })
@@ -235,14 +237,15 @@ const MyPolicy = props => {
         setOpenWaiting(false)
       })
   }
-  const actionApproveUnderlying = data => {
+  const actionApproveUnderlying = async data => {
     setOpenSuccess(false)
     const Erc20Contracts = getContract(library, Erc20ABI.abi, data.underlying)
+    const gasPrice = await getGasPrice()
     const Infinitys =
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     Erc20Contracts.methods
       .approve(OrderAddress, Infinitys)
-      .send({ from: account })
+      .send({ from: account, gasPrice })
       .on('transactionHash', hash => {
         setOpenWaiting(true)
       })
@@ -255,13 +258,14 @@ const MyPolicy = props => {
         setOpenWaiting(false)
       })
   }
-  const actionApproveLong = (data, approveFlag) => {
+  const actionApproveLong = async (data, approveFlag) => {
     const Erc20Contracts = getContract(library, Erc20ABI.abi, data.long)
+    const gasPrice = await getGasPrice()
     const Infinitys =
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     Erc20Contracts.methods
       .approve(OrderAddress, Infinitys)
-      .send({ from: account })
+      .send({ from: account, gasPrice })
       .on('transactionHash', hash => {
         setOpenWaiting(true)
       })

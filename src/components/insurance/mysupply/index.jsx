@@ -27,6 +27,7 @@ import ERC20 from '../../../web3/abi/ERC20.json'
 import { getAllowance } from '../../../hooks/wallet'
 import './index.less'
 import moment from 'moment'
+import {getGasPrice} from '../../../utils'
 
 const MySupply = props => {
   const { blockHeight } = useContext(VarContext)
@@ -51,12 +52,15 @@ const MySupply = props => {
   const onStakeClose = () => {
     setOpenStake(false)
   }
-  const CurrentPool =
-    PoolList.filter(
-      pool =>
-        pool.cover === CurrentPolicy.type &&
-        pool.name.toUpperCase() === CurrentPolicy.callToken
-    )[0] || ''
+
+  let CurrentPool = ''
+  for (let i = PoolList.length - 1; i >= 0; i--) {
+    if (PoolList[i].cover === CurrentPolicy.type && PoolList[i].name.toUpperCase() === CurrentPolicy.callToken) {
+      CurrentPool = PoolList[i]
+      break
+    }
+  }
+
   useMemo(() => {
     console.log(CurrentPool)
     if (blockHeight !== 0 && CurrentPool) {
@@ -77,6 +81,7 @@ const MySupply = props => {
     ERC20.abi,
     CurrentPool && CurrentPool.mlpDecimal
   )
+  console.log('ShortBalance', ShortBalance, CurrentPool.MLP)
   const goMining = data => {
     setCurrentPolicy(data)
     setOpenStake(true)
@@ -225,12 +230,13 @@ const MySupply = props => {
     })
   }
   // 撤销订单
-  const handleClickCancelOrder = data => {
+  const handleClickCancelOrder = async data => {
+    const gasPrice = await getGasPrice()
     const AskID = data.askID
     const OrderContracts = getContract(library, OrderABI, OrderAddress)
     OrderContracts.methods
       .cancel(AskID)
-      .send({ from: account })
+      .send({ from: account, gasPrice })
       .on('transactionHash', hash => {
         setOpenWaiting(true)
       })

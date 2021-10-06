@@ -12,6 +12,7 @@ import { formatAmount, numToWei, splitFormat } from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import PolygonscanClaim from '../../../web3/abi/PolygonscanClaim.json'
 import GuardInsureLogo from '../../../assets/images/guard.insure_logo@2x.png'
+import {getGasPrice} from '../../../utils'
 
 function LineData ({ title, value }) {
   return (
@@ -39,7 +40,7 @@ function HeaderChaimDialog ({ visible, onClose, intl, pool }) {
     }
   }, [blockHeight, account])
 
-  const onConfirm = e => {
+  const onConfirm = async e => {
     if (!active) {
       return
     }
@@ -52,11 +53,12 @@ function HeaderChaimDialog ({ visible, onClose, intl, pool }) {
     if (loadFlag) return
     setLoadFlag(true)
     const contract = getContract(library, claimPools.abi, claimPools.address)
-
+    const gasPrice = await getGasPrice()
     contract.methods
       .claim()
       .send({
         from: account,
+        gasPrice
       })
       .on('transactionHash', hash => {})
       .on('receipt', (_, receipt) => {
