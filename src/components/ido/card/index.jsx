@@ -91,7 +91,7 @@ const IdoCard = props => {
   }
   const getAvailable = () => {
     const purchasedCurrencyOf =
-      fromWei(idoData.purchasedCurrencyOf).toFixed(6, 1) * 1
+      fromWei(idoData.purchasedCurrencyOf, idoData.currency.decimal).toFixed(6, 1) * 1
     const balanceOf = idoData.balanceOf || 0
     const remainingLimit = idoData.pool_info.max_allocation - purchasedCurrencyOf
     return Math.min(remainingLimit, balanceOf)
@@ -379,7 +379,7 @@ const IdoCard = props => {
                 />
               </span>
               <span className="value">
-                {fromWei(idoData.purchasedCurrencyOf).toFixed(6, 1) * 1}
+                {fromWei(idoData.purchasedCurrencyOf, idoData.currency.decimal).toFixed(6, 1) * 1}
               </span>
             </p>
             <p className="ibo_item_value">
@@ -389,7 +389,7 @@ const IdoCard = props => {
               <span className="value">
                 {!idoData.settleable || status === 0
                   ? '-'
-                  : fromWei(idoData.settleable.rate)
+                  : fromWei(idoData.settleable.rate, idoData.decimal)
                     .multipliedBy(new BigNumber(100))
                     .toFixed(2, 1)
                     .toString()}
@@ -430,7 +430,7 @@ const IdoCard = props => {
                       ? idoData.settleable.amount == '0'
                         ? 0
                         : new BigNumber(
-                          fromWei(idoData.settleable.amount)
+                          fromWei(idoData.settleable.amount, idoData.currency.decimal)
                         ).toFormat(6)
                       : 0}
                   </span>
