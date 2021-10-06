@@ -83,13 +83,11 @@ export const getPoolInfo = (pool, account) => {
       }
 
       const [completed_, amount, volume, rate] = settleable
-
       const totalPurchasedAmount = new BigNumber(
         fromWei(pool.amount, pool.decimal)
       )
         .multipliedBy(new BigNumber(price))
-        .div(new BigNumber(fromWei('1', pool.underlying.decimal)))
-      console.log('totalPurchasedAmount ', totalPurchasedAmount.toString(), pool.amount, price.toString())
+        .div(new BigNumber(fromWei('1', pool.currency.decimal)))
       const totalPurchasedUnderlying = numToWei(
         new BigNumber(totalPurchasedCurrency)
           .dividedBy(new BigNumber(price))
@@ -101,9 +99,10 @@ export const getPoolInfo = (pool, account) => {
         allowance: currency_allowance,
       })
       const num = new BigNumber(1).div(
-        new BigNumber(price).div(new BigNumber(10).pow(pool.underlying.decimal))
+        new BigNumber(price).div(new BigNumber(10).pow(pool.currency.decimal))
       ).toFixed(6) * 1
-      console.log('num', num, new BigNumber(price).div(new BigNumber(10).pow(pool.currency.decimal)).toString())
+
+
       return Object.assign({}, pool, {
         ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
           pool.underlying.symbol
@@ -117,7 +116,7 @@ export const getPoolInfo = (pool, account) => {
         totalPurchasedCurrency,
         totalPurchasedAmount: totalPurchasedAmount.toString(),
         totalPurchasedUnderlying,
-        balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6),
+        balanceOf: formatAmount(balanceOf, pool.currency.decimal, 6),
         purchasedCurrencyOf,
         totalSettledUnderlying,
         startTime,
@@ -133,8 +132,8 @@ export const getPoolInfo = (pool, account) => {
           ...pool.pool_info,
           maxAccount: maxUser,
           curUserCount,
-          min_allocation: fromWei(amtLow, 18) * 1,
-          max_allocation: fromWei(amtHigh, 18) * 1,
+          min_allocation: fromWei(amtLow, pool.currency.decimal) * 1,
+          max_allocation: fromWei(amtHigh, pool.currency.decimal) * 1,
         }
       })
     })

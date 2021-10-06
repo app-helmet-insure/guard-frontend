@@ -509,7 +509,9 @@ const IdoCard = props => {
         </div>
       )}
       <Modal
-        title="Tip"
+        title={<FormattedMessage id="IBO_text33"/>}
+        cancelText={<FormattedMessage id="IBO_text32"/>}
+        okText={<FormattedMessage id="IBO_text31"/>}
         className="ido-modal"
         visible={isModalVisible}
         onOk={() => setIsModalVisible(false)}
