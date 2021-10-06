@@ -101,15 +101,13 @@ export const getPoolInfo = (pool, account) => {
       const num = new BigNumber(1).div(
         new BigNumber(price).div(new BigNumber(10).pow(pool.currency.decimal))
       ).toFixed(6) * 1
-
-
       return Object.assign({}, pool, {
         ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
           pool.underlying.symbol
         }`,
         progress:
-          new BigNumber(totalPurchasedUnderlying)
-            .div(totalPurchasedAmount)
+          new BigNumber(totalPurchasedCurrency)
+            .div(new BigNumber(totalPurchasedAmount).div(new BigNumber(num)))
             .toFixed(6)
             .toString(),
         is_join: purchasedCurrencyOf > 0,
