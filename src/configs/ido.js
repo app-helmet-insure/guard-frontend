@@ -40,7 +40,6 @@ export const idoPools = [
     progress: 0,
     ratio: '1 GUARD = 1.6 pNAUT',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '100000000000000000000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
@@ -88,7 +87,6 @@ export const idoPools = [
     progress: 0,
     ratio: '1 USDC = 8 pNAUT',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '20000000000000000000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 

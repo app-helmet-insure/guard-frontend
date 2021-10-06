@@ -83,11 +83,6 @@ export const getPoolInfo = (pool, account) => {
       }
 
       const [completed_, amount, volume, rate] = settleable
-      const totalPurchasedAmount = new BigNumber(
-        fromWei(pool.amount, pool.underlying.decimal)
-      )
-        .multipliedBy(new BigNumber(price))
-        .div(new BigNumber(fromWei('1', pool.currency.decimal)))
       const totalPurchasedUnderlying = numToWei(
         new BigNumber(totalPurchasedCurrency)
           .dividedBy(new BigNumber(price))
@@ -106,13 +101,12 @@ export const getPoolInfo = (pool, account) => {
           pool.underlying.symbol
         }`,
         progress:
-          new BigNumber(totalPurchasedCurrency)
-            .div(new BigNumber(totalPurchasedAmount).div(new BigNumber(num)))
+          new BigNumber(fromWei(totalPurchasedCurrency, pool.underlying.decimal))
+            .div(new BigNumber(pool.amount).div(new BigNumber(num)))
             .toFixed(6)
             .toString(),
         is_join: purchasedCurrencyOf > 0,
         totalPurchasedCurrency,
-        totalPurchasedAmount: totalPurchasedAmount.toString(),
         totalPurchasedUnderlying,
         balanceOf: formatAmount(balanceOf, pool.currency.decimal, 6),
         purchasedCurrencyOf,
