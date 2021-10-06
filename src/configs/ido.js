@@ -79,7 +79,7 @@ export const idoPools = [
       symbol: 'pNAUT',
       name: 'pNAUT',
     },
-    amount: '160000',
+    amount: '640000',
     pool_info: {
       min_allocation: 0,
       max_allocation: 2000,
