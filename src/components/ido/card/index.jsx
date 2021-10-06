@@ -5,7 +5,7 @@ import cs from 'classnames'
 import {message, Slider, InputNumber, Row, Col, Modal, Button} from 'antd'
 import {
   formatAmount,
-  fromWei,
+  fromWei, numToWei,
 } from '../../../utils/format'
 import './index.less'
 import {getPoolInfo, onAirdrop_, onApprove_, onBurn_, onClaim_} from '../../../hooks/ido'
@@ -131,7 +131,7 @@ const IdoCard = props => {
     }
   }
   const onBurnBtnClick = () => {
-    if (Number(amount) > 0) {
+    if (Number(amount.toFixed(idoData.currency.decimal)) > 0) {
       setTipModalVisible(true)
     } else {
       message.warn('please enter amount')
@@ -140,7 +140,7 @@ const IdoCard = props => {
   const onBurn = () => {
     setTipModalVisible(false)
     setBurnLoading(true)
-    onBurn_(library, account, amount, idoData, success => {
+    onBurn_(library, account, amount.toFixed(idoData.currency.decimal), idoData, success => {
       success && message.success('burn success')
       getData()
       Modal.destroyAll()
