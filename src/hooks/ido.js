@@ -84,7 +84,7 @@ export const getPoolInfo = (pool, account) => {
 
       const [completed_, amount, volume, rate] = settleable
       const totalPurchasedAmount = new BigNumber(
-        fromWei(pool.amount, pool.currency.decimal)
+        fromWei(pool.amount, pool.underlying.decimal)
       )
         .multipliedBy(new BigNumber(price))
         .div(new BigNumber(fromWei('1', pool.currency.decimal)))
