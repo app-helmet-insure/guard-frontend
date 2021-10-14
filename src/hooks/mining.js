@@ -22,7 +22,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 // lpt的年奖励
-const getVolume = async (miningPools, price) => {
+const getVolume = async (miningPools, price, poolTotalSupply) => {
   const query = gql`
     {
       pairHourDatas(
@@ -53,21 +53,23 @@ const getVolume = async (miningPools, price) => {
 
   const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
   const contract = new Contract(
-    '0x8782772E35e262Ba7f481DDDb015424Fc1aABC62',
+    // '0x8782772E35e262Ba7f481DDDb015424Fc1aABC62',
+    '0xF5c305F9D817a462Fa0eCE578a552C3F05F58b40',
     StakingRewards
   )
-  const rewardRate = await multicallProvider
-    .all([contract.rewardRate()])
+  const [rewardRate, totalSupply] = await multicallProvider
+    .all([contract.rewardRate(), contract.totalSupply()])
     .then(res => {
-      const [rewardRate_] = processResult(res)
-      return rewardRate_
+      const [rewardRate_, totalSupply_] = processResult(res)
+      return [rewardRate_, totalSupply_]
     })
   // quick日产量  (rewardRate * 86400) / 10 ** 18
   const dayVolume =
-    fromWei(new BigNumber(rewardRate).multipliedBy(86400)) * price
+    fromWei(new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply)).multipliedBy(new BigNumber(rewardRate).multipliedBy(86400))) * price
 
   // 手续费 ： thegraph 查询结果 hourlyVolumeUSD 之和  乘以 24 乘以 0.003
-  const fee = volumeTotal.multipliedBy(0.003)
+  // debugger
+  const fee = new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply)).multipliedBy(volumeTotal.multipliedBy(0.003))
   return fee.plus(dayVolume)
 }
 
@@ -171,7 +173,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       earned2 = data[8]
       // 计算奖励2的apr
       // 日产量+手续费
-      const volumeTotal = await getVolume(pool, reserve0Price)
+      const volumeTotal = await getVolume(pool, reserve0Price, totalSupply)
       // 年奖励
       const totalRewardValue = volumeTotal.multipliedBy(new BigNumber(365))
       if (LPTStakeValue === '0') {
