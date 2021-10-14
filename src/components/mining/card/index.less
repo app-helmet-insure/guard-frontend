@@ -6,12 +6,36 @@
   width: 380px;
   //min-width: 380px;
   max-width: 90vw;
-  height: 465px;
+  min-height: 465px;
   background: #fff;
   box-shadow: 10px 10px 40px 0px rgba(237, 237, 240, 0.6);
   border-radius: 5px;
   border: 1px solid #f5f7fb;
   vertical-align: top;
+
+  .mining_card_new {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .warning-tip {
+    position: relative;
+    background: rgba(255, 184, 1, 0.1);
+    font-size: 14px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFB801;
+    line-height: 20px;
+    padding: 4px 4px 4px 35px;
+    img{
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 10px;
+      top: 6px;
+    }
+  }
 
   .card_loading {
     position: absolute;
@@ -22,10 +46,12 @@
     height: 100%;
     background: #ffffff;
     padding: 20px;
+
     .skeleton_top_title {
       flex: 1;
       padding-left: 20px;
     }
+
     .skeleton_apr {
       width: 100%;
       display: flex;
@@ -33,10 +59,12 @@
       padding: 20px 0;
     }
   }
+
   &_title {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     img {
       display: inline-block;
       margin-right: 12px;
@@ -44,11 +72,13 @@
       height: 60px;
     }
   }
+
   &_title_text {
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
     text-align: right;
+
     .Call_cover {
       display: inline-block;
       // padding-right: 12px;
@@ -60,6 +90,7 @@
       // background: #f7f7fa;
       border-radius: 5px;
     }
+
     .Call_cover_logo {
       display: inline-block;
       width: 24px;
@@ -69,6 +100,7 @@
       background-size: 100% 100%;
       vertical-align: middle;
     }
+
     .Put_cover {
       display: inline-block;
       // padding-right: 12px;
@@ -80,6 +112,7 @@
       // background: #f7f7fa;
       border-radius: 5px;
     }
+
     .Put_cover_logo {
       display: inline-block;
       width: 24px;
@@ -89,6 +122,7 @@
       background-size: 100% 100%;
       vertical-align: middle;
     }
+
     .title_text {
       margin-bottom: 8px;
       font-size: 20px;
@@ -97,6 +131,7 @@
       color: #2a3749;
       line-height: 20px;
     }
+
     .multiple {
       display: inline-block;
       padding: 0 8px;
@@ -108,6 +143,7 @@
       background-color: #4364E8;
       border-radius: 12px;
     }
+
     .multiple_box {
       display: flex;
       justify-content: flex-end;
@@ -115,6 +151,7 @@
       text-align: right;
       margin-top: 8px;
     }
+
     .core {
       display: inline-block;
       margin-right: 4px;
@@ -126,23 +163,27 @@
       font-weight: 500;
       color: #4364E8;
       border: 1px solid #4364E8;
+
       svg {
         fill: #4364E8;
         vertical-align: text-bottom;
       }
     }
   }
+
   &_apy {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
   }
+
   &_apy_val {
     display: flex;
     flex-direction: column;
     // align-items: center;
     margin-bottom: 0;
+
     span {
       display: inline-block;
       font-size: 14px;
@@ -150,14 +191,17 @@
       color: #919aa6;
       line-height: 14px;
     }
+
     .value {
       margin-top: 10px;
       color: #2a3749;
     }
+
     &:last-child {
       text-align: right;
     }
   }
+
   &_content {
     margin: 12px auto 10px;
     padding: 10px 12px 12px;
@@ -165,14 +209,17 @@
     background: #f7f7fa;
     border-radius: 5px;
   }
+
   &_content_val {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 12px 0 0;
+
     &:first-child {
       margin: 0;
     }
+
     span {
       color: #2a3749;
       font-size: 14px;
@@ -180,11 +227,13 @@
       line-height: 14px;
     }
   }
+
   &_content_rewards {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+
   &_content_rewards_val {
     display: flex;
     flex-direction: column;
@@ -193,11 +242,13 @@
       line-height: 20px;
     }
   }
+
   &_content_icon {
     display: inline-block;
     width: auto;
     height: 22px;
   }
+
   .buy_link {
     padding-bottom: 10px;
     color: #4364e8;
@@ -206,6 +257,7 @@
     font-weight: bold;
     text-decoration: underline;
   }
+
   &_btn {
     display: flex;
     justify-content: center;
@@ -219,11 +271,13 @@
     color: #fff;
     background: #4364e8;
     border-radius: 5px;
+
     &:hover {
       color: #fff;
       background: #3050d0;
     }
   }
+
   &_claim_btn {
     display: flex;
     justify-content: center;
@@ -237,11 +291,13 @@
     color: #fff;
     background: #4364e8;
     border-radius: 5px;
+
     &:hover {
       color: #fff;
       background: #3050d0;
     }
   }
+
   .countdown_time_128 {
     padding: 4px 6px;
     background-color: #f7f7fa;
@@ -271,8 +327,10 @@
     min-height: 484px;
   }
 }
+
 .ledLight {
   z-index: 1;
+
   &::before {
     position: absolute;
     top: 0;
@@ -284,6 +342,7 @@
     border-radius: 10px;
     background: #fff;
   }
+
   &::after {
     filter: blur(8px);
     position: absolute;
@@ -295,20 +354,18 @@
     bottom: -5px;
     left: -5px;
     z-index: -2;
-    background: linear-gradient(
-      45deg,
-      red,
-      #ffaa2b 10%,
-      #f3ff45 20%,
-      #84ff7f 30%,
-      #7bfdfb 40%,
-      #5ee7fc 50%,
-      #7fbbff 60%,
-      #af88ff 70%,
-      #d973fd 80%,
-      #ff6fec 90%,
-      red
-    );
+    background: linear-gradient(45deg,
+    red,
+    #ffaa2b 10%,
+    #f3ff45 20%,
+    #84ff7f 30%,
+    #7bfdfb 40%,
+    #5ee7fc 50%,
+    #7fbbff 60%,
+    #af88ff 70%,
+    #d973fd 80%,
+    #ff6fec 90%,
+    red);
     background-position-x: left;
     background-position-y: top;
     background-size: 300% 300%;
@@ -316,12 +373,12 @@
     background-origin: initial;
     background-clip: initial;
     background-color: initial;
-    animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none
-      running;
+    animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none running;
     border-radius: 10px;
     animation: animation_bg 2s linear 0s infinite normal none running;
   }
 }
+
 @keyframes animation_bg {
   0% {
     background-position: 0 50%;

@@ -174,7 +174,11 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       const volumeTotal = await getVolume(pool, reserve0Price)
       // 年奖励
       const totalRewardValue = volumeTotal.multipliedBy(new BigNumber(365))
-      APR2 = toWei(String(totalRewardValue / LPTStakeValue))
+      if (LPTStakeValue === '0') {
+        APR2 = 0
+      } else {
+        APR2 = toWei(String(totalRewardValue / LPTStakeValue))
+      }
     } else {
       earned  = data[2]
       balanceOf = data[3]

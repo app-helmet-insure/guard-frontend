@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mining_1920" transform="translate(-200.000000, -319.000000)">
+            <g id="编组-3" transform="translate(200.000000, 319.000000)">
+                <path d="M10,0 L44,0 L44,0 L0,44 L0,10 C-6.76353751e-16,4.4771525 4.4771525,1.01453063e-15 10,0 Z" id="矩形" fill="#EF6E45"></path>
+                <text id="NEW" transform="translate(15.939340, 15.767767) rotate(-45.000000) translate(-15.939340, -15.767767) " font-family="IBMPlexSans-SemiBold, IBM Plex Sans SemiBold" font-size="12" font-weight="500" fill="#FFFFFF">
+                    <tspan x="1.93933983" y="20.267767">NEW</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
