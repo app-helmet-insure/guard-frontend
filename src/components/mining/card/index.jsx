@@ -142,7 +142,8 @@ const MiningCard = props => {
           cx({
             mining_card: true,
             ledLight: miningPools.ledLight && !isEnd && isStarted,
-            custom_height1: miningPools.title === 'Guard-USDC LPT Pool' && miningPools.warningTipLocal
+            custom_height1: miningPools.title === 'Guard-USDC LPT Pool' && miningPools.warningTipLocal,
+            custom_height2: miningPools.title === 'Guard-USDC LPT Pool' && !miningPools.warningTipLocal
           })
         }
       >
@@ -315,7 +316,7 @@ const MiningCard = props => {
           className="mining_card_content mining_card_content_rewards"
           style={{ padding: '6px 12px' }}
         >
-          <p className="mining_card_content_val mining_card_content_rewards_val">
+          <div className="mining_card_content_val mining_card_content_rewards_val">
             <div>
               <FormattedMessage
                 id="mining_text13"
@@ -351,7 +352,7 @@ const MiningCard = props => {
                   : '--'}
               </div>
             )}
-          </p>
+          </div>
           {isStarted &&
             (miningPools.earned - 0 > 0 || miningPools.earned2 - 0 > 0) && (
             <a
