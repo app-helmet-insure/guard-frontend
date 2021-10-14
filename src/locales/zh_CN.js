@@ -27,6 +27,7 @@ export default {
   mining_text25: '从 {name} 获取 {b}',
   mining_text26: 'Core',
   mining_text27: '总抵押价值',
+  mining_text28: '由于 Quickswap 的近期调整, 该池奖励已经停止, 请将 LPT 抵押到新 GUARD-USDC LPT 池领取奖励',
 
   DayM: '天',
   HourM: '时',

@@ -13,8 +13,12 @@ const Mining = props => {
     // 分类
     const map = {}
     for (let i = 0; i < mining.length; i++) {
-      if (!map[mining[i].title + mining[i].cover]) {
-        map[mining[i].title + mining[i].cover] = [mining[i]]
+      if (!map[mining[i].title + mining[i].cover] || mining[i].unstack) {
+        if (mining[i].unstack) {
+          map[mining[i].title + mining[i].cover + i] = [mining[i]]
+        } else {
+          map[mining[i].title + mining[i].cover] = [mining[i]]
+        }
       } else {
         map[mining[i].title + mining[i].cover].push(mining[i])
       }

@@ -27,6 +27,8 @@ export default {
   mining_text25: 'From {name} get {b}',
   mining_text26: 'Core',
   mining_text27: 'Total Stake Value',
+  mining_text28: 'Due to the adjustment of Quickswap, this pool has ended. You could re-stake your LPT in the new pool to get GUARD + dQUICK rewards.',
+
   DayM: 'd',
   HourM: 'h',
   MinM: 'm',

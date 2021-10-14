@@ -15,8 +15,56 @@ const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
 const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 const QUICK_ADDRESS = '0x831753DD7087CaC61aB5644b308642cc1c33Dc13'
+const DQUICK_ADDRESS = '0xf28164a485b0b2c90639e47b0f377b4a438a16b1'
 const WETH_ADDRESS = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
-export default [
+
+export default  [
+  {
+    title: 'Guard-USDC LPT Pool',
+    name: 'Guard',
+    icon: GuardShortSvg,
+    rewardIcon: GuardQuickRewardSvg,
+    shortToken: 'ETH',
+    rewards1: 'GUARD',
+    rewards2: 'DQUICK',
+    address: '0x1dbdfea5f5cfb066ec5a74d3e8b9324cd2717c43',
+    rewards1Address: GUARD_ADDRESS,
+    rewards2Address: DQUICK_ADDRESS,
+    reserve0: USDC_ADDRESS, // lpt的其中一个
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0xD2EeeEdfcAF1457F7BC9cbA28d5316F73BB83b49', // 质押的资产
+    byLink: `https://quickswap.exchange/#/add/${GUARD_ADDRESS}/${USDC_ADDRESS}`,
+    byLinkName: 'Guard-USDC LPT',
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 1628092800,
+    openDate: 1628092800,
+    time: '',
+    dueDate: '',
+    earnName: 'APR',
+    rewards: 'Guard-USDC LPT Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: true, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 8,
+    cover: '', // Call看涨 Put看跌 空不展示
+    strikeprice: '4288', // 翻倍或者腰斩价
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 2,
+    ledLight: true, // 呼吸灯
+    multiple: '8.5X', // 倍数
+    core: true, // 星标
+    showLptValue: true, // 展示奖励2总价值
+    isNew: true,
+    unstack: true, // 不堆叠
+  },
   {
     title: 'Guard-USDC LPT Pool',
     name: 'Guard',
@@ -59,7 +107,9 @@ export default [
     ledLight: true, // 呼吸灯
     multiple: '8.5X', // 倍数
     core: true, // 星标
-    showLptValue: true // 展示奖励2总价值
+    showLptValue: true, // 展示奖励2总价值
+    unstack: true, // 不堆叠
+    warningTipLocal: 'mining_text28'
   },
   {
     title: 'Guard Short Token Pool',

@@ -17,7 +17,8 @@ import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
 import { VarContext } from '../../../context'
 import { useActiveWeb3React } from '../../../web3'
-import GuardLogoSvg from '../../../assets/images/mining/pool/GUARD.png'
+import NewSvg from '../../../assets/images/mining/new.svg'
+import WarningTipIcon from '../../../assets/images/mining/warning-tip.png'
 import { Button, Skeleton, Space } from 'antd'
 
 const MiningCard = props => {
@@ -140,6 +141,7 @@ const MiningCard = props => {
           miningPools.ledLight && !isEnd && isStarted ? 'ledLight mining_card' : 'mining_card'
         }
       >
+        {miningPools.isNew && <img src={NewSvg} className="mining_card_new" alt=""/>}
         <div className="mining_card_title">
           <img src={miningPools.icon} />
           <p className="mining_card_title_text">
@@ -355,6 +357,14 @@ const MiningCard = props => {
             </a>
           )}
         </div>
+        {
+          miningPools.warningTipLocal && (
+            <div className="warning-tip">
+              <img src={WarningTipIcon} alt=""/>
+              <FormattedMessage id={miningPools.warningTipLocal}/>
+            </div>
+          )
+        }
       </div>
       <StakeChaimDialog
         visible={visibleStakePopup}
