@@ -87,7 +87,7 @@ export default  [
     start_at: 1628092800,
     openDate: 1628092800,
     time: '',
-    dueDate: '',
+    dueDate: '1634227200',
     earnName: 'APR',
     rewards: 'Guard-USDC LPT Token',
     decimal: 18,
