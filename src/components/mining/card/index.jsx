@@ -20,6 +20,7 @@ import { useActiveWeb3React } from '../../../web3'
 import NewSvg from '../../../assets/images/mining/new.svg'
 import WarningTipIcon from '../../../assets/images/mining/warning-tip.png'
 import { Button, Skeleton, Space } from 'antd'
+import cx from 'classname'
 
 const MiningCard = props => {
   const { blockHeight } = useContext(VarContext)
@@ -138,7 +139,11 @@ const MiningCard = props => {
       <div
         style={cStyle}
         className={
-          miningPools.ledLight && !isEnd && isStarted ? 'ledLight mining_card' : 'mining_card'
+          cx({
+            mining_card: true,
+            ledLight: miningPools.ledLight && !isEnd && isStarted,
+            custom_height1: miningPools.title === 'Guard-USDC LPT Pool' && miningPools.warningTipLocal
+          })
         }
       >
         {miningPools.isNew && <img src={NewSvg} className="mining_card_new" alt=""/>}
@@ -311,7 +316,7 @@ const MiningCard = props => {
           style={{ padding: '6px 12px' }}
         >
           <p className="mining_card_content_val mining_card_content_rewards_val">
-            <span>
+            <div>
               <FormattedMessage
                 id="mining_text13"
                 values={{ coin: miningPools.rewards1 }}
@@ -329,9 +334,9 @@ const MiningCard = props => {
                   }
                 )
                 : '--'}
-            </span>
+            </div>
             {miningPools.rewards2 && (
-              <span>
+              <div>
                 <FormattedMessage
                   id="mining_text13"
                   values={{ coin: miningPools.rewards2 }}
@@ -344,7 +349,7 @@ const MiningCard = props => {
                       : 0
                   )
                   : '--'}
-              </span>
+              </div>
             )}
           </p>
           {isStarted &&
