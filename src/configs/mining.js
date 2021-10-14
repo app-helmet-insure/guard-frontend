@@ -105,8 +105,8 @@ export default  [
     quickToken: QUICK_ADDRESS,
     poolType: 2,
     ledLight: false, // 呼吸灯
-    multiple: '8.5X', // 倍数
-    core: true, // 星标
+    multiple: '', // 倍数
+    core: false, // 星标
     showLptValue: true, // 展示奖励2总价值
     unstack: true, // 不堆叠
     warningTipLocal: 'mining_text28'
