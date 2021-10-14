@@ -26,7 +26,7 @@ export default  [
     rewardIcon: GuardQuickRewardSvg,
     shortToken: 'ETH',
     rewards1: 'GUARD',
-    rewards2: 'DQUICK',
+    rewards2: 'dQUICK',
     address: '0x1dbdfea5f5cfb066ec5a74d3e8b9324cd2717c43',
     rewards1Address: GUARD_ADDRESS,
     rewards2Address: DQUICK_ADDRESS,
@@ -59,7 +59,7 @@ export default  [
     quickToken: QUICK_ADDRESS,
     poolType: 2,
     ledLight: true, // 呼吸灯
-    multiple: '8.5X', // 倍数
+    multiple: '9X', // 倍数
     core: true, // 星标
     showLptValue: true, // 展示奖励2总价值
     isNew: true,
@@ -104,7 +104,7 @@ export default  [
     factoryAbi: QuickSwapFactory,
     quickToken: QUICK_ADDRESS,
     poolType: 2,
-    ledLight: true, // 呼吸灯
+    ledLight: false, // 呼吸灯
     multiple: '8.5X', // 倍数
     core: true, // 星标
     showLptValue: true, // 展示奖励2总价值
