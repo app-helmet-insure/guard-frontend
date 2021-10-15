@@ -162,7 +162,9 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       }
     } else if (pool.poolType === 2) {
       // lpt
-      APR = data[2]
+      if (hasApr) {
+        APR = data[2]
+      }
       const reserve0Price = fromWei(data[3][0], data[3][1]).toString()
       LPTStakeValue = formatAmount(data[4], pool.settleTokenDecimal, 2)
       earned  = data[5]
@@ -174,7 +176,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       const volumeTotal = await getVolume(pool, reserve0Price, totalSupply)
       // 年奖励
       const totalRewardValue = volumeTotal.multipliedBy(new BigNumber(365))
-      if (LPTStakeValue === '0') {
+      if (LPTStakeValue === '0' || !hasApr) {
         APR2 = 0
       } else {
         APR2 = toWei(String(totalRewardValue / LPTStakeValue))
