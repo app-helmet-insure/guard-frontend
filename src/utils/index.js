@@ -1,7 +1,6 @@
 
 import {getHttpWeb3} from '../web3'
 import {ChainId} from '../web3/address'
-import BigNumber from 'bignumber.js'
 import axios from 'axios'
 
 export const formatAddress = (address, left = 4, right = 4) => {
@@ -21,5 +20,5 @@ export const getGasPrice = async () => {
   // console.log('gasFee1', gasFee1, new BigNumber(gasFee1).multipliedBy(1.5).toFixed(0).toString())
   console.log('gasFee', gasFee, web3.utils.toWei(String(gasFee), 'gwei'))
 
-  return new BigNumber(web3.utils.toWei(String(gasFee), 'gwei')).multipliedBy(1.5).toFixed(0).toString()
+  return web3.utils.toWei(String(gasFee), 'gwei')
 }
