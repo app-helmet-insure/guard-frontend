@@ -93,9 +93,11 @@ export const getPoolInfo = (pool, account) => {
       Object.assign(pool.currency, {
         allowance: currency_allowance,
       })
+      console.log('price', price)
       const num = new BigNumber(1).div(
-        new BigNumber(price).div(new BigNumber(10).pow(18 + 18 - pool.underlying.decimal))
+        new BigNumber(price).div(new BigNumber(10).pow(18 + pool.currency.decimal - pool.underlying.decimal))
       ).toFixed(6) * 1
+      console.log('num', num)
       return Object.assign({}, pool, {
         ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
           pool.underlying.symbol
