@@ -25,28 +25,28 @@ export const InsuranceTypeList = [
     InsuranceSymbol: 'GUARD',
     PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
     Logo: GuardLogoSvg,
-    Expiry: moment(new Date(1635264000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1637942400 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Guard',
   },
   {
     InsuranceSymbol: 'MATIC',
     PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
     Logo: MaticLogoSvg,
-    Expiry: moment(new Date(1635264000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1637942400 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Matic',
   },
   {
     InsuranceSymbol: 'QUICK',
     PairUSDC: '0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb',
     Logo: QuickLogoSvg,
-    Expiry: moment(new Date(1635264000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1637942400 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Quick',
   },
   {
     InsuranceSymbol: 'ETH',
     PairUSDC: '0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d',
     Logo: ETHLogoSvg,
-    Expiry: moment(new Date(1635264000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1637942400 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'ETH',
   },
 ]
@@ -83,7 +83,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.07',
       strikeprice_decimals: 'tether',
       lastprice: '0.14',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     {
@@ -106,7 +106,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.28',
       strikeprice_decimals: 'mwei',
       lastprice: '0.14',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     // MATIC
@@ -130,7 +130,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.93',
       strikeprice_decimals: 'tether',
       lastprice: '1.87',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     {
@@ -153,7 +153,7 @@ export const getCurrentInsurance = ({
       strikeprice: '3.74',
       strikeprice_decimals: 'mwei',
       lastprice: '1.87',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     // QUICK
@@ -177,7 +177,7 @@ export const getCurrentInsurance = ({
       strikeprice: '215',
       strikeprice_decimals: 'tether',
       lastprice: '430',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     {
@@ -200,7 +200,7 @@ export const getCurrentInsurance = ({
       strikeprice: '860',
       strikeprice_decimals: 'mwei',
       lastprice: '430',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     // ETH
@@ -224,7 +224,7 @@ export const getCurrentInsurance = ({
       strikeprice: '2000',
       strikeprice_decimals: 'tether',
       lastprice: '4000',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
     {
@@ -247,7 +247,7 @@ export const getCurrentInsurance = ({
       strikeprice: '8000',
       strikeprice_decimals: 'mwei',
       lastprice: '4000',
-      expiry: 1635264000,
+      expiry: 1637942400,
       status: true,
     },
   ]
