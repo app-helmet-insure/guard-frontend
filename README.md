@@ -1,4 +1,4 @@
-#Guard Insure
+# Guard Insure
 Crypto-assets insurance trading platform on MATIC.
 
 - Website: [guard.insure](https://guard.insure)
