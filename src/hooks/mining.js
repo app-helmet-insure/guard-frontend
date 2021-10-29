@@ -86,41 +86,39 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
   const now = new Date().getTime() / 1000
   const hasApr = pool.dueDate > now || !pool.dueDate
   // 还没结束，算apr
-  if (hasApr) {
-    if (pool.poolType === 3) {
-      // sort
+  if (hasApr && pool.poolType === 3) {
+    // sort
+    promise_list.push(
+      calc_contract.getShortApr(
+        pool.address,
+        sameAddress(pool.sort.collateral, pool.settleToken),
+        sameAddress(pool.sort.underlying, pool.settleToken),
+        sameAddress(pool.rewards1Address, pool.settleToken),
+        pool.mineMountainAddress))
+
+    // 有奖励2,取子池子的总量,【目前只有一个子池】
+    if (pool.mdexReward && pool.childPools) {
       promise_list.push(
         calc_contract.getShortApr(
-          pool.address,
+          pool.childPools[0].address,
           sameAddress(pool.sort.collateral, pool.settleToken),
           sameAddress(pool.sort.underlying, pool.settleToken),
-          sameAddress(pool.rewards1Address, pool.settleToken),
+          sameAddress(pool.rewards2Address, pool.settleToken),
           pool.mineMountainAddress))
-
-      // 有奖励2,取子池子的总量,【目前只有一个子池】
-      if (pool.mdexReward && pool.childPools) {
-        promise_list.push(
-          calc_contract.getShortApr(
-            pool.childPools[0].address,
-            sameAddress(pool.sort.collateral, pool.settleToken),
-            sameAddress(pool.sort.underlying, pool.settleToken),
-            sameAddress(pool.rewards2Address, pool.settleToken),
-            pool.mineMountainAddress))
-      }
-    } else if (pool.poolType === 2) {
-      // LP  奖励1 apr
-      promise_list.push(
-        calc_contract.getLPTApr(
-          pool.address,
-          sameAddress(pool.reserve0, pool.settleToken),
-          sameAddress(pool.rewards1Address, pool.settleToken),
-          pool.mineMountainAddress))
-
-      // 获取lp reserve0的价格
-      promise_list.push(calc_contract.getPrice(sameAddress(pool.reserve0, pool.settleToken)))
-      // 获取lpt的总抵押价值
-      promise_list.push(calc_contract.getLPTStakeValue(pool.address, sameAddress(pool.reserve0, pool.settleToken)))
     }
+  } else if (pool.poolType === 2) {
+    // LP  奖励1 apr
+    promise_list.push(
+      calc_contract.getLPTApr(
+        pool.address,
+        sameAddress(pool.reserve0, pool.settleToken),
+        sameAddress(pool.rewards1Address, pool.settleToken),
+        pool.mineMountainAddress))
+
+    // 获取lp reserve0的价格
+    promise_list.push(calc_contract.getPrice(sameAddress(pool.reserve0, pool.settleToken)))
+    // 获取lpt的总抵押价值
+    promise_list.push(calc_contract.getLPTStakeValue(pool.address, sameAddress(pool.reserve0, pool.settleToken)))
   }
 
   if (account) {
@@ -162,9 +160,11 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
         allowance = data[5]
         earned2 = data[6]
       }
-    } else if (hasApr && pool.poolType === 2) {
+    } else if (pool.poolType === 2) {
       // lpt
-      APR = data[2]
+      if (hasApr) {
+        APR = data[2]
+      }
       const reserve0Price = fromWei(data[3][0], data[3][1]).toString()
       LPTStakeValue = formatAmount(data[4], pool.settleTokenDecimal, 2)
       earned  = data[5]
@@ -176,7 +176,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       const volumeTotal = await getVolume(pool, reserve0Price, totalSupply)
       // 年奖励
       const totalRewardValue = volumeTotal.multipliedBy(new BigNumber(365))
-      if (LPTStakeValue === '0') {
+      if (LPTStakeValue === '0' || !hasApr) {
         APR2 = 0
       } else {
         APR2 = toWei(String(totalRewardValue / LPTStakeValue))
