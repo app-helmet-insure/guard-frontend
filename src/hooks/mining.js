@@ -179,7 +179,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       if (LPTStakeValue === '0' || !hasApr) {
         APR2 = 0
       } else {
-        APR2 = toWei(String(totalRewardValue / LPTStakeValue))
+        APR2 = toWei(String((totalRewardValue / LPTStakeValue).toFixed(18)))
       }
     } else {
       earned  = data[2]
