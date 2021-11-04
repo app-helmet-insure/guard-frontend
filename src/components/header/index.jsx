@@ -7,9 +7,12 @@ import HelmetSvg from '../../assets/images/helmet.svg'
 import { useWeb3React } from '@web3-react/core'
 import { formatAddress } from '../../utils'
 import DrawerMenu from '../drawer-menu'
+import { formatNumber } from 'accounting'
+import { formatAmount } from '../../utils/format'
 import { FormattedMessage } from 'react-intl'
 import ConnectWallDialog from '../dialogs/connect-wallet-dialog'
 import { Link } from 'react-router-dom'
+import { getClaimInfo } from '../../hooks/claim'
 import InstallMetamaskDialog from '../dialogs/install-metamask-dialog'
 import HeaderChaimDialog from '../dialogs/header-claim-dialog'
 
@@ -18,6 +21,7 @@ import { VarContext } from '../../context'
 import DisconnectedWalletDialog from '../dialogs/disconnected-wallet-dialog'
 import cx from 'classname'
 import NewIcon from '../../assets/images/new.svg'
+import { useEffect } from 'react'
 
 export const navList = [
   {
@@ -65,7 +69,36 @@ function Header (props) {
 
   const [claimPools, setClaimPools] = useState(claim[0])
 
+  const [isShowClaimBtn, setIsShowClaimBtn] = useState(false)
+
   const { balance, blockHeight } = useContext(VarContext)
+
+  // 获取池子信息
+  useMemo(() => {
+    if (blockHeight !== 0) {
+      // 静态的 不做任何请求
+      getClaimInfo(claim[0], account).then((miningPools_) => {
+        setClaimPools(miningPools_)
+      })
+    }
+  }, [blockHeight, account])
+
+  useEffect(() => {
+    setIsShowClaimBtn(
+      claimPools &&
+        claimPools.earned &&
+        formatNumber(formatAmount(claimPools.earned, claimPools.decimal, 6), {
+          thousand: ',',
+          decimal: '.',
+          precision:
+            formatAmount(claimPools.earned) - 0 > 0
+              ? claimPools.splitDigits
+              : 0,
+        }) -
+          0 >
+          0
+    )
+  }, [claimPools])
 
   useMemo(() => {
     if (active && props.location.search.indexOf('claim') > -1) {
@@ -92,81 +125,80 @@ function Header (props) {
   }
   return (
     <>
-      <div className="header_token_contract_address">
+      <div className='header_token_contract_address'>
         <span></span>
         <p>
           Guard is now on quickswap.exchange. Token Contract Address:
           0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
           <a
-            href="https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"
-            target="_blank"
+            href='https://quickswap.exchange/#/swap?inputCurrency=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&outputCurrency=0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8'
+            target='_blank'
           >
             Exchange now
           </a>
         </p>
       </div>
       <div style={{ width: '100%', background: '#fff' }}>
-        <div className="header">
-          <Link to="/" className="logo">
-            <img src={LOGO} alt="Gurad" />
+        <div className='header'>
+          <Link to='/' className='logo'>
+            <img src={LOGO} alt='Gurad' />
           </Link>
-          <ul className="nav_list">
-            {navList.map(item => (
-              <Link to={item.path} className="nav_list_item" key={item.path}>
+          <ul className='nav_list'>
+            {navList.map((item) => (
+              <Link to={item.path} className='nav_list_item' key={item.path}>
                 <span
-                  className={
-                    cx({
-                      active: props.location.pathname &&
-                        props.location.pathname.indexOf(item.path) === 0,
-                      is_new: item.isNew
-                    })
-                  }
+                  className={cx({
+                    active:
+                      props.location.pathname &&
+                      props.location.pathname.indexOf(item.path) === 0,
+                    is_new: item.isNew,
+                  })}
                 >
                   {item.name}
-                  {
-                    item.isNew && <img src={NewIcon} className="is_new_icon" alt=""/>
-                  }
+                  {item.isNew && (
+                    <img src={NewIcon} className='is_new_icon' alt='' />
+                  )}
                 </span>
               </Link>
             ))}
           </ul>
-          <div className="connect_wallet">
-            <a href="https://app.helmet.insure/#/">
-              <div className="to_helmet flex_center">
-                <img src={HelmetSvg} alt="" />
+          <div className='connect_wallet'>
+            <a href='https://app.helmet.insure/#/'>
+              <div className='to_helmet flex_center'>
+                <img src={HelmetSvg} alt='' />
                 <FormattedMessage
-                  id="header_text7"
+                  id='header_text7'
                   values={{ name: 'Helmet' }}
                 />
               </div>
             </a>
-
-            <a className="header_claim flex_center" onClick={goClaim}>
-              <FormattedMessage id="header_claim_dialog_text1" />
-            </a>
-
+            {isShowClaimBtn && (
+              <a className='header_claim flex_center' onClick={goClaim}>
+                <FormattedMessage id='header_claim_dialog_text1' />
+              </a>
+            )}
             {!active ? (
               <div
-                className="not_connect flex_center"
+                className='not_connect flex_center'
                 onClick={connectWalletClick}
               >
-                <FormattedMessage id="header_text6" />
+                <FormattedMessage id='header_text6' />
               </div>
             ) : (
-              <div className="connected" onClick={connectWalletClick}>
-                <div className="balance flex_center">
-                  <img src={GuradSvg} alt="" />
+              <div className='connected' onClick={connectWalletClick}>
+                <div className='balance flex_center'>
+                  <img src={GuradSvg} alt='' />
                   {balance}
                 </div>
-                <div className="address flex_center">
+                <div className='address flex_center'>
                   {formatAddress(account)}
                   <span />
                 </div>
               </div>
             )}
           </div>
-          <div className="menu_tab">
-            <img src={MenuSvg} alt="" onClick={() => setVisibleMenu(true)} />
+          <div className='menu_tab'>
+            <img src={MenuSvg} alt='' onClick={() => setVisibleMenu(true)} />
           </div>
         </div>
       </div>
@@ -179,6 +211,7 @@ function Header (props) {
           setVisible: setVisibleMenu,
           visibleHeaderClaim: visibleHeaderClaimPopup,
           setVisibleHeaderClaim: setVisibleHeaderClaimPopup,
+          isShowClaimBtn: isShowClaimBtn,
           connectWalletClick,
           ...props,
         }}
