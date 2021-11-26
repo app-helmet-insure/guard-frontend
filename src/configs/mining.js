@@ -59,7 +59,7 @@ export default  [
     quickToken: QUICK_ADDRESS,
     poolType: 2,
     ledLight: true, // 呼吸灯
-    multiple: '9X', // 倍数
+    multiple: '6X', // 倍数
     core: true, // 星标
     showLptValue: true, // 展示奖励2总价值
     isNew: true,
@@ -1410,7 +1410,7 @@ export default  [
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
-    rewardIcon: GuardMaticSvg,
+    rewardIcon: GuardPng,
     shortToken: 'GUARD',
     rewards1: 'GUARD',
     rewards2: null,
@@ -1447,7 +1447,7 @@ export default  [
     factoryAbi: QuickSwapFactory,
     quickToken: QUICK_ADDRESS,
     poolType: 3,
-    multiple: '1.5X',
+    multiple: '1X',
     core: true,
     showLptValue: false, // 展示奖励2总价值
     ledLight: true,
@@ -1589,7 +1589,7 @@ export default  [
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
     icon: MaticSvg,
-    rewardIcon: GuardMaticSvg,
+    rewardIcon: GuardPng,
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
@@ -1626,7 +1626,7 @@ export default  [
     factoryAbi: QuickSwapFactory,
     quickToken: QUICK_ADDRESS,
     poolType: 3,
-    multiple: '1X',
+    multiple: '0.5X',
     showLptValue: false, // 展示奖励2总价值
     ledLight: true,
   },
