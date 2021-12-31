@@ -3,7 +3,7 @@ import ERC20 from '../web3/abi/ERC20.json'
 import StakingRewards from '../web3/abi/StakingRewards.json'
 import ShortOptionAbi from '../web3/abi/ShortOption.json'
 import {formatAmount, fromWei} from '../utils/format'
-import { processResult, getOnlyMultiCallProvider } from '../web3/multicall'
+import {processResult, getOnlyMultiCallProvider, multicallClient, ClientContract} from '../web3/multicall'
 import { Contract } from 'ethers-multicall-x'
 import CalcAbi from '../web3/abi/Calc.json'
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
@@ -74,10 +74,24 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
 }
 
 export const getMiningInfo = (pool, account) => new Promise(resolve => {
-  const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
-  const pool_contract = new Contract(pool.address, pool.abi)
-  const currency_token = new Contract(pool.MLP, ERC20.abi)
-  const calc_contract = new Contract(CALC_ADDRESS, CalcAbi)
+  if (pool.staticFinish) {
+    const staticPool = Object.assign({}, pool, {
+      earned: '0',
+      earned2: '0',
+      totalSupply: '0',
+      balanceOf: '0',
+      allowance: '0',
+      APR: '0',
+      LPTStakeValue: '0'
+    })
+    resolve(staticPool)
+    return
+  }
+  // const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
+  const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
+  const currency_token = new ClientContract(ERC20.abi, pool.MLP, pool.networkId)
+  const calc_contract = new ClientContract(CalcAbi, CALC_ADDRESS, pool.networkId)
+
 
   const promise_list = [
     pool_contract.begin(), // 开始时间
@@ -131,8 +145,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       promise_list.push(pool_contract.earned2(account))
     }
   }
-  multicallProvider.all(promise_list).then(async data => {
-    data = processResult(data)
+  multicallClient(promise_list).then(async data => {
     const begin = data[0],
       totalSupply = data[1]
 

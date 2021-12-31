@@ -1,3 +1,4 @@
+import {config, multicallClient, Contract as ClientContract} from '@chainstarter/multicall-client.js/build/index.js'
 import { Provider, setMulticallAddress} from 'ethers-multicall-x'
 import {cloneDeep} from 'lodash'
 import {JsonRpcProvider} from '@ethersproject/providers'
@@ -36,4 +37,16 @@ export const processResult = _data => {
     return data
   }
   return data
+}
+
+
+config({
+  defaultChainId: ChainId.MATIC,
+  allowFailure: false,
+
+})
+
+export {
+  multicallClient,
+  ClientContract
 }
