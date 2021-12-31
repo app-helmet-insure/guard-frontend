@@ -81,6 +81,7 @@
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
     "stream-browserify": "^3.0.0",
-    "web3": "^1.4.0"
+    "web3": "^1.4.0",
+    "@chainstarter/multicall-client.js": "^1.0.5"
   }
 }
