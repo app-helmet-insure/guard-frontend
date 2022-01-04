@@ -50,7 +50,6 @@ export const useIndexPrice = async (library, data) => {
     underlying_symbol,
     underlying_symbol
   )
-
   try {
     // 获取交易对地址
     const address = Pair.getAddress(TOKEN1, TOKEN2)
@@ -127,6 +126,7 @@ export const getLptValue = lpt_address => {
     data: querygql,
   })
 }
+
 const getPrice = async (library, data) => {
   const {
     collateral_chainid,
@@ -138,7 +138,9 @@ const getPrice = async (library, data) => {
     underlying_address,
     underlying_decimals_number,
   } = data
-  const value = await useIndexPrice(library, {
+
+
+  return  await useIndexPrice(library, {
     collateral_chainid,
     collateral_address,
     collateral_decimals_number,
@@ -148,7 +150,6 @@ const getPrice = async (library, data) => {
     underlying_decimals_number,
     underlying_symbol,
   })
-  return value
 }
 export const getShortTokenValue = library =>
   getInsuranceList().then(Insurance => {
@@ -177,17 +178,29 @@ export const getShortTokenValue = library =>
     })
     let CallValue = 0
     const CallList = ShortList.filter(item => item.type === 'Call')
-    return Promise.all(
-      CallList.map((item, index) => {
-        const CurrentInsurance = getCurrentInsurance({
-          CollateralAddress: item.collateral,
-          UnderlyingAddress: item.underlying,
-        })
-        return getPrice(library, CurrentInsurance)
+
+    const TVLPriceMap = {}
+    const priceArr = []
+    for (let i = 0; i < CallList.length; i++) {
+      const CurrentInsurance = getCurrentInsurance({
+        CollateralAddress: CallList[i].collateral,
+        UnderlyingAddress: CallList[i].underlying,
       })
+      CallList[i].CurrentInsurance = CurrentInsurance
+      if (!TVLPriceMap[`${CurrentInsurance.collateral_address}${CurrentInsurance.underlying_address}`]) {
+        priceArr.push(CurrentInsurance)
+        TVLPriceMap[`${CurrentInsurance.collateral_address}${CurrentInsurance.underlying_address}`] = true
+      }
+    }
+    return Promise.all(
+      priceArr.map((item, index) => getPrice(library, item))
     ).then(price_list => {
-      CallValue = price_list.reduce(
-        (sum, price, index) => sum + price * CallList[index].show_volume,
+      const priceMap = {}
+      for (let i = 0; i < priceArr.length; i++) {
+        priceMap[`${priceArr[i].collateral_address}${priceArr[i].underlying_address}`] = price_list[i]
+      }
+      CallValue = CallList.reduce(
+        (sum, item, index) => sum + (priceMap[`${item.CurrentInsurance.collateral_address}${item.CurrentInsurance.underlying_address}`] || 0) * CallList[index].show_volume,
         0
       )
       return CallValue + PutValue
