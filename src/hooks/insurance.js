@@ -93,7 +93,7 @@ export const getBalance = (
           const resBalance = formatAmount(balance_, decimals)
           setBalance(resBalance)
         })
-        .catch(e => {})
+        .catch(e => { })
     }
   }, [account, active, address])
 
