@@ -70,6 +70,7 @@ const ShowData = props => {
       : '-'
   const getData2 = async () => {
     const Datas = await getShortTokenValue(library)
+    console.log('Datas', Datas)
     setData2Price(formatAmount(Datas, 0))
   }
   useEffect(() => {

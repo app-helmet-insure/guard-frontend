@@ -9,8 +9,7 @@ import { formatNumber } from 'accounting'
 import { formatAmount, numToWei, splitFormat } from '../../../utils/format'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import ERC20 from '../../../web3/abi/ERC20.json'
-import { useBalance } from '../../../hooks/index'
-import { useBlockHeight } from '../../../web3/index'
+
 import {getGasPrice} from '../../../utils'
 const { TabPane } = Tabs
 

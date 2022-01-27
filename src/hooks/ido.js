@@ -1,15 +1,14 @@
 import BigNumber from 'bignumber.js'
 import {formatAmount, fromWei, numToWei} from '../utils/format'
-import {Contract} from 'ethers-multicall-x'
 import ERC20 from '../web3/abi/ERC20.json'
-import {getOnlyMultiCallProvider, processResult} from '../web3/multicall'
+import {multicallClient, ClientContract} from '../web3/multicall'
 import {getContract} from '../web3'
 import Erc20ABI from '../web3/abi/ERC20.json'
 import {getGasPrice} from '../utils'
 import {ADDRESS_INFINITY} from '../web3/address'
 
 export const getPoolInfo = (pool, account) => {
-  const poolContract = new Contract(pool.address, pool.abi)
+  const poolContract = new ClientContract(pool.abi, pool.address, pool.networkId)
   const promiseList = [
     poolContract.price(),
     poolContract.totalPurchasedCurrency(),
@@ -25,7 +24,7 @@ export const getPoolInfo = (pool, account) => {
     poolContract.timeSettle(), // claim time
   ]
   if (pool.airdrop) {
-    const airdropContract = new Contract(pool.airdrop.address, pool.airdrop.abi)
+    const airdropContract = new ClientContract(pool.airdrop.abi, pool.airdrop.address, pool.networkId)
     promiseList.push(airdropContract.allowList(account))
     promiseList.push(airdropContract.withdrawList(account))
     promiseList.push(airdropContract.begin())
@@ -33,102 +32,99 @@ export const getPoolInfo = (pool, account) => {
   if (pool.currency.is_ht) {
     // get chain underlying asset
   } else {
-    const currencyContract = new Contract(pool.currency.address, ERC20.abi)
+    const currencyContract = new ClientContract(ERC20.abi, pool.currency.address, pool.networkId)
     promiseList.push(currencyContract.allowance(account, pool.address))
     promiseList.push(currencyContract.balanceOf(account))
 
   }
-  const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
-  return multicallProvider
-    .all(promiseList).then(res => {
-      const resData = processResult(res)
-      const [
-        price,
-        totalPurchasedCurrency,
-        purchasedCurrencyOf,
-        // totalSettleable,
-        settleable,
-        totalSettledUnderlying,
-        maxUser,
-        curUserCount,
-        amtLow,
-        amtHigh,
-        startTime,
-        endTime,
-        claimTime
-      ] = resData
-      let allowList,
-        withdrawList,
-        airdropBegin,
-        currency_allowance,
-        balanceOf
+  return multicallClient(promiseList).then(resData => {
+    const [
+      price,
+      totalPurchasedCurrency,
+      purchasedCurrencyOf,
+      // totalSettleable,
+      settleable,
+      totalSettledUnderlying,
+      maxUser,
+      curUserCount,
+      amtLow,
+      amtHigh,
+      startTime,
+      endTime,
+      claimTime
+    ] = resData
+    let allowList,
+      withdrawList,
+      airdropBegin,
+      currency_allowance,
+      balanceOf
 
-      if (pool.airdrop) {
-        allowList = resData[12]
-        withdrawList = resData[13]
-        airdropBegin = resData[14]
-        currency_allowance = resData[15] || 0
-        balanceOf = resData[16] || 0
-        pool.airdrop = Object.assign(pool.airdrop, {
-          begin: airdropBegin,
-          allowList: fromWei(allowList, 18).toFixed(6) * 1,
-          withdrawList: {
-            true: true,
-            false: false
-          }[String(withdrawList)]
-        })
-      } else {
-        currency_allowance = resData[12] || 0
-        balanceOf = resData[13] || 0
-      }
-
-      const [completed_, amount, volume, rate] = settleable
-      const totalPurchasedUnderlying = numToWei(
-        new BigNumber(totalPurchasedCurrency)
-          .dividedBy(new BigNumber(price))
-          .toFixed(0, 1),
-        pool.underlying.decimal
-      )
-
-      Object.assign(pool.currency, {
-        allowance: currency_allowance,
+    if (pool.airdrop) {
+      allowList = resData[12]
+      withdrawList = resData[13]
+      airdropBegin = resData[14]
+      currency_allowance = resData[15] || 0
+      balanceOf = resData[16] || 0
+      pool.airdrop = Object.assign(pool.airdrop, {
+        begin: airdropBegin,
+        allowList: fromWei(allowList, 18).toFixed(6) * 1,
+        withdrawList: {
+          true: true,
+          false: false
+        }[String(withdrawList)]
       })
-      const num = new BigNumber(1).div(
-        new BigNumber(price).div(new BigNumber(10).pow(18 + pool.currency.decimal - pool.underlying.decimal))
-      ).toFixed(6) * 1
-      return Object.assign({}, pool, {
-        ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
-          pool.underlying.symbol
-        }`,
-        progress:
-          new BigNumber(fromWei(totalPurchasedCurrency, pool.currency.decimal))
-            .div(new BigNumber(pool.amount).div(new BigNumber(num)))
-            .toFixed(6)
-            .toString(),
-        is_join: purchasedCurrencyOf > 0,
-        totalPurchasedCurrency,
-        totalPurchasedUnderlying,
-        balanceOf: formatAmount(balanceOf, pool.currency.decimal, 6),
-        purchasedCurrencyOf,
-        totalSettledUnderlying,
-        startTime,
-        endTime,
-        claimTime,
-        settleable: {
-          completed_,
-          amount,
-          volume,
-          rate,
-        },
-        pool_info: {
-          ...pool.pool_info,
-          maxAccount: maxUser,
-          curUserCount,
-          min_allocation: fromWei(amtLow, pool.currency.decimal) * 1,
-          max_allocation: fromWei(amtHigh, pool.currency.decimal) * 1,
-        }
-      })
+    } else {
+      currency_allowance = resData[12] || 0
+      balanceOf = resData[13] || 0
+    }
+
+    const [completed_, amount, volume, rate] = settleable
+    const totalPurchasedUnderlying = numToWei(
+      new BigNumber(totalPurchasedCurrency)
+        .dividedBy(new BigNumber(price))
+        .toFixed(0, 1),
+      pool.underlying.decimal
+    )
+
+    Object.assign(pool.currency, {
+      allowance: currency_allowance,
     })
+    const num = new BigNumber(1).div(
+      new BigNumber(price).div(new BigNumber(10).pow(18 + pool.currency.decimal - pool.underlying.decimal))
+    ).toFixed(6) * 1
+    return Object.assign({}, pool, {
+      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
+        pool.underlying.symbol
+      }`,
+      progress:
+        new BigNumber(fromWei(totalPurchasedCurrency, pool.currency.decimal))
+          .div(new BigNumber(pool.amount).div(new BigNumber(num)))
+          .toFixed(6)
+          .toString(),
+      is_join: purchasedCurrencyOf > 0,
+      totalPurchasedCurrency,
+      totalPurchasedUnderlying,
+      balanceOf: formatAmount(balanceOf, pool.currency.decimal, 6),
+      purchasedCurrencyOf,
+      totalSettledUnderlying,
+      startTime,
+      endTime,
+      claimTime,
+      settleable: {
+        completed_,
+        amount,
+        volume,
+        rate,
+      },
+      pool_info: {
+        ...pool.pool_info,
+        maxAccount: maxUser,
+        curUserCount,
+        min_allocation: fromWei(amtLow, pool.currency.decimal) * 1,
+        max_allocation: fromWei(amtHigh, pool.currency.decimal) * 1,
+      }
+    })
+  })
 }
 
 export const onApprove_ = async (library, account, contractAddress, poolAddress, callback = () => {

@@ -64,7 +64,6 @@ const Supply = props => {
         pool.name.toUpperCase() === CurrentInsurance.insurance &&
         Number(pool.strikeprice) === Number(CurrentInsurance.strikeprice)
     )[0] || ''
-  console.log(CurrentPool)
   // 获取池子信息
   useMemo(() => {
     if (blockHeight !== 0 && CurrentPool) {
