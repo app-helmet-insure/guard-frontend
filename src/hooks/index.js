@@ -18,9 +18,9 @@ export const useBalance = (
   owner = null,
 ) => {
   const [balance, setBalance] = useState('0')
-  const { account, library, active } = useActiveWeb3React()
+  const { account, library } = useActiveWeb3React()
   useMemo(() => {
-    if (active && address && blockHeight !== 0) {
+    if (account && address && blockHeight !== 0) {
       owner = !owner ? account : owner
       const contract = getContract(library, abi, address)
       contract.methods
@@ -31,7 +31,7 @@ export const useBalance = (
           setBalance(resBalance)
         }).catch(e=>{})
     }
-  }, [account, active, blockHeight, address])
+  }, [account, blockHeight, address])
   return balance
 }
 

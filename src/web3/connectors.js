@@ -47,7 +47,7 @@ const networkConf = {
       symbol: 'MATIC',
       decimals: 18,
     },
-    rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
+    rpcUrls: ['https://polygon-rpc.com'],
     blockExplorerUrls: [SCAN_ADDRESS[ChainId.MATIC]],
   },
 }
@@ -95,7 +95,7 @@ const hecoWalletConnector = new WalletConnectConnector({
 })
 
 const maticWalletConnector = new WalletConnectConnector({
-  rpc: { 137: 'https://rpc-mainnet.maticvigil.com' },
+  rpc: { 137: 'https://polygon-rpc.com' },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,

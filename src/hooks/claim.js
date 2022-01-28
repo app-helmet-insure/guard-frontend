@@ -1,12 +1,10 @@
-import React, { useContext, useState, useMemo } from 'react'
-import { processResult, getOnlyMultiCallProvider } from '../web3/multicall'
-import { Contract } from 'ethers-multicall-x'
+import React from 'react'
 import BigNumber from 'bignumber.js'
+import {multicallClient, ClientContract} from '../web3/multicall'
 
 export const getClaimInfo = (pool, account) => {
   if (pool.is_coming) return pool
-  const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
-  const pool_contract = new Contract(pool.address, pool.abi)
+  const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
   const promise_list = []
   if (account) {
     promise_list.push(
@@ -14,8 +12,7 @@ export const getClaimInfo = (pool, account) => {
       pool_contract.claimedList(account)
     )
   }
-  return multicallProvider.all(promise_list).then((data) => {
-    data = processResult(data)
+  return multicallClient(promise_list).then(data => {
     const [claiming = 0, claimed = 0] = data
     const earned = new BigNumber(claiming)
       .minus(new BigNumber(claimed))

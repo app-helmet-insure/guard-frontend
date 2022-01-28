@@ -10,8 +10,6 @@ import {
   formatLastZero, fromWei,
   splitFormat,
 } from '../../../utils/format'
-import { useBalance } from '../../../hooks/index'
-import ERC20 from '../../../web3/abi/ERC20.json'
 import { getMiningInfo } from '../../../hooks/mining'
 import StakeChaimDialog from '@/components/dialogs/stake-chaim-dialog'
 import CountDown from '@/components/mining/countDown'
@@ -50,12 +48,6 @@ const MiningCard = props => {
     }
   }, [blockHeight, account])
   // 获取池子token个人账户可使用余额
-  const balance = useBalance(
-    blockHeight,
-    miningPools && miningPools.MLP,
-    ERC20.abi,
-    miningPools && miningPools.mlpDecimal
-  )
   const isFinish =
     miningPools &&
     miningPools.dueDate &&
@@ -280,10 +272,10 @@ const MiningCard = props => {
             <span>
               {miningPools.balanceOf
                 ? formatLastZero(
-                  formatNumber(balance, {
+                  formatNumber(miningPools.balance, {
                     thousand: ',',
                     decimal: '.',
-                    precision: balance - 0 > 0 ? miningPools.splitDigits : 0,
+                    precision: miningPools.balance - 0 > 0 ? miningPools.splitDigits : 0,
                   })
                 )
                 : '--'}
@@ -376,7 +368,7 @@ const MiningCard = props => {
         visible={visibleStakePopup}
         tab={tabFlag}
         pool={miningPools}
-        balance={balance}
+        balance={miningPools.balance}
         isEnd={isEnd}
         onClose={() => setVisibleStakePopup(false)}
       />

@@ -7,7 +7,7 @@ import {
   getCurrentInsurance,
   getInsuranceList,
 } from '../../../configs/insurance'
-import { getTokenName } from '../../../web3/address'
+import {ChainId, getTokenName} from '../../../web3/address'
 import { useActiveWeb3React, getContract } from '../../../web3'
 import { toWei, fromWei } from 'web3-utils'
 import OrderABI from '../../../web3/abi/Order.json'
@@ -16,13 +16,8 @@ import FactoryABI from '../../../web3/abi/Factory.json'
 import WaitingConfirmationDialog from '../../dialogs/waiting-confirmation-dialog'
 import SuccessfulPurchaseDialog from '../../dialogs/successful-purchase-dialog'
 import { Tooltip } from 'antd'
-import {
-  processResult,
-  getOnlyMultiCallProvider,
-} from '../../../web3/multicall'
+import {multicallClient, ClientContract} from '../../../web3/multicall'
 import Loading from '../../loading'
-import { Contract } from 'ethers-multicall-x'
-import { getRpcUrl } from '../../../web3/address'
 import { Pagination } from 'antd'
 const OrderAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D'
 const FactoryAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88'
@@ -62,7 +57,6 @@ const MySettle = props => {
       if (res && res.data.data.options) {
         const ReturnList = res.data.data.options
         const FixListPush = []
-        const multicallPorvider = getOnlyMultiCallProvider(137)
         ReturnList.forEach(item => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
@@ -81,14 +75,13 @@ const MySettle = props => {
               insurance,
               settleToken_symbol,
             } = CurrentInsurance
-            const longContracts = new Contract(item.long, PoolABI)
-            const shortContracts = new Contract(item.short, PoolABI)
+            const longContracts = new ClientContract( PoolABI, item.long, ChainId.MATIC)
+            const shortContracts = new ClientContract( PoolABI, item.short, ChainId.MATIC)
             PromiseList.push(
               longContracts.balanceOf(account),
               shortContracts.balanceOf(account)
             )
-            multicallPorvider.all(PromiseList).then(data => {
-              data = processResult(data)
+            multicallClient(PromiseList).then(data => {
               let [longBalance, shortBalance] = data
               longBalance = fromWei(
                 longBalance + '',

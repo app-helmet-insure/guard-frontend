@@ -3,8 +3,7 @@ import ERC20 from '../web3/abi/ERC20.json'
 import StakingRewards from '../web3/abi/StakingRewards.json'
 import ShortOptionAbi from '../web3/abi/ShortOption.json'
 import {formatAmount, fromWei} from '../utils/format'
-import {processResult, getOnlyMultiCallProvider, multicallClient, ClientContract} from '../web3/multicall'
-import { Contract } from 'ethers-multicall-x'
+import {multicallClient, ClientContract} from '../web3/multicall'
 import CalcAbi from '../web3/abi/Calc.json'
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
 import {toWei} from 'web3-utils'
@@ -40,9 +39,10 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
       query,
     })
     .then(res => {
-      const factory = new Contract(
+      const factory = new ClientContract(
+        miningPools.factoryAbi,
         miningPools.factoryAddress,
-        miningPools.factoryAbi
+        miningPools.networkId
       )
       const pairHourDatas = (res.data && res.data.pairHourDatas) || []
       return pairHourDatas.reduce((sum, i) => {
@@ -51,16 +51,15 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
       }, new BigNumber(0))
     })
 
-  const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
-  const contract = new Contract(
+  const contract = new ClientContract(
     // '0x8782772E35e262Ba7f481DDDb015424Fc1aABC62',
+    StakingRewards,
     '0xF5c305F9D817a462Fa0eCE578a552C3F05F58b40',
-    StakingRewards
+    miningPools.networkId
   )
-  const [rewardRate, totalSupply] = await multicallProvider
-    .all([contract.rewardRate(), contract.totalSupply()])
+  const [rewardRate, totalSupply] = await multicallClient([contract.rewardRate(), contract.totalSupply()])
     .then(res => {
-      const [rewardRate_, totalSupply_] = processResult(res)
+      const [rewardRate_, totalSupply_] = res
       return [rewardRate_, totalSupply_]
     })
   // quick日产量  (rewardRate * 86400) / 10 ** 18
@@ -82,12 +81,12 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       balanceOf: '0',
       allowance: '0',
       APR: '0',
-      LPTStakeValue: '0'
+      LPTStakeValue: '0',
+      balance: '0'
     })
     resolve(staticPool)
     return
   }
-  // const multicallProvider = getOnlyMultiCallProvider(pool.networkId)
   const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
   const currency_token = new ClientContract(ERC20.abi, pool.MLP, pool.networkId)
   const calc_contract = new ClientContract(CalcAbi, CALC_ADDRESS, pool.networkId)
@@ -139,7 +138,8 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
     promise_list.push(
       pool_contract.earned(account), // 奖励1
       pool_contract.balanceOf(account), // 我的抵押
-      currency_token.allowance(account, pool.address)
+      currency_token.allowance(account, pool.address),
+      currency_token.balanceOf(account), // 余额
     )
     if (pool.rewards2) {
       promise_list.push(pool_contract.earned2(account))
@@ -155,7 +155,8 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       balanceOf = 0,
       allowance = 0,
       earned2 = 0,
-      LPTStakeValue = 0
+      LPTStakeValue = 0,
+      balance = 0
 
     if (hasApr && pool.poolType === 3) {
       if (pool.mdexReward) {
@@ -165,13 +166,15 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
         earned  = data[4]
         balanceOf = data[5]
         allowance = data[6]
-        earned2 = data[7]
+        balance = data[7]
+        earned2 = data[8]
       } else {
         APR = data[2]
         earned  = data[3]
         balanceOf = data[4]
         allowance = data[5]
-        earned2 = data[6]
+        balance = data[6]
+        earned2 = data[7]
       }
     } else if (pool.poolType === 2) {
       // lpt
@@ -183,7 +186,8 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       earned  = data[5]
       balanceOf = data[6]
       allowance = data[7]
-      earned2 = data[8]
+      balance = data[8]
+      earned2 = data[9]
       // 计算奖励2的apr
       // 日产量+手续费
       const volumeTotal = await getVolume(pool, reserve0Price, totalSupply)
@@ -198,13 +202,15 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
       earned  = data[2]
       balanceOf = data[3]
       allowance = data[4]
-      earned2 = data[5]
+      balance = data[5]
+      earned2 = data[6]
     }
     const APR_ = fromWei(new BigNumber(APR).plus(new BigNumber(APR2)).toString(), 18).multipliedBy(100).toFixed(2)
     const newPool = Object.assign({}, pool, {
       start_at: pool.openDate > begin ? pool.openDate : begin,
       earned,
       earned2,
+      balance: fromWei(balance, pool.mlpDecimal),
       totalSupply,
       balanceOf: fromWei(balanceOf, pool.mlpDecimal),
       allowance,
@@ -220,17 +226,15 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
  * @param miningPools
  */
 export const getSortToken = miningPools => new Promise(reslove => {
-  const multicallProvider = getOnlyMultiCallProvider(miningPools.networkId)
   // short
   if (miningPools.poolType === 3) {
-    const short = new Contract(miningPools.MLP, ShortOptionAbi) // quick的合约
-    multicallProvider
-      .all([
-        short.underlying(), // 标的物
-        short.collateral(), // 抵押物
-      ])
+    const short = new ClientContract(ShortOptionAbi, miningPools.MLP, miningPools.networkId) // quick的合约
+    multicallClient([
+      short.underlying(), // 标的物
+      short.collateral(), // 抵押物
+    ])
       .then(data => {
-        data = processResult(data)
+        console.log('data', data)
         const [underlying, collateral] = data
         console.log('抵押物', collateral, '标的物', underlying)
         reslove({
