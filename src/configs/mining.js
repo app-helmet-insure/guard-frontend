@@ -2048,5 +2048,319 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
 
+  // 20220128
+
+  {
+    title: 'Guard Short Token Pool',
+    name: 'Guard',
+    icon: GuardPng,
+    rewardIcon: GuardPng,
+    shortToken: 'GUARD',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x396B15793dFf5814d606610B8AC4AC2b1B2EF013',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null, // MATIC
+    sort: {
+      collateral: GUARD_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS,
+    settleTokenDecimal: 6,
+    MLP: '0xff7c25a67cb55a8fc318508c6b038ba90770daa1', // 质押的资产 stakingToken
+    mlpDecimal: 18,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'Guard Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: ChainId.MATIC,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '0.06',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '1X',
+    core: true,
+    showLptValue: false, // 展示奖励2总价值
+    ledLight: true,
+  },
+  {
+    title: 'Guard Short Token Pool',
+    name: 'Guard',
+    icon: GuardPng,
+    rewardIcon: GuardPng,
+    shortToken: 'GUARD',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x85a8704CD0C2f898dDFC7C5F7877c2cE80Bcf53c',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: GUARD_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // 用哪个来计算，一般都是usdc
+    settleTokenDecimal: 6,
+    MLP: '0x402ab513f788152effdf43275eb256bf20145799', // 质押的资产
+    mlpDecimal: 6,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'Guard Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Put', // Call看涨 Put看跌
+    strikeprice: '0.015',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    core: true,
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'Quick Short Token Pool',
+    name: 'Quick',
+    icon: QuickPng,
+    rewardIcon: GuardPng,
+    shortToken: 'QUICK',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x343C94CecF62B296BcBd019Ef5906DF23bA25dAC',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: QUICK_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x8594c0c578ef0940c392625c7b5f2c1db21bacbc', // 质押的资产
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${QUICK_ADDRESS}`,
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'Quick Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '354',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'Quick Short Token Pool',
+    name: 'Quick',
+    icon: QuickPng,
+    rewardIcon: GuardPng,
+    shortToken: 'QUICK',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x2790881D3Cd60721AEA870758da5abF84D7d5c0f',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: QUICK_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x750134a200ce03adf34a11d96d32e9ba2fbcef8a', // 质押的资产
+    mlpDecimal: 6,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${USDC_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'Quick Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Put', // Call看涨 Put看跌
+    strikeprice: '88.5',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'Matic Short Token Pool',
+    name: 'Matic', // 用于
+    icon: MaticSvg,
+    rewardIcon: GuardPng,
+    shortToken: 'MATIC',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x60d43ea612ee03162ba36cd22b6c6427523607f0',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x52af47aa9167c9510de93af2d0ea291d48fbfb2a', // 质押的资产 stakingToken
+    sort: {
+      collateral: MATIC_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    mlpDecimal: 18,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'Matic Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '3.28',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false, // 展示奖励2总价值
+    ledLight: true,
+  },
+  {
+    title: 'Matic Short Token Pool',
+    name: 'Matic',
+    icon: MaticSvg,
+    rewardIcon: GuardPng,
+    shortToken: 'MATIC',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x161C75bD49836CBbe96F02E45CAA67CD48B0E021',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: MATIC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0xd9721427c48bc4d15ae92d6a73382d41a04ebd23', // 质押的资产
+    mlpDecimal: 6,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'Matic Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Put', // Call看涨 Put看跌
+    strikeprice: '0.82',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'ETH Short Token Pool',
+    name: 'ETH',
+    icon: ETHPng,
+    rewardIcon: GuardPng,
+    shortToken: 'ETH',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x61ea5aaa350407f20deb8a6b4f2483537fc11ac0',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: WETH_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0xf05dedd46aac10003088227addadb08c112548d9',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 1643385600,
+    openDate: 1643385600,
+    time: '',
+    dueDate: 1645804800,
+    earnName: 'APR',
+    rewards: 'ETH Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '4936',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
 ]
 // 更新 address MLP start_at openDate dueDate strikeprice multiple childPools
