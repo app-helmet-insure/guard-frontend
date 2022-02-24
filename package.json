@@ -51,11 +51,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.21",
-<<<<<<< HEAD
     "@chainstarter/multicall-client.js": "^1.0.6",
-=======
-    "@chainstarter/multicall-client.js": "^1.0.5",
->>>>>>> 5428b17b676ddc1e3a3bf99842a6458efa7c3a5e
     "@dinoswap/quickswap-sdk": "^1.0.3",
     "@ethersproject/abi": "^5.4.0",
     "@ethersproject/contracts": "^5.5.0",
