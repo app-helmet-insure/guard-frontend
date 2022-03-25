@@ -148,6 +148,9 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
   multicallClient(promise_list).then(async data => {
     const begin = data[0],
       totalSupply = data[1]
+    if (begin === null) {
+      return pool
+    }
 
     let APR = 0,
       APR2 = 0,

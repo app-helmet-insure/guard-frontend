@@ -2686,7 +2686,7 @@ export default  [
     shortToken: 'GUARD',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '',
+    address: '0x49a985d1c9b846383924c76201C90001698cBb7F',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null, // MATIC
     sort: {
@@ -2706,7 +2706,7 @@ export default  [
     earnName: 'APR',
     rewards: 'Guard Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: ChainId.MATIC,
     splitDigits: 4,
@@ -2732,7 +2732,7 @@ export default  [
     shortToken: 'GUARD',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '',
+    address: '0x06528DEFA1a8376b4b4B5628fba2C62E1D1192D8',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
@@ -2752,7 +2752,7 @@ export default  [
     earnName: 'APR',
     rewards: 'Guard Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     splitDigits: 4,
@@ -2777,7 +2777,7 @@ export default  [
     shortToken: 'QUICK',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '',
+    address: '0x8a9a5Ecfa03789655Dd4D828F781638A290Aba69',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
@@ -2797,7 +2797,7 @@ export default  [
     earnName: 'APR',
     rewards: 'Quick Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     splitDigits: 4,
@@ -2821,7 +2821,7 @@ export default  [
     shortToken: 'QUICK',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '0x28dedafad4e1cb1c49bb316e57059f9bc6b35995',
+    address: '0x0778F4164d3Edab34D9e927CF778FC45De872853',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
@@ -2841,7 +2841,7 @@ export default  [
     earnName: 'APR',
     rewards: 'Quick Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     splitDigits: 4,
@@ -2865,7 +2865,7 @@ export default  [
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '0x4be6e7dfbef42ae514a956a3d06d409b36272a00',
+    address: '0xc1F3Fda024504248d87F973686DcD97B2037A5CD',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     settleToken: USDC_ADDRESS, // usdc
@@ -2885,7 +2885,7 @@ export default  [
     earnName: 'APR',
     rewards: 'Matic Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     splitDigits: 4,
@@ -2910,7 +2910,7 @@ export default  [
     shortToken: 'MATIC',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '0x1787a1e192213da6525b9f6c9903862c162849c5',
+    address: '0x031cc01f0f5648E5cfB858006F8302EafABEec2E',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
@@ -2930,7 +2930,7 @@ export default  [
     earnName: 'APR',
     rewards: 'Matic Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     splitDigits: 4,
@@ -2954,7 +2954,7 @@ export default  [
     shortToken: 'ETH',
     rewards1: 'GUARD',
     rewards2: null,
-    address: '0xef0f0f5a93606419ff2b8adaf4e42feefbe28d58',
+    address: '0xE8dD9fA886e586C9aD705A8Ac923fEd7A31E7319',
     rewards1Address: GUARD_ADDRESS, // GUARD
     rewards2Address: null,
     sort: {
@@ -2974,7 +2974,7 @@ export default  [
     earnName: 'APR',
     rewards: 'ETH Short Token',
     decimal: 18,
-    is_coming: true,
+    is_coming: false,
     mdexReward: false, // 是否有奖励2
     networkId: 137,
     splitDigits: 4,
