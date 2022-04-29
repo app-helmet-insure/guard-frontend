@@ -2767,6 +2767,7 @@ export default  [
     poolType: 3,
     multiple: '0.5X',
     core: true,
+    noApr: true,
     showLptValue: false // 展示奖励2总价值
   },
   {

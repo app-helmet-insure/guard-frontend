@@ -97,7 +97,7 @@ export const getMiningInfo = (pool, account) => new Promise(resolve => {
     pool_contract.totalSupply(), // 总抵押
   ]
   const now = new Date().getTime() / 1000
-  const hasApr = pool.dueDate > now || !pool.dueDate
+  const hasApr = !pool.noApr && (pool.dueDate > now || !pool.dueDate)
   // 还没结束，算apr
   if (hasApr && pool.poolType === 3) {
     // sort
