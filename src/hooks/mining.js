@@ -72,32 +72,38 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
   return fee.plus(dayVolume)
 }
 
-export const getMiningInfo = (pool, account) => new Promise(resolve => {
+// eslint-disable-next-line no-async-promise-executor
+export const getMiningInfo = (pool, account) => new Promise(async resolve => {
+  const staticPool = Object.assign({}, pool, {
+    earned: '0',
+    earned2: '0',
+    totalSupply: '0',
+    balanceOf: '0',
+    allowance: '0',
+    APR: '0',
+    LPTStakeValue: '0',
+    balance: '0'
+  })
   if (pool.staticFinish) {
-    const staticPool = Object.assign({}, pool, {
-      earned: '0',
-      earned2: '0',
-      totalSupply: '0',
-      balanceOf: '0',
-      allowance: '0',
-      APR: '0',
-      LPTStakeValue: '0',
-      balance: '0'
-    })
     resolve(staticPool)
     return
   }
   const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
+
+  const totalSupply_ = await multicallClient([pool_contract.totalSupply()]).then(res => res[0])
+  if (totalSupply_ <= 0) {
+    resolve(staticPool)
+    return
+  }
   const currency_token = new ClientContract(ERC20.abi, pool.MLP, pool.networkId)
   const calc_contract = new ClientContract(CalcAbi, CALC_ADDRESS, pool.networkId)
-
 
   const promise_list = [
     pool_contract.begin(), // 开始时间
     pool_contract.totalSupply(), // 总抵押
   ]
   const now = new Date().getTime() / 1000
-  const hasApr = !pool.noApr && (pool.dueDate > now || !pool.dueDate)
+  const hasApr = pool.dueDate > now || !pool.dueDate
   // 还没结束，算apr
   if (hasApr && pool.poolType === 3) {
     // sort
