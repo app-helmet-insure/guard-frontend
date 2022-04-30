@@ -91,10 +91,6 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
   const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
 
   const totalSupply_ = await multicallClient([pool_contract.totalSupply()]).then(res => res[0])
-  if (totalSupply_ <= 0) {
-    resolve(staticPool)
-    return
-  }
   const currency_token = new ClientContract(ERC20.abi, pool.MLP, pool.networkId)
   const calc_contract = new ClientContract(CalcAbi, CALC_ADDRESS, pool.networkId)
 
@@ -103,7 +99,7 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
     pool_contract.totalSupply(), // 总抵押
   ]
   const now = new Date().getTime() / 1000
-  const hasApr = pool.dueDate > now || !pool.dueDate
+  const hasApr = totalSupply_ > 0 && (pool.dueDate > now || !pool.dueDate)
   // 还没结束，算apr
   if (hasApr && pool.poolType === 3) {
     // sort
