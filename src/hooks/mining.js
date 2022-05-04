@@ -99,7 +99,7 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
     pool_contract.totalSupply(), // 总抵押
   ]
   const now = new Date().getTime() / 1000
-  const hasApr = totalSupply_ > 0 && (pool.dueDate > now || !pool.dueDate) && pool.address !== '0xe22B2dC95E0C0abe2e2523b9d977ef85995a7E9f'
+  const hasApr = totalSupply_ > 0 && (pool.dueDate > now || !pool.dueDate) && pool.address
   // 还没结束，算apr
   if (hasApr && pool.poolType === 3) {
     // sort
@@ -148,6 +148,7 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
     }
   }
   multicallClient(promise_list).then(async data => {
+    console.log(data)
     const begin = data[0],
       totalSupply = data[1]
     if (begin === null) {
