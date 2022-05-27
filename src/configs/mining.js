@@ -9,7 +9,7 @@ import GuardPng from '../assets/images/mining/pool/GUARD.png'
 import GuardShortSvg from '../assets/images/mining/pool/guard-short.png'
 import GuardQuickRewardSvg from '../assets/images/mining/pool/guard-quick-reward.png'
 import GuardMaticSvg from '../assets/images/mining/pool/guard-matic.png'
-import {ChainId} from '../web3/address'
+import { ChainId } from '../web3/address'
 
 const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
 const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
@@ -18,7 +18,7 @@ const QUICK_ADDRESS = '0x831753DD7087CaC61aB5644b308642cc1c33Dc13'
 const DQUICK_ADDRESS = '0xf28164a485b0b2c90639e47b0f377b4a438a16b1'
 const WETH_ADDRESS = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
 
-export default  [
+export default [
   {
     title: 'Guard-USDC LPT Pool',
     name: 'Guard',
@@ -808,6 +808,7 @@ export default  [
     ]
   },
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -1466,6 +1467,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -1511,6 +1513,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -1555,6 +1558,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -1644,6 +1648,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic',
     icon: MaticSvg,
@@ -1688,6 +1693,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'ETH Short Token Pool',
     name: 'ETH',
     icon: ETHPng,
@@ -1736,6 +1742,7 @@ export default  [
   // 20211230
 
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -1782,6 +1789,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -1827,6 +1835,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -1915,6 +1924,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
     icon: MaticSvg,
@@ -1960,6 +1970,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic',
     icon: MaticSvg,
@@ -2004,6 +2015,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'ETH Short Token Pool',
     name: 'ETH',
     icon: ETHPng,
@@ -2051,6 +2063,7 @@ export default  [
   // 20220128
 
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -2097,6 +2110,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -2142,6 +2156,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -2186,6 +2201,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -2230,6 +2246,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
     icon: MaticSvg,
@@ -2275,6 +2292,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic',
     icon: MaticSvg,
@@ -2319,6 +2337,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'ETH Short Token Pool',
     name: 'ETH',
     icon: ETHPng,
@@ -2411,6 +2430,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -2456,6 +2476,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -2500,6 +2521,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -2544,6 +2566,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
     icon: MaticSvg,
@@ -2589,6 +2612,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic',
     icon: MaticSvg,
@@ -2633,6 +2657,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'ETH Short Token Pool',
     name: 'ETH',
     icon: ETHPng,
@@ -2679,6 +2704,7 @@ export default  [
 
   // 20220324
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -2725,6 +2751,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Guard Short Token Pool',
     name: 'Guard',
     icon: GuardPng,
@@ -2770,6 +2797,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -2814,6 +2842,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Quick Short Token Pool',
     name: 'Quick',
     icon: QuickPng,
@@ -2858,6 +2887,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic', // 用于
     icon: MaticSvg,
@@ -2903,6 +2933,7 @@ export default  [
     ledLight: true,
   },
   {
+    staticFinish: true,
     title: 'Matic Short Token Pool',
     name: 'Matic',
     icon: MaticSvg,
@@ -2947,6 +2978,7 @@ export default  [
     showLptValue: false // 展示奖励2总价值
   },
   {
+    staticFinish: true,
     title: 'ETH Short Token Pool',
     name: 'ETH',
     icon: ETHPng,
@@ -3294,6 +3326,320 @@ export default  [
     splitDigits: 4,
     cover: 'Call', // Call看涨 Put看跌
     strikeprice: '5800',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+
+  // 20200527
+  {
+    title: 'Guard Short Token Pool',
+    name: 'Guard',
+    icon: GuardPng,
+    rewardIcon: GuardPng,
+    shortToken: 'GUARD',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x821518080780dcE3Ce486F0225b17293B743d94D',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null, // MATIC
+    sort: {
+      collateral: GUARD_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS,
+    settleTokenDecimal: 6,
+    MLP: '0x620e9f1335536573574f88d9BD753369b99296d0', // 质押的资产 stakingToken
+    mlpDecimal: 18,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'Guard Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: ChainId.MATIC,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '0.02',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '1X',
+    core: true,
+    showLptValue: false, // 展示奖励2总价值
+    ledLight: true,
+  },
+  {
+    title: 'Guard Short Token Pool',
+    name: 'Guard',
+    icon: GuardPng,
+    rewardIcon: GuardPng,
+    shortToken: 'GUARD',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x007f3fCEa77715437C0A0297235E366aFA206088',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: GUARD_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // 用哪个来计算，一般都是usdc
+    settleTokenDecimal: 6,
+    MLP: '0x7d06Bd9d90D46B9cE200eD3a1864fbf5cA583Fa8', // 质押的资产
+    mlpDecimal: 6,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'Guard Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Put', // Call看涨 Put看跌
+    strikeprice: '0.005',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    core: true,
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'Quick Short Token Pool',
+    name: 'Quick',
+    icon: QuickPng,
+    rewardIcon: GuardPng,
+    shortToken: 'QUICK',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x81182B0ED25a5DBb10176130654bd59e05312C27',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: QUICK_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x6A7bE1c00aF5b7e3687722C9A85A617170cA17bE', // 质押的资产
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${QUICK_ADDRESS}`,
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'Quick Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '140',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'Quick Short Token Pool',
+    name: 'Quick',
+    icon: QuickPng,
+    rewardIcon: GuardPng,
+    shortToken: 'QUICK',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0xb51827D4ec917795A6Fe53308A0e95FC19864bF3',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: QUICK_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x43abb8F30342CC4cC8Ec53c6607F8314651AbC44', // 质押的资产
+    mlpDecimal: 6,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${USDC_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'Quick Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Put', // Call看涨 Put看跌
+    strikeprice: '35',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'Matic Short Token Pool',
+    name: 'Matic', // 用于
+    icon: MaticSvg,
+    rewardIcon: GuardPng,
+    shortToken: 'MATIC',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x1E3dAe6166F24750C78e0C19d6Bd293fD6Ef1aB4',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0xB0510795d56B648A8845872d5f3aB5E2022b8C1d', // 质押的资产 stakingToken
+    sort: {
+      collateral: MATIC_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    mlpDecimal: 18,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${MATIC_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'Matic Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '1',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false, // 展示奖励2总价值
+    ledLight: true,
+  },
+  {
+    title: 'Matic Short Token Pool',
+    name: 'Matic',
+    icon: MaticSvg,
+    rewardIcon: GuardPng,
+    shortToken: 'MATIC',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0xE48d49De466fE514162bAeE1BDcCAeFb8ea1B48e',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: USDC_ADDRESS, //  抵押物
+      underlying: MATIC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0xf9a12d265e964C25f58176ee1CdD3C1F4F2c053e', // 质押的资产
+    mlpDecimal: 6,
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
+    abi: StakingPool,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'Matic Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Put', // Call看涨 Put看跌
+    strikeprice: '0.25',
+    mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
+    routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+    routerAbi: QuickSwapRouter,
+    factoryAddress: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    factoryAbi: QuickSwapFactory,
+    quickToken: QUICK_ADDRESS,
+    poolType: 3,
+    multiple: '0.5X',
+    showLptValue: false // 展示奖励2总价值
+  },
+  {
+    title: 'ETH Short Token Pool',
+    name: 'ETH',
+    icon: ETHPng,
+    rewardIcon: GuardPng,
+    shortToken: 'ETH',
+    rewards1: 'GUARD',
+    rewards2: null,
+    address: '0x94bf5FC7108e81F5E18d79BF225A08101c2e5f59',
+    rewards1Address: GUARD_ADDRESS, // GUARD
+    rewards2Address: null,
+    sort: {
+      collateral: WETH_ADDRESS, //  抵押物
+      underlying: USDC_ADDRESS, // 标的物
+    },
+    settleToken: USDC_ADDRESS, // usdc
+    settleTokenDecimal: 6,
+    MLP: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+    byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
+    abi: StakingPool,
+    mlpDecimal: 18,
+    start_at: 1653667200,
+    openDate: 1653667200,
+    time: '',
+    dueDate: 1656086400,
+    earnName: 'APR',
+    rewards: 'ETH Short Token',
+    decimal: 18,
+    is_coming: false,
+    mdexReward: false, // 是否有奖励2
+    networkId: 137,
+    splitDigits: 4,
+    cover: 'Call', // Call看涨 Put看跌
+    strikeprice: '3600',
     mineMountainAddress: '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699', // 矿山地址
     routerAddress: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
     routerAbi: QuickSwapRouter,
