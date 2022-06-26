@@ -3623,7 +3623,7 @@ export default [
     },
     settleToken: USDC_ADDRESS, // usdc
     settleTokenDecimal: 6,
-    MLP: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+    MLP: '0xc7bEde2B202d8566ECd4BB0dDbC03EC96Cf7fCf3',
     byLink: `https://quickswap.exchange/#/swap?outputCurrency=${GUARD_ADDRESS}`,
     abi: StakingPool,
     mlpDecimal: 18,
