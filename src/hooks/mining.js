@@ -99,7 +99,7 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
     pool_contract.totalSupply(), // 总抵押
   ]
   const now = new Date().getTime() / 1000
-  const hasApr = totalSupply_ > 0 && (pool.dueDate > now || !pool.dueDate)
+  const hasApr = totalSupply_ > 0 && (pool.dueDate > now || !pool.dueDate) && pool.address
   // 还没结束，算apr
   if (hasApr && pool.poolType === 3) {
     // sort
@@ -151,6 +151,7 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
     const begin = data[0],
       totalSupply = data[1]
     if (begin === null) {
+      // resolve(pool)
       return pool
     }
 
