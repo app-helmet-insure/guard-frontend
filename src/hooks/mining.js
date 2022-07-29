@@ -49,7 +49,7 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
         sum = sum.plus(new BigNumber(i.hourlyVolumeUSD))
         return sum
       }, new BigNumber(0))
-    })
+    }).catch(() => new BigNumber(0))
 
   const contract = new ClientContract(
     // '0x8782772E35e262Ba7f481DDDb015424Fc1aABC62',
