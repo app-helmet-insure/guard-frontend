@@ -9,23 +9,23 @@ import Supply from '@/components/insurance/supply'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import { InsuranceTypeList } from '../../configs/insurance'
-const Insurance = (props) => (
+const Insurance = props => (
   <div>
     <Header {...props} />
-    <div className='page_box'>
-      <div className='insurance_container'>
+    <div className="page_box">
+      <div className="insurance_container">
         <Banner />
         <ShowData />
-        <div className='insurance_container_list_type'>
+        <div className="insurance_container_list_type">
           <h2>
-            <FormattedMessage id='insurance_text24' />
+            <FormattedMessage id="insurance_text24" />
           </h2>
           <p>
-            <FormattedMessage id='insurance_text25' />
+            <FormattedMessage id="insurance_text25" />
             <span></span>
           </p>
         </div>
-        {InsuranceTypeList.map((insurance) => (
+        {InsuranceTypeList.map(insurance => (
           <Operation
             InsuranceSymbol={insurance.InsuranceSymbol}
             PairUSDC={insurance.PairUSDC}
@@ -33,6 +33,7 @@ const Insurance = (props) => (
             Expiry={insurance.Expiry}
             ShowName={insurance.ShowName}
             key={insurance.InsuranceSymbol}
+            tokenAddress={insurance.tokenAddress}
           />
         ))}
         <PolicyTab />

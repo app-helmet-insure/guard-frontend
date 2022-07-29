@@ -20,6 +20,7 @@ import moment from 'moment'
 // mether: ‘1000000000000000000000000’
 // gether: ‘1000000000000000000000000000’
 // tether: ‘1000000000000000000000000000000’
+const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
@@ -27,6 +28,7 @@ export const InsuranceTypeList = [
     Logo: GuardLogoSvg,
     Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Guard',
+    tokenAddress: GUARD_ADDRESS
   },
   {
     InsuranceSymbol: 'MATIC',
@@ -34,6 +36,7 @@ export const InsuranceTypeList = [
     Logo: MaticLogoSvg,
     Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Matic',
+    tokenAddress: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
   },
   {
     InsuranceSymbol: 'QUICK',
@@ -41,6 +44,7 @@ export const InsuranceTypeList = [
     Logo: QuickLogoSvg,
     Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Quick',
+    tokenAddress: '0xf28164A485B0B2C90639E47b0f377b4a438a16B1'
   },
   {
     InsuranceSymbol: 'ETH',
@@ -48,6 +52,7 @@ export const InsuranceTypeList = [
     Logo: ETHLogoSvg,
     Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'ETH',
+    tokenAddress: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
   },
 ]
 export const getCurrentInsurance = ({
