@@ -123,7 +123,7 @@ export const useConnectWallet = () => {
               // 监听chainID变化
               window.ethereum.on('chainChanged', chainID => {
                 if (chainID * 1 === 56) {
-                  window.location.href = 'https://www.helmet.insure/insurance/'
+                  window.location.href = 'https://www.helmet.insure/home/'
                 }
               })
               // 监听钱包事件
