@@ -21,19 +21,19 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 // lpt的年奖励
-const getVolume = async (miningPools, price, poolTotalSupply) => {
+const getVolume = async (miningPools, price, poolTotalSupply) => new Promise(async resolve => {
   const query = gql`
-    {
-      pairHourDatas(
-        first: 24
-        where: { pair: "0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49" }
-        orderBy: hourStartUnix
-        orderDirection: desc
-      ) {
-        hourlyVolumeUSD
-      }
-    }
-  `
+        {
+            pairHourDatas(
+                first: 24
+                where: { pair: "0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49" }
+                orderBy: hourStartUnix
+                orderDirection: desc
+            ) {
+                hourlyVolumeUSD
+            }
+        }
+    `
   const volumeTotal = await client
     .query({
       query,
@@ -49,7 +49,7 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
         sum = sum.plus(new BigNumber(i.hourlyVolumeUSD))
         return sum
       }, new BigNumber(0))
-    })
+    }).catch(() => new BigNumber(0))
 
   const contract = new ClientContract(
     // '0x8782772E35e262Ba7f481DDDb015424Fc1aABC62',
@@ -62,15 +62,15 @@ const getVolume = async (miningPools, price, poolTotalSupply) => {
       const [rewardRate_, totalSupply_] = res
       return [rewardRate_, totalSupply_]
     })
-  // quick日产量  (rewardRate * 86400) / 10 ** 18
+    // quick日产量  (rewardRate * 86400) / 10 ** 18
   const dayVolume =
-    fromWei(new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply)).multipliedBy(new BigNumber(rewardRate).multipliedBy(86400))) * price
+      fromWei(new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply)).multipliedBy(new BigNumber(rewardRate).multipliedBy(86400))) * price
 
   // 手续费 ： thegraph 查询结果 hourlyVolumeUSD 之和  乘以 24 乘以 0.003
   // debugger
   const fee = new BigNumber(poolTotalSupply).div(new BigNumber(totalSupply)).multipliedBy(volumeTotal.multipliedBy(0.003))
-  return fee.plus(dayVolume)
-}
+  resolve(fee.plus(dayVolume))
+})
 
 // eslint-disable-next-line no-async-promise-executor
 export const getMiningInfo = (pool, account) => new Promise(async resolve => {
