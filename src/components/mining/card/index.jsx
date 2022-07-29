@@ -42,8 +42,10 @@ const MiningCard = props => {
         return
       }
       getMiningInfo(props.pools, account).then(async miningPools_ => {
-        // console.log('miningPools_', miningPools_)
+        console.log('miningPools_', miningPools_)
         setMiningPools(miningPools_)
+      }).catch(e =>{
+        console.log(e)
       })
     }
   }, [blockHeight, account])

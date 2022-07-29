@@ -222,6 +222,7 @@ export const getMiningInfo = (pool, account) => new Promise(async resolve => {
       APR: APR_,
       LPTStakeValue
     })
+    console.log('newPool', newPool)
     resolve(newPool)
   })
 })
