@@ -36,7 +36,6 @@ const Mining = props => {
         components.push(<MiningCard pools={miningMap[i][0]} key={i} />)
       }
     }
-    console.log(components)
     return components
   }
 
