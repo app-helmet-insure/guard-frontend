@@ -374,10 +374,10 @@ const getGraphList2 = async function () {
 }
 // get Insurance
 export const getInsuranceList = async function () {
-  const Status = await getInsuranceStatus()
-  console.log('The Graph is ' + Status)
-  if (Status === 'healthy') {
-    return getGraphList1()
-  }
+  // const Status = await getInsuranceStatus()
+  // console.log('The Graph is ' + Status)
+  // if (Status === 'healthy') {
+  //   return getGraphList1()
+  // }
   return getGraphList2()
 }
