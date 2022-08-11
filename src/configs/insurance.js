@@ -379,5 +379,6 @@ export const getInsuranceList = async function () {
   // if (Status === 'healthy') {
   //   return getGraphList1()
   // }
-  return getGraphList2()
+  // return getGraphList2()
+  return getGraphList1()
 }
