@@ -20,39 +20,34 @@ import moment from 'moment'
 // mether: ‘1000000000000000000000000’
 // gether: ‘1000000000000000000000000000’
 // tether: ‘1000000000000000000000000000000’
-const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
     PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
     Logo: GuardLogoSvg,
-    Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Guard',
-    tokenAddress: GUARD_ADDRESS
   },
   {
     InsuranceSymbol: 'MATIC',
     PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
     Logo: MaticLogoSvg,
-    Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Matic',
-    tokenAddress: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270'
   },
   {
     InsuranceSymbol: 'QUICK',
     PairUSDC: '0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb',
     Logo: QuickLogoSvg,
-    Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Quick',
-    tokenAddress: '0xf28164A485B0B2C90639E47b0f377b4a438a16B1'
   },
   {
     InsuranceSymbol: 'ETH',
     PairUSDC: '0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d',
     Logo: ETHLogoSvg,
-    Expiry: moment(new Date(1661529600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
+    Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'ETH',
-    tokenAddress: '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
   },
 ]
 export const getCurrentInsurance = ({
@@ -85,10 +80,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'tether',
-      strikeprice: '0.005',
+      strikeprice: '0.003',
       strikeprice_decimals: 'tether',
-      lastprice: '0.01',
-      expiry: 1661529600,
+      lastprice: '0.006',
+      expiry: 1664553600,
       status: true,
     },
     {
@@ -108,10 +103,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
-      strikeprice: '0.02',
+      strikeprice: '0.012',
       strikeprice_decimals: 'mwei',
-      lastprice: '0.01',
-      expiry: 1661529600,
+      lastprice: '0.006',
+      expiry: 1664553600,
       status: true,
     },
     // MATIC
@@ -132,10 +127,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'tether',
-      strikeprice: '0.45',
+      strikeprice: '0.4',
       strikeprice_decimals: 'tether',
-      lastprice: '0.9',
-      expiry: 1661529600,
+      lastprice: '0.8',
+      expiry: 1664553600,
       status: true,
     },
     {
@@ -155,10 +150,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
-      strikeprice: '1.8',
+      strikeprice: '1.6',
       strikeprice_decimals: 'mwei',
-      lastprice: '0.9',
-      expiry: 1661529600,
+      lastprice: '0.8',
+      expiry: 1664553600,
       status: true,
     },
     // QUICK
@@ -179,10 +174,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'tether',
-      strikeprice: '40',
+      strikeprice: '47.5',
       strikeprice_decimals: 'tether',
-      lastprice: '80',
-      expiry: 1661529600,
+      lastprice: '75',
+      expiry: 1664553600,
       status: true,
     },
     {
@@ -202,10 +197,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
-      strikeprice: '160',
+      strikeprice: '150',
       strikeprice_decimals: 'mwei',
-      lastprice: '80',
-      expiry: 1661529600,
+      lastprice: '75',
+      expiry: 1664553600,
       status: true,
     },
     // ETH
@@ -226,10 +221,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'tether',
-      strikeprice: '800',
+      strikeprice: '850',
       strikeprice_decimals: 'tether',
-      lastprice: '1600',
-      expiry: 1661529600,
+      lastprice: '1700',
+      expiry: 1664553600,
       status: true,
     },
     {
@@ -249,10 +244,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
-      strikeprice: '3200',
+      strikeprice: '3400',
       strikeprice_decimals: 'mwei',
-      lastprice: '1600',
-      expiry: 1661529600,
+      lastprice: '1700',
+      expiry: 1664553600,
       status: true,
     },
   ]
@@ -374,11 +369,10 @@ const getGraphList2 = async function () {
 }
 // get Insurance
 export const getInsuranceList = async function () {
-  // const Status = await getInsuranceStatus()
-  // console.log('The Graph is ' + Status)
-  // if (Status === 'healthy') {
-  //   return getGraphList1()
-  // }
-  // return getGraphList2()
-  return getGraphList1()
+  const Status = await getInsuranceStatus()
+  console.log('The Graph is ' + Status)
+  if (Status === 'healthy') {
+    return getGraphList1()
+  }
+  return getGraphList2()
 }
