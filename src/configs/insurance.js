@@ -5,6 +5,7 @@ import ETHLogoSvg from '../assets/images/insurance/eth_logo.svg'
 import MaticLogoSvg from '../assets/images/insurance/matic_logo.svg'
 import QuickLogoSvg from '../assets/images/insurance/quick_logo.png'
 import moment from 'moment'
+import {GUARD_ADDRESS, MATIC_ADDRESS, QUICK_ADDRESS, WETH_ADDRESS} from './mining'
 // noether: ‘0’
 // wei: ‘1’
 // Kwei: ‘1000’
@@ -27,6 +28,7 @@ export const InsuranceTypeList = [
     Logo: GuardLogoSvg,
     Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Guard',
+    tokenAddress: GUARD_ADDRESS
   },
   {
     InsuranceSymbol: 'MATIC',
@@ -34,6 +36,7 @@ export const InsuranceTypeList = [
     Logo: MaticLogoSvg,
     Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Matic',
+    tokenAddress: MATIC_ADDRESS
   },
   {
     InsuranceSymbol: 'QUICK',
@@ -41,6 +44,7 @@ export const InsuranceTypeList = [
     Logo: QuickLogoSvg,
     Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'Quick',
+    tokenAddress: QUICK_ADDRESS
   },
   {
     InsuranceSymbol: 'ETH',
@@ -48,6 +52,7 @@ export const InsuranceTypeList = [
     Logo: ETHLogoSvg,
     Expiry: moment(new Date(1664553600 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
     ShowName: 'ETH',
+    tokenAddress: WETH_ADDRESS
   },
 ]
 export const getCurrentInsurance = ({
