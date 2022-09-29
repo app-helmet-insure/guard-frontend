@@ -15,8 +15,9 @@ import './index.less'
 import BigNumber from 'bignumber.js'
 import { getHttpWeb3 } from '../../../web3'
 import { ChainId } from '../../../web3/address'
+import {multicallClient} from '../../../web3/multicall'
 
-const API = 'https://api.thegraph.com/subgraphs/name/sameepsi/quickswap06'
+const API = 'https://guard.insure/swapgraph'
 const STATUS = 'https://api.thegraph.com/index-node/graphql'
 const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
 /**
@@ -177,81 +178,89 @@ export const Chart = props => {
 
   const loadDataByBlock = async () => {
 
-
     const client = new ApolloClient({
       uri: API,
       cache: new InMemoryCache(),
     })
     const web3 = getHttpWeb3(ChainId.MATIC)
     // const current_height = await web3.eth.getBlockNumber()
-    const current_height = await getLastBlock()
-
-    const current_block = await web3.eth.getBlock(current_height)
+    const current_height = await multicallClient.getBlockInfo(ChainId.MATIC).then(r => r.number)
+    // const current_block = await web3.eth.getBlock(current_height)
     // 当前块高度 - 出块时间
-    const last_block = await web3.eth.getBlock(current_height - 50000)
+    // const last_block = await web3.eth.getBlock(current_height - 50000)
 
-    const { timestamp: current_timestamp } = current_block
-    const { timestamp: last_timestamp } = last_block
-    const agv_block_interval = (current_timestamp - last_timestamp) / 50000
+    // const { timestamp: current_timestamp } = current_block
+    // const { timestamp: last_timestamp } = last_block
+    // const agv_block_interval = (current_timestamp - last_timestamp) / 50000
 
     const end_time = dayjs()
       .startOf('hour')
       .unix()
     const start_time = Math.floor(end_time - 24 * 3600)
 
+    // [{timestamp: 1659016800}]
     const timeline = range(start_time, end_time, 3600).map(
       (timestamp, index) => ({
         timestamp,
         value: 0,
-        block:
-          current_height -
-          Math.floor(((24 - index) * 3600) / agv_block_interval),
       })
     )
 
     const block_query_arr = []
     timeline.map(item => {
       block_query_arr.push(`
-        t${item.timestamp}: pair(
-          id: "${lpt_address.toLowerCase()}"
-          block: {number: ${item.block}}
+        t${item.timestamp}: blocks(
+          first: 1, orderBy: timestamp, orderDirection: desc, where: {timestamp_gt: ${item.timestamp}, timestamp_lt: ${item.timestamp + 600}}
         ) {
-          token0 {
-            id
-          }
-          token1 {
-            id
-          }
-          token0Price
-          token1Price
+        number
         }
       `)
     })
 
     const query = gql`
-      {
-        ${block_query_arr.join('')}
+          query blocks {
+          ${block_query_arr.join('')}
       }
+      
     `
     const ret = await client.query({
       query,
+    }).then(r => r.data)
+
+    const priceQueryArr = []
+    timeline.map((item, index) => {
+      priceQueryArr.push(`
+        t${item.timestamp}: token(
+          id: "${props.tokenAddress.toLowerCase()}",
+          block: {number: ${ret['t' + item.timestamp][0].number}}
+        ) {
+        derivedETH
+        }
+        
+        b${item.timestamp}: bundle(
+          id: "1",
+          block: {number: ${ret['t' + item.timestamp][0].number}}
+        ) {
+        ethPrice
+        }
+      `)
     })
+    const priceQuery = gql`
+        query blocks {
+            ${priceQueryArr.join('')}
+        }
+    `
+    const resData = await client.query({
+      query: priceQuery,
+    }).then(r=>r.data)
+
     let max = 0,
       min = Math.pow(10, 10)
     let last_price = 0
 
-    const data = timeline.map(item => {
-      const hour_data = ret.data[`t${item.timestamp}`]
-      let _price = 0
-      if (hour_data !== null) {
-        if (hour_data.token0.id === USDC_ADDRESS.toLowerCase()) {
-          _price = hour_data.token0Price
-        } else if (hour_data.token1.id === USDC_ADDRESS.toLowerCase()) {
-          _price = hour_data.token1Price
-        }
-      }
+    const data = timeline.map((item, index) => {
+      let _price =  new BigNumber(resData[`t${item.timestamp}`].derivedETH).multipliedBy(resData[`b${item.timestamp}`].ethPrice)
       _price = new BigNumber(_price).toFixed(6, 1).toString() * 1
-
       last_price = _price
 
       if (_price > max) {

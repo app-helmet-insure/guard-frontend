@@ -28,21 +28,21 @@ const Operation = props => {
     }
   }
   return (
-    <div className='insurance_operation_wrap'>
-      <div className='insurance_operation'>
-        <div className='insurance_control'>
-          <div className='insurance_operation_left'>
-            <div className='logo'>
-              <img src={Logo} alt='' />
+    <div className="insurance_operation_wrap">
+      <div className="insurance_operation">
+        <div className="insurance_control">
+          <div className="insurance_operation_left">
+            <div className="logo">
+              <img src={Logo} alt="" />
               <p>{ShowName}</p>
               <span>{Expiry}</span>
             </div>
-            <div className='price'>
-              <div className='call price_cell'>
-                <img src={CallSvg} alt='' />
+            <div className="price">
+              <div className="call price_cell">
+                <img src={CallSvg} alt="" />
                 <div>
                   <span>
-                    <FormattedMessage id='insurance_text14' />
+                    <FormattedMessage id="insurance_text14" />
                   </span>
                   <span>
                     {CallCurrentInsurance.strikeprice}{' '}
@@ -50,11 +50,11 @@ const Operation = props => {
                   </span>
                 </div>
               </div>
-              <div className='put price_cell'>
-                <img src={PutSvg} alt='' />
+              <div className="put price_cell">
+                <img src={PutSvg} alt="" />
                 <div>
                   <span>
-                    <FormattedMessage id='insurance_text15' />
+                    <FormattedMessage id="insurance_text15" />
                   </span>
                   <span>
                     {PutCurrentInsurance.strikeprice}{' '}
@@ -63,26 +63,27 @@ const Operation = props => {
                 </div>
               </div>
             </div>
-            <div className='buttons'>
+            <div className="buttons">
               <button
-                className='market'
+                className="market"
                 onClick={() => handleChilciActiveType('MARKET')}
               >
-                <FormattedMessage id='insurance_text16' /> <img src={Select} alt='' />
+                <FormattedMessage id="insurance_text16" /> <img src={Select} alt="" />
               </button>
               <button
-                className='supply'
+                className="supply"
                 onClick={() => handleChilciActiveType('SUPPLY')}
               >
-                <FormattedMessage id='insurance_text17' /> <img src={Select} alt='' />
+                <FormattedMessage id="insurance_text17" /> <img src={Select} alt="" />
               </button>
             </div>
           </div>
-          <div className='insurance_operation_right'>
+          <div className="insurance_operation_right">
             <Chart
               lpt_address={PairUSDC}
               over_price={CallCurrentInsurance.strikeprice}
               off_price={PutCurrentInsurance.strikeprice}
+              tokenAddress={props.tokenAddress}
             />
           </div>
         </div>
