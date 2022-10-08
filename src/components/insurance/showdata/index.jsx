@@ -11,9 +11,9 @@ import { getBalance, getShortTokenValue } from '../../../hooks/insurance'
 import { formatNumber } from 'accounting'
 import './index.less'
 import axios from 'axios'
-import {formatAmount} from '../../../utils/format'
+import { formatAmount } from '../../../utils/format'
 import BigNumber from 'bignumber.js'
-import {ChainId} from '../../../web3/address'
+import { ChainId } from '../../../web3/address'
 
 const ShowData = props => {
   const { library, active, account } = useActiveWeb3React()
@@ -31,7 +31,7 @@ const ShowData = props => {
       underlying_address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
     }
     const guardPrice = await useIndexPrice(library, calldata)
-    const fixguardPrice = Number(guardPrice).toFixed(2)
+    const fixguardPrice = Number(guardPrice).toFixed(5)
     setData1Price(fixguardPrice)
   }
   const Data4 = getBalance(
