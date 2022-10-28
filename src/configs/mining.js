@@ -11,12 +11,12 @@ import GuardQuickRewardSvg from '../assets/images/mining/pool/guard-quick-reward
 import GuardMaticSvg from '../assets/images/mining/pool/guard-matic.png'
 import { ChainId } from '../web3/address'
 
-const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
-const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
-const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
-const QUICK_ADDRESS = '0x831753DD7087CaC61aB5644b308642cc1c33Dc13'
-const DQUICK_ADDRESS = '0xf28164a485b0b2c90639e47b0f377b4a438a16b1'
-const WETH_ADDRESS = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
+export const MATIC_ADDRESS = '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
+export const GUARD_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
+export const USDC_ADDRESS = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174'
+export const QUICK_ADDRESS = '0x831753DD7087CaC61aB5644b308642cc1c33Dc13'
+export const DQUICK_ADDRESS = '0xf28164a485b0b2c90639e47b0f377b4a438a16b1'
+export const WETH_ADDRESS = '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619'
 
 
 const poolTemplate = {
