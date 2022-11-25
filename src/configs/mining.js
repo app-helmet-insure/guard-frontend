@@ -4687,6 +4687,138 @@ export default [
     openDate: 1664553600,
     dueDate: 1666972800,
     strikeprice: '2600',
+  },
+
+  // 20201028
+  {
+    ...poolTemplate.guardCall,
+    address: '0x550579f657e8F5466b895c9485E4B8972dfAcB2D',
+    MLP: '0xc185650Ef1eeE906eDd3fF6778B7d520ab8Af9ff', // 质押的资产 stakingToken
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '0.01',
+  },
+  {
+    ...poolTemplate.guardPut,
+    address: '0x489F6df108b8C03f3fe47f76EEEA95F99b8ca3DF',
+    MLP: '0xAe522Cc6668869ad65f1443CEa8bacA4450e687d', // 质押的资产
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '0.002',
+  },
+  {
+    ...poolTemplate.quickCall,
+    address: '0x0F1903092F8003Df0AA9C332D99D26201b4c379d',
+    MLP: '0x7fA449ab5b8855A60D8634c47c9a0F1eb154cA35', // 质押的资产
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '120',
+  },
+  {
+    ...poolTemplate.quickPut,
+    address: '0x83Ee9c6d4C43bccA274C0e82A87c6f1E51e55D39',
+    MLP: '0x600C18d151D72a7c5e55dA7CB5Aa5A663D684691', // 质押的资产
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '30',
+  },
+  {
+    ...poolTemplate.maticCall,
+    address: '0xb250Ad68244a662fBC195501f214DA656A64a41c',
+    MLP: '0x61fC167Dca585c2bF81a148942A9A79F416A3292', // 质押的资产 stakingToken
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '1.8',
+  },
+  {
+    ...poolTemplate.maticPut,
+    address: '0x0Be5f4ba2f31788DF281CDb847e3A8c5276EA4f8',
+    MLP: '0xe20A3C300e91178e972a8B1BC9334D80EE2a9e31', // 质押的资产
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '0.45',
+  },
+  {
+    ...poolTemplate.ethCall,
+    address: '0xe41E96aa828A916Cf98f1f936d0EfaF6d3079c47',
+    MLP: '0xe5D4DD2b56dD6a522Ef8F6E9a8d9eaADcb5D8Baf',
+    start_at: 1666972800,
+    openDate: 1666972800,
+    dueDate: 1669392000,
+    strikeprice: '3000',
+  },
+
+  // 20201124
+  {
+    ...poolTemplate.guardCall,
+    address: '0x82d4AcD99Eea8d6f4396f42221Ede048020CFb2a',
+    MLP: '0x460949AD7082A7913754A850d414220d5241DCE6', // 质押的资产 stakingToken
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '0.008',
+  },
+  {
+    ...poolTemplate.guardPut,
+    address: '0x37A37C15bc8D63941A78BD805D34cD96b952F587',
+    MLP: '0xEfFbc0B41e72d0E2A366B8d2F23914C2A379Dde7', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '0.002',
+  },
+  {
+    ...poolTemplate.quickCall,
+    address: '0x31120Eb3Dc8Ef92bF68447852c583d77690FDc3a',
+    MLP: '0xAaEf61c3fdF1F7A6499302273E450F0FdE341547', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '100',
+  },
+  {
+    ...poolTemplate.quickPut,
+    address: '0x2f2881E4FcD6ca7D6A9F3E564bcEcC5149b74c78',
+    MLP: '0x3A6cf1304739769a056dC01c9584A3e51672368b', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '25',
+  },
+  {
+    ...poolTemplate.maticCall,
+    address: '0x944075Cbd248fa2974fbc96060f5d00CBaf134CE',
+    MLP: '0x571d520F60351E18349B7F5487D82a3ca0524BD5', // 质押的资产 stakingToken
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '1.6',
+  },
+  {
+    ...poolTemplate.maticPut,
+    address: '0x4E6e196e501aD3d82dDab82Cd0B9191Be98Df46a',
+    MLP: '0x0BA8eFD90112A4DC9CE0C79D890a4eb8f6938e9b', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '0.4',
+  },
+  {
+    ...poolTemplate.ethCall,
+    address: '0x944cabb5881BFeC5386AF0CAB84728fe2a148702',
+    MLP: '0xD85bbE74C1568E4edf73dD6DCe22936f92165311',
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672502400,
+    strikeprice: '2400',
   }
+
+
 ]
 // 更新 address MLP start_at openDate dueDate strikeprice multiple childPools
