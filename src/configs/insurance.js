@@ -27,11 +27,7 @@ export const InsuranceTypeList = [
     InsuranceSymbol: 'GUARD',
     PairUSDC: '0xd2eeeedfcaf1457f7bc9cba28d5316f73bb83b49',
     Logo: GuardLogoSvg,
-<<<<<<< HEAD
-    Expiry: moment(new Date(1672416000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-=======
     Expiry: moment(new Date(DateTime * 1000)).format('YYYY/MM/DD HH:mm:ss'),
->>>>>>> 122922insurance
     ShowName: 'Guard',
     tokenAddress: GUARD_ADDRESS
   },
@@ -39,11 +35,7 @@ export const InsuranceTypeList = [
     InsuranceSymbol: 'MATIC',
     PairUSDC: '0x6e7a5FAFcec6BB1e78bAE2A1F0B612012BF14827',
     Logo: MaticLogoSvg,
-<<<<<<< HEAD
-    Expiry: moment(new Date(1672416000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-=======
     Expiry: moment(new Date(DateTime * 1000)).format('YYYY/MM/DD HH:mm:ss'),
->>>>>>> 122922insurance
     ShowName: 'Matic',
     tokenAddress: MATIC_ADDRESS
   },
@@ -51,11 +43,7 @@ export const InsuranceTypeList = [
     InsuranceSymbol: 'QUICK',
     PairUSDC: '0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb',
     Logo: QuickLogoSvg,
-<<<<<<< HEAD
-    Expiry: moment(new Date(1672416000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-=======
     Expiry: moment(new Date(DateTime * 1000)).format('YYYY/MM/DD HH:mm:ss'),
->>>>>>> 122922insurance
     ShowName: 'Quick',
     tokenAddress: QUICK_ADDRESS
   },
@@ -63,11 +51,7 @@ export const InsuranceTypeList = [
     InsuranceSymbol: 'ETH',
     PairUSDC: '0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d',
     Logo: ETHLogoSvg,
-<<<<<<< HEAD
-    Expiry: moment(new Date(1672416000 * 1000)).format('YYYY/MM/DD HH:mm:ss'),
-=======
     Expiry: moment(new Date(DateTime * 1000)).format('YYYY/MM/DD HH:mm:ss'),
->>>>>>> 122922insurance
     ShowName: 'ETH',
     tokenAddress: WETH_ADDRESS
   },
@@ -105,11 +89,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.002',
       strikeprice_decimals: 'tether',
       lastprice: '0.004',
-<<<<<<< HEAD
-      expiry: 1672416000,
-=======
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     {
@@ -132,11 +112,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.008',
       strikeprice_decimals: 'mwei',
       lastprice: '0.004',
-<<<<<<< HEAD
-      expiry: 1672416000,
-=======
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     // MATIC
@@ -160,11 +136,7 @@ export const getCurrentInsurance = ({
       strikeprice: '0.4',
       strikeprice_decimals: 'tether',
       lastprice: '0.8',
-<<<<<<< HEAD
-      expiry: 1672416000,
-=======
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     {
@@ -187,11 +159,7 @@ export const getCurrentInsurance = ({
       strikeprice: '1.6',
       strikeprice_decimals: 'mwei',
       lastprice: '0.8',
-<<<<<<< HEAD
-      expiry: 1672416000,
-=======
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     // QUICK
@@ -212,17 +180,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'tether',
-<<<<<<< HEAD
-      strikeprice: '25',
-      strikeprice_decimals: 'tether',
-      lastprice: '50',
-      expiry: 1672416000,
-=======
       strikeprice: '23',
       strikeprice_decimals: 'tether',
       lastprice: '46',
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     {
@@ -242,17 +203,10 @@ export const getCurrentInsurance = ({
       settleToken_symbol: 'GUARD',
       settleToken_address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       settleToken_decimals: 'ether',
-<<<<<<< HEAD
-      strikeprice: '100',
-      strikeprice_decimals: 'mwei',
-      lastprice: '50',
-      expiry: 1672416000,
-=======
       strikeprice: '92',
       strikeprice_decimals: 'mwei',
       lastprice: '46',
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     // ETH
@@ -276,11 +230,7 @@ export const getCurrentInsurance = ({
       strikeprice: '600',
       strikeprice_decimals: 'tether',
       lastprice: '1200',
-<<<<<<< HEAD
-      expiry: 1672416000,
-=======
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
     {
@@ -303,11 +253,7 @@ export const getCurrentInsurance = ({
       strikeprice: '2400',
       strikeprice_decimals: 'mwei',
       lastprice: '1200',
-<<<<<<< HEAD
-      expiry: 1672416000,
-=======
       expiry: DateTime,
->>>>>>> 122922insurance
       status: true,
     },
   ]
