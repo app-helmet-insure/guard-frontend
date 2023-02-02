@@ -178,104 +178,57 @@ export const Chart = props => {
 
   const loadDataByBlock = async () => {
 
-    const client = new ApolloClient({
-      uri: API,
-      cache: new InMemoryCache(),
-    })
-    const web3 = getHttpWeb3(ChainId.MATIC)
-    // const current_height = await web3.eth.getBlockNumber()
-    const current_height = await multicallClient.getBlockInfo(ChainId.MATIC).then(r => r.number)
-    // const current_block = await web3.eth.getBlock(current_height)
-    // 当前块高度 - 出块时间
-    // const last_block = await web3.eth.getBlock(current_height - 50000)
-
-    // const { timestamp: current_timestamp } = current_block
-    // const { timestamp: last_timestamp } = last_block
-    // const agv_block_interval = (current_timestamp - last_timestamp) / 50000
-
     const end_time = dayjs()
       .startOf('hour')
       .unix()
-    const start_time = Math.floor(end_time - 24 * 3600)
+    const start_time = Math.floor(end_time - 24 * 3600 * 7)
 
-    // [{timestamp: 1659016800}]
-    const timeline = range(start_time, end_time, 3600).map(
-      (timestamp, index) => ({
-        timestamp,
-        value: 0,
+    const {priceList7Day, min, max, tPrice} = await axios
+      .post(
+        'https://api.defined.fi/',
+        {
+          query:
+            'query ExampleQuery($from: Int!, $resolution: String!, $symbol: String!, $to: Int!) {\n  getBars(from: $from, resolution: $resolution, symbol: $symbol, to: $to) {\n    h\n t\n }\n}\n',
+          variables: {
+            to: end_time,
+            symbol: lpt_address + ':' + ChainId.MATIC,
+            resolution: '60',
+            from: start_time,
+          },
+          operationName: 'ExampleQuery',
+        },
+        {
+          headers: {
+            'x-api-key': 'ZDhetvbpiAB1dMn9FPP8SRkcSnoueg2hf1poyY30',
+          },
+        },
+      )
+      .then(res => {
+        const priceList = res.data.data.getBars.h
+        const timeLine = res.data.data.getBars.t
+        const result = []
+        let min_ = 0
+        let max_ = 0
+        for (let i = 0; i < priceList.length; i++) {
+          result.push([timeLine[i] * 1000, priceList[i]])
+          if (priceList[i] > max_) {
+            max_ = priceList[i]
+          }
+          if (priceList[i] < min_) {
+            min_ = priceList[i]
+          }
+        }
+        return {
+          priceList7Day: result,
+          min: min_,
+          max: max_,
+          tPrice: result[result.length - 1][1]
+        }
       })
-    )
 
-    const block_query_arr = []
-    timeline.map(item => {
-      block_query_arr.push(`
-        t${item.timestamp}: blocks(
-          first: 1, orderBy: timestamp, orderDirection: desc, where: {timestamp_gt: ${item.timestamp}, timestamp_lt: ${item.timestamp + 600}}
-        ) {
-        number
-        }
-      `)
-    })
-
-    const query = gql`
-          query blocks {
-          ${block_query_arr.join('')}
-      }
-      
-    `
-    const ret = await client.query({
-      query,
-    }).then(r => r.data)
-
-    const priceQueryArr = []
-    timeline.map((item, index) => {
-      priceQueryArr.push(`
-        t${item.timestamp}: token(
-          id: "${props.tokenAddress.toLowerCase()}",
-          block: {number: ${ret['t' + item.timestamp][0].number}}
-        ) {
-        derivedETH
-        }
-        
-        b${item.timestamp}: bundle(
-          id: "1",
-          block: {number: ${ret['t' + item.timestamp][0].number}}
-        ) {
-        ethPrice
-        }
-      `)
-    })
-    const priceQuery = gql`
-        query blocks {
-            ${priceQueryArr.join('')}
-        }
-    `
-    const resData = await client.query({
-      query: priceQuery,
-    }).then(r=>r.data)
-
-    let max = 0,
-      min = Math.pow(10, 10)
-    let last_price = 0
-
-    const data = timeline.map((item, index) => {
-      let _price =  new BigNumber(resData[`t${item.timestamp}`].derivedETH).multipliedBy(resData[`b${item.timestamp}`].ethPrice)
-      _price = new BigNumber(_price).toFixed(6, 1).toString() * 1
-      last_price = _price
-
-      if (_price > max) {
-        max = _price
-      }
-
-      if (_price < min) {
-        min = _price
-      }
-
-      return [item.timestamp * 1000, _price]
-    })
-
-    setPrice(last_price)
-    return [data, min, max]
+    setPrice(tPrice)
+    // data = [item.timestamp * 1000, _price]
+    return [priceList7Day, min, max]
   }
 
   const initChart = async () => {

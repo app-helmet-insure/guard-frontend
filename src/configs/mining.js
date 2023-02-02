@@ -4752,6 +4752,138 @@ export default [
     openDate: 1666972800,
     dueDate: 1669392000,
     strikeprice: '3000',
+  },
+
+  // 20201124
+  {
+    ...poolTemplate.guardCall,
+    address: '0x82d4AcD99Eea8d6f4396f42221Ede048020CFb2a',
+    MLP: '0x460949AD7082A7913754A850d414220d5241DCE6', // 质押的资产 stakingToken
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '0.008',
+  },
+  {
+    ...poolTemplate.guardPut,
+    address: '0x37A37C15bc8D63941A78BD805D34cD96b952F587',
+    MLP: '0xEfFbc0B41e72d0E2A366B8d2F23914C2A379Dde7', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '0.002',
+  },
+  {
+    ...poolTemplate.quickCall,
+    address: '0x31120Eb3Dc8Ef92bF68447852c583d77690FDc3a',
+    MLP: '0xAaEf61c3fdF1F7A6499302273E450F0FdE341547', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '100',
+  },
+  {
+    ...poolTemplate.quickPut,
+    address: '0x2f2881E4FcD6ca7D6A9F3E564bcEcC5149b74c78',
+    MLP: '0x3A6cf1304739769a056dC01c9584A3e51672368b', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '25',
+  },
+  {
+    ...poolTemplate.maticCall,
+    address: '0x944075Cbd248fa2974fbc96060f5d00CBaf134CE',
+    MLP: '0x571d520F60351E18349B7F5487D82a3ca0524BD5', // 质押的资产 stakingToken
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '1.6',
+  },
+  {
+    ...poolTemplate.maticPut,
+    address: '0x4E6e196e501aD3d82dDab82Cd0B9191Be98Df46a',
+    MLP: '0x0BA8eFD90112A4DC9CE0C79D890a4eb8f6938e9b', // 质押的资产
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '0.4',
+  },
+  {
+    ...poolTemplate.ethCall,
+    address: '0x944cabb5881BFeC5386AF0CAB84728fe2a148702',
+    MLP: '0xD85bbE74C1568E4edf73dD6DCe22936f92165311',
+    start_at: 1669392000,
+    openDate: 1669392000,
+    dueDate: 1672416000,
+    strikeprice: '2400',
+  },
+
+  // 20221230
+  {
+    ...poolTemplate.guardCall,
+    address: '0xD2518922cc4D54F592270307d0F15b8332916Cf6',
+    MLP: '0xcb24ec65307FDc6b7D02BdAC7e460E56251BF3DD', // 质押的资产 stakingToken
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '0.008',
+  },
+  {
+    ...poolTemplate.guardPut,
+    address: '0x83e4dFE0e4fD296Afb01Ca7B2EC8d28EebE32c78',
+    MLP: '0xa9E52A20846597BA26b2a2E8Dc8F44d5Ec78263C', // 质押的资产
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '0.002',
+  },
+  {
+    ...poolTemplate.quickCall,
+    address: '0x97aBdbB4eDd882740146fecba8C8fADE1342D585',
+    MLP: '0x7F698b4ad03D8DC7A89b33FDFC3f7Cd9F58aB12d', // 质押的资产
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '92',
+  },
+  {
+    ...poolTemplate.quickPut,
+    address: '0xc8EDA19aEB0F924C19Cbb8706AF9b9e081fcC27c',
+    MLP: '0x3f51c56486400D20999F9B81A776C3e88E91627D', // 质押的资产
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '23',
+  },
+  {
+    ...poolTemplate.maticCall,
+    address: '0x13d08c23b0b580207149550123f81eFa02560d23',
+    MLP: '0x7720824377E759a10dDe54249a509445F3B7dD4F', // 质押的资产 stakingToken
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '1.6',
+  },
+  {
+    ...poolTemplate.maticPut,
+    address: '0x19864738386b6B992cf596aA70d315aD7180b9cA',
+    MLP: '0x649dc0993b94E5E49AAfc5fA6789298d45C1DC77', // 质押的资产
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '0.4',
+  },
+  {
+    ...poolTemplate.ethCall,
+    address: '0xCfFbBB2E353dCe035b4FCc170861ec2F07B4844d',
+    MLP: '0xD67008215386ab6cf48AC6d31aeF1faC6D0A5460',
+    start_at: 1672416000,
+    openDate: 1672416000,
+    dueDate: 1675440000,
+    strikeprice: '2400',
   }
+
+
 ]
 // 更新 address MLP start_at openDate dueDate strikeprice multiple childPools
