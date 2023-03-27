@@ -5013,6 +5013,71 @@ export default [
     openDate: 1677513600,
     dueDate: 1679932800,
     strikeprice: '3200',
+  },
+
+  // 20230327
+  {
+    ...poolTemplate.guardCall,
+    address: '0x13b6c0CB9D4c36B4e615799c3B5da9b923B79249',
+    MLP: '0xA4628683AeE7a4CE0e5363e7A630367e04fcFD43', // 质押的资产 stakingToken
+    start_at: 1677513600,
+    openDate: 1677513600,
+    dueDate: 1687708800,
+    strikeprice: '0.006',
+  },
+  {
+    ...poolTemplate.guardPut,
+    address: '0x5BFC7FbD74a665b987AD3E8aE2FA5E033B738429',
+    MLP: '0xc8Eb142B82B9982bf7BE8fE14d5B2dE506F80643', // 质押的资产
+    start_at: 1679932800,
+    openDate: 1679932800,
+    dueDate: 1687708800,
+    strikeprice: '0.0015',
+  },
+  {
+    ...poolTemplate.quickCall,
+    address: '0x64a864a802aedd18eaa318953628623bae300916',
+    MLP: '0x55c766550677bEEAA0C497F380B20D53677730E2', // 质押的资产
+    start_at: 1679932800,
+    openDate: 1679932800,
+    dueDate: 1687708800,
+    strikeprice: '196',
+  },
+  {
+    ...poolTemplate.quickPut,
+    address: '0x04555069d4e22fAbA5B91c03401db22272A30785',
+    MLP: '0x7FDdBbA6FE4a43aB53adF2749e121F5710a02e41', // 质押的资产
+    start_at: 1679932800,
+    openDate: 1679932800,
+    dueDate: 1687708800,
+    strikeprice: '49',
+  },
+  {
+    ...poolTemplate.maticCall,
+    address: '0xe42e4De733054C6B2488899dD85a4dAdd700B306',
+    MLP: '0x11BD65BEAd3C5F8eBE38688031BB67dB8Edb8A8A', // 质押的资产 stakingToken
+    start_at: 1679932800,
+    openDate: 1679932800,
+    dueDate: 1687708800,
+    strikeprice: '2.2',
+  },
+  {
+    ...poolTemplate.maticPut,
+    address: '0xFC4aE9309ACB1E6201F80Bc6A7a0CD201B39D644',
+    MLP: '0xa157B42C4Bb3a59853Ed3F4B6B2b1C8Ba5111a07', // 质押的资产
+    start_at: 1679932800,
+    openDate: 1679932800,
+    dueDate: 1687708800,
+    strikeprice: '0.55',
+  },
+  {
+    ...poolTemplate.ethCall,
+    address: '0xBf02d03FF0e5dBF10f99269a9e14D4b8Da131df6',
+    MLP: '0xbDb8971F9457E70e18F5b0186F23DaBAB0d1598F',
+    start_at: 1679932800,
+    openDate: 1679932800,
+    dueDate: 1687708800,
+    strikeprice: '3556',
   }
 ]
 // 更新 address MLP start_at openDate dueDate strikeprice multiple childPools
