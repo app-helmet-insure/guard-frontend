@@ -23,7 +23,7 @@ import { GUARD_ADDRESS, MATIC_ADDRESS, QUICK_ADDRESS, WETH_ADDRESS } from './min
 // tether: ‘1000000000000000000000000000000’
 
 
-const DateTime = 1687708800
+const DateTime = 1703865600
 export const InsuranceTypeList = [
   {
     InsuranceSymbol: 'GUARD',
