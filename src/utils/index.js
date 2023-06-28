@@ -15,8 +15,8 @@ export const getGasPrice = async () => {
   // const gasFee1 = await web3.eth.getGasPrice()
   const gasFee = await axios({
     method: 'get',
-    url: 'https://gasstation-mainnet.matic.network/'
-  }).then(res => res.data.fast)
+    url: 'https://gpoly.blockscan.com/gasapi.ashx?apikey=key&method=gasoracle'
+  }).then(res => res.data.result.FastGasPrice)
   // console.log('gasFee1', gasFee1, new BigNumber(gasFee1).multipliedBy(1.5).toFixed(0).toString())
   console.log('gasFee', gasFee, web3.utils.toWei(String(gasFee), 'gwei'))
 
